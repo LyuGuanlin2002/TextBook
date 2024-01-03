@@ -1385,9 +1385,11 @@ underlay boxed title={
 subtitle style={empty,before upper=\par,fontupper=\centering\FontSize{13pt}\bfseries\color{#3}},
 title={\maxsizebox{\linewidth-2.0cm}{!}{#2}},#1}
 
-\DeclareDocumentEnvironment{Point}{s}{\IfBooleanTF{#1}{\begin{box0}[left=0mm]{本章要点}[ColorA]}{\begin{box0}[left=0mm]{本节导言}[ColorA]}}{\end{box0}}
+\newenvironment{Point}{\begin{box0}[left=0mm]{本章要点}[ColorA]}{\end{box0}}
+\newenvironment{Point*}{\begin{box0}[left=0mm]{本节导言}[ColorA]}{\end{box0}}
 
-\DeclareDocumentEnvironment{Case}{s}{\IfBooleanTF{#1}{\begin{box0}[left=-2.075mm]{基础概念、公式和定理}[ColorB]\begin{Concept}}{\begin{box0}[left=-2.2mm]{本节提要}[ColorB]\begin{Concept}}}{\end{Concept}\end{box0}}
+\newenvironment{Case}{\begin{box0}[left=-2.075mm]{基础概念、公式和定理}[ColorB]\begin{Concept}}{\end{Concept}\end{box0}}
+\newenvironment{Case*}{\begin{box0}[left=-2.2mm]{本节提要}[ColorB]\begin{Concept}}{\end{Concept}\end{box0}}
 
 
 %%设置习题盒子样式%%
@@ -1559,54 +1561,60 @@ subtitle style={empty,fontupper=\FontSize{12pt}\bfseries\color{#4}},
 
 \makeatletter
 %%设置定义定理盒子%%
-\DeclareTColorBox{box3}{O{} m m O{} O{ColorA} O{\faCodepen} m}{
+\DeclareTColorBox{box3}{O{} m O{} O{ColorA} O{\faCodepen}}{
 Box,
-frame style={left color=#5!50,right color=#5!50,middle color=#5},
-code={\JudgeTitle{#3}{#4}{#5}},
+frame style={left color=#4!50,right color=#4!50,middle color=#4},
+code={\JudgeTitle{#2}{#3}{#4}},
 before title={\@BoxedBeforeTitleText},
 title={\@BoxedTitleText},
 before upper={\@BoxedBeforeUpperText},
-step and label={#7}{#2},
 attach boxed title to top left={xshift=4.25mm,yshift*=-\tcboxedtitleheight+1.5mm},
 boxed title style={empty,left=5.5mm,right=3.5mm,height=0.7cm,valign=center},
 underlay boxed title={
 \draw[white,fill=white,line width=15.0pt](title.west)circle({2*\tcboxedtitleheight/3});
 \draw[white,fill=white,rounded corners=\tcboxedtitleheight/2,line width=10.0pt](title.north west)rectangle(title.south east);
-\draw[#5,fill=#5!90,line width=2.25pt]
+\draw[#4,fill=#4!90,line width=2.25pt]
 ([xshift={sqrt(7)*\tcboxedtitleheight/6}]title.north west) arc ({asin(0.75)}:{360-asin(0.75)}:{2*\tcboxedtitleheight/3})[rounded corners=\tcboxedtitleheight/2]--
 (title.south east)[rounded corners=\tcboxedtitleheight/2]--
 (title.north east)[sharp corners]--
 cycle;
-\node[circle,align=center,inner sep=0mm,font=\FontSize{16pt}\bfseries,text=white](P)at(title.west){#6};},
+\node[circle,align=center,inner sep=0mm,font=\FontSize{16pt}\bfseries,text=white](P)at(title.west){#5};},
 #1}
+%%编号定义盒子%%
+\DeclareDocumentEnvironment{Definition}{ O{} }{\begin{box3}[step and label={@def}{Def.\the@prenumber.\the@def}]{定义~\the@prenumber.\the@def}[#1][ColorA][\faCrosshairs]}{\end{box3}}
+\DeclareDocumentEnvironment{Theorem}{ O{} }{\begin{box3}[step and label={@thm}{Thm.\the@prenumber.\the@thm}]{定理~\the@prenumber.\the@thm}[#1][ColorB][\faCrosshairs]}{\end{box3}}
+\DeclareDocumentEnvironment{Axiom}{ O{} }{\begin{box3}[step and label={@axm}{Axm.\the@prenumber.\the@axm}]{公理~\the@prenumber.\the@axm}[#1][ColorI][\faCompactDisc]}{\end{box3}}
+%%不编号定义盒子%%
+\DeclareDocumentEnvironment{Definition*}{ O{} }{\begin{box3}{定义}[#1][ColorA][\faCrosshairs]}{\end{box3}}
+\DeclareDocumentEnvironment{Theorem*}{ O{} }{\begin{box3}{定理}[#1][ColorB][\faCrosshairs]}{\end{box3}}
+\DeclareDocumentEnvironment{Axiom*}{ O{} }{\begin{box3}{公理}[#1][ColorI][\faCompactDisc]}{\end{box3}}
 
-\DeclareDocumentEnvironment{Definition}{ O{} }{\begin{box3}{Def.\the@prenumber.\the@def}{定义~\the@prenumber.\the@def}[#1][ColorA][\faCrosshairs]{@def}}{\end{box3}}
-\DeclareDocumentEnvironment{Theorem}{ O{} }{\begin{box3}{Thm.\the@prenumber.\the@thm}{定理~\the@prenumber.\the@thm}[#1][ColorB][\faCrosshairs]{@thm}}{\end{box3}}
-\DeclareDocumentEnvironment{Axiom}{ O{} }{\begin{box3}{Axm.\the@prenumber.\the@axm}{公理~\the@prenumber.\the@axm}[#1][ColorI][\faCompactDisc]{@axm}}{\end{box3}}
 
 %%设置引理盒子%%
-\DeclareTColorBox{box4}{O{} m m O{} O{ColorA} O{\faDiceD20} m}{
+\DeclareTColorBox{box4}{O{} m O{} O{ColorA} O{\faDiceD20}}{
 Box,
-frame style={left color=#5!50,right color=#5!50,middle color=#5},
-code={\JudgeTitle{#3}{#4}{#5}},
+frame style={left color=#4!50,right color=#4!50,middle color=#4},
+code={\JudgeTitle{#2}{#3}{#4}},
 before title={\@BoxedBeforeTitleText},
 title={\@BoxedTitleText},
 before upper={\@BoxedBeforeUpperText},
-step and label={#7}{#2},
 attach boxed title to top left={xshift=4.5mm,yshift*=-\tcboxedtitleheight+1.5mm},
 boxed title style={empty,left=5.5mm,right=3.5mm,height=0.7cm,valign=center},
 underlay boxed title={
 \draw[white,fill=white,line width=15.0pt](title.west)circle({2*\tcboxedtitleheight/3});
 \draw[white,fill=white,rounded corners=\tcboxedtitleheight/2,line width=10.0pt](title.north west)rectangle(title.south east);
-\draw[#5,fill=#5,rounded corners=\tcboxedtitleheight/2,line width=3.0pt](title.north west)rectangle(title.south east);
-\draw[#5,fill=white,line width=2.75pt](title.west)circle({2*\tcboxedtitleheight/3});
-\node[circle,align=center,inner sep=0mm,font=\FontSize{16pt}\bfseries,text=#5](P)at(title.west){#6};},
+\draw[#4,fill=#4,rounded corners=\tcboxedtitleheight/2,line width=3.0pt](title.north west)rectangle(title.south east);
+\draw[#4,fill=white,line width=2.75pt](title.west)circle({2*\tcboxedtitleheight/3});
+\node[circle,align=center,inner sep=0mm,font=\FontSize{16pt}\bfseries,text=#4](P)at(title.west){#5};},
 #1}
-
-\DeclareDocumentEnvironment{Lemma}{ O{} }{\begin{box4}{Lem.\the@prenumber.\the@lem}{引理~\the@prenumber.\the@lem}[#1][ColorE][\faGlobe]{@lem}}{\end{box4}}
-\DeclareDocumentEnvironment{Corollary}{ O{} }{\begin{box4}{Colry.\the@prenumber.\the@colry}{推论~\the@prenumber.\the@colry}[#1][ColorG][\faCompactDisc]{@colry}}{\end{box4}}
-\DeclareDocumentEnvironment{Proposition}{ O{} }{\begin{box4}{Prop.\the@prenumber.\the@prop}{命题~\the@prenumber.\the@prop}[#1][ColorH][\faGlobe]{@prop}}{\end{box4}}
-\makeatother
+%%编号引理盒子%%
+\DeclareDocumentEnvironment{Lemma}{ O{} }{\begin{box4}[step and label={@lem}{Lem.\the@prenumber.\the@lem}]{引理~\the@prenumber.\the@lem}[#1][ColorE][\faGlobe]}{\end{box4}}
+\DeclareDocumentEnvironment{Corollary}{ O{} }{\begin{box4}[step and label={@colry}{Colry.\the@prenumber.\the@colry}]{推论~\the@prenumber.\the@colry}[#1][ColorG][\faCompactDisc]}{\end{box4}}
+\DeclareDocumentEnvironment{Proposition}{ O{} }{\begin{box4}[step and label={@prop}{Prop.\the@prenumber.\the@prop}]{命题~\the@prenumber.\the@prop}[#1][ColorH][\faGlobe]}{\end{box4}}
+%%不编号引理盒子%%
+\DeclareDocumentEnvironment{Lemma*}{ O{} }{\begin{box4}{引理}[#1][ColorE][\faGlobe]}{\end{box4}}
+\DeclareDocumentEnvironment{Corollary*}{ O{} }{\begin{box4}{推论}[#1][ColorG][\faCompactDisc]}{\end{box4}}
+\DeclareDocumentEnvironment{Proposition*}{ O{} }{\begin{box4}{命题}[#1][ColorH][\faGlobe]}{\end{box4}}
 
 %%设置拓展盒子%%
 \DeclareTColorBox{box5}{O{} m O{ColorA} O{\faLink}}{
