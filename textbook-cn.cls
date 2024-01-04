@@ -294,28 +294,31 @@ delim_0 " \\hfill "
 delim_1 " \\hfill "
 delim_2 " \\hfill "
 \end{filecontents*}
+
 \makeatletter
-%%索引首页页面设置%%
-\def\imki@firstpagestyle{empty}
-%%修改索引环境（删除其页眉选项）%%
-\renewenvironment{theindex}{
-%索引样式设置
-\def\imki@options{ }
-\def\imki@columns{3}
-\def\imki@columnsep{2.0em}
-\KV@imki@columnseprulefalse
-\KV@imki@intocfalse
-\KV@imki@noautomaticfalse
-\if@appendix
-\def\imki@indexlevel{\chapter}
+%%添加新关键字envlevel（环境中索引层次）%%
+\def\imki@envindexlevel{
+\@ifundefined{chapter}{\section}{\chapter}*}
+\define@key{imkiindex}{envlevel}{\def\imki@envindexlevel{#1}}
+%%修改索引环境%%
+\ifimki@original
+\expandafter\def\expandafter\theindex\expandafter{\expandafter
+\imki@maybeaddtotoc\theindex}
 \else
-\def\imki@indexlevel{\chapter*}
-\fi
+\global\let\imki@idxprologue\relax
+\renewenvironment{theindex}{
 \imki@maybeaddtotoc
+%%%%%%%%%% 修改部分开始 %%%%%%%%%%
+\if@appendix%判断索引所在环境
+\imki@envindexlevel{\indexname}
+\else
 \imki@indexlevel{\indexname}
+\fi
+%\imki@indexheaders%注释掉页眉设置
+%%%%%%%%%% 修改部分结束 %%%%%%%%%%
 \thispagestyle{\imki@firstpagestyle}
 \ifnum\imki@columns>\@ne
-\columnsep \imki@columnsep
+\columnsep\imki@columnsep
 \ifx\imki@idxprologue\relax
 \begin{multicols}{\imki@columns}
 \else
@@ -327,42 +330,65 @@ delim_2 " \\hfill "
 \global\let\imki@idxprologue\relax
 \parindent\z@
 \parskip\z@ \@plus 0.3\p@\relax
-\columnseprule \ifKV@imki@columnseprule0.4\p@\else\z@\fi
+\columnseprule
+\ifKV@imki@columnseprule0.4\p@\else\z@\fi
 \raggedright
 \let\item\@idxitem
-\imki@othercode}
-{\ifnum\imki@columns>\@ne\end{multicols}\fi}
+\imki@othercode}{
+\ifnum\imki@columns>\@ne
+\end{multicols}
+\fi}\fi
 \makeatother
 
+%%索引预设（只能放置在导言区，不要引入noclearpage选项，否则会出现目录页码错误）%%
+\indexsetup{level=\chapter*,envlevel=\chapter,toclevel=chapter,firstpagestyle=empty}
+
 %%%%%%%%%%%%%%%%%%%% 术语表宏包 %%%%%%%%%%%%%%%%%%%%
-\RequirePackage{nomencl}%引入术语表
+\RequirePackage[notocbasic]{nomencl}%引入术语表
 %%生成主要符号表的方法：主文件先用XeLaTeX编译一次，然后建立一个.bat文件，内容为：makeindex <filename>.nlo -s nomencl.ist -o <filename>.nls -t <filename>.nlg，运行，再用XeLaTeX编译主文件两次即可生成%%
 \makenomenclature
 \renewcommand{\nomname}{主要符号表}%更改符号表标题
-%%修改符号表的列数和章节生成%%
-%%列表起始%%
+
+%%修改列数和层次%%
+\renewcommand*{\nompreamble}{\begin{multicols}{3}[
+\setlength{\columnsep}{2.0em}
+\setlength{\columnseprule}{0pt}]}
+\renewcommand*{\nompostamble}{\end{multicols}}
+%%修改符号表环境%%
 \makeatletter
 \renewcommand{\thenomenclature}{
-\begin{multicols}{3}[
-\setlength{\columnsep}{2.0em}
-\setlength{\columnseprule}{0pt}
-\if@appendix
+\providecommand*{\listofnlsname}{\nomname}
+\if@nomencl@tocbasic
+\let\list@fname\listofnlsname
+\def\@currext{nls}
+\tocbasic@listhead{\list@fname}
+\else
+\@ifundefined{chapter}
+{\section*{\nomname}
+\if@intoc\addcontentsline{toc}{section}{\nomname}\fi}
+{%%%%%%%%%% 修改部分开始 %%%%%%%%%%
+\if@appendix%判断符号表所在环境
 \chapter{\nomname}
 \else
 \chapter*{\nomname}
+%\@mkboth{\nomname}{\nomname}%注释掉页眉设置
+\if@intoc\addcontentsline{toc}{chapter}{\nomname}\fi
 \fi
-\nompreamble]
+}%%%%%%%%%% 修改部分结束 %%%%%%%%%%
+\fi
+\nompreamble
+\if@nomentbl
+\let\itemOrig=\item
+\def\item{\gdef\item{\\}}
+\expandafter\longtable\expandafter{\@nomtableformat}
+\else
 \list{}{
 \labelwidth\nom@tempdim
 \leftmargin\labelwidth
 \advance\leftmargin\labelsep
 \itemsep\nomitemsep
-\let\makelabel\nomlabel}}
-%%列表结束%%
-\renewcommand{\endthenomenclature}{
-\endlist
-\end{multicols}
-\nompostamble}
+\let\makelabel\nomlabel}
+\fi}
 \makeatother
 
 %%%%%%%%%%%%%%%%%%%% 数学符号宏包 %%%%%%%%%%%%%%%%%%%%
@@ -933,7 +959,7 @@ font=\bfseries\FontSize{40pt},text=ColorA!95!black](P)at([xshift=0.5cm]R.east){\
 \begin{flushleft}
 \mbox{\begin{tikzpicture}
 \node[anchor=west,inner sep=0mm](C)at(0,0){\sectionstarlabel};
-\node[anchor=north west,font=\FontSize{17pt}\bfseries,inner ysep=1.425mm](P)at([xshift=0.25cm]C.north east){\begin{varwidth}{\linewidth-1.0cm}#1\end{varwidth}};
+\node[anchor=north west,font=\FontSize{17pt}\bfseries,text=ColorA,inner ysep=1.425mm](P)at([xshift=0.25cm]C.north east){\begin{varwidth}{\linewidth-1.0cm}#1\end{varwidth}};
 \end{tikzpicture}}
 \end{flushleft}}
 %%环境内节样式%%
@@ -1054,20 +1080,20 @@ font=\bfseries\FontSize{40pt},text=ColorA!95!black](P)at([xshift=0.5cm]R.east){\
 \makeatletter
 %%标签绘制%%
 \newcommand{\PartContents}[1]{
-\draw[ColorH!7.5,fill=ColorH!7.5,line width=0.1pt,rounded corners=0.38cm]
+\draw[ColorB!7.5,fill=ColorB!7.5,line width=0.1pt,rounded corners=0.38cm]
 (0,0.38cm)rectangle(\linewidth,-0.38cm);
-\draw[draw=ColorH,fill=ColorH,sharp corners]node[append after command={(T.north west)--(T.north east)[sharp corners]--(T.south east)[rounded corners=0.38cm]--(T.south west)[rounded corners=0.38cm]--cycle},font=\FontSize{13pt}\bfseries,text=white,align=center,inner xsep=5.0mm,minimum height=0.76cm,anchor=west](T)at(0,0){\maxsizebox{\linewidth/2-1.0cm}{!}{#1}};}
+\draw[draw=ColorA,fill=ColorA,sharp corners]node[append after command={(T.north west)--(T.north east)[sharp corners]--(T.south east)[rounded corners=0.38cm]--(T.south west)[rounded corners=0.38cm]--cycle},font=\FontSize{13pt}\bfseries,text=white,align=center,inner xsep=5.0mm,minimum height=0.76cm,anchor=west](T)at(0,0){\maxsizebox{\linewidth/2-1.0cm}{!}{#1}};}
 %%编号部分目录样式%%
 \newcommand{\tocentrypartnumbered}[1]{
 \contentslabel[\tikz{
 \PartContents{\maxsizebox{2.8cm}{!}{第~\thecontentslabel~部分}}
-\node[font=\FontSize{13pt}\bfseries,text=ColorH,anchor=west,inner xsep=0mm](S)at([xshift=3.5mm]T.east){\maxsizebox{\linewidth-4.0cm}{!}{#1}};
-\node[font=\FontSize{14pt}\bfseries,text=ColorH,anchor=east,inner xsep=0mm](P)at(\linewidth-0.35cm,0){\thecontentspage};}]{1.25cm}}
+\node[font=\FontSize{13pt}\bfseries,text=ColorA,anchor=west,inner xsep=0mm](S)at([xshift=3.5mm]T.east){\maxsizebox{\linewidth-4.0cm}{!}{#1}};
+\node[font=\FontSize{14pt}\bfseries,text=ColorA,anchor=east,inner xsep=0mm](P)at(\linewidth-0.35cm,0){\thecontentspage};}]{1.25cm}}
 %%不编号部分目录样式%%
 \newcommand{\tocentrypartunnumbered}[1]{
 \contentslabel[\tikz{
 \PartContents{#1}
-\node[font=\FontSize{14pt}\bfseries,text=ColorH,anchor=east,inner xsep=0mm](P)at(\linewidth-0.35cm,0){\thecontentspage};}]{1.25cm}}
+\node[font=\FontSize{14pt}\bfseries,text=ColorA,anchor=east,inner xsep=0mm](P)at(\linewidth-0.35cm,0){\thecontentspage};}]{1.25cm}}
 %%部分目录样式%%
 \titlecontents{part}[1.25cm]
 {\addvspace{20pt}\bfseries\hypersetup{linkcolor=white}}
