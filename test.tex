@@ -1,6 +1,6 @@
-% !TEX program = xelatex
+% !TEX program = bibtex
 % !Mode:: "TeX:UTF-8"
-\documentclass[color=COLORFUL]{textbook-cn}%openany
+\documentclass[color=COLORFUL,biblevel=CHAPREF]{textbook-cn}%openany
 \usepackage{zhlipsum,lipsum}%乱数假文（测试文字）
 \graphicspath{{./figure/}{./figures/}{./image/}{./images/}{./graphics/}{./graphic/}{./pictures/}{./picture/}}%提供多种图片路径
 
@@ -1148,7 +1148,11 @@ Just like \ref{Thm.3.1.1} on page \pageref{Thm.3.1.1}
 
 \chaptersubtitle{副标题副标题副标题副标题副标题}
 \chapter*{章节名称章节名称章节名称章节名称}
-\lipsum\lipsum
+\lipsum
+%\cite{41}\cite{42}\cite{43}\cite{44}\cite{45}\cite{46}\cite{47}\cite{48}\cite{49}\cite{50}
+\lipsum
+%\cite{51}\cite{52}\cite{53}\cite{54}\cite{55}
+
 
 
 
@@ -1217,7 +1221,7 @@ Just like \ref{Thm.3.1.1} on page \pageref{Thm.3.1.1}
 
 
 
-\printbib*{reference}
+%\printbib{Reference}
 
 \printnomenclature
 
@@ -1244,12 +1248,22 @@ Just like \ref{Thm.3.1.1} on page \pageref{Thm.3.1.1}
 \chaptersubtitle{测试文字}
 \chapter*{后记}
 \lipsum
+%\cite{1}\cite{2}\cite{3}\cite{4}\cite{5}\cite{6}\cite{7}\cite{8}\cite{9}\cite{10}
 \lipsum
+%\cite{11}\cite{12}\cite{13}\cite{14}\cite{15}\cite{16}\cite{17}\cite{18}\cite{19}\cite{20}
 
 
 \chapter{后记}
 \lipsum
+%\cite{21}\cite{22}\cite{23}\cite{24}\cite{25}\cite{26}\cite{27}\cite{28}\cite{29}\cite{30}
 \lipsum
+%\cite{31}\cite{32}\cite{33}\cite{34}\cite{35}\cite{36}\cite{37}\cite{38}\cite{39}\cite{40}
+
+
+
+
+
+
 
 
 
@@ -1265,8 +1279,8 @@ Just like \ref{Thm.3.1.1} on page \pageref{Thm.3.1.1}
 \end{TCBCODE}
 
 
-
-\printbib*{reference}
+%\chaptersubtitle{参考文献}
+%\printbib*{Reference}
 
 
 
@@ -1277,17 +1291,6 @@ Just like \ref{Thm.3.1.1} on page \pageref{Thm.3.1.1}
 \end{document}
 
 
-
-
-
-%%%不限索引位置%%
-%\ifx\imki@finalmessage\@gobble
-%\else
-%\def\imki@finalmessage#1{
-%\AddToHook{enddocument/afteraux}{
-%\immediate\closeout\csname #1@idxfile\endcsname
-%\imki@exec{\imki@program\imki@options#1.idx}}}
-%\fi
 
 
 

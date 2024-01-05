@@ -198,11 +198,11 @@ marginparsep=-\@marginlen,marginparwidth=\@marginlen,reversemarginpar]{geometry}
 \RequirePackage{graphicx}%插入图片路径
 \RequirePackage{caption,subcaption}%图表标签
 %%设置图片和表格格式%%
-\captionsetup[figure]{labelfont={bf,color=ColorA},textfont={bf,sf,color=ColorA},
+\captionsetup[figure]{labelfont={bf,color=ColorA},textfont={bf,color=ColorA},
 name={图},labelsep=colon}
 \captionsetup[subfigure]{labelfont={bf,color=ColorA},textfont={bf,color=ColorA},
 name={图},labelsep=colon}
-\captionsetup[table]{labelfont={bf,color=ColorA},textfont={bf,sf,color=ColorA},
+\captionsetup[table]{labelfont={bf,color=ColorA},textfont={bf,color=ColorA},
 name={表},labelsep=colon}
 \captionsetup[subtable]{labelfont={bf,color=ColorA},textfont={bf,color=ColorA},
 name={表},labelsep=colon}
@@ -261,14 +261,14 @@ name={表},labelsep=colon}
 \makeatother
 
 %%%%%%%%%%%%%%%%%%%% 参考文献宏包 %%%%%%%%%%%%%%%%%%%%
-\RequirePackage[numbers]{natbib}%参考文献格式
+%%参考文献编译方式：先用XeLaTeX编译主文件.tex一次；再用BibTeX编译主文件（或各子文件）.tex一次；然后用XeLaTeX编译主文件.tex两次%%
+\RequirePackage[numbers,sectionbib]{natbib}%参考文献格式
 \renewcommand{\bibnumfmt}[1]{\hskip1.75mm\protect\cir{#1}}%修改参考文献序号样式
 \renewcommand{\citenumfont}[1]{\textbf{\color{ColorA}{\FontSize{12pt}#1}}}%修改引用样式
 \bibpunct{\color{ColorA}{[}}{\color{ColorA}{]}}{,}{n}{}{;}%修改方括号颜色
 \renewcommand{\bibname}{参考文献}%修改参考文献标题
 \RequirePackage{chapterbib}%分章节显示参考文献，且参考文献编号各自独立
-%%参考文献编译方式：先用XeLaTeX编译主文件.tex一次；再用BibTeX编译章节子文件.tex一次；然后用XeLaTeX编译主文件.tex两次%%
-\makeatletter
+
 %%参考文献输出设置%%
 \NewDocumentCommand{\printbib}{sm}{
 \IfBooleanTF{#1}
