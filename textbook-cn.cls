@@ -127,6 +127,7 @@ T\kern-0.25em\lower0.215ex\hbox{\footnotesize E}\kern-0.075em{\small X}\kern-0.1
 %%定义书籍信息%%
 \makeatletter
 \newcommand*\coverimage[1]{\def\@coverimage{#1}}
+\newcommand*\backimage[1]{\def\@backimage{#1}}
 \newcommand*\series[1]{\def\@series{#1}}
 \newcommand*\version[1]{\def\@version{#1}}
 \newcommand*\subtitle[1]{\def\@subtitle{#1}}
@@ -695,9 +696,9 @@ cycle;
 %%标题%%
 \node[align=left,inner xsep=0mm,minimum height=2.0cm,anchor=south east,
 font=\bfseries\FontSize{40pt},text=ColorA!95!black](P)at([xshift=-1.4cm,yshift=0.25cm]C){\maxsizebox{\textwidth-5.0cm}{!}{#1}};
-\node[inner xsep=0mm,minimum height=2.0cm,anchor=east](S)at([xshift=-0.5cm]P.west){\halfcircle{ColorA!60}{0.725cm}};
-\node[inner xsep=0mm,minimum height=2.0cm,anchor=east](Q)at(S.west){\halfcircle{ColorA!80}{0.725cm}};
-\node[inner xsep=0mm,minimum height=2.0cm,anchor=east](R)at(Q.west){\halfcircle{ColorA}{0.725cm}};
+\node[inner xsep=0mm,minimum height=2.0cm,anchor=east](S)at([xshift=-0.5cm]P.west){\halfcircle{ColorA!60}{0.7cm}};
+\node[inner xsep=0mm,minimum height=2.0cm,anchor=east](Q)at(S.west){\halfcircle{ColorA!80}{0.7cm}};
+\node[inner xsep=0mm,minimum height=2.0cm,anchor=east](R)at(Q.west){\halfcircle{ColorA}{0.7cm}};
 %%介绍%%
 \node[align=right,inner xsep=2.0mm,anchor=north east,font=\FontSize{12pt}\itshape,text=ColorA!95!black,text width=\textwidth-2.45cm](W)at([yshift=-3.0cm]P.south east){\ifdefvoid{\@partintro}{}{\@partintro}};
 %%小目录%%
@@ -733,9 +734,9 @@ font=\bfseries\FontSize{40pt},text=ColorA!95!black](P)at([xshift=-1.4cm,yshift=0
 \draw[ColorB!20,fill=ColorB!20]([yshift=-0.35cm]D)--([yshift=0.35cm]E)[rounded corners=2.5mm]--([xshift=\partstarlen+4.5cm,yshift=0.35cm]F)--([xshift=\partstarlen+4.5cm,yshift=1.75cm]F)[sharp corners]--cycle;
 \fi
 %%标题%%
-\node[inner xsep=0mm,minimum height=2.0cm,anchor=south west](S)at([xshift=1.4cm,yshift=0.25cm]C){\halfcircle{ColorA}{0.725cm}};
-\node[inner xsep=0mm,minimum height=2.0cm,anchor=west](Q)at(S.east){\halfcircle{ColorA!80}{0.725cm}};
-\node[inner xsep=0mm,minimum height=2.0cm,anchor=west](R)at(Q.east){\halfcircle{ColorA!60}{0.725cm}};
+\node[inner xsep=0mm,minimum height=2.0cm,anchor=south west](S)at([xshift=1.4cm,yshift=0.25cm]C){\halfcircle{ColorA}{0.7cm}};
+\node[inner xsep=0mm,minimum height=2.0cm,anchor=west](Q)at(S.east){\halfcircle{ColorA!80}{0.7cm}};
+\node[inner xsep=0mm,minimum height=2.0cm,anchor=west](R)at(Q.east){\halfcircle{ColorA!60}{0.7cm}};
 \node[align=left,inner xsep=0mm,minimum height=2.0cm,anchor=west,
 font=\bfseries\FontSize{40pt},text=ColorA!95!black](P)at([xshift=0.5cm]R.east){\maxsizebox{\textwidth-5.0cm}{!}{#1}};
 %%介绍%%
@@ -1859,8 +1860,9 @@ overlay unbroken and first={\CD{#1}{Java}}}
 \newtcblisting{TCBCODE}{enhanced standard,breakable,colback=white,colbacklower=white,colframe=ColorH,before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
 
 
-%%重定义标题页%%
+
 \makeatletter
+%%重定义标题页%%
 \renewcommand{\maketitle}{
 \begin{titlepage}
 \begin{tikzpicture}[remember picture,overlay]
@@ -1872,7 +1874,8 @@ overlay unbroken and first={\CD{#1}{Java}}}
 \coordinate(F)at([xshift=-0.85cm,yshift=-0.85cm]current page.north east);
 \coordinate(G)at([xshift=-0.85cm,yshift=0.85cm]current page.south east);
 \coordinate(H)at([yshift=0.85cm]current page.south west);
-\draw[ColorB!7.5,fill=ColorB!7.5,sharp corners](D)rectangle(B);
+%%背景%%
+\draw[ColorB!5,fill=ColorB!5,sharp corners](D)rectangle(B);
 \draw[ColorA!80,fill=ColorA!80](A)--(B)--(C)--(D)--(H)[rounded corners=7.5mm]--(G)[rounded corners=7.5mm]--(F)[sharp corners]--(E)--cycle;
 \end{tikzpicture}
 \begin{center}
@@ -1907,6 +1910,90 @@ overlay unbroken and first={\CD{#1}{Java}}}
 {\FontSize{15pt}\ifdefvoid{\@presslogo}{}{\raisebox{-0.2cm}{\mbox{\includegraphics[width=0.75cm]{\@presslogo}}}}\hskip0.25cm\@pressname\par}
 \end{center}
 \end{titlepage}}
+
+%%设计封面%%
+\newcommand{\ifetdef}{
+\maxsizebox{\paperwidth}{!}{\ifdefvoid{\@englishtitle}{}{\@englishtitle}}
+}
+\newcommand{\makecover}{
+\tikzset{coverup node/.style={text=ColorA!95!black,anchor=north west,inner sep=0mm},
+coverdown node/.style={text=white,anchor=west,inner sep=0mm},
+opacity node/.style={anchor=north,font=\FontSize{80pt}\bfseries,text=ColorB!25}
+}
+\begin{titlepage}
+\begin{tikzpicture}[remember picture,overlay]
+\coordinate(A)at(current page.north west);
+\coordinate(B)at(current page.north east);
+\coordinate(C)at(current page.south east);
+\coordinate(D)at(current page.south west);
+\coordinate(E)at([yshift=5.25cm]current page.west);
+\coordinate(F)at([yshift=5.25cm]current page.east);
+\coordinate(G)at($0.5*(E)+0.5*(C)$);
+%%背景1%%
+\draw[ColorB!5,fill=ColorB!5,sharp corners](D)rectangle(B);
+%%半透明文字%%
+\node[opacity node,text opacity=1.0](O_1)at(current page.north){\ifetdef};
+\node[opacity node,text opacity=0.9](O_2)at(O_1.south){\ifetdef};
+\node[opacity node,text opacity=0.8](O_3)at(O_2.south){\ifetdef};
+\node[opacity node,text opacity=0.7](O_4)at(O_3.south){\ifetdef};
+\node[opacity node,text opacity=0.6](O_5)at(O_4.south){\ifetdef};
+%%背景2%%
+\draw[ColorA!80,fill=ColorA!80](E)rectangle(C);
+%%封面图%%
+\node[inner sep=0mm,anchor=center](CI)at(G){\ifdefvoid{\@coverimage}{}{\includegraphics[width=\paperwidth,height=\paperheight/2+5.25cm]{\@coverimage}}};
+%%标题%%
+\node[font=\FontSize{55pt}\bfseries,coverup node](T)at(current page text area.north west){\@title};
+%%英文标题%%
+\node[font=\FontSize{20pt}\bfseries,coverup node](ET)at([yshift=-0.5cm]T.south west){\ifdefvoid{\@englishtitle}{}{\@englishtitle}};
+%%副标题%%
+\node[font=\FontSize{30pt}\bfseries,coverup node](ST)at([yshift=-0.5cm]ET.south west){\ifdefvoid{\@subtitle}{}{\@subtitle}};
+%%英文副标题%%
+\node[font=\FontSize{15pt}\bfseries,coverup node](EST)at([yshift=-0.5cm]ST.south west){\ifdefvoid{\@englishsubtitle}{}{\@englishsubtitle}};
+%%作者%%
+\node[font=\FontSize{15pt}\bfseries,coverdown node](A)at([yshift=4.0cm]current page text area.west){主编\quad\@author};
+%%出版社%%
+\node[coverdown node](PL)at(current page text area.south west){\ifdefvoid{\@presslogo}{}{\includegraphics[width=0.75cm]{\@presslogo}}};
+\node[font=\FontSize{15pt}\bfseries,coverdown node](PN)at([xshift=0.25cm]PL.east){\ifdefvoid{\@pressname}{}{\@pressname}};
+\end{tikzpicture}
+\end{titlepage}}
+
+%%设计封底%%
+\newcommand{\ifestdef}{
+\maxsizebox{\paperwidth}{!}{\ifdefvoid{\@englishsubtitle}{}{\@englishsubtitle}}
+}
+\NewDocumentCommand{\makeback}{O{}O{}}{
+\tikzset{backup node/.style={text=ColorA!95!black,anchor=north east,inner sep=0mm,text width=\textwidth},
+backdown node/.style={text=white,anchor=west,inner sep=0mm},
+opacity node/.style={anchor=north,font=\FontSize{80pt}\bfseries,text=ColorB!25}}
+\begin{titlepage}
+\begin{tikzpicture}[remember picture,overlay]
+\coordinate(A)at(current page.north west);
+\coordinate(B)at(current page.north east);
+\coordinate(C)at(current page.south east);
+\coordinate(D)at(current page.south west);
+\coordinate(E)at([yshift=5.25cm]current page.west);
+\coordinate(F)at([yshift=5.25cm]current page.east);
+\coordinate(G)at($0.5*(E)+0.5*(C)$);
+%%背景1%%
+\draw[ColorB!5,fill=ColorB!5,sharp corners](D)rectangle(B);
+%%半透明文字%%
+\node[opacity node,text opacity=1.0](O_1)at(current page.north){\ifestdef};
+\node[opacity node,text opacity=0.9](O_2)at(O_1.south){\ifestdef};
+\node[opacity node,text opacity=0.8](O_3)at(O_2.south){\ifestdef};
+\node[opacity node,text opacity=0.7](O_4)at(O_3.south){\ifestdef};
+\node[opacity node,text opacity=0.6](O_5)at(O_4.south){\ifestdef};
+%%背景2%%
+\draw[ColorA!80,fill=ColorA!80](E)rectangle(C);
+%%封底图%%
+\node[inner sep=0mm,anchor=center](BI)at(G){\ifdefvoid{\@backimage}{}{\scalebox{-1}[1]{\includegraphics[width=\paperwidth,height=\paperheight/2+5.25cm]{\@backimage}}}};
+%%条形码%%
+\node[inner sep=0mm,anchor=south east](BC)at([yshift=-0.5cm]current page text area.south east){\includegraphics[width=5.0cm]{#1}};
+%%说明文字%%
+\node[font=\FontSize{12pt}\bfseries,backup node](BT)at(current page text area.north east){\hspace*{2.0em}#2};
+%%书籍系列%%
+\node[font=\FontSize{15pt}\bfseries,backdown node](S)at([yshift=4.0cm]current page text area.west){\ifdefvoid{\@series}{}{\@series}};
+%%书籍系列%%
+\node[font=\FontSize{15pt}\bfseries,backdown node](V)at([yshift=-0.5cm]S.south west){\ifdefvoid{\@version}{}{第\@version 版}};
+\end{tikzpicture}
+\end{titlepage}}
 \makeatother
-
-

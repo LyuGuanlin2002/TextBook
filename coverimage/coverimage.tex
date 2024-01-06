@@ -1,0 +1,62 @@
+\documentclass[tikz]{standalone}
+\usepackage{graphicx,xcolor,tikz}
+\graphicspath{{./figure/}{./figures/}{./image/}{./images/}{./graphics/}{./graphic/}{./pictures/}{./picture/}}
+
+
+\newcommand{\ropic}[2]{\rotatebox[origin=c]{#1}{\includegraphics[width=1.0cm]{#2}}}
+
+
+\begin{document}
+\begin{tikzpicture}[remember picture]
+\node at(0,0){\ropic{0}{jolly_icons_free_1.pdf}};
+
+\node at(1.25,-0.25){\ropic{5}{jolly_icons_free_2.pdf}};
+
+\node at(2.5,0.25){\ropic{15}{jolly_icons_free_3.pdf}};
+
+\node at(3.75,0.1){\ropic{-10}{jolly_icons_free_4.pdf}};
+
+\node at(5.15,-0.25){\ropic{-5}{jolly_icons_free_5.pdf}};
+
+\node at(0.15,-1.25){\ropic{15}{jolly_icons_free_11.pdf}};
+
+\node at(1.45,-1.35){\ropic{5}{jolly_icons_free_8.pdf}};
+
+\node at(2.7,-1.05){\ropic{0}{jolly_icons_free_9.pdf}};
+
+\node at(3.95,-1.35){\ropic{-15}{jolly_icons_free_10.pdf}};
+
+\node at(5.0,-1.25){\ropic{5}{jolly_icons_free_7.pdf}};
+
+\node at(0.0,-2.5){\ropic{-10}{jolly_icons_free_14.pdf}};
+
+\node at(1.25,-2.5){\ropic{0}{jolly_icons_free_15.pdf}};
+
+\node at(2.5,-2.65){\ropic{-5}{jolly_icons_free_16.pdf}};
+
+\node at(3.75,-2.5){\ropic{10}{jolly_icons_free_17.pdf}};
+
+\node at(5.0,-2.5){\ropic{0}{jolly_icons_free_19.pdf}};
+
+\node at(-0.15,-3.75){\ropic{10}{jolly_icons_free_21.pdf}};
+
+\node at(1.25,-3.7){\ropic{0}{jolly_icons_free_24.pdf}};
+
+\node at(2.75,-3.85){\ropic{-10}{jolly_icons_free_25.pdf}};
+
+\node at(4.0,-3.75){\ropic{0}{jolly_icons_free_6.pdf}};
+
+\node at(5.25,-3.75){\ropic{0}{jolly_icons_free_12.pdf}};
+
+\node at(-0.1,-5.0){\ropic{10}{jolly_icons_free_27.pdf}};
+
+\node at(1.25,-5.15){\ropic{5}{jolly_icons_free_28.pdf}};
+
+\node at(2.5,-5.1){\ropic{0}{jolly_icons_free_30.pdf}};
+
+\node at(3.75,-5.0){\ropic{0}{jolly_icons_free_29.pdf}};
+
+\node at(5.0,-5.0){\ropic{10}{jolly_icons_free_22.pdf}};
+
+\end{tikzpicture}
+\end{document}
