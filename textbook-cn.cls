@@ -1918,7 +1918,7 @@ overlay unbroken and first={\CD{#1}{Java}}}
 \newcommand{\makecover}{
 \tikzset{coverup node/.style={text=ColorA!95!black,anchor=north west,inner sep=0mm},
 coverdown node/.style={text=white,anchor=west,inner sep=0mm},
-opacity node/.style={anchor=north,font=\FontSize{80pt}\bfseries,text=ColorB!25}
+opacity node/.style={anchor=north west,font=\FontSize{100pt}\bfseries,text=ColorB!25}
 }
 \begin{titlepage}
 \begin{tikzpicture}[remember picture,overlay]
@@ -1932,11 +1932,10 @@ opacity node/.style={anchor=north,font=\FontSize{80pt}\bfseries,text=ColorB!25}
 %%背景1%%
 \draw[ColorB!5,fill=ColorB!5,sharp corners](D)rectangle(B);
 %%半透明文字%%
-\node[opacity node,text opacity=1.0](O_1)at(current page.north){\ifetdef};
-\node[opacity node,text opacity=0.9](O_2)at(O_1.south){\ifetdef};
-\node[opacity node,text opacity=0.8](O_3)at(O_2.south){\ifetdef};
-\node[opacity node,text opacity=0.7](O_4)at(O_3.south){\ifetdef};
-\node[opacity node,text opacity=0.6](O_5)at(O_4.south){\ifetdef};
+\node[opacity node,text opacity=1.0](O_1)at(current page.north west){\ifetdef};
+\foreach \x[evaluate=\x as \botpoint using int(\x-1),
+evaluate=\x as \opa using 1.2-0.2*\x] in {2,...,10}{
+\node[opacity node,text opacity=\opa](O_\x)at(O_\botpoint.south west){\ifetdef};}
 %%背景2%%
 \draw[ColorA!80,fill=ColorA!80](E)rectangle(C);
 %%封面图%%
@@ -1961,10 +1960,10 @@ opacity node/.style={anchor=north,font=\FontSize{80pt}\bfseries,text=ColorB!25}
 \newcommand{\ifestdef}{
 \maxsizebox{\paperwidth}{!}{\ifdefvoid{\@englishsubtitle}{}{\@englishsubtitle}}
 }
-\NewDocumentCommand{\makeback}{O{}O{}}{
+\NewDocumentCommand{\makeback}{oo}{
 \tikzset{backup node/.style={text=ColorA!95!black,anchor=north east,inner sep=0mm,text width=\textwidth},
 backdown node/.style={text=white,anchor=west,inner sep=0mm},
-opacity node/.style={anchor=north,font=\FontSize{80pt}\bfseries,text=ColorB!25}}
+opacity node/.style={anchor=north east,font=\FontSize{100pt}\bfseries,text=ColorB!25}}
 \begin{titlepage}
 \begin{tikzpicture}[remember picture,overlay]
 \coordinate(A)at(current page.north west);
@@ -1977,23 +1976,56 @@ opacity node/.style={anchor=north,font=\FontSize{80pt}\bfseries,text=ColorB!25}}
 %%背景1%%
 \draw[ColorB!5,fill=ColorB!5,sharp corners](D)rectangle(B);
 %%半透明文字%%
-\node[opacity node,text opacity=1.0](O_1)at(current page.north){\ifestdef};
-\node[opacity node,text opacity=0.9](O_2)at(O_1.south){\ifestdef};
-\node[opacity node,text opacity=0.8](O_3)at(O_2.south){\ifestdef};
-\node[opacity node,text opacity=0.7](O_4)at(O_3.south){\ifestdef};
-\node[opacity node,text opacity=0.6](O_5)at(O_4.south){\ifestdef};
+\node[opacity node,text opacity=1.0](O_1)at(current page.north east){\ifestdef};
+\foreach \x[evaluate=\x as \botpoint using int(\x-1),
+evaluate=\x as \opa using 1.2-0.2*\x] in {2,...,10}{
+\node[opacity node,text opacity=\opa](O_\x)at(O_\botpoint.south east){\ifestdef};}
 %%背景2%%
 \draw[ColorA!80,fill=ColorA!80](E)rectangle(C);
 %%封底图%%
 \node[inner sep=0mm,anchor=center](BI)at(G){\ifdefvoid{\@backimage}{}{\scalebox{-1}[1]{\includegraphics[width=\paperwidth,height=\paperheight/2+5.25cm]{\@backimage}}}};
 %%条形码%%
-\node[inner sep=0mm,anchor=south east](BC)at([yshift=-0.5cm]current page text area.south east){\includegraphics[width=5.0cm]{#1}};
+\IfValueTF{#2}{
+\node[draw=white,fill=white,inner xsep=0mm,anchor=south east](BC)at([yshift=-0.5cm]current page text area.south east){\includegraphics[width=5.0cm]{#2}};}{\relax}
 %%说明文字%%
-\node[font=\FontSize{12pt}\bfseries,backup node](BT)at(current page text area.north east){\hspace*{2.0em}#2};
+\node[font=\FontSize{12pt}\bfseries,backup node](BT)at(current page text area.north east){\hspace*{2.0em}#1};
 %%书籍系列%%
 \node[font=\FontSize{15pt}\bfseries,backdown node](S)at([yshift=4.0cm]current page text area.west){\ifdefvoid{\@series}{}{\@series}};
 %%书籍系列%%
 \node[font=\FontSize{15pt}\bfseries,backdown node](V)at([yshift=-0.5cm]S.south west){\ifdefvoid{\@version}{}{第\@version 版}};
 \end{tikzpicture}
 \end{titlepage}}
+
+%%设计书脊%%
+\NewDocumentCommand{\makespine}{O{1.0cm}}{
+\newlength{\SpineWidth}
+\setlength{\SpineWidth}{#1}
+\tikzset{spine title/.style={font=\FontSize{20pt}\bfseries,text=white,text width=1.0cm,align=center},
+spine subtitle/.style={font=\FontSize{15pt}\bfseries,text=white,text width=1.0cm,align=center},
+spine englishtitle/.style={font=\FontSize{20pt}\bfseries,text=ColorA!95!black,inner sep=0mm}}
+\begin{titlepage}
+\begin{tikzpicture}[remember picture,overlay]
+\coordinate(A)at(current page.north);
+\coordinate(B)at(current page.south);
+\coordinate(C)at([yshift=5.25cm]current page.center);
+%%背景%%
+\draw[ColorB!5,fill=ColorB!5]
+([xshift=-\SpineWidth/2]A)rectangle([xshift=\SpineWidth/2]B);
+\draw[ColorA!80,fill=ColorA!80]
+([xshift=-\SpineWidth/2]C)rectangle([xshift=\SpineWidth/2]B);
+%%书脊英文标题%%
+\node[spine englishtitle,anchor=north](ET)at([yshift=-0.5cm]A){\ifdefvoid{\@englishtitle}{}{\rotatebox[origin=c]{-90}{\maxsizebox{\paperheight/2-5.25cm}{\SpineWidth}{\@englishtitle}}}};
+%%书脊标题%%
+\node[spine title,anchor=north](T)at([yshift=-0.5cm]C){\@title};
+%%书脊副标题%%
+\node[spine subtitle,anchor=north](ST)at([yshift=-0.5cm]T.south){\ifdefvoid{\@subtitle}{}{\@subtitle}};
+%%书脊出版社名称%%
+\node[spine subtitle,anchor=south](PN)at([yshift=0.5cm]B){\ifdefvoid{\@pressname}{}{\@pressname}};
+%%书脊出版社logo%%
+\node[spine subtitle,anchor=south](PL)at([yshift=0.25cm]PN.north){\ifdefvoid{\@presslogo}{}{\includegraphics[width=0.8cm]{\@presslogo}}};
+\end{tikzpicture}
+\end{titlepage}}
+
 \makeatother
+
+
