@@ -583,8 +583,8 @@ cycle;
 \fancyhead{}
 \fancyfoot{}
 \fancyfoot[C]{\pageframe}
-\fancyhead[RO]{\textbf{\color{ColorA}{\FontSize{12pt}{\rightmark}}}}
-\fancyhead[LE]{\textbf{\color{ColorA}{\FontSize{12pt}{\leftmark}}}}
+\fancyhead[RO]{\textbf{\color{ColorA}{\FontSize{12.5pt}{\rightmark}}}}
+\fancyhead[LE]{\textbf{\color{ColorA}{\FontSize{12.5pt}{\leftmark}}}}
 }
 
 %%%%%%%%%%%%%%%%%%%% 书籍层次样式 %%%%%%%%%%%%%%%%%%%%%%
@@ -614,11 +614,11 @@ cycle;
 \draw[ColorB!20,fill=ColorB!20]([xshift=2.1cm,yshift=-0.35cm]C)--([xshift=2.1cm,yshift=0.35cm]F)[rounded corners=2.5mm]--([xshift=-1.0cm,yshift=0.35cm]F)--([xshift=-1.0cm,yshift=-0.35cm]C)[sharp corners]--cycle;
 \draw[ColorB!50,fill=ColorB!50,rounded corners=2.5mm]([xshift=\paperwidth/2+1.8cm,yshift=0.35cm]E)rectangle([xshift=-1.35cm,yshift=-0.35cm]C);
 %%编号%%
-\node[align=left,anchor=south east,font=\bfseries\FontSize{37.5pt},text=ColorA!95!black,minimum height=2.0cm](T)at([xshift=-1.4cm,yshift=0.25cm]C){\maxsizebox{\textwidth-2.45cm}{!}{#1}};
+\node[align=left,anchor=south east,font=\bfseries\FontSize{37.5pt},text=ColorA,minimum height=2.0cm](T)at([xshift=-1.4cm,yshift=0.25cm]C){\maxsizebox{\textwidth-2.45cm}{!}{#1}};
 %%标题%%
-\node[align=left,anchor=north east,font=\bfseries\FontSize{37.5pt},text=ColorA!95!black,minimum height=2.0cm](P)at([yshift=-2.6cm]T.south east){\maxsizebox{\textwidth-2.45cm}{!}{#2}};
+\node[align=left,anchor=north east,font=\bfseries\FontSize{37.5pt},text=ColorA,minimum height=2.0cm](P)at([yshift=-2.6cm]T.south east){\maxsizebox{\textwidth-2.45cm}{!}{#2}};
 %%介绍%%
-\node[align=right,inner xsep=3.0mm,anchor=north east,font=\FontSize{12pt}\itshape,text=ColorA!95!black,text width=\textwidth-2.45cm](W)at([yshift=-0.75cm]P.south east){\ifdefvoid{\@partintro}{}{\@partintro}};
+\node[align=right,inner xsep=3.0mm,anchor=north east,font=\FontSize{12pt}\itshape,text=ColorA,text width=\textwidth-2.45cm](W)at([yshift=-0.75cm]P.south east){\ifdefvoid{\@partintro}{}{\@partintro}};
 %%小目录%%
 \node[minimum width=7.5cm,anchor=south west](C)at([xshift=\@innerlen+0.25in,yshift=\@botlen]current page.south west){\parbox[b][][b]{7.5cm}{\printcontents[part]{l}{0}{\setcounter{tocdepth}{0}}}};
 \node[font=\FontSize{13pt}\bfseries,text=ColorB!95!black,anchor=south west](R)at(C.north west){部分概要};
@@ -640,11 +640,11 @@ cycle;
 \draw[ColorB!20,fill=ColorB!20]([xshift=-2.1cm,yshift=-0.35cm]C)--([xshift=-2.1cm,yshift=0.35cm]F)[rounded corners=2.5mm]--([xshift=1.0cm,yshift=0.35cm]F)--([xshift=1.0cm,yshift=-0.35cm]C)[sharp corners]--cycle;
 \draw[ColorB!50,fill=ColorB!50,rounded corners=2.5mm]([xshift=-\paperwidth/2-1.8cm,yshift=0.35cm]E)rectangle([xshift=1.35cm,yshift=-0.35cm]C);
 %%编号%%
-\node[align=left,anchor=south west,font=\bfseries\FontSize{37.5pt},text=ColorA!95!black,minimum height=2.0cm](T)at([xshift=1.4cm,yshift=0.25cm]C){\maxsizebox{\textwidth-2.45cm}{!}{#1}};
+\node[align=left,anchor=south west,font=\bfseries\FontSize{37.5pt},text=ColorA,minimum height=2.0cm](T)at([xshift=1.4cm,yshift=0.25cm]C){\maxsizebox{\textwidth-2.45cm}{!}{#1}};
 %%标题%%
-\node[align=left,anchor=north west,font=\bfseries\FontSize{37.5pt},text=ColorA!95!black,minimum height=2.0cm](P)at([yshift=-2.6cm]T.south west){\maxsizebox{\textwidth-2.45cm}{!}{#2}};
+\node[align=left,anchor=north west,font=\bfseries\FontSize{37.5pt},text=ColorA,minimum height=2.0cm](P)at([yshift=-2.6cm]T.south west){\maxsizebox{\textwidth-2.45cm}{!}{#2}};
 %%介绍%%
-\node[align=left,inner xsep=3.0mm,anchor=north west,font=\FontSize{12pt}\itshape,text=ColorA!95!black,text width=\textwidth-2.45cm](W)at([yshift=-0.75cm]P.south west){\ifdefvoid{\@partintro}{}{\@partintro}};
+\node[align=left,inner xsep=3.0mm,anchor=north west,font=\FontSize{12pt}\itshape,text=ColorA,text width=\textwidth-2.45cm](W)at([yshift=-0.75cm]P.south west){\ifdefvoid{\@partintro}{}{\@partintro}};
 %%小目录%%
 \node[minimum width=7.5cm,anchor=south east](C)at([xshift=-\@innerlen-0.25in,yshift=\@botlen]current page.south east){\parbox[b][][b]{7.5cm}{\printcontents[part]{l}{0}{\setcounter{tocdepth}{0}}}};
 \node[font=\FontSize{13pt}\bfseries,text=ColorB!95!black,anchor=south west](R)at(C.north west){部分概要};
@@ -695,12 +695,12 @@ cycle;
 \fi
 %%标题%%
 \node[align=left,inner xsep=0mm,minimum height=2.0cm,anchor=south east,
-font=\bfseries\FontSize{40pt},text=ColorA!95!black](P)at([xshift=-1.4cm,yshift=0.25cm]C){\maxsizebox{\textwidth-5.0cm}{!}{#1}};
+font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=-1.4cm,yshift=0.25cm]C){\maxsizebox{\textwidth-5.0cm}{!}{#1}};
 \node[inner xsep=0mm,minimum height=2.0cm,anchor=east](S)at([xshift=-0.5cm]P.west){\halfcircle{ColorA!60}{0.7cm}};
 \node[inner xsep=0mm,minimum height=2.0cm,anchor=east](Q)at(S.west){\halfcircle{ColorA!80}{0.7cm}};
 \node[inner xsep=0mm,minimum height=2.0cm,anchor=east](R)at(Q.west){\halfcircle{ColorA}{0.7cm}};
 %%介绍%%
-\node[align=right,inner xsep=2.0mm,anchor=north east,font=\FontSize{12pt}\itshape,text=ColorA!95!black,text width=\textwidth-2.45cm](W)at([yshift=-3.0cm]P.south east){\ifdefvoid{\@partintro}{}{\@partintro}};
+\node[align=right,inner xsep=2.0mm,anchor=north east,font=\FontSize{12pt}\itshape,text=ColorA,text width=\textwidth-2.45cm](W)at([yshift=-3.0cm]P.south east){\ifdefvoid{\@partintro}{}{\@partintro}};
 %%小目录%%
 \node[minimum width=7.5cm,anchor=south west](C)at([xshift=\@innerlen+0.25in,yshift=\@botlen]current page.south west){\parbox[b][][b]{7.5cm}{\printcontents[part]{l}{0}{\setcounter{tocdepth}{0}}}};
 \node[font=\FontSize{13pt}\bfseries,text=ColorB!95!black,anchor=south west](W)at(C.north west){部分概要};
@@ -738,9 +738,9 @@ font=\bfseries\FontSize{40pt},text=ColorA!95!black](P)at([xshift=-1.4cm,yshift=0
 \node[inner xsep=0mm,minimum height=2.0cm,anchor=west](Q)at(S.east){\halfcircle{ColorA!80}{0.7cm}};
 \node[inner xsep=0mm,minimum height=2.0cm,anchor=west](R)at(Q.east){\halfcircle{ColorA!60}{0.7cm}};
 \node[align=left,inner xsep=0mm,minimum height=2.0cm,anchor=west,
-font=\bfseries\FontSize{40pt},text=ColorA!95!black](P)at([xshift=0.5cm]R.east){\maxsizebox{\textwidth-5.0cm}{!}{#1}};
+font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebox{\textwidth-5.0cm}{!}{#1}};
 %%介绍%%
-\node[align=left,inner xsep=2.0mm,anchor=north west,font=\FontSize{12pt}\itshape,text=ColorA!95!black,text width=\textwidth-2.45cm](W)at([yshift=-3.0cm]S.south west){\ifdefvoid{\@partintro}{}{\@partintro}};
+\node[align=left,inner xsep=2.0mm,anchor=north west,font=\FontSize{12pt}\itshape,text=ColorA,text width=\textwidth-2.45cm](W)at([yshift=-3.0cm]S.south west){\ifdefvoid{\@partintro}{}{\@partintro}};
 %%小目录%%
 \node[minimum width=7.5cm,anchor=south east](C)at([xshift=-\@innerlen-0.25in,yshift=\@botlen]current page.south east){\parbox[b][][b]{7.5cm}{\printcontents[part]{l}{0}{\setcounter{tocdepth}{0}}}};
 \node[font=\FontSize{13pt}\bfseries,text=ColorB!95!black,anchor=south west](W)at(C.north west){部分概要};
@@ -799,9 +799,9 @@ font=\bfseries\FontSize{40pt},text=ColorA!95!black](P)at([xshift=0.5cm]R.east){\
 \draw[ColorB!40,fill=ColorB!40,line width=0pt]
 ([yshift=-2.79cm]current page.north west)rectangle([yshift=-3.09cm]current page.north east);
 %%标题%%
-\node[anchor=east,font=\bfseries\FontSize{27.5pt},text=ColorA!95!black](P)at([xshift=-\@outerlen-0.25in+0.25cm,yshift=-3.95cm]current page.north east){\maxsizebox{\textwidth-0.5in}{!}{#2}};
+\node[anchor=east,font=\bfseries\FontSize{27.5pt},text=ColorA](P)at([xshift=-\@outerlen-0.25in+0.25cm,yshift=-3.95cm]current page.north east){\maxsizebox{\textwidth-0.5in}{!}{#2}};
 %%副标题%%
-\node[anchor=west,font=\itshape\fontsize{12}{0.75\baselineskip}\selectfont,text=ColorA!95!black,text width=\paperwidth-\@innerlen-5.0cm](S)at([xshift=\@innerlen,yshift=1.0cm]current page.south west){\ifdefvoid{\@chaptersaying}{}{\@chaptersaying}};
+\node[anchor=west,font=\itshape\fontsize{12}{0.75\baselineskip}\selectfont,text=ColorA,text width=\paperwidth-\@innerlen-5.0cm](S)at([xshift=\@innerlen,yshift=1.0cm]current page.south west){\ifdefvoid{\@chaptersaying}{}{\@chaptersaying}};
 %%章节图片%%
 \node[anchor=north west,inner sep=0mm](I)at(current page.north west){\ifdefvoid{\@chapterimage}{}{\includegraphics[height=5.022cm]{\@chapterimage}}};
 %%页码%%
@@ -829,9 +829,9 @@ font=\bfseries\FontSize{40pt},text=ColorA!95!black](P)at([xshift=0.5cm]R.east){\
 \draw[ColorB!40,fill=ColorB!40,line width=0pt]
 ([yshift=-2.79cm]current page.north east)rectangle([yshift=-3.09cm]current page.north west);
 %%标题%%
-\node[anchor=west,font=\bfseries\FontSize{27.5pt},text=ColorA!95!black](P)at([xshift=\@outerlen+0.25in-0.25cm,yshift=-3.95cm]current page.north west){\maxsizebox{\textwidth-0.5in}{!}{#2}};
+\node[anchor=west,font=\bfseries\FontSize{27.5pt},text=ColorA](P)at([xshift=\@outerlen+0.25in-0.25cm,yshift=-3.95cm]current page.north west){\maxsizebox{\textwidth-0.5in}{!}{#2}};
 %%副标题%%
-\node[anchor=west,font=\itshape\fontsize{12}{0.75\baselineskip}\selectfont,text=ColorA!95!black,text width=\paperwidth-\@innerlen-4.0cm](S)at([xshift=4.0cm,yshift=1.0cm]current page.south west){\ifdefvoid{\@chaptersaying}{}{\@chaptersaying}};
+\node[anchor=west,font=\itshape\fontsize{12}{0.75\baselineskip}\selectfont,text=ColorA,text width=\paperwidth-\@innerlen-4.0cm](S)at([xshift=4.0cm,yshift=1.0cm]current page.south west){\ifdefvoid{\@chaptersaying}{}{\@chaptersaying}};
 %%章节图片%%
 \node[anchor=north east,inner sep=0mm](I)at(current page.north east){\ifdefvoid{\@chapterimage}{}{\includegraphics[height=5.022cm]{\@chapterimage}}};
 %%页码%%
@@ -859,12 +859,12 @@ font=\bfseries\FontSize{40pt},text=ColorA!95!black](P)at([xshift=0.5cm]R.east){\
 %%标题%%
 \node[inner sep=0mm,anchor=west](T)at([xshift=\@innerlen+0.25in,yshift=-1.79cm]current page.north west){\halfcircle{ColorA}{0.5cm}};
 \node[inner sep=0mm,anchor=west](P)at(T.east){\halfcircle{ColorA!90}{0.5cm}};
-\node[anchor=west,font=\bfseries\FontSize{30pt},text=ColorA!95!black,minimum height=1.45cm](Q)at([xshift=0.25cm]P.east){\maxsizebox{\textwidth-0.5in-1.5cm}{!}{#1}};
+\node[anchor=west,font=\bfseries\FontSize{30pt},text=ColorA,minimum height=1.45cm](Q)at([xshift=0.25cm]P.east){\maxsizebox{\textwidth-0.5in-1.5cm}{!}{#1}};
 %%渐变带%%
 \draw[ColorB!40,fill=ColorB!40,line width=0pt]
 ([yshift=-2.79cm]current page.north west)rectangle([yshift=-3.09cm]current page.north east);
 %%副标题%%
-\node[anchor=east,font=\bfseries\FontSize{27.5pt},text=ColorA!95!black,minimum height=1.45cm](R)at([xshift=-\@outerlen-0.25in,yshift=-4.0cm]current page.north east){\maxsizebox{\textwidth-0.5in-1.5cm}{!}{#2}};
+\node[anchor=east,font=\bfseries\FontSize{27.5pt},text=ColorA,minimum height=1.45cm](R)at([xshift=-\@outerlen-0.25in,yshift=-4.0cm]current page.north east){\maxsizebox{\textwidth-0.5in-1.5cm}{!}{#2}};
 %%章节图片%%
 \node[anchor=north east,inner sep=0mm](I)at(current page.north east){\ifdefvoid{\@chapterimage}{}{\includegraphics[height=5.022cm]{\@chapterimage}}};
 %%页码%%
@@ -885,14 +885,14 @@ font=\bfseries\FontSize{40pt},text=ColorA!95!black](P)at([xshift=0.5cm]R.east){\
 \draw[fill=ColorB!7.5,ColorB!7.5,line width=0.1pt,sharp corners,overlay]
 (A)--(B)--(C)--(D)--(E)[rounded corners=5.0mm]--(F)[rounded corners=5.0mm]--(G)[sharp corners]--(H)--cycle;
 %%标题%%
-\node[anchor=east,font=\bfseries\FontSize{30pt},text=ColorA!95!black,minimum height=1.45cm](T)at([xshift=-\@innerlen-0.25in,yshift=-1.79cm]current page.north east){\maxsizebox{\textwidth-0.5in-1.5cm}{!}{#1}};
+\node[anchor=east,font=\bfseries\FontSize{30pt},text=ColorA,minimum height=1.45cm](T)at([xshift=-\@innerlen-0.25in,yshift=-1.79cm]current page.north east){\maxsizebox{\textwidth-0.5in-1.5cm}{!}{#1}};
 \node[inner sep=0mm,anchor=east](P)at([xshift=-0.25cm]T.west){\halfcircle{ColorA!90}{0.5cm}};
 \node[inner sep=0mm,anchor=east](Q)at(P.west){\halfcircle{ColorA}{0.5cm}};
 %%渐变带%%
 \draw[ColorB!40,fill=ColorB!40,line width=0pt]
 ([yshift=-2.79cm]current page.north east)rectangle([yshift=-3.09cm]current page.north west);
 %%副标题%%
-\node[anchor=west,font=\bfseries\FontSize{27.5pt},text=ColorA!95!black,minimum height=1.45cm](R)at([xshift=\@outerlen+0.25in,yshift=-4.0cm]current page.north west){\maxsizebox{\textwidth-0.5in-1.5cm}{!}{#2}};
+\node[anchor=west,font=\bfseries\FontSize{27.5pt},text=ColorA,minimum height=1.45cm](R)at([xshift=\@outerlen+0.25in,yshift=-4.0cm]current page.north west){\maxsizebox{\textwidth-0.5in-1.5cm}{!}{#2}};
 %%章节图片%%
 \node[anchor=north west,inner sep=0mm](I)at(current page.north west){\ifdefvoid{\@chapterimage}{}{\includegraphics[height=5.022cm]{\@chapterimage}}};
 %%页码%%
@@ -1876,10 +1876,10 @@ overlay unbroken and first={\CD{#1}{Java}}}
 \coordinate(H)at([yshift=0.85cm]current page.south west);
 %%背景%%
 \draw[ColorB!5,fill=ColorB!5,sharp corners](D)rectangle(B);
-\draw[ColorA!80,fill=ColorA!80](A)--(B)--(C)--(D)--(H)[rounded corners=7.5mm]--(G)[rounded corners=7.5mm]--(F)[sharp corners]--(E)--cycle;
+\draw[ColorA!80,fill=ColorA!80](A)--(B)--(C)--(D)--(H)[rounded corners=5.0mm]--(G)[rounded corners=5.0mm]--(F)[sharp corners]--(E)--cycle;
 \end{tikzpicture}
 \begin{center}
-\color{ColorA!95!black}\bfseries
+\color{ColorA}\bfseries
 %%书籍系列%%
 \ifdefvoid{\@series}{}{
 {\FontSize{15pt}\@series\par}}
@@ -1916,7 +1916,7 @@ overlay unbroken and first={\CD{#1}{Java}}}
 \maxsizebox{\paperwidth}{!}{\ifdefvoid{\@englishtitle}{}{\@englishtitle}}
 }
 \newcommand{\makecover}{
-\tikzset{coverup node/.style={text=ColorA!95!black,anchor=north west,inner sep=0mm},
+\tikzset{coverup node/.style={text=ColorA,anchor=north west,inner sep=0mm},
 coverdown node/.style={text=white,anchor=west,inner sep=0mm},
 opacity node/.style={anchor=north west,font=\FontSize{100pt}\bfseries,text=ColorB!25}
 }
@@ -1961,7 +1961,7 @@ evaluate=\x as \opa using 1.2-0.2*\x] in {2,...,10}{
 \maxsizebox{\paperwidth}{!}{\ifdefvoid{\@englishsubtitle}{}{\@englishsubtitle}}
 }
 \NewDocumentCommand{\makeback}{oo}{
-\tikzset{backup node/.style={text=ColorA!95!black,anchor=north east,inner sep=0mm,text width=\textwidth},
+\tikzset{backup node/.style={text=ColorA,anchor=north east,inner sep=0mm,text width=\textwidth},
 backdown node/.style={text=white,anchor=west,inner sep=0mm},
 opacity node/.style={anchor=north east,font=\FontSize{100pt}\bfseries,text=ColorB!25}}
 \begin{titlepage}
@@ -1992,7 +1992,7 @@ evaluate=\x as \opa using 1.2-0.2*\x] in {2,...,10}{
 %%书籍系列%%
 \node[font=\FontSize{15pt}\bfseries,backdown node](S)at([yshift=4.0cm]current page text area.west){\ifdefvoid{\@series}{}{\@series}};
 %%书籍系列%%
-\node[font=\FontSize{15pt}\bfseries,backdown node](V)at([yshift=-0.5cm]S.south west){\ifdefvoid{\@version}{}{第\@version 版}};
+\node[font=\FontSize{15pt}\bfseries,backdown node](V)at([yshift=-0.5cm]S.south west){\ifdefvoid{\@version}{}{第{\@version}版}};
 \end{tikzpicture}
 \end{titlepage}}
 
@@ -2002,7 +2002,7 @@ evaluate=\x as \opa using 1.2-0.2*\x] in {2,...,10}{
 \setlength{\SpineWidth}{#1}
 \tikzset{spine title/.style={font=\FontSize{20pt}\bfseries,text=white,text width=1.0cm,align=center},
 spine subtitle/.style={font=\FontSize{15pt}\bfseries,text=white,text width=1.0cm,align=center},
-spine englishtitle/.style={font=\FontSize{20pt}\bfseries,text=ColorA!95!black,inner sep=0mm}}
+spine englishtitle/.style={font=\FontSize{20pt}\bfseries,text=ColorA,inner sep=0mm}}
 \begin{titlepage}
 \begin{tikzpicture}[remember picture,overlay]
 \coordinate(A)at(current page.north);
