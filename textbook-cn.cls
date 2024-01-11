@@ -615,7 +615,7 @@ cycle;
 %%标题%%
 \node[align=left,anchor=north east,font=\bfseries\FontSize{37.5pt},text=ColorA,minimum height=2.0cm](P)at([yshift=-2.6cm]T.south east){\maxsizebox{\textwidth-2.45cm}{!}{#2}};
 %%介绍%%
-\node[align=right,inner xsep=3.0mm,anchor=north east,font=\FontSize{12pt}\itshape,text=ColorA,text width=\textwidth-2.45cm](W)at([yshift=-0.75cm]P.south east){\ifdefvoid{\@partintro}{}{\@partintro}};
+\node[align=right,inner xsep=3.0mm,anchor=north east,font=\FontSize{12pt}\itshape,text=ColorA](W)at([yshift=-0.75cm]P.south east){\begin{varwidth}{\textwidth-2.75cm}\ifdefvoid{\@partintro}{}{\@partintro}\end{varwidth}};
 %%小目录%%
 \node[anchor=south west](C)at([xshift=\@innerlen+0.25in,yshift=\@botlen]current page.south west){\begin{varwidth}{\textwidth}\printcontents[part]{l}{0}{\setcounter{tocdepth}{0}}\end{varwidth}};
 \node[font=\FontSize{13pt}\bfseries,text=ColorB!95!black,anchor=south west](R)at(C.north west){部分概要};
@@ -641,7 +641,7 @@ cycle;
 %%标题%%
 \node[align=left,anchor=north west,font=\bfseries\FontSize{37.5pt},text=ColorA,minimum height=2.0cm](P)at([yshift=-2.6cm]T.south west){\maxsizebox{\textwidth-2.45cm}{!}{#2}};
 %%介绍%%
-\node[align=left,inner xsep=3.0mm,anchor=north west,font=\FontSize{12pt}\itshape,text=ColorA,text width=\textwidth-2.45cm](W)at([yshift=-0.75cm]P.south west){\ifdefvoid{\@partintro}{}{\@partintro}};
+\node[align=left,inner xsep=3.0mm,anchor=north west,font=\FontSize{12pt}\itshape,text=ColorA](W)at([yshift=-0.75cm]P.south west){\begin{varwidth}{\textwidth-2.75cm}\ifdefvoid{\@partintro}{}{\@partintro}\end{varwidth}};
 %%小目录%%
 \node[anchor=south east](C)at([xshift=-\@innerlen-0.25in,yshift=\@botlen]current page.south east){\begin{varwidth}{\textwidth}\printcontents[part]{l}{0}{\setcounter{tocdepth}{0}}\end{varwidth}};
 \node[font=\FontSize{13pt}\bfseries,text=ColorB!95!black,anchor=south west](R)at(C.north west){部分概要};
@@ -697,7 +697,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=-1.4cm,yshift=0.25cm]C){
 \node[inner xsep=0mm,minimum height=2.0cm,anchor=east](Q)at(S.west){\halfcircle{ColorA!80}{0.7cm}};
 \node[inner xsep=0mm,minimum height=2.0cm,anchor=east](R)at(Q.west){\halfcircle{ColorA}{0.7cm}};
 %%介绍%%
-\node[align=right,inner xsep=2.0mm,anchor=north east,font=\FontSize{12pt}\itshape,text=ColorA,text width=\textwidth-2.45cm](W)at([yshift=-3.0cm]P.south east){\ifdefvoid{\@partintro}{}{\@partintro}};
+\node[align=right,inner xsep=2.0mm,anchor=north east,font=\FontSize{12pt}\itshape,text=ColorA](W)at([yshift=-3.5cm]P.south east){\begin{varwidth}{\textwidth-2.75cm}\ifdefvoid{\@partintro}{}{\@partintro}\end{varwidth}};
 %%小目录%%
 \node[anchor=south west](C)at([xshift=\@innerlen+0.25in,yshift=\@botlen]current page.south west){\begin{varwidth}{\textwidth}\printcontents[part]{l}{0}{\setcounter{tocdepth}{0}}\end{varwidth}};
 \node[font=\FontSize{13pt}\bfseries,text=ColorB!95!black,anchor=south west](W)at(C.north west){部分概要};
@@ -737,7 +737,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=-1.4cm,yshift=0.25cm]C){
 \node[align=left,inner xsep=0mm,minimum height=2.0cm,anchor=west,
 font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebox{\textwidth-5.0cm}{!}{#1}};
 %%介绍%%
-\node[align=left,inner xsep=2.0mm,anchor=north west,font=\FontSize{12pt}\itshape,text=ColorA,text width=\textwidth-2.45cm](W)at([yshift=-3.0cm]S.south west){\ifdefvoid{\@partintro}{}{\@partintro}};
+\node[align=left,inner xsep=2.0mm,anchor=north west,font=\FontSize{12pt}\itshape,text=ColorA](W)at([yshift=-3.5cm]S.south west){\begin{varwidth}{\textwidth-2.75cm}\ifdefvoid{\@partintro}{}{\@partintro}\end{varwidth}};
 %%小目录%%
 \node[anchor=south east](C)at([xshift=-\@innerlen-0.25in,yshift=\@botlen]current page.south east){\begin{varwidth}{\textwidth}\printcontents[part]{l}{0}{\setcounter{tocdepth}{0}}\end{varwidth}};
 \node[font=\FontSize{13pt}\bfseries,text=ColorB!95!black,anchor=south west](W)at(C.north west){部分概要};
@@ -1153,45 +1153,40 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 \makeatother
 
 %%%%%%%%%%%%%%%%%% 环境定义和命令定义 %%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\basenode}[1]{
+\tikz[baseline=($0.7*(current bounding box.west)+0.3*(current bounding box.south west)$)]{\node[inner xsep=-0.75mm](E){#1};}}
 %%设置例题命令%%
 \newcommand{\egextitle}[3]{
-\bigskip
-\tikz[baseline]{\node[anchor=base,font=\FontSize{11.5pt}\bfseries,text=white,draw=#2!90!ColorD,fill=#2!90!ColorD,rounded corners=0.8em,inner xsep=3.5mm,ultra thick,minimum height=1.6em](T)at(0,0){#1\hspace*{0.5cm}};
+\tikz{\node[font=\FontSize{11.5pt}\bfseries,text=white,draw=#2!90!ColorD,fill=#2!90!ColorD,rounded corners=0.8em,inner xsep=3.5mm,ultra thick,minimum height=1.6em](T){#1\hspace*{0.5cm}};
 \node[anchor=west,font=\FontSize{11.5pt}\bfseries,text=#2!90!ColorD,draw=#2!90!ColorD,fill=white,rounded corners=0.8em,inner xsep=2.5mm,ultra thick,minimum height=1.6em](N)at([xshift=-1.85em]T.east){#3};}}
 %%设置解答命令%%
 \newcommand{\ansanatitle}[2]{
-\tikz[baseline]{\node[anchor=base,font=\FontSize{11.5pt}\bfseries,text=white,draw=#2!90!ColorD,fill=#2!90!ColorD,rounded corners=0.8em,inner xsep=3.5mm,ultra thick,minimum height=1.6em](T)at(0,0){#1};}
-\bigskip}
+\tikz{\node[font=\FontSize{11.5pt}\bfseries,text=white,draw=#2!90!ColorD,fill=#2!90!ColorD,rounded corners=0.8em,inner xsep=3.5mm,ultra thick,minimum height=1.6em](T){#1};}}
 %%解答%%
 \NewExpandableDocumentCommand{\Answer}{sm}{
+\begin{flushleft}
+\begin{varwidth}{\linewidth}
 \IfBooleanTF{#1}
-{\begin{flushleft}
-\hangafter 1
-\hangindent0.25em%设置悬挂缩进
-\raisebox{0em}{\ansanatitle{延展}{ColorA}}\hspace{1.0em}\vspace{0.4em}#2
-\end{flushleft}}%带星号*
-{\begin{flushleft}
-\hangafter 1
-\hangindent0.25em%设置悬挂缩进
-\raisebox{0em}{\ansanatitle{解答}{ColorA}}\hspace{1.0em}\vspace{0.4em}#2
-\end{flushleft}}%不带星号*
-}
+{\basenode{\ansanatitle{延展}{ColorA}}\hspace{1.0em}\vspace{0.25em}#2}%带星号*
+{\basenode{\ansanatitle{解答}{ColorA}}\hspace{1.0em}\vspace{0.25em}#2}
+\end{varwidth}
+\end{flushleft}}
 %%例题%%
 \makeatletter
 \newcommand{\Example}[1]{
 \stepcounter{@egnum}
 \begin{flushleft}
-\hangafter 1
-\hangindent0.25em%设置悬挂缩进
-\raisebox{0em}{\egextitle{例题}{ColorA}{\thechapter.\the@egnum}}\hspace{1.0em}\vspace{0.4em}#1
+\begin{varwidth}{\linewidth}
+\basenode{\egextitle{例题}{ColorA}{\thechapter.\the@egnum}}\hspace{1.0em}\vspace{0.25em}#1
+\end{varwidth}
 \end{flushleft}}
 %%变式%%
 \newcommand{\Variety}[1]{
 \stepcounter{@varnum}
 \begin{flushleft}
-\hangafter 1
-\hangindent0.25em%设置悬挂缩进
-\raisebox{0em}{\egextitle{变式}{ColorB}{\thechapter.\the@varnum}}\hspace{1.0em}\vspace{0.4em}#1
+\begin{varwidth}{\linewidth}
+\basenode{\egextitle{变式}{ColorB}{\thechapter.\the@varnum}}\hspace{1.0em}\vspace{0.25em}#1
+\end{varwidth}
 \end{flushleft}}
 \makeatother
 
@@ -1327,9 +1322,9 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 \renewcommand{\Example}[1]{
 \stepcounter{@classic}
 \begin{flushleft}
-\hangafter 1
-\hangindent0.25em%设置悬挂缩进
-\raisebox{0em}{\egextitle{典例}{ColorA}{\thesection.\the@classic}}\hspace{1.0em}\vspace{0.4em}##1
+\begin{varwidth}{\linewidth}
+\basenode{\egextitle{典例}{ColorA}{\thesection.\the@classic}}\hspace{1.0em}\vspace{0.25em}##1
+\end{varwidth}
 \end{flushleft}}
 %将环境前的节计数器值储存在beforecounter中
 \setcounter{@beforetopiccounter}{\value{section}}
