@@ -1,8 +1,8 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.5.9)  6 JAN 2024 18:26
+This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2022.5.9)  9 JAN 2024 16:13
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**coverimage.tex
+**coverimage.tex $xelatex -shell-escape input
 (./coverimage.tex
 LaTeX2e <2021-11-15> patch level 1
 L3 programming layer <2022-02-24>
@@ -28,11 +28,11 @@ Package: xkeyval 2020/11/20 v2.8 package option processing (HA)
 \XKV@tempa@toks=\toks17
 
 (c:/texlive/2022/texmf-dist/tex/generic/xkeyval/keyval.tex))
-\XKV@depth=\count185
+\XKV@depth=\count181
 File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
 ))
-\sa@internal=\count186
-\c@sapage=\count187
+\sa@internal=\count182
+\c@sapage=\count183
 
 (c:/texlive/2022/texmf-dist/tex/latex/standalone/standalone.cfg
 File: standalone.cfg 2018/03/26 v1.3a Default configuration file for 'standalon
@@ -43,14 +43,14 @@ Document Class: article 2021/10/04 v1.4n Standard LaTeX document class
 (c:/texlive/2022/texmf-dist/tex/latex/base/size10.clo
 File: size10.clo 2021/10/04 v1.4n Standard LaTeX file (size option)
 )
-\c@part=\count188
-\c@section=\count189
-\c@subsection=\count190
-\c@subsubsection=\count191
-\c@paragraph=\count192
-\c@subparagraph=\count193
-\c@figure=\count194
-\c@table=\count195
+\c@part=\count184
+\c@section=\count185
+\c@subsection=\count186
+\c@subsubsection=\count187
+\c@paragraph=\count188
+\c@subparagraph=\count189
+\c@figure=\count190
+\c@table=\count191
 \abovecaptionskip=\skip47
 \belowcaptionskip=\skip48
 \bibindent=\dimen138
@@ -86,10 +86,10 @@ Package: trig 2021/08/11 v1.11 sin cos tan (DPC)
 (c:/texlive/2022/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
 File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
-Package graphics Info: Driver file: pdftex.def on input line 107.
+Package graphics Info: Driver file: xetex.def on input line 107.
 
-(c:/texlive/2022/texmf-dist/tex/latex/graphics-def/pdftex.def
-File: pdftex.def 2020/10/05 v1.2a Graphics/color driver for pdftex
+(c:/texlive/2022/texmf-dist/tex/latex/graphics-def/xetex.def
+File: xetex.def 2021/03/18 v5.0k Graphics/color driver for xetex
 ))
 \Gin@req@height=\dimen141
 \Gin@req@width=\dimen142
@@ -117,29 +117,34 @@ Package: pgfsys 2021/05/15 v3.1.9a (3.1.9a)
 \pgf@yd=\dimen152
 \w@pgf@writea=\write3
 \r@pgf@reada=\read2
-\c@pgf@counta=\count196
-\c@pgf@countb=\count197
-\c@pgf@countc=\count198
-\c@pgf@countd=\count199
+\c@pgf@counta=\count192
+\c@pgf@countb=\count193
+\c@pgf@countc=\count194
+\c@pgf@countd=\count195
 \t@pgf@toka=\toks22
 \t@pgf@tokb=\toks23
 \t@pgf@tokc=\toks24
-\pgf@sys@id@count=\count266
+\pgf@sys@id@count=\count196
  (c:/texlive/2022/texmf-dist/tex/generic/pgf/systemlayer/pgf.cfg
 File: pgf.cfg 2021/05/15 v3.1.9a (3.1.9a)
 )
-Driver file for pgf: pgfsys-pdftex.def
+Driver file for pgf: pgfsys-xetex.def
 
-(c:/texlive/2022/texmf-dist/tex/generic/pgf/systemlayer/pgfsys-pdftex.def
-File: pgfsys-pdftex.def 2021/05/15 v3.1.9a (3.1.9a)
+(c:/texlive/2022/texmf-dist/tex/generic/pgf/systemlayer/pgfsys-xetex.def
+File: pgfsys-xetex.def 2021/05/15 v3.1.9a (3.1.9a)
+
+(c:/texlive/2022/texmf-dist/tex/generic/pgf/systemlayer/pgfsys-dvipdfmx.def
+File: pgfsys-dvipdfmx.def 2021/05/15 v3.1.9a (3.1.9a)
 
 (c:/texlive/2022/texmf-dist/tex/generic/pgf/systemlayer/pgfsys-common-pdf.def
 File: pgfsys-common-pdf.def 2021/05/15 v3.1.9a (3.1.9a)
+)
+\pgfsys@objnum=\count197
 )))
 (c:/texlive/2022/texmf-dist/tex/generic/pgf/systemlayer/pgfsyssoftpath.code.tex
 File: pgfsyssoftpath.code.tex 2021/05/15 v3.1.9a (3.1.9a)
-\pgfsyssoftpath@smallbuffer@items=\count267
-\pgfsyssoftpath@bigbuffer@items=\count268
+\pgfsyssoftpath@smallbuffer@items=\count198
+\pgfsyssoftpath@bigbuffer@items=\count199
 )
 (c:/texlive/2022/texmf-dist/tex/generic/pgf/systemlayer/pgfsysprotocol.code.tex
 File: pgfsysprotocol.code.tex 2021/05/15 v3.1.9a (3.1.9a)
@@ -149,9 +154,8 @@ Package: xcolor 2021/10/31 v2.13 LaTeX color extensions (UK)
 (c:/texlive/2022/texmf-dist/tex/latex/graphics-cfg/color.cfg
 File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
-Package xcolor Info: Driver file: pdftex.def on input line 227.
+Package xcolor Info: Driver file: xetex.def on input line 227.
 Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1352.
-Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1356.
 Package xcolor Info: Model `RGB' extended on input line 1368.
 Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1370.
 Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1371.
@@ -168,7 +172,7 @@ Package: pgfcore 2021/05/15 v3.1.9a (3.1.9a)
 (c:/texlive/2022/texmf-dist/tex/generic/pgf/math/pgfmathutil.code.tex)
 (c:/texlive/2022/texmf-dist/tex/generic/pgf/math/pgfmathparser.code.tex
 \pgfmath@dimen=\dimen153
-\pgfmath@count=\count269
+\pgfmath@count=\count266
 \pgfmath@box=\box51
 \pgfmath@toks=\toks25
 \pgfmath@stack@operand=\toks26
@@ -192,7 +196,7 @@ x)
 (c:/texlive/2022/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.integerarithm
 etics.code.tex)))
 (c:/texlive/2022/texmf-dist/tex/generic/pgf/math/pgfmathfloat.code.tex
-\c@pgfmathroundto@lastzeros=\count270
+\c@pgfmathroundto@lastzeros=\count267
 ))
 (c:/texlive/2022/texmf-dist/tex/generic/pgf/math/pgfint.code.tex)
 (c:/texlive/2022/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepoints.code.tex
@@ -229,7 +233,7 @@ File: pgfcorescopes.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 \pgfpic=\box52
 \pgf@hbox=\box53
 \pgf@layerbox@main=\box54
-\pgf@picture@serial@count=\count271
+\pgf@picture@serial@count=\count268
 )
 (c:/texlive/2022/texmf-dist/tex/generic/pgf/basiclayer/pgfcoregraphicstate.code
 .tex
@@ -260,8 +264,8 @@ File: pgfcorearrows.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 (c:/texlive/2022/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreshade.code.tex
 File: pgfcoreshade.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 \pgf@max=\dimen177
-\pgf@sys@shading@range@num=\count272
-\pgf@shadingcount=\count273
+\pgf@sys@shading@range@num=\count269
+\pgf@shadingcount=\count270
 )
 (c:/texlive/2022/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreimage.code.tex
 File: pgfcoreimage.code.tex 2021/05/15 v3.1.9a (3.1.9a)
@@ -318,7 +322,7 @@ Package: tikz 2021/05/15 v3.1.9a (3.1.9a)
 (c:/texlive/2022/texmf-dist/tex/generic/pgf/libraries/pgflibraryplothandlers.co
 de.tex
 File: pgflibraryplothandlers.code.tex 2021/05/15 v3.1.9a (3.1.9a)
-\pgf@plot@mark@count=\count274
+\pgf@plot@mark@count=\count271
 \pgfplotmarksize=\dimen182
 )
 \tikz@lastx=\dimen183
@@ -333,18 +337,18 @@ File: pgflibraryplothandlers.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 \tikz@figbox@bg=\box58
 \tikz@tempbox=\box59
 \tikz@tempbox@bg=\box60
-\tikztreelevel=\count275
-\tikznumberofchildren=\count276
-\tikznumberofcurrentchild=\count277
-\tikz@fig@count=\count278
+\tikztreelevel=\count272
+\tikznumberofchildren=\count273
+\tikznumberofcurrentchild=\count274
+\tikz@fig@count=\count275
 
 (c:/texlive/2022/texmf-dist/tex/generic/pgf/modules/pgfmodulematrix.code.tex
 File: pgfmodulematrix.code.tex 2021/05/15 v3.1.9a (3.1.9a)
-\pgfmatrixcurrentrow=\count279
-\pgfmatrixcurrentcolumn=\count280
-\pgf@matrix@numberofcolumns=\count281
+\pgfmatrixcurrentrow=\count276
+\pgfmatrixcurrentcolumn=\count277
+\pgf@matrix@numberofcolumns=\count278
 )
-\tikz@expandcount=\count282
+\tikz@expandcount=\count279
 
 (c:/texlive/2022/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzli
 brarytopaths.code.tex
@@ -352,12 +356,19 @@ File: tikzlibrarytopaths.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 )))
 \sa@box=\box61
 )
-(c:/texlive/2022/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
-File: l3backend-pdftex.def 2022-02-07 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count283
+(c:/texlive/2022/texmf-dist/tex/latex/l3backend/l3backend-xetex.def
+File: l3backend-xetex.def 2022-02-07 L3 backend support: XeTeX
+
+(|extractbb --version)
+\c__kernel_sys_dvipdfmx_version_int=\count280
+\l__color_backend_stack_int=\count281
+\g__color_backend_stack_int=\count282
+\g__graphics_track_int=\count283
 \l__pdf_internal_box=\box62
-)
-(./coverimage.aux)
+\g__pdf_backend_object_int=\count284
+\g__pdf_backend_annotation_int=\count285
+\g__pdf_backend_link_int=\count286
+) (./coverimage.aux)
 \openout1 = `coverimage.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 9.
@@ -369,310 +380,79 @@ LaTeX Font Info:    ... okay on input line 9.
 LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 9.
 LaTeX Font Info:    ... okay on input line 9.
 LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 9.
+LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 9
+.
+
+(c:/texlive/2022/texmf-dist/tex/latex/base/ts1cmr.fd
+File: ts1cmr.fd 2019/12/16 v2.5j Standard LaTeX font definitions
+)
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 9.
 LaTeX Font Info:    ... okay on input line 9.
 LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 9.
 LaTeX Font Info:    ... okay on input line 9.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 9.
 LaTeX Font Info:    ... okay on input line 9.
-
-(c:/texlive/2022/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
-[Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count284
-\scratchdimen=\dimen191
-\scratchbox=\box63
-\nofMPsegments=\count285
-\nofMParguments=\count286
-\everyMPshowfont=\toks30
-\MPscratchCnt=\count287
-\MPscratchDim=\dimen192
-\MPnumerator=\count288
-\makeMPintoPDFobject=\count289
-\everyMPtoPDFconversion=\toks31
-) (c:/texlive/2022/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
-Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
-Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
-85.
-
-(c:/texlive/2022/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
-File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
-e
-))
-
-pdfTeX warning: pdflatex.exe (file ./figures//jolly_icons_free_1.pdf): PDF incl
-usion: found PDF version <1.7>, but at most version <1.5> allowed
-<./figures//jolly_icons_free_1.pdf, id=4, 111.80972pt x 79.8684pt>
 File: ./figures//jolly_icons_free_1.pdf Graphic file (type pdf)
 <use ./figures//jolly_icons_free_1.pdf>
-Package pdftex.def Info: ./figures//jolly_icons_free_1.pdf  used on input line 
-11.
-(pdftex.def)             Requested size: 28.45274pt x 20.32411pt.
-
-
-pdfTeX warning: pdflatex.exe (file ./figures//jolly_icons_free_2.pdf): PDF incl
-usion: found PDF version <1.7>, but at most version <1.5> allowed
-<./figures//jolly_icons_free_2.pdf, id=5, 113.94469pt x 93.85063pt>
 File: ./figures//jolly_icons_free_2.pdf Graphic file (type pdf)
 <use ./figures//jolly_icons_free_2.pdf>
-Package pdftex.def Info: ./figures//jolly_icons_free_2.pdf  used on input line 
-13.
-(pdftex.def)             Requested size: 28.45274pt x 23.43394pt.
-
-
-pdfTeX warning: pdflatex.exe (file ./figures//jolly_icons_free_3.pdf): PDF incl
-usion: found PDF version <1.7>, but at most version <1.5> allowed
-<./figures//jolly_icons_free_3.pdf, id=6, 101.9549pt x 99.87312pt>
 File: ./figures//jolly_icons_free_3.pdf Graphic file (type pdf)
 <use ./figures//jolly_icons_free_3.pdf>
-Package pdftex.def Info: ./figures//jolly_icons_free_3.pdf  used on input line 
-15.
-(pdftex.def)             Requested size: 28.45274pt x 27.87132pt.
-
-
-pdfTeX warning: pdflatex.exe (file ./figures//jolly_icons_free_4.pdf): PDF incl
-usion: found PDF version <1.7>, but at most version <1.5> allowed
-<./figures//jolly_icons_free_4.pdf, id=7, 55.7553pt x 101.88063pt>
 File: ./figures//jolly_icons_free_4.pdf Graphic file (type pdf)
 <use ./figures//jolly_icons_free_4.pdf>
-Package pdftex.def Info: ./figures//jolly_icons_free_4.pdf  used on input line 
-17.
-(pdftex.def)             Requested size: 28.45274pt x 51.99107pt.
-
-
-pdfTeX warning: pdflatex.exe (file ./figures//jolly_icons_free_5.pdf): PDF incl
-usion: found PDF version <1.7>, but at most version <1.5> allowed
-<./figures//jolly_icons_free_5.pdf, id=8, 101.88162pt x 99.37125pt>
 File: ./figures//jolly_icons_free_5.pdf Graphic file (type pdf)
 <use ./figures//jolly_icons_free_5.pdf>
-Package pdftex.def Info: ./figures//jolly_icons_free_5.pdf  used on input line 
-19.
-(pdftex.def)             Requested size: 28.45274pt x 27.75098pt.
-
-
-pdfTeX warning: pdflatex.exe (file ./figures//jolly_icons_free_11.pdf): PDF inc
-lusion: found PDF version <1.7>, but at most version <1.5> allowed
-<./figures//jolly_icons_free_11.pdf, id=9, 87.88734pt x 102.3825pt>
 File: ./figures//jolly_icons_free_11.pdf Graphic file (type pdf)
 <use ./figures//jolly_icons_free_11.pdf>
-Package pdftex.def Info: ./figures//jolly_icons_free_11.pdf  used on input line
- 21.
-(pdftex.def)             Requested size: 28.45274pt x 33.14424pt.
-
-
-pdfTeX warning: pdflatex.exe (file ./figures//jolly_icons_free_8.pdf): PDF incl
-usion: found PDF version <1.7>, but at most version <1.5> allowed
-<./figures//jolly_icons_free_8.pdf, id=10, 106.99474pt x 72.77188pt>
 File: ./figures//jolly_icons_free_8.pdf Graphic file (type pdf)
 <use ./figures//jolly_icons_free_8.pdf>
-Package pdftex.def Info: ./figures//jolly_icons_free_8.pdf  used on input line 
-23.
-(pdftex.def)             Requested size: 28.45274pt x 19.35107pt.
-
-
-pdfTeX warning: pdflatex.exe (file ./figures//jolly_icons_free_9.pdf): PDF incl
-usion: found PDF version <1.7>, but at most version <1.5> allowed
-<./figures//jolly_icons_free_9.pdf, id=11, 80.87614pt x 95.85812pt>
 File: ./figures//jolly_icons_free_9.pdf Graphic file (type pdf)
 <use ./figures//jolly_icons_free_9.pdf>
-Package pdftex.def Info: ./figures//jolly_icons_free_9.pdf  used on input line 
-25.
-(pdftex.def)             Requested size: 28.45274pt x 33.72343pt.
-
-
-pdfTeX warning: pdflatex.exe (file ./figures//jolly_icons_free_10.pdf): PDF inc
-lusion: found PDF version <1.7>, but at most version <1.5> allowed
-<./figures//jolly_icons_free_10.pdf, id=12, 105.46703pt x 88.33pt>
 File: ./figures//jolly_icons_free_10.pdf Graphic file (type pdf)
 <use ./figures//jolly_icons_free_10.pdf>
-Package pdftex.def Info: ./figures//jolly_icons_free_10.pdf  used on input line
- 27.
-(pdftex.def)             Requested size: 28.45274pt x 23.8292pt.
-
-
-pdfTeX warning: pdflatex.exe (file ./figures//jolly_icons_free_7.pdf): PDF incl
-usion: found PDF version <1.7>, but at most version <1.5> allowed
-<./figures//jolly_icons_free_7.pdf, id=13, 101.93584pt x 75.28125pt>
 File: ./figures//jolly_icons_free_7.pdf Graphic file (type pdf)
 <use ./figures//jolly_icons_free_7.pdf>
-Package pdftex.def Info: ./figures//jolly_icons_free_7.pdf  used on input line 
-29.
-(pdftex.def)             Requested size: 28.45274pt x 21.01196pt.
-
-
-pdfTeX warning: pdflatex.exe (file ./figures//jolly_icons_free_14.pdf): PDF inc
-lusion: found PDF version <1.7>, but at most version <1.5> allowed
-<./figures//jolly_icons_free_14.pdf, id=14, 101.88966pt x 101.88063pt>
 File: ./figures//jolly_icons_free_14.pdf Graphic file (type pdf)
 <use ./figures//jolly_icons_free_14.pdf>
-Package pdftex.def Info: ./figures//jolly_icons_free_14.pdf  used on input line
- 31.
-(pdftex.def)             Requested size: 28.45274pt x 28.4502pt.
-
-
-pdfTeX warning: pdflatex.exe (file ./figures//jolly_icons_free_15.pdf): PDF inc
-lusion: found PDF version <1.7>, but at most version <1.5> allowed
-<./figures//jolly_icons_free_15.pdf, id=15, 99.90022pt x 101.88063pt>
 File: ./figures//jolly_icons_free_15.pdf Graphic file (type pdf)
 <use ./figures//jolly_icons_free_15.pdf>
-Package pdftex.def Info: ./figures//jolly_icons_free_15.pdf  used on input line
- 33.
-(pdftex.def)             Requested size: 28.45274pt x 29.01607pt.
-
-
-pdfTeX warning: pdflatex.exe (file ./figures//jolly_icons_free_16.pdf): PDF inc
-lusion: found PDF version <1.7>, but at most version <1.5> allowed
-<./figures//jolly_icons_free_16.pdf, id=16, 66.26456pt x 101.88063pt>
 File: ./figures//jolly_icons_free_16.pdf Graphic file (type pdf)
 <use ./figures//jolly_icons_free_16.pdf>
-Package pdftex.def Info: ./figures//jolly_icons_free_16.pdf  used on input line
- 35.
-(pdftex.def)             Requested size: 28.45274pt x 43.74562pt.
-
-
-pdfTeX warning: pdflatex.exe (file ./figures//jolly_icons_free_17.pdf): PDF inc
-lusion: found PDF version <1.7>, but at most version <1.5> allowed
-<./figures//jolly_icons_free_17.pdf, id=17, 104.45424pt x 96.36pt>
 File: ./figures//jolly_icons_free_17.pdf Graphic file (type pdf)
 <use ./figures//jolly_icons_free_17.pdf>
-Package pdftex.def Info: ./figures//jolly_icons_free_17.pdf  used on input line
- 37.
-(pdftex.def)             Requested size: 28.45274pt x 26.2469pt.
-
-
-pdfTeX warning: pdflatex.exe (file ./figures//jolly_icons_free_19.pdf): PDF inc
-lusion: found PDF version <1.7>, but at most version <1.5> allowed
-<./figures//jolly_icons_free_19.pdf, id=18, 96.37907pt x 103.88812pt>
 File: ./figures//jolly_icons_free_19.pdf Graphic file (type pdf)
 <use ./figures//jolly_icons_free_19.pdf>
-Package pdftex.def Info: ./figures//jolly_icons_free_19.pdf  used on input line
- 39.
-(pdftex.def)             Requested size: 28.45274pt x 30.66891pt.
-
-
-pdfTeX warning: pdflatex.exe (file ./figures//jolly_icons_free_21.pdf): PDF inc
-lusion: found PDF version <1.7>, but at most version <1.5> allowed
-<./figures//jolly_icons_free_21.pdf, id=19, 96.91708pt x 103.88812pt>
 File: ./figures//jolly_icons_free_21.pdf Graphic file (type pdf)
 <use ./figures//jolly_icons_free_21.pdf>
-Package pdftex.def Info: ./figures//jolly_icons_free_21.pdf  used on input line
- 41.
-(pdftex.def)             Requested size: 28.45274pt x 30.4993pt.
-
-
-pdfTeX warning: pdflatex.exe (file ./figures//jolly_icons_free_24.pdf): PDF inc
-lusion: found PDF version <1.7>, but at most version <1.5> allowed
-<./figures//jolly_icons_free_24.pdf, id=20, 96.42023pt x 95.35625pt>
 File: ./figures//jolly_icons_free_24.pdf Graphic file (type pdf)
 <use ./figures//jolly_icons_free_24.pdf>
-Package pdftex.def Info: ./figures//jolly_icons_free_24.pdf  used on input line
- 43.
-(pdftex.def)             Requested size: 28.45274pt x 28.13857pt.
-
-
-pdfTeX warning: pdflatex.exe (file ./figures//jolly_icons_free_25.pdf): PDF inc
-lusion: found PDF version <1.7>, but at most version <1.5> allowed
-<./figures//jolly_icons_free_25.pdf, id=21, 79.33841pt x 114.2137pt>
 File: ./figures//jolly_icons_free_25.pdf Graphic file (type pdf)
 <use ./figures//jolly_icons_free_25.pdf>
-Package pdftex.def Info: ./figures//jolly_icons_free_25.pdf  used on input line
- 45.
-(pdftex.def)             Requested size: 28.45274pt x 40.96004pt.
-
-
-pdfTeX warning: pdflatex.exe (file ./figures//jolly_icons_free_6.pdf): PDF incl
-usion: found PDF version <1.7>, but at most version <1.5> allowed
-<./figures//jolly_icons_free_6.pdf, id=22, 101.93082pt x 89.83563pt>
 File: ./figures//jolly_icons_free_6.pdf Graphic file (type pdf)
 <use ./figures//jolly_icons_free_6.pdf>
-Package pdftex.def Info: ./figures//jolly_icons_free_6.pdf  used on input line 
-47.
-(pdftex.def)             Requested size: 28.45274pt x 25.07567pt.
-
-
-pdfTeX warning: pdflatex.exe (file ./figures//jolly_icons_free_12.pdf): PDF inc
-lusion: found PDF version <1.7>, but at most version <1.5> allowed
-<./figures//jolly_icons_free_12.pdf, id=23, 111.9382pt x 98.86937pt>
 File: ./figures//jolly_icons_free_12.pdf Graphic file (type pdf)
 <use ./figures//jolly_icons_free_12.pdf>
-Package pdftex.def Info: ./figures//jolly_icons_free_12.pdf  used on input line
- 49.
-(pdftex.def)             Requested size: 28.45274pt x 25.13063pt.
-
-
-pdfTeX warning: pdflatex.exe (file ./figures//jolly_icons_free_27.pdf): PDF inc
-lusion: found PDF version <1.7>, but at most version <1.5> allowed
-<./figures//jolly_icons_free_27.pdf, id=24, 94.92363pt x 101.88063pt>
 File: ./figures//jolly_icons_free_27.pdf Graphic file (type pdf)
 <use ./figures//jolly_icons_free_27.pdf>
-Package pdftex.def Info: ./figures//jolly_icons_free_27.pdf  used on input line
- 51.
-(pdftex.def)             Requested size: 28.45274pt x 30.538pt.
-
-
-pdfTeX warning: pdflatex.exe (file ./figures//jolly_icons_free_28.pdf): PDF inc
-lusion: found PDF version <1.7>, but at most version <1.5> allowed
-<./figures//jolly_icons_free_28.pdf, id=25, 60.29626pt x 101.88063pt>
 File: ./figures//jolly_icons_free_28.pdf Graphic file (type pdf)
 <use ./figures//jolly_icons_free_28.pdf>
-Package pdftex.def Info: ./figures//jolly_icons_free_28.pdf  used on input line
- 53.
-(pdftex.def)             Requested size: 28.45274pt x 48.0751pt.
-
-
-pdfTeX warning: pdflatex.exe (file ./figures//jolly_icons_free_30.pdf): PDF inc
-lusion: found PDF version <1.7>, but at most version <1.5> allowed
-<./figures//jolly_icons_free_30.pdf, id=26, 101.37875pt x 94.85437pt>
 File: ./figures//jolly_icons_free_30.pdf Graphic file (type pdf)
 <use ./figures//jolly_icons_free_30.pdf>
-Package pdftex.def Info: ./figures//jolly_icons_free_30.pdf  used on input line
- 55.
-(pdftex.def)             Requested size: 28.45274pt x 26.62126pt.
-
-
-pdfTeX warning: pdflatex.exe (file ./figures//jolly_icons_free_29.pdf): PDF inc
-lusion: found PDF version <1.7>, but at most version <1.5> allowed
-<./figures//jolly_icons_free_29.pdf, id=27, 106.89838pt x 90.83937pt>
 File: ./figures//jolly_icons_free_29.pdf Graphic file (type pdf)
 <use ./figures//jolly_icons_free_29.pdf>
-Package pdftex.def Info: ./figures//jolly_icons_free_29.pdf  used on input line
- 57.
-(pdftex.def)             Requested size: 28.45274pt x 24.17766pt.
-
-
-pdfTeX warning: pdflatex.exe (file ./figures//jolly_icons_free_22.pdf): PDF inc
-lusion: found PDF version <1.7>, but at most version <1.5> allowed
-<./figures//jolly_icons_free_22.pdf, id=28, 98.4508pt x 101.88063pt>
 File: ./figures//jolly_icons_free_22.pdf Graphic file (type pdf)
 <use ./figures//jolly_icons_free_22.pdf>
-Package pdftex.def Info: ./figures//jolly_icons_free_22.pdf  used on input line
- 59.
-(pdftex.def)             Requested size: 28.45274pt x 29.44357pt.
-[1
+ [1
 
- <./figures//jolly_icons_free_1.pdf> <./figures//jolly_icons_free_2.pdf> <./fig
-ures//jolly_icons_free_3.pdf> <./figures//jolly_icons_free_4.pdf> <./figures//j
-olly_icons_free_5.pdf> <./figures//jolly_icons_free_11.pdf> <./figures//jolly_i
-cons_free_8.pdf> <./figures//jolly_icons_free_9.pdf> <./figures//jolly_icons_fr
-ee_10.pdf> <./figures//jolly_icons_free_7.pdf> <./figures//jolly_icons_free_14.
-pdf> <./figures//jolly_icons_free_15.pdf> <./figures//jolly_icons_free_16.pdf> 
-<./figures//jolly_icons_free_17.pdf> <./figures//jolly_icons_free_19.pdf> <./fi
-gures//jolly_icons_free_21.pdf> <./figures//jolly_icons_free_24.pdf> <./figures
-//jolly_icons_free_25.pdf> <./figures//jolly_icons_free_6.pdf> <./figures//joll
-y_icons_free_12.pdf> <./figures//jolly_icons_free_27.pdf> <./figures//jolly_ico
-ns_free_28.pdf> <./figures//jolly_icons_free_30.pdf> <./figures//jolly_icons_fr
-ee_29.pdf> <./figures//jolly_icons_free_22.pdf>] (./coverimage.aux) ) 
+] (./coverimage.aux) ) 
 Here is how much of TeX's memory you used:
- 12544 strings out of 478268
- 264976 string characters out of 5850346
- 533965 words of memory out of 5000000
- 30535 multiletter control sequences out of 15000+600000
- 469259 words of font info for 28 fonts, out of 8000000 for 9000
- 1141 hyphenation exceptions out of 8191
- 115i,8n,118p,428b,635s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 12258 strings out of 476179
+ 262479 string characters out of 5813073
+ 541627 words of memory out of 5000000
+ 32787 multiletter control sequences out of 15000+600000
+ 469267 words of font info for 29 fonts, out of 8000000 for 9000
+ 1348 hyphenation exceptions out of 8191
+ 115i,8n,118p,466b,628s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on coverimage.pdf (1 page, 16090359 bytes).
-PDF statistics:
- 1062 PDF objects out of 1200 (max. 8388607)
- 182 compressed objects within 2 object streams
- 0 named destinations out of 1000 (max. 500000)
- 138 words of extra memory for PDF output out of 10000 (max. 10000000)
-
+Output written on coverimage.pdf (1 page).

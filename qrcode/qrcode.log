@@ -1,8 +1,8 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.5.9)  7 JAN 2024 23:26
+This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2022.5.9)  9 JAN 2024 16:15
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**qrcode.tex
+**qrcode.tex $xelatex -shell-escape input
 (./qrcode.tex
 LaTeX2e <2021-11-15> patch level 1
 L3 programming layer <2022-02-24>
@@ -28,11 +28,11 @@ Package: xkeyval 2020/11/20 v2.8 package option processing (HA)
 \XKV@tempa@toks=\toks17
 
 (c:/texlive/2022/texmf-dist/tex/generic/xkeyval/keyval.tex))
-\XKV@depth=\count185
+\XKV@depth=\count181
 File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
 ))
-\sa@internal=\count186
-\c@sapage=\count187
+\sa@internal=\count182
+\c@sapage=\count183
 
 (c:/texlive/2022/texmf-dist/tex/latex/standalone/standalone.cfg
 File: standalone.cfg 2018/03/26 v1.3a Default configuration file for 'standalon
@@ -43,14 +43,14 @@ Document Class: article 2021/10/04 v1.4n Standard LaTeX document class
 (c:/texlive/2022/texmf-dist/tex/latex/base/size10.clo
 File: size10.clo 2021/10/04 v1.4n Standard LaTeX file (size option)
 )
-\c@part=\count188
-\c@section=\count189
-\c@subsection=\count190
-\c@subsubsection=\count191
-\c@paragraph=\count192
-\c@subparagraph=\count193
-\c@figure=\count194
-\c@table=\count195
+\c@part=\count184
+\c@section=\count185
+\c@subsection=\count186
+\c@subsubsection=\count187
+\c@paragraph=\count188
+\c@subparagraph=\count189
+\c@figure=\count190
+\c@table=\count191
 \abovecaptionskip=\skip47
 \belowcaptionskip=\skip48
 \bibindent=\dimen138
@@ -66,13 +66,12 @@ Package: xcolor 2021/10/31 v2.13 LaTeX color extensions (UK)
 (c:/texlive/2022/texmf-dist/tex/latex/graphics-cfg/color.cfg
 File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
-Package xcolor Info: Driver file: pdftex.def on input line 227.
+Package xcolor Info: Driver file: xetex.def on input line 227.
 
-(c:/texlive/2022/texmf-dist/tex/latex/graphics-def/pdftex.def
-File: pdftex.def 2020/10/05 v1.2a Graphics/color driver for pdftex
+(c:/texlive/2022/texmf-dist/tex/latex/graphics-def/xetex.def
+File: xetex.def 2021/03/18 v5.0k Graphics/color driver for xetex
 )
 Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1352.
-Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1356.
 Package xcolor Info: Model `RGB' extended on input line 1368.
 Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1370.
 Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1371.
@@ -81,104 +80,84 @@ Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1373.
 Package xcolor Info: Model `Gray' substituted by `gray' on input line 1374.
 Package xcolor Info: Model `wave' substituted by `hsb' on input line 1375.
 )
-\c@qr@i=\count196
-\c@qr@j=\count197
-\qr@a=\count198
-\qr@b=\count199
-\qr@c=\count266
-\qr@for@depth=\count267
-\qr@for@maxdepth=\count268
-\qr@for@start=\count269
-\qr@for@end=\count270
-\qr@for@step=\count271
-\qr@newforcount=\count272
-\qr@newforcount=\count273
+\c@qr@i=\count192
+\c@qr@j=\count193
+\qr@a=\count194
+\qr@b=\count195
+\qr@c=\count196
+\qr@for@depth=\count197
+\qr@for@maxdepth=\count198
+\qr@for@start=\count199
+\qr@for@end=\count266
+\qr@for@step=\count267
+\qr@newforcount=\count268
+\qr@newforcount=\count269
 \qr@desiredheight=\skip49
 \qr@modulesize=\skip50
 \qr@minipagewidth=\skip51
-\c@maski=\count274
-\c@maskj=\count275
-\c@totalones=\count276
-\c@penaltyi=\count277
-\c@penaltyii=\count278
-\c@penaltyiii=\count279
-\c@penaltyiv=\count280
-\c@qr@hexchars=\count281
-\qr@newforcount=\count282
-\c@qr@divisionsremaining=\count283
+\c@maski=\count270
+\c@maskj=\count271
+\c@totalones=\count272
+\c@penaltyi=\count273
+\c@penaltyii=\count274
+\c@penaltyiii=\count275
+\c@penaltyiv=\count276
+\c@qr@hexchars=\count277
+\qr@newforcount=\count278
+\c@qr@divisionsremaining=\count279
 )
-(c:/texlive/2022/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
-File: l3backend-pdftex.def 2022-02-07 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count284
+(c:/texlive/2022/texmf-dist/tex/latex/l3backend/l3backend-xetex.def
+File: l3backend-xetex.def 2022-02-07 L3 backend support: XeTeX
+
+(|extractbb --version)
+\c__kernel_sys_dvipdfmx_version_int=\count280
+\l__color_backend_stack_int=\count281
+\g__color_backend_stack_int=\count282
+\g__graphics_track_int=\count283
 \l__pdf_internal_box=\box51
-)
-(./qrcode.aux <Reading QR code for "ABCD" at level 5-H from aux file.>
+\g__pdf_backend_object_int=\count284
+\g__pdf_backend_annotation_int=\count285
+\g__pdf_backend_link_int=\count286
+) (./qrcode.aux
+<Reading QR code for "https://github.com/LyuGuanlin2002/TextBook/tree/main" at 
+level 5-Q from aux file.>
 )
 \openout1 = `qrcode.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 5.
-LaTeX Font Info:    ... okay on input line 5.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 5.
-LaTeX Font Info:    ... okay on input line 5.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 5.
-LaTeX Font Info:    ... okay on input line 5.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 5.
-LaTeX Font Info:    ... okay on input line 5.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 5.
-LaTeX Font Info:    ... okay on input line 5.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 5.
-LaTeX Font Info:    ... okay on input line 5.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 5.
-LaTeX Font Info:    ... okay on input line 5.
- (c:/texlive/2022/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
-[Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count285
-\scratchdimen=\dimen139
-\scratchbox=\box52
-\nofMPsegments=\count286
-\nofMParguments=\count287
-\everyMPshowfont=\toks18
-\MPscratchCnt=\count288
-\MPscratchDim=\dimen140
-\MPnumerator=\count289
-\makeMPintoPDFobject=\count290
-\everyMPtoPDFconversion=\toks19
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 4.
+LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 4
+.
+ (c:/texlive/2022/texmf-dist/tex/latex/base/ts1cmr.fd
+File: ts1cmr.fd 2019/12/16 v2.5j Standard LaTeX font definitions
 )
+LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+
 
 
 <QR code requested for "https://github.com/LyuGuanlin2002/TextBook/tree/main" i
 n version 5-M.>
 <Error-correction level increased from M to Q at no cost.>
 
-<Calculating QR code for "https://github.com/LyuGuanlin2002/TextBook/tree/main"
- in version 5-Q.>
-<Splitting off block 1> <Splitting off block 2> <Splitting off block 3>
-<Splitting off block 4> <Making error block 1> <Making error block 2>
-<Making error block 3> <Making error block 4>
-<Interleaving datablocks of length 15\ and 16:  1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
-11, 12, 13, 14, 15, 16.> <Interleaving errorblocks of length 18:  1, 2, 3, 4,
-5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, .><Interleaving complete.>
-<Writing data... done.>
-<Applying Mask 0... done. Calculating penalty... penalty is 1540>
-<Applying Mask 1... done. Calculating penalty... penalty is 1486>
-<Applying Mask 2... done. Calculating penalty... penalty is 1500>
-<Applying Mask 3... done. Calculating penalty... penalty is 1732>
-<Applying Mask 4... done. Calculating penalty... penalty is 1463>
-<Applying Mask 5... done. Calculating penalty... penalty is 1472>
-<Applying Mask 6... done. Calculating penalty... penalty is 1432>
-<Applying Mask 7... done. Calculating penalty... penalty is 1675>
-<Selected Mask 6>
-<Encoding and writing format string... done.>
-<Encoding and writing version information... done.>
-<Saving QR code to memory... done.>
-<Writing QR code to aux file... done.>
-<Printing matrix...
+<Copying the QR code for "https://github.com/LyuGuanlin2002/TextBook/tree/main"
+ in version 5-Q as previously calculated.>
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 6.
+(Font)              <7> on input line 5.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 6.
- done.>
-
+(Font)              <5> on input line 5.
 [1
 
 ] (./qrcode.aux
@@ -186,18 +165,12 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 level 5-Q from aux file.>
 ) ) 
 Here is how much of TeX's memory you used:
- 7544 strings out of 478268
- 117799 string characters out of 5850346
- 412741 words of memory out of 5000000
- 25785 multiletter control sequences out of 15000+600000
- 469259 words of font info for 28 fonts, out of 8000000 for 9000
- 1141 hyphenation exceptions out of 8191
- 68i,5n,207p,1551b,1172s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 3147 strings out of 476179
+ 48561 string characters out of 5813073
+ 423260 words of memory out of 5000000
+ 23930 multiletter control sequences out of 15000+600000
+ 469267 words of font info for 29 fonts, out of 8000000 for 9000
+ 1348 hyphenation exceptions out of 8191
+ 55i,5n,71p,1582b,241s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on qrcode.pdf (1 page, 3743 bytes).
-PDF statistics:
- 8 PDF objects out of 1000 (max. 8388607)
- 4 compressed objects within 1 object stream
- 0 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
-
+Output written on qrcode.pdf (1 page).

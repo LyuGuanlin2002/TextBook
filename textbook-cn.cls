@@ -172,7 +172,7 @@ T\kern-0.25em\lower0.215ex\hbox{\footnotesize E}\kern-0.075em{\small X}\kern-0.1
 \setlength{\@outerlen}{2.0cm}
 \setlength{\@toplen}{2.25cm}
 \setlength{\@botlen}{2.25cm}
-\setlength{\@marginlen}{12.0em}
+\setlength{\@marginlen}{\textwidth-0.8\textwidth+2.0em}
 \RequirePackage[letterpaper,
 inner=\@innerlen,outer=\@outerlen,top=\@toplen,bottom=\@botlen,
 headsep=0.925cm,footskip=1.3cm,
@@ -185,7 +185,7 @@ marginparsep=-\@marginlen,marginparwidth=\@marginlen,reversemarginpar]{geometry}
 \renewcommand*{\raggedleftmarginnote}{}
 \renewcommand*{\raggedrightmarginnote}{}
 \RequirePackage{multicol,paracol}%双栏%分栏、边注、中英对照
-\columnratio{0.75}
+\columnratio{0.8}
 \footnotelayout{m}
 \twosided[pcm]
 %%设置栏间距和分割线颜色%%
@@ -197,16 +197,13 @@ marginparsep=-\@marginlen,marginparwidth=\@marginlen,reversemarginpar]{geometry}
 
 %%%%%%%%%%%%%%%%%%%% 图表插入宏包 %%%%%%%%%%%%%%%%%%%%
 \RequirePackage{graphicx}%插入图片路径
-\RequirePackage{caption,subcaption}%图表标签
+\RequirePackage[font={large,bf,color=ColorA},labelsep=colon]{caption}%图表标签
+\RequirePackage[font={large,bf,color=ColorA},labelsep=colon]{subcaption}%图表标签
 %%设置图片和表格格式%%
-\captionsetup[figure]{labelfont={bf,color=ColorA},textfont={bf,color=ColorA},
-name={图},labelsep=colon}
-\captionsetup[subfigure]{labelfont={bf,color=ColorA},textfont={bf,color=ColorA},
-name={图},labelsep=colon}
-\captionsetup[table]{labelfont={bf,color=ColorA},textfont={bf,color=ColorA},
-name={表},labelsep=colon}
-\captionsetup[subtable]{labelfont={bf,color=ColorA},textfont={bf,color=ColorA},
-name={表},labelsep=colon}
+\captionsetup[figure]{name={图}}
+\captionsetup[subfigure]{name={图}}
+\captionsetup[table]{name={表}}
+\captionsetup[subtable]{name={表}}
 %%定义非浮动体标签%%
 \newcommand\figcaption{\setcaptiontype{figure}\caption} 
 \newcommand\tabcaption{\setcaptiontype{table}\caption}
@@ -620,7 +617,7 @@ cycle;
 %%介绍%%
 \node[align=right,inner xsep=3.0mm,anchor=north east,font=\FontSize{12pt}\itshape,text=ColorA,text width=\textwidth-2.45cm](W)at([yshift=-0.75cm]P.south east){\ifdefvoid{\@partintro}{}{\@partintro}};
 %%小目录%%
-\node[minimum width=7.5cm,anchor=south west](C)at([xshift=\@innerlen+0.25in,yshift=\@botlen]current page.south west){\parbox[b][][b]{7.5cm}{\printcontents[part]{l}{0}{\setcounter{tocdepth}{0}}}};
+\node[anchor=south west](C)at([xshift=\@innerlen+0.25in,yshift=\@botlen]current page.south west){\begin{varwidth}{\textwidth}\printcontents[part]{l}{0}{\setcounter{tocdepth}{0}}\end{varwidth}};
 \node[font=\FontSize{13pt}\bfseries,text=ColorB!95!black,anchor=south west](R)at(C.north west){部分概要};
 \else
 %%坐标%%
@@ -646,7 +643,7 @@ cycle;
 %%介绍%%
 \node[align=left,inner xsep=3.0mm,anchor=north west,font=\FontSize{12pt}\itshape,text=ColorA,text width=\textwidth-2.45cm](W)at([yshift=-0.75cm]P.south west){\ifdefvoid{\@partintro}{}{\@partintro}};
 %%小目录%%
-\node[minimum width=7.5cm,anchor=south east](C)at([xshift=-\@innerlen-0.25in,yshift=\@botlen]current page.south east){\parbox[b][][b]{7.5cm}{\printcontents[part]{l}{0}{\setcounter{tocdepth}{0}}}};
+\node[anchor=south east](C)at([xshift=-\@innerlen-0.25in,yshift=\@botlen]current page.south east){\begin{varwidth}{\textwidth}\printcontents[part]{l}{0}{\setcounter{tocdepth}{0}}\end{varwidth}};
 \node[font=\FontSize{13pt}\bfseries,text=ColorB!95!black,anchor=south west](R)at(C.north west){部分概要};
 \fi
 \end{tikzpicture}}}
@@ -702,7 +699,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=-1.4cm,yshift=0.25cm]C){
 %%介绍%%
 \node[align=right,inner xsep=2.0mm,anchor=north east,font=\FontSize{12pt}\itshape,text=ColorA,text width=\textwidth-2.45cm](W)at([yshift=-3.0cm]P.south east){\ifdefvoid{\@partintro}{}{\@partintro}};
 %%小目录%%
-\node[minimum width=7.5cm,anchor=south west](C)at([xshift=\@innerlen+0.25in,yshift=\@botlen]current page.south west){\parbox[b][][b]{7.5cm}{\printcontents[part]{l}{0}{\setcounter{tocdepth}{0}}}};
+\node[anchor=south west](C)at([xshift=\@innerlen+0.25in,yshift=\@botlen]current page.south west){\begin{varwidth}{\textwidth}\printcontents[part]{l}{0}{\setcounter{tocdepth}{0}}\end{varwidth}};
 \node[font=\FontSize{13pt}\bfseries,text=ColorB!95!black,anchor=south west](W)at(C.north west){部分概要};
 \else
 %%坐标%%
@@ -742,7 +739,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 %%介绍%%
 \node[align=left,inner xsep=2.0mm,anchor=north west,font=\FontSize{12pt}\itshape,text=ColorA,text width=\textwidth-2.45cm](W)at([yshift=-3.0cm]S.south west){\ifdefvoid{\@partintro}{}{\@partintro}};
 %%小目录%%
-\node[minimum width=7.5cm,anchor=south east](C)at([xshift=-\@innerlen-0.25in,yshift=\@botlen]current page.south east){\parbox[b][][b]{7.5cm}{\printcontents[part]{l}{0}{\setcounter{tocdepth}{0}}}};
+\node[anchor=south east](C)at([xshift=-\@innerlen-0.25in,yshift=\@botlen]current page.south east){\begin{varwidth}{\textwidth}\printcontents[part]{l}{0}{\setcounter{tocdepth}{0}}\end{varwidth}};
 \node[font=\FontSize{13pt}\bfseries,text=ColorB!95!black,anchor=south west](W)at(C.north west){部分概要};
 \fi
 \end{tikzpicture}}}
