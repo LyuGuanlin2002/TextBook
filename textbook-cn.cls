@@ -966,8 +966,8 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 \coordinate(R)at([xshift=0.65cm]P.east);
 \draw[ColorA,fill=ColorA](R)circle(0.375cm);
 \node[inner sep=0mm,anchor=center,font=\FontSize{17pt}\bfseries,text=white](N)at(R){\maxsizebox{0.45cm}{0.45cm}{#2}};}}
-\newlength{\sectionlabelwidth}
 %%
+\newlength{\sectionlabelwidth}
 \newcommand{\envsectionstyle}[3]{
 \settowidth{\sectionlabelwidth}{\FontSize{17pt}{\textbf{#1}}}
 \begin{flushleft}
@@ -1140,7 +1140,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 {\titlerule*[6pt]{.}\FontSize{12pt}\xbsong\thecontentspage}
 %%部分页上的小目录章样式%%
 \titlecontents{lchapter}[0.75cm]
-{\addvspace{1.5pt}\FontSize{12.5pt}\bfseries\hypersetup{linkcolor=ColorB}}
+{\addvspace{5pt}\FontSize{12.5pt}\bfseries\hypersetup{linkcolor=ColorB}}
 {\color{ColorB}\contentslabel[\raisebox{-0.25mm}{\FontSize{15.5pt}\bfseries\faGenderless}]{0.6cm}}
 {\color{ColorB}\contentslabel[\raisebox{-0.25mm}{\FontSize{15.5pt}\bfseries\faGenderless}]{0.6cm}}%不编号章节
 {}
