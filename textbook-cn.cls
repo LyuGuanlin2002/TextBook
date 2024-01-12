@@ -81,8 +81,8 @@
 }{\relax}
 %%橙色主题%%
 \ifdefstring{\TextBook@color}{ORANGE}{
-\colorlet{ColorA}{RedOrange}
-\colorlet{ColorB}{Coral}
+\colorlet{ColorA}{Firebrick2}
+\colorlet{ColorB}{Dandelion}
 \colorlet{ColorC}{DarkOrange}
 \colorlet{ColorD}{BurntOrange}
 \colorlet{ColorE}{Chocolate2}
@@ -1690,7 +1690,7 @@ attach boxed title to top left={yshift=-0.25mm-\tcboxedtitleheight/2,yshifttext=
 IfBooleanTF={#1}{
 top=1.0mm,boxsep=0.25mm,left=0mm,right=0mm,boxsep=0mm,
 fonttitle=\bfseries\FontSize{11pt}\color{#3},
-fontupper=\fangsong\fontsize{11pt}{0.75\baselineskip}\selectfont,
+fontupper=\itshape\fontsize{11pt}{0.75\baselineskip}\selectfont,
 boxed title style={empty,top=2.0mm,bottom=2.0mm,left=0mm},
 underlay boxed title={
 \node[anchor=east,align=center,font=\bfseries\FontSize{12pt},text=#3,
@@ -1698,13 +1698,13 @@ inner sep=0mm](T)at([xshift=-0.75mm]title.west){#4};},
 if odd page={grow to left by=0mm,grow to right by=5.0mm}
 {grow to left by=5.0mm,grow to right by=0mm}
 }{breakable,
-top=2.0mm,bottom=2.5mm,left=0mm,right=0mm,boxsep=0mm,
+top=2.0mm,bottom=0mm,left=0mm,right=0mm,boxsep=0mm,
 fonttitle=\FontSize{12pt}\bfseries\color{#3},
-fontupper=\fangsong,
+fontupper=\itshape,
 boxed title style={empty,top=2.0mm,bottom=2.0mm,left=1.0mm},
 underlay boxed title={
 \node[anchor=east,align=center,font=\bfseries\FontSize{15pt},text=#3,inner sep=0mm](T)at(title.west){#4};},
-before=\par\noindent\medskip,after=\par\medskip},
+before=\par\noindent,after=\par},
 title={\maxsizebox{\linewidth-1.0cm}{!}{#2}},
 parbox=false,before upper=\par,before lower=\par}
 
