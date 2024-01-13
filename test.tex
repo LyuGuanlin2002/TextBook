@@ -1,6 +1,6 @@
 % !TEX program = bibtex
 % !Mode:: "TeX:UTF-8"
-\documentclass[color=COLORFUL]{textbook-cn}%openany
+\documentclass[color=ORANGE]{textbook-cn}%openany
 \usepackage{zhlipsum,lipsum}%乱数假文（测试文字）
 \graphicspath{{./figure/}{./figures/}{./image/}{./images/}{./graphics/}{./graphic/}{./pictures/}{./picture/}}%提供多种图片路径
 
@@ -75,7 +75,7 @@
 \printnomenclature
 
 
-\tableofcontents*
+\tableofcontents
 
 \listoffigures*
 
@@ -94,6 +94,15 @@
 \lipsum\lipsum\lipsum
 
 
+
+\begin{empheq}[box=\Formula]{align*}
+a&=\sin(z)\\
+E&=mc^2+\int_a^bx{\rm d}x
+\end{empheq}
+
+
+
+
 \part{运动学}
 
 
@@ -103,7 +112,7 @@
 
 \lipsum
 \begin{figure}[htbp]
-\centering\includegraphics[width=4\linewidth/5]{example-image-a}
+\centering\includegraphics[width=2\linewidth/5]{example-image-a}
 \caption{极光}
 \end{figure}
 
@@ -169,7 +178,7 @@ Just like Definition~\ref{Def.3.1.1} on page \pageref{Def.3.1.1}
 \lipsum[2]
 \DeepThink*{\lipsum[1][1]}
 \RelaInfo*{\lipsum[1][1]}
-\Remark*{\lipsum[1][1]}
+%\Remark*{\lipsum[1][1]}
 
 \begin{Corollary}
 \lipsum[2][1-7]

@@ -4,7 +4,7 @@
 \ProvidesClass{textbook-cn}[By Lyu Guanlin]
 
 %%%%%%%%%%%%%%%%%%%% 自定义命令宏包 %%%%%%%%%%%%%%%%%%%%
-\RequirePackage{kvoptions,etoolbox,ifthen,xifthen,xparse}%设置键和键值%自定义命令
+\RequirePackage{xkeyval,kvoptions,etoolbox,ifthen,xifthen,xparse}%设置键和键值%自定义命令
 \SetupKeyvalOptions{family=TextBook,prefix=TextBook@,setkeys=\kvsetkeys}
 \newcommand{\ekv}[1]{\kvsetkeys{TextBook}{#1}}
 %%声明颜色键及默认值%%
@@ -286,8 +286,8 @@ marginparsep=-\@marginlen,marginparwidth=\@marginlen,reversemarginpar]{geometry}
 %%索引风格文件indexstyle.ist%%
 \begin{filecontents*}{indexstyle.ist}
 headings_flag 1
-heading_prefix "\n\\centering\\large\\bfseries\\color{ColorA}"
-heading_suffix "\\normalsize\\normalfont\\color{black}\\centering\\nopagebreak\n"
+heading_prefix "\n\\centering\\Large\\bfseries\\color{ColorA}"
+heading_suffix "\\normalsize\\normalfont\\color{black}\\nopagebreak\n"
 delim_0 " \\hfill " 
 delim_1 " \\hfill "
 delim_2 " \\hfill "
@@ -396,6 +396,7 @@ delim_2 " \\hfill "
 \RequirePackage[most]{tcolorbox}%彩色盒子
 \tcbuselibrary{xparse}
 \tcbuselibrary{minted}
+\RequirePackage{empheq}%数学公式盒子
 \RequirePackage{adjustbox}%根据内容多少自动调整字体大小的盒子
 \RequirePackage{varwidth}%固定可变长度盒子
 \RequirePackage{enumitem,hlist}%控制列表环境格式%对齐列表环境
@@ -936,7 +937,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 %%编号节样式%%
 \newcommand{\sectionlabel}[1]{
 \tikz{\node[inner sep=0mm,anchor=west,font=\FontSize{17pt}\bfseries](P)at(0,0){第};
-\node[inner sep=0mm,anchor=west,font=\FontSize{17pt}\bfseries](S)at([xshift=1.3cm]P.east){节};
+\node[inner sep=0mm,anchor=west,font=\FontSize{17pt}\bfseries](S)at([xshift=1.2cm]P.east){节};
 \coordinate(R)at($0.5*(P.east)+0.5*(S.west)$);
 \draw[ColorA,fill=ColorA](R)circle(0.375cm);
 \node[inner sep=0mm,anchor=center,font=\FontSize{17pt}\bfseries,text=white](N)at(R){\maxsizebox{0.45cm}{0.45cm}{#1}};}}
@@ -1372,7 +1373,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 \@mainmatterfalse
 \pagenumbering{roman}
 \pagestyle{MainPage}
-\fontsize{12pt}{0.75\baselineskip}\selectfont}
+\fontsize{12.5pt}{0.8\baselineskip}\selectfont}
 %%重定义\backmatter%%
 \renewcommand{\backmatter}{
 \cleardoublepage
@@ -1851,6 +1852,10 @@ overlay unbroken and first={\CD{#1}{Java}}}
 %%盒子代码与实际效果对比%%
 \newtcblisting{TCBCODE}{enhanced standard,breakable,colback=white,colbacklower=white,colframe=ColorH,before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
 
+%%数学公式小盒子%%
+\newtcbox{\Formula}[1][]{nobeforeafter,math upper,tcbox raise base,
+enhanced standard,breakable,colframe=ColorB!7.5,colback=ColorB!7.5,
+rounded corners,arc=5.0pt,#1}
 
 
 \makeatletter
