@@ -1,6 +1,6 @@
 % !TEX program = bibtex
 % !Mode:: "TeX:UTF-8"
-\documentclass[color=ORANGE]{textbook-cn}%openany
+\documentclass[color=ORANGE,openany]{textbook-cn}%openany
 \usepackage{zhlipsum,lipsum}%乱数假文（测试文字）
 \graphicspath{{./figure/}{./figures/}{./image/}{./images/}{./graphics/}{./graphic/}{./pictures/}{./picture/}}%提供多种图片路径
 
@@ -19,6 +19,8 @@
 %%双栏题目环境%%
 \newenvironment{McQsNum}{\begin{multicols}{2}\begin{enumerate}[label=\protect\cir{\arabic*},itemindent=0em]}
 {\end{enumerate}\end{multicols}\colorlet{ListColor}{ColorA}}
+
+\newcommand{\inputlogo}[1]{\raisebox{-0.5em}{\includegraphics[width=1.5cm]{#1}}~~}
 
 
 %\externaldocument{Ch1}%跨文件交叉引用
@@ -39,6 +41,8 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
+
+\fontsize{12.5pt}{0.8\baselineskip}\selectfont
 
 \makecover
 
@@ -75,7 +79,7 @@
 \printnomenclature
 
 
-\tableofcontents
+\tableofcontents[\zhlipsum[1]]
 
 \listoffigures*
 
@@ -241,7 +245,7 @@ Just like Definition~\ref{Def.3.1.1} on page \pageref{Def.3.1.1}
 
 
 
-\Example{\lipsum[1][1-5]}
+\Example{\inputlogo{PLUS.pdf}\lipsum[1][1-5]}
 {\centering\includegraphics[width=\linewidth/2]{example-image-a}\figcaption{例题图}}
 \medskip
 \lipsum[1][6-10]
@@ -280,7 +284,7 @@ Just like \ref{Def.3.1.1} on page \pageref{Def.3.1.1}
 \subsubsection{标题名称}
 \lipsum[1]
 
-\Example{\lipsum[1][1-5]}
+\Example{\inputlogo{LOOK.pdf}\lipsum[1][1-5]}
 \Answer{\lipsum[1][1-5]}
 
 
@@ -293,11 +297,11 @@ Just like \ref{Def.3.1.1} on page \pageref{Def.3.1.1}
 \marginpic{qrcode.pdf}{图片名}
 
 
-\Example{\zhlipsum[1]}
+\Example{\inputlogo{LISTEN.pdf}\zhlipsum[1]}
 \Answer{\lipsum[1][1-5]}
 \Answer*{\lipsum[1][1-5]}
 
-\Variety{\lipsum[1][1-5]}
+\Variety{\inputlogo{READ.pdf}\lipsum[1][1-5]}
 \Answer{\lipsum[1][1-5]}
 
 
@@ -567,25 +571,25 @@ for n in range(0, file_num): #
 \begin{Specific}
 \begin{QsNum}
 \item \lipsum[1][1]
-\xx{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
+\choice{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
 \item \lipsum[1][1]
-\xx{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
+\choice{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
 \item \lipsum[1][1]
-\xx{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
+\choice{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
 \item \lipsum[1][1]
-\xx{polar}{saturn}{mars}{venus}
+\choice{polar}{saturn}{mars}{venus}
 \item \lipsum[1][1]
-\xx{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
+\choice{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
 \item \lipsum[1][1]
-\xx{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
+\choice{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
 \item \lipsum[1][1]
-\xx{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
+\choice{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
 \item \lipsum[1][1]
-\xx{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
+\choice{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
 \item \lipsum[1][1]
-\xx{polar}{saturn}{mars}{venus}
+\choice{polar}{saturn}{mars}{venus}
 \item \lipsum[1][1]
-\xx{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
+\choice{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
 \end{QsNum}
 \tcblower
 \lipsum[1]
@@ -618,25 +622,25 @@ for n in range(0, file_num): #
 \begin{Specific}
 \begin{QsNum}
 \item \lipsum[1][1]
-\xx{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
+\choice{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
 \item \lipsum[1][1]
-\xx{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
+\choice{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
 \item \lipsum[1][1]
-\xx{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
+\choice{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
 \item \lipsum[1][1]
-\xx{polar}{saturn}{mars}{venus}
+\choice{polar}{saturn}{mars}{venus}
 \item \lipsum[1][1]
-\xx{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
+\choice{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
 \item \lipsum[1][1]
-\xx{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
+\choice{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
 \item \lipsum[1][1]
-\xx{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
+\choice{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
 \item \lipsum[1][1]
-\xx{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
+\choice{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
 \item \lipsum[1][1]
-\xx{polar}{saturn}{mars}{venus}
+\choice{polar}{saturn}{mars}{venus}
 \item \lipsum[1][1]
-\xx{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
+\choice{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
 \end{QsNum}
 \tcblower
 \lipsum[1]
@@ -1149,6 +1153,10 @@ Just like \ref{Thm.3.1.1} on page \pageref{Thm.3.1.1}
 \input{index/indexvideo.tex}
 \input{index/indexnoun.tex}
 
+\begin{Block*}[测试标题]
+\lipsum\lipsum
+\end{Block*}
+
 
 \chaptersubtitle{视频索引测试文字}
 \printindex[video]
@@ -1179,26 +1187,26 @@ Just like \ref{Thm.3.1.1} on page \pageref{Thm.3.1.1}
 	Something strange happened after I drove a long, \wx and found it was not the correct road that Iwanted to \wx, but the hilly road I decided to avoid .I realized that it was at the. \wx that I had made the. \wx mistake. ``What shall I do ?" I asked myself. If I went back to take that road again, it would be very lateby the time I got to Columbia. Thin it \wx, I decided to go on. ``If \wx people can go along this road, why can't I ?" I \wx myself.\par
 	The short cut, to my surprise, was not that \wx. In fact, it was only a very peaceful country road, \wx upand down two low \wx.There was \wx traffic. On both sides of the road, you could see trees, wild flowers, and \wx{} with cows and horses, My fear was \wx with the wind. Listening to the beautiful country musicover my car stereo, I drove on and \wx the scenery which was so quiet and so natural. Even my used car forgot to give me. \wx. It was just in this light heartedness that I arrived at my destination. My friends, after they heard what had happened to me, all said it sounded like an adventure.
 \begin{QsNum}
-\item \xx{before}{ago}{already}{still}
-\item \xx{town}{country}{friends}{way}
-\item \xx{train}{car}{highway}{phone}
-\item \xx{have}{go}{ride}{cross}
-\item \xx{safe}{dangerous}{fast}{slow}
-\item \xx{moment}{way}{road}{day}
-\item \xx{come}{leave}{take}{drive}
-\item \xx{crossroad}{corner}{station}{beginning}
-\item \xx{direction}{road}{disappointed}{interesting}
-\item \xx{about}{over}{of}{up}
-\item \xx{another}{the other}{other}{others}
-\item \xx{asked}{forced}{encouraged}{told}
-\item \xx{far}{safe}{dangerous}{dirty}
-\item \xx{going}{coming}{driving}{walking}
-\item \xx{lands}{cars}{farms}{hills}
-\item \xx{heavy}{little}{few}{light}
-\item \xx{farms}{trucks}{houses}{villages}
-\item \xx{together}{gone}{covered}{coming}
-\item \xx{looked}{liked}{enjoyed}{found}
-\item \xx{happiness}{scenery}{joys}{problems}
+\item \choice{before}{ago}{already}{still}
+\item \choice{town}{country}{friends}{way}
+\item \choice{train}{car}{highway}{phone}
+\item \choice{have}{go}{ride}{cross}
+\item \choice{safe}{dangerous}{fast}{slow}
+\item \choice{moment}{way}{road}{day}
+\item \choice{come}{leave}{take}{drive}
+\item \choice{crossroad}{corner}{station}{beginning}
+\item \choice{direction}{road}{disappointed}{interesting}
+\item \choice{about}{over}{of}{up}
+\item \choice{another}{the other}{other}{others}
+\item \choice{asked}{forced}{encouraged}{told}
+\item \choice{far}{safe}{dangerous}{dirty}
+\item \choice{going}{coming}{driving}{walking}
+\item \choice{lands}{cars}{farms}{hills}
+\item \choice{heavy}{little}{few}{light}
+\item \choice{farms}{trucks}{houses}{villages}
+\item \choice{together}{gone}{covered}{coming}
+\item \choice{looked}{liked}{enjoyed}{found}
+\item \choice{happiness}{scenery}{joys}{problems}
 \end{QsNum}
 \end{Cloze}
 
@@ -1284,6 +1292,26 @@ Just like \ref{Thm.3.1.1} on page \pageref{Thm.3.1.1}
 \lipsum[2][1-3]
 \end{box6}
 \end{TCBCODE}
+
+\begin{CppBox}{有限元分析}
+void FN( double A, double B, double *N, int *Ele );
+void FNA( double A, double B, double *NA, int *Ele );
+void FNB( double A, double B, double *NB, int *Ele );
+double Inv_jaco( double A, double B, double *xo, double *yo, double *Nx, double *Ny, int *Ele );
+void eld( double E, double u, double (*D)[3], int Iopt );
+void CacuEKF( double E, double u, double Thick , double *xo, double *yo, double (*stress)[3], double *uo, double *vo, double *ef, double *ek, int *Ele, int nGauss , int Iopt );
+void AssembleUF( double *ef, double (*UF)[2], int *Ele );
+void skdd( int *jd, int (*Element)[8], int NN, int ND, int NE );
+void SetStiff( int i, int j, double Value , double *Stiff , int *jd );
+double GetStiff( int i, int j, double *Stiff , int *jd );
+void AssembleK( double *ek, int *je, int EFN, double *Stiff, int *jd );
+void Fix( int k, double a, double *Stiff , double *Load , int *jd, int NF );
+void LLT( int *jd, double *zk, double *F, int NF );
+void CacuSS( double E, double u, double *xo, double *yo, double *uo, double *vo, double (*SS)[4], int *Ele, int Iopt );
+\end{CppBox}
+
+
+
 
 
 \chaptersubtitle{参考文献}

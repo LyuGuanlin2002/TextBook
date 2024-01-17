@@ -233,8 +233,8 @@ marginparsep=-\@marginlen,marginparwidth=\@marginlen,reversemarginpar]{geometry}
 \@starttoc{toc}}
 {\begin{paracol}{2}
 \@starttoc{toc}
-\switchcolumn\bigskip
-#2
+\switchcolumn
+{\narrowragged\noindent#2}
 \end{paracol}}}
 %%重定义\listoffigures%%
 \RenewDocumentCommand{\listoffigures}{s O{}}{
@@ -243,8 +243,8 @@ marginparsep=-\@marginlen,marginparwidth=\@marginlen,reversemarginpar]{geometry}
 \@starttoc{lof}}
 {\begin{paracol}{2}
 \@starttoc{lof}
-\switchcolumn\bigskip
-#2
+\switchcolumn
+{\narrowragged\noindent#2}
 \end{paracol}}}
 %%重定义\listoftables%%
 \RenewDocumentCommand{\listoftables}{s O{}}{
@@ -253,8 +253,8 @@ marginparsep=-\@marginlen,marginparwidth=\@marginlen,reversemarginpar]{geometry}
 \@starttoc{lot}}
 {\begin{paracol}{2}
 \@starttoc{lot}
-\switchcolumn\bigskip
-#2
+\switchcolumn
+{\narrowragged\noindent#2}
 \end{paracol}}}
 \makeatother
 
@@ -454,11 +454,11 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 
 %%%%%%%%%%%%%%%%%%%% 列表环境 %%%%%%%%%%%%%%%%%%%%%%
 %%设置题号%%
-\newcommand*\cir[1]{\tikz[baseline=(char.base)]{
-\node[shape=circle,fill=ListColor,draw=ListColor,minimum size=5.0mm,align=center,inner sep=0pt,font=\FontSize{11pt}\bfseries,text=white](char){#1};}}
+\newcommand*\cir[1]{\tikz[baseline=($0.3*(current bounding box.west)+0.7*(current bounding box.south west)$)]{
+\node[shape=circle,fill=ListColor,draw=ListColor,minimum size=5.0mm,align=center,inner sep=0pt,font=\FontSize{11pt}\bfseries,text=white]{#1};}}
 %%设置序号%%
-\newcommand*\chevron{\tikz[baseline=(char.base)]{
-\node[circle,fill=ListColor,draw=ListColor,minimum size=4.5mm,align=center,inner sep=-2.5mm,font=\FontSize{11pt}\bfseries,text=white](char){\faChevronRight};}}
+\newcommand*\chevron{\tikz[baseline=($0.3*(current bounding box.west)+0.7*(current bounding box.south west)$)]{
+\node[circle,fill=ListColor,draw=ListColor,minimum size=4.5mm,align=center,inner sep=-2.5mm,font=\FontSize{11pt}\bfseries,text=white]{\faChevronRight};}}
 %%章末总结基本概念列表环境%%
 \newenvironment{Concept}{\begin{multicols}{2}\itshape\begin{itemize}[label=\protect\chevron,itemindent=0em]}{\end{itemize}\end{multicols}\colorlet{ListColor}{ColorA}}
 %%设置星级%%
@@ -476,7 +476,7 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 \colorlet{ListColor}{ColorA}
 \newlength{\la}\newlength{\lb}\newlength{\lc}\newlength{\ld}
 \newlength{\lhalf}\newlength{\lquarter}\newlength{\lmax}
-\newcommand{\xx}[4]{
+\newcommand{\choice}[4]{
 \settowidth{\la}{A.~#1~~~}\settowidth{\lb}{B.~#2~~~}
 \settowidth{\lc}{C.~#3~~~}\settowidth{\ld}{D.~#4~~~}
 \ifthenelse{\lengthtest{\la>\lb}}
@@ -1372,8 +1372,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 \cleardoublepage
 \@mainmatterfalse
 \pagenumbering{roman}
-\pagestyle{MainPage}
-\fontsize{12.5pt}{0.8\baselineskip}\selectfont}
+\pagestyle{MainPage}}
 %%重定义\backmatter%%
 \renewcommand{\backmatter}{
 \cleardoublepage
@@ -1734,20 +1733,29 @@ parbox=false,before upper=\par,before lower=\par}
 #2
 \end{box7}}}
 
-\DeclareTColorBox{box8}{O{}}{
+
+\DeclareTColorBox{box8}{O{}O{}}{
 enhanced standard,breakable,
 pad before break=3.0mm,pad after break=4.5mm,
 top=3.5mm,bottom=3.0mm,toptitle=3.0mm,bottomtitle=-2.5mm,
 rounded corners,arc=5.0pt,
-colframe=ColorB!7.5,colback=ColorB!7.5,colbacktitle=ColorB!7.5,
 before=\par\noindent\medskip,after=\par\medskip,
 parbox=false,before upper=\par,before lower=\par,
 fonttitle=\FontSize{12pt}\bfseries\color{ColorA},
 subtitle style={empty,fontupper=\FontSize{12pt}\bfseries\color{ColorA}},
-title={#1}}
+title={#1},#2}
 
-\newenvironment{Proof}{\begin{box8}[\faBars~~证明]}{\end{box8}}
-\DeclareDocumentEnvironment{Block}{O{}}{\begin{box8}[#1]}{\end{box8}}
+
+\newenvironment{Proof}{\begin{box8}[\faBars~~证明]
+[colframe=ColorB!7.5,colback=ColorB!7.5,colbacktitle=ColorB!7.5]}{\end{box8}}
+\DeclareDocumentEnvironment{Block}{O{}}{\begin{box8}[#1][colframe=ColorB!7.5,colback=ColorB!7.5,colbacktitle=ColorB!7.5]}{\end{box8}}
+\DeclareDocumentEnvironment{Block*}{O{}}{\begin{box8}[#1]
+[empty,overlay={
+\ifodd\value{page}
+\draw[ColorB!7.5,fill=ColorB!7.5](frame.north east)[rounded corners=5.0pt]--(frame.south east)[sharp corners]--([xshift=-\@innerlen]frame.south west)[sharp corners]--([xshift=-\@innerlen]frame.north west)[rounded corners=5.0pt]--cycle;
+\else
+\draw[ColorB!7.5,fill=ColorB!7.5](frame.north west)[rounded corners=5.0pt]--(frame.south west)[sharp corners]--([xshift=\@innerlen]frame.south east)[sharp corners]--([xshift=\@innerlen]frame.north east)[rounded corners=5.0pt]--cycle;
+\fi}]}{\end{box8}}
 
 
 \DeclareTColorBox{box9}{O{} m m O{ColorA} O{}}{
@@ -1795,15 +1803,9 @@ title={#2},#1}
 \newenvironment{Vocabulary}[1]{\begin{box10}{词汇解析}{#1}[ColorE]}{\end{box10}}
 
 
-\newtcolorbox{TocBox}{enhanced standard,breakable,
-pad before break=3.0mm,pad after break=4.5mm,
-top=2.5mm,bottom=2.5mm,left=2.5mm,right=2.5mm,
-rounded corners,arc=5.0pt,
-colframe=ColorB!7.5,colback=ColorB!7.5}
-
 
 %%修改代码盒子左侧行数样式%%
-\renewcommand{\theFancyVerbLine}{\bfseries\small\color{ColorA}{\oldstylenums{\arabic{FancyVerbLine}}}}
+\renewcommand{\theFancyVerbLine}{\numberfont\FontSize{10pt}\color{ColorA}{\oldstylenums{\arabic{FancyVerbLine}}}}
 %%定义代码盒子基本样式%%
 \tcbset{Code/.style={
 enhanced standard,breakable,
@@ -1833,24 +1835,27 @@ minted options={breaklines,autogobble,linenos,numbersep=5.5mm},
 listing only,
 listing engine=minted}}
 
-\newcommand{\CD}[2]{
+\newcommand{\CodeSubtitle}[2]{
 \node[font=\bfseries,text=ColorA,anchor=west,inner xsep=3.5mm](T)at([yshift=-0.5mm]title.east){\maxsizebox{\linewidth-2.5cm}{!}{#1}};
 \node[font=\bfseries,text=ColorA,anchor=east,inner xsep=5.0mm](ST)at([yshift={-\tcboxedtitleheight/2}]interior.north east){\maxsizebox{\linewidth/2-1.5cm}{!}{#2}};}
 
 \newtcblisting{PythonBox}[1]{
 Code,minted language=python,
-overlay unbroken and first={\CD{#1}{Python}}}
+overlay unbroken and first={\CodeSubtitle{#1}{Python}}}
 
 \newtcblisting{CppBox}[1]{
 Code,minted language=cpp,
-overlay unbroken and first={\CD{#1}{Cpp}}}
+overlay unbroken and first={\CodeSubtitle{#1}{Cpp}}}
 
 \newtcblisting{JavaBox}[1]{
 Code,minted language=java,
-overlay unbroken and first={\CD{#1}{Java}}}
+overlay unbroken and first={\CodeSubtitle{#1}{Java}}}
 
 %%盒子代码与实际效果对比%%
-\newtcblisting{TCBCODE}{enhanced standard,breakable,colback=white,colbacklower=white,colframe=ColorH,before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
+\newtcblisting{TCBCODE}{enhanced standard,breakable,
+before=\par\noindent\medskip,after=\par\medskip,
+colback=white,colbacklower=white,colframe=ColorH,
+before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
 
 %%数学公式小盒子%%
 \newtcbox{\Formula}[1][]{nobeforeafter,math upper,tcbox raise base,
