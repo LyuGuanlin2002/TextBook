@@ -79,7 +79,10 @@
 \printnomenclature
 
 
-\tableofcontents[\zhlipsum[1]]
+
+\shorttableofcontents
+
+\tableofcontents*
 
 \listoffigures*
 
@@ -139,20 +142,20 @@ E&=mc^2+\int_a^bx{\rm d}x
 
 \section{钠及其化合物}
 
-\begin{Point}
+\begin{Point*}
 \lipsum[2]
-\end{Point}
+\end{Point*}
 
-\begin{Case}
+\begin{Case*}
 \item 碳酸氢铵受热分解实验
 \item 氮气的性质和用途
 \item 铁的锈蚀实验
-\end{Case}
+\end{Case*}
 
 
 \begin{Paracol}
 \subsection{Look and Read}
-\lipsum[3]
+\Example{\lipsum[3]}
 
 \subsubsection{化学帮我们正确认识物质}
 
@@ -178,11 +181,12 @@ E&=mc^2+\int_a^bx{\rm d}x
 \end{Axiom*}
 
 Just like Definition~\ref{Def.3.1.1} on page \pageref{Def.3.1.1}
-
-\lipsum[2]
 \DeepThink*{\lipsum[1][1]}
 \RelaInfo*{\lipsum[1][1]}
-%\Remark*{\lipsum[1][1]}
+\Remark*{\lipsum[1][1]}
+\lipsum[2]
+
+
 
 \begin{Corollary}
 \lipsum[2][1-7]
@@ -209,7 +213,7 @@ Just like Definition~\ref{Def.3.1.1} on page \pageref{Def.3.1.1}
 
 
 
-\subsubsection{化学指导人类合理利用资源化学指导人类合理利用资源化学指导人类合理利用资源}
+\subsubsection{化学指导人类合理利用资源}
 
 
 
@@ -244,6 +248,10 @@ Just like Definition~\ref{Def.3.1.1} on page \pageref{Def.3.1.1}
 \lipsum[1-2]
 
 
+
+\subsection{测试小节}
+
+\subsection*{测试小节}
 
 \Example{\inputlogo{PLUS.pdf}\lipsum[1][1-5]}
 {\centering\includegraphics[width=\linewidth/2]{example-image-a}\figcaption{例题图}}
@@ -339,7 +347,7 @@ Just like \ref{Def.3.1.1} on page \pageref{Def.3.1.1}
 \begin{History}
 \lipsum[1-2]
 \end{History}
-%\DeepThink{请思考以下问题请思考以下问题请思考以下问题}
+
 
 
 \begin{STS}

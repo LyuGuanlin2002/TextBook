@@ -222,9 +222,13 @@ marginparsep=-\@marginlen,marginparwidth=\@marginlen,reversemarginpar]{geometry}
 %%%%%%%%%%%%%%%%%%%% 目录宏包 %%%%%%%%%%%%%%%%%%%%
 \RequirePackage[explicit,newparttoc]{titlesec}%设置标题格式
 \RequirePackage{titletoc}%目录格式设置
+\RequirePackage{shorttoc}%简洁目录设置
+\def\shorttocname#1{#1}%定义简洁目录标题宏
 \renewcommand{\contentsname}{目录}%更改目录标题
 \renewcommand{\listfigurename}{插图目录}%更改图片目录标题
 \renewcommand{\listtablename}{表格目录}%更改表格目录标题
+\renewcommand{\shorttocname}{简洁目录}%更改简洁目录标题
+
 \makeatletter
 %%重定义\tableofcontents%%
 \RenewDocumentCommand{\tableofcontents}{s O{}}{
@@ -256,6 +260,19 @@ marginparsep=-\@marginlen,marginparwidth=\@marginlen,reversemarginpar]{geometry}
 \switchcolumn
 {\narrowragged\noindent#2}
 \end{paracol}}}
+%%重定义\shorttableofcontents%%
+\RenewDocumentCommand{\shorttableofcontents}{s O{}}{
+\bgroup%确保计数器值只在局部生效
+\c@tocdepth=0
+\chapter*{\shorttocname}
+\IfBooleanTF{#1}{
+\@startshorttoc{toc}}
+{\begin{paracol}{2}
+\@startshorttoc{toc}
+\switchcolumn
+{\narrowragged\noindent#2}
+\end{paracol}}
+\egroup}
 \makeatother
 
 %%%%%%%%%%%%%%%%%%%% 参考文献宏包 %%%%%%%%%%%%%%%%%%%%
@@ -457,10 +474,9 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 \newcommand*\cir[1]{\tikz[baseline=($0.3*(current bounding box.west)+0.7*(current bounding box.south west)$)]{
 \node[shape=circle,fill=ListColor,draw=ListColor,minimum size=5.0mm,align=center,inner sep=0pt,font=\FontSize{11pt}\bfseries,text=white]{#1};}}
 %%设置序号%%
-\newcommand*\chevron{\tikz[baseline=($0.3*(current bounding box.west)+0.7*(current bounding box.south west)$)]{
-\node[circle,fill=ListColor,draw=ListColor,minimum size=4.5mm,align=center,inner sep=-2.5mm,font=\FontSize{11pt}\bfseries,text=white]{\faChevronRight};}}
+\newcommand*\preconcept{\raisebox{-0.05em}{\tikz{\draw[ListColor,fill=white,line width=2.5pt](0,0)circle(1.5mm);}}}
 %%章末总结基本概念列表环境%%
-\newenvironment{Concept}{\begin{multicols}{2}\itshape\begin{itemize}[label=\protect\chevron,itemindent=0em]}{\end{itemize}\end{multicols}\colorlet{ListColor}{ColorA}}
+\newenvironment{Concept}{\begin{multicols}{2}\itshape\begin{itemize}[label=\protect\preconcept,itemindent=0em]}{\end{itemize}\end{multicols}\colorlet{ListColor}{ColorA}}
 %%设置星级%%
 \NewDocumentCommand{\score}{mm O{ColorB}}{
 \begin{tikzpicture}[baseline]
@@ -998,36 +1014,39 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 %%小节标题样式%%
 \newlength{\subsectionlabelwidth}
 %%编号小节标题样式%%
+%%设置\subsection的标题%%
+\newcommand{\subsectiontitle}[3]{\tikz{
+\node[anchor=west,draw=ColorA,fill=ColorA,line width=3.0pt,minimum height=0.7cm,rounded corners=0.35cm,font=\bfseries\FontSize{13.5pt},text=white,inner xsep=4.0mm](N)at(0,0){#1\hspace*{0.5cm}};
+\draw[draw=white,fill=white,line width=7.5pt](N.east)circle(0.45cm);
+\draw[ColorB!7.5,fill=ColorB!7.5,rounded corners=0.4cm]([xshift=-0.4cm,yshift=0.4cm]N.east)rectangle(\linewidth+2.0mm,-0.4cm);
+\draw[draw=ColorA,fill=white,line width=3.0pt](N.east)circle(0.375cm);
+\node[anchor=center,font=\bfseries\FontSize{16pt},text=ColorA](S)at(N.east){\maxsizebox{0.5cm}{!}{#2}};
+\node[anchor=west,font=\bfseries\FontSize{13.75pt},text=ColorA,inner ysep=0mm,inner xsep=2.5mm](T)at([xshift=4.0mm]S.east){\maxsizebox{\linewidth-\subsectionlabelwidth-3.0cm}{!}{#3}};}}
+%%
 \newcommand{\subsectionstyle}[3]{
 \settowidth{\subsectionlabelwidth}{\FontSize{13.5pt}{\textbf{#1}}}
 \begin{flushleft}
-\mbox{\begin{tikzpicture}
-\node[anchor=west,draw=ColorA,fill=ColorA,line width=3.0pt,minimum height=0.7cm,rounded corners=0.35cm,font=\bfseries\FontSize{13.5pt},text=white,inner xsep=4.0mm](N)at(0,0){#1\hspace*{0.5cm}};
-\draw[draw=white,fill=white,line width=7.5pt](N.east)circle(0.45cm);
-\draw[ColorB!7.5,fill=ColorB!7.5,rounded corners=0.4cm]
-([xshift=-0.35cm,yshift=0.4cm]N.east)rectangle(\linewidth,-0.4cm);
-\draw[draw=ColorA,fill=white,line width=3.0pt](N.east)circle(0.375cm);
-\node[minimum size=0.375cm,line width=3.0pt,font=\bfseries\FontSize{16pt},text=ColorA](S)at(N.east){\maxsizebox{0.5cm}{!}{#2}};
-\node[anchor=west,font=\bfseries\FontSize{13.75pt},text=ColorA,inner xsep=3.5mm,inner ysep=0mm](T)at(S.east){\maxsizebox{\linewidth-\subsectionlabelwidth-3.0cm}{!}{#3}};
-\end{tikzpicture}}
+\begin{tikzpicture}
+\node[anchor=west,inner ysep=0mm,inner xsep=-0.95mm](G)at(0,0){\subsectiontitle{#1}{#2}{#3}};
+\end{tikzpicture}
 \end{flushleft}}
 
 %%不编号小节标题样式%%
 \newcommand*\subsectionsubtitle[1]{\def\@subsectionsubtitle{#1}}
 %%设置\subsection*的标题%%
 \newcommand{\subsectionstartitle}[1]{\tikz{
-\node[anchor=west,draw=ColorA,fill=ColorA,line width=3.0pt,minimum height=0.7cm,rounded corners=0.35cm,font=\bfseries\FontSize{13.5pt},text=white,inner xsep=4.0mm](N)at(0,0){\maxsizebox{\linewidth-1.5cm}{!}{\hspace*{0.95cm}#1}};
-\draw[draw=white,fill=white,line width=7.5pt]([xshift=4.0mm]N.west)circle(0.45cm);
-\draw[draw=ColorA,fill=white,line width=3.0pt]([xshift=4.0mm]N.west)circle(0.375cm);
-\draw[draw=ColorA,fill=ColorA]([xshift=4.0mm]N.west)circle(0.2cm);}}
+\draw[ColorB!7.5,fill=ColorB!7.5,rounded corners=0.4cm](0,0.4cm)rectangle(\linewidth+2.0mm,-0.4cm);
+\node[anchor=west,draw=ColorA,fill=ColorA,line width=3.0pt,minimum height=0.7cm,rounded corners=0.35cm,font=\bfseries\FontSize{13.5pt},text=white,inner xsep=4.0mm](N)at(0,0){\maxsizebox{\linewidth-1.5cm}{!}{\hspace*{0.875cm+1.5pt}#1}};
+\draw[draw=white,fill=white,line width=7.5pt]([xshift=0.375cm+1.5pt]N.west)circle(0.45cm);
+\draw[draw=ColorA,fill=white,line width=3.0pt]([xshift=0.375cm+1.5pt]N.west)circle(0.375cm);
+\draw[draw=ColorA,fill=ColorA]([xshift=0.375cm+1.5pt]N.west)circle(0.2cm);
+\node[font=\bfseries\FontSize{12pt},text=ColorA,anchor=east,inner xsep=5.0mm,inner ysep=0mm](S)at(\linewidth+2.0mm,0){\ifdefvoid{\@subsectionsubtitle}{}{\@subsectionsubtitle}};}}
 %%
 \newcommand{\subsectionstarstyle}[1]{
 \begin{flushleft}
-\mbox{\begin{tikzpicture}
-\draw[ColorB!7.5,fill=ColorB!7.5,rounded corners=0.4cm](0,0.4cm)rectangle(\linewidth,-0.4cm);
-\node[anchor=west,inner xsep=-1.8mm](T)at(0,0){\subsectionstartitle{#1}};
-\node[font=\bfseries\FontSize{12pt},text=ColorA,anchor=east,inner xsep=5.0mm](S)at(\linewidth,0){\ifdefvoid{\@subsectionsubtitle}{}{\@subsectionsubtitle}};
-\end{tikzpicture}}
+\begin{tikzpicture}
+\node[anchor=west,inner ysep=0mm,inner xsep=-1.7mm-2.25pt](G)at(0,0){\subsectionstartitle{#1}};
+\end{tikzpicture}
 \end{flushleft}}
 
 %%编号小节样式%%
@@ -1046,8 +1065,8 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 {}{}{0em}
 {\begin{flushleft}
 \mbox{\begin{tikzpicture}
-\node[inner sep=0mm,anchor=west,font=\FontSize{24pt}\bfseries,text=ColorB](T)at(0,0){\ding{119}};
-\node[inner ysep=0.815mm,anchor=north west,font=\FontSize{13pt}\bfseries,text=ColorB](Q)at([xshift=0.25em]T.north east){\begin{varwidth}{\linewidth-0.5cm}#1\end{varwidth}};
+\node[inner xsep=-0.85mm,inner ysep=0mm,anchor=west,font=\FontSize{24pt}\bfseries,text=ColorB](T)at(0,0){\ding{119}};
+\node[inner ysep=0.815mm,anchor=north west,font=\FontSize{13pt}\bfseries,text=ColorB](Q)at([xshift=2.0mm]T.north east){\begin{varwidth}{\linewidth-0.5cm}#1\end{varwidth}};
 \end{tikzpicture}}
 \end{flushleft}}
 %%间距设置%%
@@ -1155,7 +1174,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 
 %%%%%%%%%%%%%%%%%% 环境定义和命令定义 %%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\basenode}[1]{
-\tikz[baseline=($0.7*(current bounding box.west)+0.3*(current bounding box.south west)$)]{\node[inner xsep=-0.75mm](E){#1};}}
+\tikz[baseline=($0.7*(current bounding box.west)+0.3*(current bounding box.south west)$)]{\node[inner xsep=-0.95mm](E){#1};}}
 %%设置例题命令%%
 \newcommand{\egextitle}[3]{
 \tikz{\node[font=\FontSize{11.5pt}\bfseries,text=white,draw=#2!90!ColorD,fill=#2!90!ColorD,rounded corners=0.8em,inner xsep=3.5mm,ultra thick,minimum height=1.6em](T){#1\hspace*{0.5cm}};
@@ -1390,9 +1409,9 @@ right=0mm,boxsep=0mm,
 parbox=false,before upper=\par,before lower=\par,
 before=\par\bigskip\noindent,after=\par,
 fonttitle=\bfseries\color{white}\FontSize{12pt},
-attach boxed title to top left={xshift=4.25mm,yshift*=-\tcboxedtitleheight},
+attach boxed title to top left={xshift=3.05mm,yshift*=-\tcboxedtitleheight},
 code={\colorlet{ListColor}{#3}},
-boxed title style={empty,left=8.5mm,right=3.5mm,height=0.7cm,valign=center},
+boxed title style={empty,left=8.35mm,right=3.5mm,height=0.7cm,valign=center},
 underlay boxed title={
 \draw[#3,fill=#3,line width=1.0pt](title.north west)--([xshift=-\tcboxedtitleheight/2]title.north east) arc (90:-90:{\tcboxedtitleheight/2})--(title.south west)--cycle;
 \draw[white,fill=white,line width=12.5pt](title.west)circle({\tcboxedtitleheight/2});
@@ -1407,8 +1426,8 @@ title={\maxsizebox{\linewidth-2.0cm}{!}{#2}},#1}
 \newenvironment{Point}{\begin{box0}[left=0mm]{本章要点}[ColorA]}{\end{box0}}
 \newenvironment{Point*}{\begin{box0}[left=0mm]{本节导言}[ColorA]}{\end{box0}}
 
-\newenvironment{Case}{\begin{box0}[left=-2.075mm]{基础概念、公式和定理}[ColorB]\begin{Concept}}{\end{Concept}\end{box0}}
-\newenvironment{Case*}{\begin{box0}[left=-2.2mm]{本节提要}[ColorB]\begin{Concept}}{\end{Concept}\end{box0}}
+\newenvironment{Case}{\begin{box0}[left=-3.8mm]{基础概念、公式和定理}[ColorB]\begin{Concept}}{\end{Concept}\end{box0}}
+\newenvironment{Case*}{\begin{box0}[left=-3.8mm]{本节提要}[ColorB]\begin{Concept}}{\end{Concept}\end{box0}}
 
 
 %%设置习题盒子样式%%
@@ -1416,7 +1435,7 @@ title={\maxsizebox{\linewidth-2.0cm}{!}{#2}},#1}
 enhanced standard,breakable,empty,
 pad before break=3.0mm,pad after break=5.0mm,
 top=3.0mm,bottom=3.0mm,
-right=0mm,left=-2.075mm,boxsep=0mm,
+right=0mm,left=-2.775mm,boxsep=0mm,
 attach boxed title to top left={xshift=0.5mm},
 after=\par\medskip,
 parbox=false,before upper=\par,before lower=\par,
