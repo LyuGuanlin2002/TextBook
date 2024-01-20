@@ -476,7 +476,7 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 %%设置序号%%
 \newcommand*\preconcept{\raisebox{-0.05em}{\tikz{\draw[ListColor,fill=white,line width=2.5pt](0,0)circle(1.5mm);}}}
 %%章末总结基本概念列表环境%%
-\newenvironment{Concept}{\begin{multicols}{2}\itshape\begin{itemize}[label=\protect\preconcept,itemindent=0em]}{\end{itemize}\end{multicols}\colorlet{ListColor}{ColorA}}
+\newenvironment{Concept}{\begin{multicols}{2}\itshape\begin{itemize}[label=\protect\preconcept,itemindent=-0.5em]}{\end{itemize}\end{multicols}\colorlet{ListColor}{ColorA}}
 %%设置星级%%
 \NewDocumentCommand{\score}{mm O{ColorB}}{
 \begin{tikzpicture}[baseline]
@@ -486,7 +486,7 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 \draw(\i*1.25em,0)node[name=circle\i,circle,inner sep=0mm,minimum size=0.35cm,draw=#3,very thick,fill=\circlecolor]{};}
 \end{tikzpicture}}
 %%单栏题目环境%%
-\newenvironment{QsNum}{\begin{enumerate}[label=\protect\cir{\arabic*},itemindent=0em]}
+\newenvironment{QsNum}{\begin{enumerate}[label=\protect\cir{\arabic*},itemindent=-0.5em]}
 {\end{enumerate}\colorlet{ListColor}{ColorA}}
 %%选择题的4个选项，根据选项内容长度自动排版%%
 \colorlet{ListColor}{ColorA}
@@ -973,7 +973,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 \newcommand{\sectionstarstyle}[1]{
 \begin{flushleft}
 \mbox{\begin{tikzpicture}
-\node[anchor=west,inner sep=0mm](C)at(0,0){\sectionstarlabel};
+\node[anchor=west,inner xsep=-1.0mm,inner ysep=0mm](C)at(0,0){\sectionstarlabel};
 \node[anchor=north west,font=\FontSize{17pt}\bfseries,text=ColorA,inner ysep=1.425mm](P)at([xshift=0.25cm]C.north east){\begin{varwidth}{\linewidth-1.0cm}#1\end{varwidth}};
 \end{tikzpicture}}
 \end{flushleft}}
@@ -989,7 +989,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 \settowidth{\sectionlabelwidth}{\FontSize{17pt}{\textbf{#1}}}
 \begin{flushleft}
 \mbox{\begin{tikzpicture}
-\node[anchor=west,inner sep=0mm](L)at(0,0){\envsectionlabel{#1}{#2}};
+\node[anchor=west,inner xsep=-1.0mm,inner ysep=0mm](L)at(0,0){\envsectionlabel{#1}{#2}};
 \node[anchor=north west,font=\FontSize{17pt}\bfseries,inner ysep=0.96mm](Q)at([xshift=0.75cm]L.north east){\begin{varwidth}{\linewidth-\sectionlabelwidth-1.5cm}#3\end{varwidth}};
 \end{tikzpicture}}
 \end{flushleft}}
@@ -1417,17 +1417,17 @@ underlay boxed title={
 \draw[white,fill=white,line width=12.5pt](title.west)circle({\tcboxedtitleheight/2});
 \draw[#3,fill=white,line width=3.0pt](title.west)circle({\tcboxedtitleheight/2});
 \draw[#3,fill=#3](title.west)circle({\tcboxedtitleheight/2-1.75mm});
-\draw[#3,fill=#3,ultra thin]([xshift=-16.0mm,yshift=-\tcboxedtitleheight/2]frame.north east)circle({\tcboxedtitleheight/2-1.15mm});
-\draw[#3!90,fill=#3!90,ultra thin]([xshift=-9.5mm,yshift=-\tcboxedtitleheight/2]frame.north east)circle({\tcboxedtitleheight/2-1.15mm});
-\draw[#3!80,fill=#3!80,ultra thin]([xshift=-3.0mm,yshift=-\tcboxedtitleheight/2]frame.north east)circle({\tcboxedtitleheight/2-1.15mm});},
+\draw[#3,fill=#3,ultra thin]([xshift=-14.25mm,yshift=-\tcboxedtitleheight/2]frame.north east)circle({\tcboxedtitleheight/2-1.15mm});
+\draw[#3!90,fill=#3!90,ultra thin]([xshift=-7.75mm,yshift=-\tcboxedtitleheight/2]frame.north east)circle({\tcboxedtitleheight/2-1.15mm});
+\draw[#3!80,fill=#3!80,ultra thin]([xshift=-1.25mm,yshift=-\tcboxedtitleheight/2]frame.north east)circle({\tcboxedtitleheight/2-1.15mm});},
 subtitle style={empty,before upper=\par,fontupper=\centering\FontSize{13pt}\bfseries\color{#3}},
 title={\maxsizebox{\linewidth-2.0cm}{!}{#2}},#1}
 
 \newenvironment{Point}{\begin{box0}[left=0mm]{本章要点}[ColorA]}{\end{box0}}
 \newenvironment{Point*}{\begin{box0}[left=0mm]{本节导言}[ColorA]}{\end{box0}}
 
-\newenvironment{Case}{\begin{box0}[left=-3.8mm]{基础概念、公式和定理}[ColorB]\begin{Concept}}{\end{Concept}\end{box0}}
-\newenvironment{Case*}{\begin{box0}[left=-3.8mm]{本节提要}[ColorB]\begin{Concept}}{\end{Concept}\end{box0}}
+\newenvironment{Case}{\begin{box0}[left=-3.8mm+0.5em]{基础概念、公式和定理}[ColorB]\begin{Concept}}{\end{Concept}\end{box0}}
+\newenvironment{Case*}{\begin{box0}[left=-3.8mm+0.5em]{本节提要}[ColorB]\begin{Concept}}{\end{Concept}\end{box0}}
 
 
 %%设置习题盒子样式%%
@@ -1435,7 +1435,7 @@ title={\maxsizebox{\linewidth-2.0cm}{!}{#2}},#1}
 enhanced standard,breakable,empty,
 pad before break=3.0mm,pad after break=5.0mm,
 top=3.0mm,bottom=3.0mm,
-right=0mm,left=-2.775mm,boxsep=0mm,
+right=0mm,left=-2.775mm+0.5em,boxsep=0mm,
 attach boxed title to top left={xshift=0.5mm},
 after=\par\medskip,
 parbox=false,before upper=\par,before lower=\par,
