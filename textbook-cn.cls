@@ -1018,7 +1018,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 \newcommand{\subsectiontitle}[3]{\tikz{
 \node[anchor=west,draw=ColorA,fill=ColorA,line width=3.0pt,minimum height=0.7cm,rounded corners=0.35cm,font=\bfseries\FontSize{13.5pt},text=white,inner xsep=4.0mm](N)at(0,0){#1\hspace*{0.5cm}};
 \draw[draw=white,fill=white,line width=7.5pt](N.east)circle(0.45cm);
-\draw[ColorB!7.5,fill=ColorB!7.5,rounded corners=0.4cm]([xshift=-0.4cm,yshift=0.4cm]N.east)rectangle(\linewidth+2.0mm,-0.4cm);
+\draw[ColorB!7.5,fill=ColorB!7.5,rounded corners=0.4cm]([xshift=-0.4cm,yshift=0.4cm]N.east)rectangle(\linewidth+1.0mm,-0.4cm);
 \draw[draw=ColorA,fill=white,line width=3.0pt](N.east)circle(0.375cm);
 \node[anchor=center,font=\bfseries\FontSize{16pt},text=ColorA](S)at(N.east){\maxsizebox{0.5cm}{!}{#2}};
 \node[anchor=west,font=\bfseries\FontSize{13.75pt},text=ColorA,inner ysep=0mm,inner xsep=2.5mm](T)at([xshift=4.0mm]S.east){\maxsizebox{\linewidth-\subsectionlabelwidth-3.0cm}{!}{#3}};}}
@@ -1035,7 +1035,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 \newcommand*\subsectionsubtitle[1]{\def\@subsectionsubtitle{#1}}
 %%设置\subsection*的标题%%
 \newcommand{\subsectionstartitle}[1]{\tikz{
-\draw[ColorB!7.5,fill=ColorB!7.5,rounded corners=0.4cm](0,0.4cm)rectangle(\linewidth+2.0mm,-0.4cm);
+\draw[ColorB!7.5,fill=ColorB!7.5,rounded corners=0.4cm](0,0.4cm)rectangle(\linewidth+1.0mm,-0.4cm);
 \node[anchor=west,draw=ColorA,fill=ColorA,line width=3.0pt,minimum height=0.7cm,rounded corners=0.35cm,font=\bfseries\FontSize{13.5pt},text=white,inner xsep=4.0mm](N)at(0,0){\maxsizebox{\linewidth-1.5cm}{!}{\hspace*{0.875cm+1.5pt}#1}};
 \draw[draw=white,fill=white,line width=7.5pt]([xshift=0.375cm+1.5pt]N.west)circle(0.45cm);
 \draw[draw=ColorA,fill=white,line width=3.0pt]([xshift=0.375cm+1.5pt]N.west)circle(0.375cm);
@@ -1100,7 +1100,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 \newcommand{\PartContents}[1]{
 \draw[ColorB!7.5,fill=ColorB!7.5,line width=0.1pt,rounded corners=0.38cm]
 (0,0.38cm)rectangle(\linewidth,-0.38cm);
-\draw[draw=ColorA,fill=ColorA,sharp corners]node[append after command={(T.north west)--(T.north east)[sharp corners]--(T.south east)[rounded corners=0.38cm]--(T.south west)[rounded corners=0.38cm]--cycle},font=\FontSize{13pt}\bfseries,text=white,align=center,inner xsep=5.0mm,minimum height=0.76cm,anchor=west](T)at(0,0){\maxsizebox{\linewidth/2-1.0cm}{!}{#1}};}
+\draw[draw=ColorA,fill=ColorA,sharp corners]node[append after command={(T.north west)--(T.north east)[sharp corners]--(T.south east)[rounded corners=0.38cm]--(T.south west)[rounded corners=0.38cm]--cycle},font=\FontSize{13pt}\bfseries,text=white,align=center,inner xsep=4.0mm,minimum height=0.76cm,anchor=west](T)at(0,0){\maxsizebox{\linewidth/2-1.0cm}{!}{#1}};}
 %%编号部分目录样式%%
 \newcommand{\tocentrypartnumbered}[1]{
 \contentslabel[\tikz{
@@ -1118,7 +1118,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 {\tocentrypartnumbered}
 {\tocentrypartunnumbered}{}
 %%章目录样式%%
-\titlecontents{chapter}[2.7cm]
+\titlecontents{chapter}[2.5cm]
 {\addvspace{5pt}\FontSize{13pt}\bfseries\color{ColorB}\hypersetup{linkcolor=ColorB}}
 {\color{ColorB}\contentslabel[\if@appendix%如果章在相应环境里，则修改目录前缀
 附录~\thecontentslabel~
@@ -1131,7 +1131,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 {\color{ColorB}\hspace*{-2.0cm}}%不编号章节
 {\titlerule*[6pt]{ }\color{ColorB}\FontSize{13pt}\thecontentspage}
 %%节目录样式%%
-\titlecontents{section}[2.7cm]
+\titlecontents{section}[2.5cm]
 {\addvspace{-0.5pt}\FontSize{12pt}\xbsong}
 {\contentslabel[\if@topic%如果节在相应环境里，则修改目录前缀
 专题~\thecontentslabel~
@@ -1147,13 +1147,13 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 {\hspace*{-1.9cm}}%不编号章节
 {\titlerule*[6pt]{.}\FontSize{12pt}\xbsong\thecontentspage}
 %%图片目录样式%%
-\titlecontents{figure}[2.7cm]
+\titlecontents{figure}[2.5cm]
 {\addvspace{-0.5pt}\FontSize{12pt}\xbsong}
 {\contentslabel[图~\thecontentslabel~]{1.9cm}}
 {\hspace*{-1.9cm}}%不编号图表
 {\titlerule*[6pt]{.}\FontSize{12pt}\xbsong\thecontentspage}
 %%表格目录样式%%
-\titlecontents{table}[2.7cm]
+\titlecontents{table}[2.5cm]
 {\addvspace{-0.5pt}\FontSize{12pt}\xbsong}
 {\contentslabel[表~\thecontentslabel~]{1.9cm}}
 {\hspace*{-1.9cm}}%不编号图表
@@ -1417,9 +1417,9 @@ underlay boxed title={
 \draw[white,fill=white,line width=12.5pt](title.west)circle({\tcboxedtitleheight/2});
 \draw[#3,fill=white,line width=3.0pt](title.west)circle({\tcboxedtitleheight/2});
 \draw[#3,fill=#3](title.west)circle({\tcboxedtitleheight/2-1.75mm});
-\draw[#3,fill=#3,ultra thin]([xshift=-14.25mm,yshift=-\tcboxedtitleheight/2]frame.north east)circle({\tcboxedtitleheight/2-1.15mm});
-\draw[#3!90,fill=#3!90,ultra thin]([xshift=-7.75mm,yshift=-\tcboxedtitleheight/2]frame.north east)circle({\tcboxedtitleheight/2-1.15mm});
-\draw[#3!80,fill=#3!80,ultra thin]([xshift=-1.25mm,yshift=-\tcboxedtitleheight/2]frame.north east)circle({\tcboxedtitleheight/2-1.15mm});},
+\draw[#3,fill=#3,ultra thin]([xshift=-15.5mm,yshift=-\tcboxedtitleheight/2]frame.north east)circle({\tcboxedtitleheight/2-1.15mm});
+\draw[#3!90,fill=#3!90,ultra thin]([xshift=-9.0mm,yshift=-\tcboxedtitleheight/2]frame.north east)circle({\tcboxedtitleheight/2-1.15mm});
+\draw[#3!80,fill=#3!80,ultra thin]([xshift=-2.5mm,yshift=-\tcboxedtitleheight/2]frame.north east)circle({\tcboxedtitleheight/2-1.15mm});},
 subtitle style={empty,before upper=\par,fontupper=\centering\FontSize{13pt}\bfseries\color{#3}},
 title={\maxsizebox{\linewidth-2.0cm}{!}{#2}},#1}
 
