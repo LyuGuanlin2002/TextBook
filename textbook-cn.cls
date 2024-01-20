@@ -1065,7 +1065,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 {}{}{0em}
 {\begin{flushleft}
 \mbox{\begin{tikzpicture}
-\node[inner xsep=-0.85mm,inner ysep=0mm,anchor=west,font=\FontSize{24pt}\bfseries,text=ColorB](T)at(0,0){\ding{119}};
+\node[inner sep=0mm,anchor=west,font=\FontSize{24pt}\bfseries,text=ColorB](T)at(0,0){\ding{119}};
 \node[inner ysep=0.815mm,anchor=north west,font=\FontSize{13pt}\bfseries,text=ColorB](Q)at([xshift=2.0mm]T.north east){\begin{varwidth}{\linewidth-0.5cm}#1\end{varwidth}};
 \end{tikzpicture}}
 \end{flushleft}}
