@@ -284,17 +284,25 @@ marginparsep=-\@marginlen,marginparwidth=\@marginlen,reversemarginpar]{geometry}
 \renewcommand{\bibname}{参考文献}%修改参考文献标题
 \RequirePackage{chapterbib}%分章节显示参考文献，且参考文献编号各自独立
 
+\makeatletter
+%%设置参考文献输出命令键%%
+\define@boolkey{printbib}{intoc}[true]{}
+%%设置默认键值%%
+\setkeys{printbib}{}
 %%参考文献输出设置%%
-\NewDocumentCommand{\printbib}{sm}{
-\IfBooleanTF{#1}
-{\if@appendix
+\NewDocumentCommand{\printbib}{s O{} m}{
+\begingroup
+\setkeys{printbib}{#2}
+\IfBooleanTF{#1}{
+\if@appendix
 \renewcommand{\bibsection}{\chapter{\bibname}}
 \else
-\renewcommand{\bibsection}{\chapter*{\bibname}}
-\fi}
-{\renewcommand{\bibsection}{\subsection*{\bibname}}}
+\renewcommand{\bibsection}{\chapter*{\bibname}\ifKV@printbib@intoc\addcontentsline{toc}{chapter}{\bibname}\fi}
+\fi}{\renewcommand{\bibsection}{\subsection*{\bibname}}}
 \bibliographystyle{plain}
-\bibliography{#2}}
+\bibliography{#3}
+\endgroup}
+
 \makeatother
 
 %%%%%%%%%%%%%%%%%%%% 索引宏包 %%%%%%%%%%%%%%%%%%%%
@@ -361,16 +369,20 @@ delim_2 " \\hfill "
 %%%%%%%%%%%%%%%%%%%% 术语表宏包 %%%%%%%%%%%%%%%%%%%%
 \RequirePackage[notocbasic]{nomencl}%引入术语表
 %%生成主要符号表的方法：主文件先用XeLaTeX编译一次，然后建立一个.bat文件，内容为：makeindex <filename>.nlo -s nomencl.ist -o <filename>.nls -t <filename>.nlg，运行，再用XeLaTeX编译主文件两次即可生成%%
-\makenomenclature
+\makenomenclature%写入数据文件
 \renewcommand{\nomname}{主要符号表}%更改符号表标题
 
-%%修改列数和层次%%
-\renewcommand*{\nompreamble}{\begin{multicols}{3}[
-\setlength{\columnsep}{2.0em}
-\setlength{\columnseprule}{0pt}]}
-\renewcommand*{\nompostamble}{\end{multicols}}
-%%修改符号表环境%%
 \makeatletter
+%%设置符号表输出命令键%%
+\define@key{nomen}{columns}{\def\nomen@columns{#1}}
+\define@key{nomen}{columnsep}{\def\nomen@columnsep{#1}}
+\define@key{nomen}{columnseprule}{\def\nomen@columnseprule{#1}}
+\define@boolkey{nomen}{intoc}[true]{}
+%%设置默认键值%%
+\setkeys{nomen}{columns=2,columnsep=2.0em,columnseprule=0pt}
+%%定义符号表设置命令%%
+\newcommand{\nomensetup}[1]{\setkeys{nomen}{#1}}
+%%修改符号表环境%%
 \renewcommand{\thenomenclature}{
 \providecommand*{\listofnlsname}{\nomname}
 \if@nomencl@tocbasic
@@ -380,18 +392,22 @@ delim_2 " \\hfill "
 \else
 \@ifundefined{chapter}
 {\section*{\nomname}
-\if@intoc\addcontentsline{toc}{section}{\nomname}\fi}
-{%%%%%%%%%% 修改部分开始 %%%%%%%%%%
-\if@appendix%判断符号表所在环境
+%%%%%%%%%% 修改部分开始 %%%%%%%%%%
+%\if@intoc\addcontentsline{toc}{section}{\nomname}\fi%注释掉原宏包自带的intoc键
+\ifKV@nomen@intoc\addcontentsline{toc}{section}{\nomname}\fi}%插入新定义的intoc键，使其能够在主文件中被修改
+{\if@appendix%判断符号表所在环境
 \chapter{\nomname}
 \else
 \chapter*{\nomname}
 %\@mkboth{\nomname}{\nomname}%注释掉页眉设置
-\if@intoc\addcontentsline{toc}{chapter}{\nomname}\fi
+%\if@intoc\addcontentsline{toc}{chapter}{\nomname}\fi%注释掉原宏包自带的intoc键
+\ifKV@nomen@intoc\addcontentsline{toc}{chapter}{\nomname}\fi%插入新定义的intoc键，使其能够在主文件中被修改
+\fi}
 \fi
-}%%%%%%%%%% 修改部分结束 %%%%%%%%%%
-\fi
-\nompreamble
+%\nompreamble
+\begin{multicols}{\nomen@columns}[\setlength{\columnsep}{\nomen@columnsep}
+\setlength{\columnseprule}{\nomen@columnseprule}]
+%%%%%%%%%% 修改部分结束 %%%%%%%%%%
 \if@nomentbl
 \let\itemOrig=\item
 \def\item{\gdef\item{\\}}
@@ -404,6 +420,16 @@ delim_2 " \\hfill "
 \itemsep\nomitemsep
 \let\makelabel\nomlabel}
 \fi}
+%%
+\def\endthenomenclature{
+\if@nomentbl
+\item\endlongtable
+\global\let\item=\itemOrig
+\else
+\endlist
+\fi
+%\nompostamble
+\end{multicols}}
 \makeatother
 
 %%%%%%%%%%%%%%%%%%%% 数学符号宏包 %%%%%%%%%%%%%%%%%%%%
@@ -1077,6 +1103,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 {3.25ex \@plus1.0ex \@minus0.2ex}{-1em}
 {\FontSize{12pt}\bfseries\color{ColorA}}}
 \makeatother
+
 %%练习题面板标题%%
 \NewDocumentCommand{\ExerciseTitle}{O{ColorA} m}{
 \colorlet{ListColor}{#1}
@@ -1654,6 +1681,8 @@ underlay boxed title={
 \DeclareDocumentEnvironment{Corollary*}{ O{} }{\begin{box4}{推论}[#1][ColorG][\faCompactDisc]}{\end{box4}}
 \DeclareDocumentEnvironment{Proposition*}{ O{} }{\begin{box4}{命题}[#1][ColorH][\faGlobe]}{\end{box4}}
 
+\makeatother
+
 %%设置拓展盒子%%
 \DeclareTColorBox{box5}{O{} m O{ColorA} O{\faLink}}{
 Box,before upper=\par,
@@ -1764,7 +1793,7 @@ fonttitle=\FontSize{12pt}\bfseries\color{ColorA},
 subtitle style={empty,fontupper=\FontSize{12pt}\bfseries\color{ColorA}},
 title={#1},#2}
 
-
+\makeatletter
 \newenvironment{Proof}{\begin{box8}[\faBars~~证明]
 [colframe=ColorB!7.5,colback=ColorB!7.5,colbacktitle=ColorB!7.5]}{\end{box8}}
 \DeclareDocumentEnvironment{Block}{O{}}{\begin{box8}[#1][colframe=ColorB!7.5,colback=ColorB!7.5,colbacktitle=ColorB!7.5]}{\end{box8}}
@@ -1775,6 +1804,7 @@ title={#1},#2}
 \else
 \draw[ColorB!7.5,fill=ColorB!7.5](frame.north west)[rounded corners=5.0pt]--(frame.south west)[sharp corners]--([xshift=\@innerlen]frame.south east)[sharp corners]--([xshift=\@innerlen]frame.north east)[rounded corners=5.0pt]--cycle;
 \fi}]}{\end{box8}}
+\makeatother
 
 
 \DeclareTColorBox{box9}{O{} m m O{ColorA} O{}}{

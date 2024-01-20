@@ -1,14 +1,16 @@
 % !TEX program = bibtex
 % !Mode:: "TeX:UTF-8"
-\documentclass[color=ORANGE,openany]{textbook-cn}%openany
+\documentclass[color=ORANGE,openany]{textbook-cn}
 \usepackage{zhlipsum,lipsum}%乱数假文（测试文字）
 \graphicspath{{./figure/}{./figures/}{./image/}{./images/}{./graphics/}{./graphic/}{./pictures/}{./picture/}}%提供多种图片路径
+
+\nomensetup{columns=3,columnsep=2.0em,intoc}
 
 %%定义中文索引命令，#2是中文，#3是全拼（首字母）%%
 \NewDocumentCommand{\zhindex}{omm}{\IfValueTF{#1}{\index[#1]{#3@#2}}{\index{#3@#2}}}
 %%预置索引栏目%%
 \makeindex[name=noun,title=名词索引,columns=3,columnsep=2.0em,intoc,options=-s indexstyle.ist]
-\makeindex[name=video,title=视频索引,columns=2,columnsep=2.0em,options=-s indexstyle.ist]
+\makeindex[name=video,title=视频索引,columnsep=2.0em,options=-s indexstyle.ist]
 %%设置英文索引命令%%
 \newcommand{\indexnoun}[1]{\index[noun]{#1}}
 \newcommand{\indexvideo}[1]{\index[video]{#1}}
@@ -1324,7 +1326,7 @@ void CacuSS( double E, double u, double *xo, double *yo, double *uo, double *vo,
 
 
 \chaptersubtitle{参考文献}
-\printbib*{Reference}
+\printbib*[intoc]{Reference}
 
 
 
