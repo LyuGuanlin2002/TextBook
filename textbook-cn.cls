@@ -17,6 +17,8 @@
 \DeclareVoidOption{ORANGE}{\ekv{color=ORANGE}}
 \DeclareVoidOption{YELLOW}{\ekv{color=YELLOW}}
 \DeclareVoidOption{COLORFUL}{\ekv{color=COLORFUL}}
+%%声明参考文献生成方式布尔键%%
+\DeclareBoolOption[false]{splitbib}
 %%加载book作为基础文档类%%
 \DeclareDefaultOption{\PassOptionsToClass{\CurrentOption}{book}}
 \ProcessKeyvalOptions*\relax
@@ -32,7 +34,7 @@
 \renewcommand*{\floatpagefraction}{0.85}%\floatpagefraction的数值必须小于\topfraction
 \RequirePackage[table,dvipsnames,svgnames,x11names]{xcolor}%颜色宏包
 %%蓝色主题%%
-\ifdefstring{\TextBook@color}{BLUE}{
+\ifdefstring{\TextBook@color}{blue}{
 \definecolor{ColorA}{RGB}{68,114,210}
 \definecolor{ColorB}{rgb}{0.3,0.52,1.0}
 \colorlet{ColorC}{RoyalBlue}
@@ -44,7 +46,7 @@
 \colorlet{ColorI}{CornflowerBlue}
 }{\relax}
 %%红色主题%%
-\ifdefstring{\TextBook@color}{RED}{
+\ifdefstring{\TextBook@color}{red}{
 \colorlet{ColorA}{Firebrick2}
 \colorlet{ColorB}{Brown2}
 \colorlet{ColorC}{Crimson}
@@ -56,7 +58,7 @@
 \colorlet{ColorI}{Red3}
 }{\relax}
 %%绿色主题%%
-\ifdefstring{\TextBook@color}{GREEN}{
+\ifdefstring{\TextBook@color}{green}{
 \definecolor{ColorA}{rgb}{0.3,0.6,0.3}
 \definecolor{ColorB}{rgb}{0.4,0.7,0.4}
 \colorlet{ColorC}{ForestGreen}
@@ -68,7 +70,7 @@
 \colorlet{ColorI}{Chartreuse3}
 }{\relax}
 %%紫色主题%%
-\ifdefstring{\TextBook@color}{PURPLE}{
+\ifdefstring{\TextBook@color}{purple}{
 \definecolor{ColorA}{RGB}{147,75,201}
 \definecolor{ColorB}{RGB}{192,113,217}
 \colorlet{ColorC}{BlueViolet}
@@ -80,7 +82,7 @@
 \colorlet{ColorI}{MediumOrchid}
 }{\relax}
 %%橙色主题%%
-\ifdefstring{\TextBook@color}{ORANGE}{
+\ifdefstring{\TextBook@color}{orange}{
 \colorlet{ColorA}{Firebrick2}
 \colorlet{ColorB}{Dandelion}
 \colorlet{ColorC}{DarkOrange}
@@ -92,7 +94,7 @@
 \colorlet{ColorI}{OrangeRed}
 }{\relax}
 %%黄色主题%%
-\ifdefstring{\TextBook@color}{YELLOW}{
+\ifdefstring{\TextBook@color}{yellow}{
 \colorlet{ColorA}{Dandelion}
 \colorlet{ColorB}{Goldenrod1}
 \colorlet{ColorC}{Gold}
@@ -104,7 +106,7 @@
 \colorlet{ColorI}{DarkGoldenrod2}
 }{\relax}
 %%彩色主题%%
-\ifdefstring{\TextBook@color}{COLORFUL}{
+\ifdefstring{\TextBook@color}{colorful}{
 \colorlet{ColorA}{Firebrick2}
 \colorlet{ColorB}{Dandelion}
 \colorlet{ColorC}{DodgerBlue1}
@@ -234,44 +236,47 @@ marginparsep=-\@marginlen,marginparwidth=\@marginlen,reversemarginpar]{geometry}
 \RenewDocumentCommand{\tableofcontents}{s O{}}{
 \chapter*{\contentsname}
 \IfBooleanTF{#1}{
-\@starttoc{toc}}
-{\begin{paracol}{2}
+\begin{paracol}{2}
 \@starttoc{toc}
 \switchcolumn
 {\narrowragged\noindent#2}
-\end{paracol}}}
+\end{paracol}}{
+\@starttoc{toc}}
+}
 %%重定义\listoffigures%%
 \RenewDocumentCommand{\listoffigures}{s O{}}{
 \chapter*{\listfigurename}
 \IfBooleanTF{#1}{
-\@starttoc{lof}}
-{\begin{paracol}{2}
+\begin{paracol}{2}
 \@starttoc{lof}
 \switchcolumn
 {\narrowragged\noindent#2}
-\end{paracol}}}
+\end{paracol}}{
+\@starttoc{lof}}
+}
 %%重定义\listoftables%%
 \RenewDocumentCommand{\listoftables}{s O{}}{
 \chapter*{\listtablename}
 \IfBooleanTF{#1}{
-\@starttoc{lot}}
-{\begin{paracol}{2}
+\begin{paracol}{2}
 \@starttoc{lot}
 \switchcolumn
 {\narrowragged\noindent#2}
-\end{paracol}}}
+\end{paracol}}{
+\@starttoc{lot}}
+}
 %%重定义\shorttableofcontents%%
 \RenewDocumentCommand{\shorttableofcontents}{s O{}}{
 \bgroup%确保计数器值只在局部生效
 \c@tocdepth=0
 \chapter*{\shorttocname}
 \IfBooleanTF{#1}{
-\@startshorttoc{toc}}
-{\begin{paracol}{2}
+\begin{paracol}{2}
 \@startshorttoc{toc}
 \switchcolumn
 {\narrowragged\noindent#2}
-\end{paracol}}
+\end{paracol}}{
+\@startshorttoc{toc}}
 \egroup}
 \makeatother
 
@@ -282,9 +287,11 @@ marginparsep=-\@marginlen,marginparwidth=\@marginlen,reversemarginpar]{geometry}
 \renewcommand{\citenumfont}[1]{\textbf{\color{ColorA}{\FontSize{12pt}#1}}}%修改引用样式
 \bibpunct{\color{ColorA}{[}}{\color{ColorA}{]}}{,}{n}{}{;}%修改方括号颜色
 \renewcommand{\bibname}{参考文献}%修改参考文献标题
-\RequirePackage{chapterbib}%分章节显示参考文献，且参考文献编号各自独立
-
+%%根据类布尔参数splitbib的存在与否来判断是否加载宏包chapterbib%%
 \makeatletter
+\ifTextBook@splitbib
+\RequirePackage{chapterbib}%分章节显示参考文献，且参考文献编号各自独立
+\fi
 %%设置参考文献输出命令键%%
 \define@boolkey{printbib}{intoc}[true]{}
 %%设置默认键值%%
@@ -297,12 +304,15 @@ marginparsep=-\@marginlen,marginparwidth=\@marginlen,reversemarginpar]{geometry}
 \if@appendix
 \renewcommand{\bibsection}{\chapter{\bibname}}
 \else
-\renewcommand{\bibsection}{\chapter*{\bibname}\ifKV@printbib@intoc\addcontentsline{toc}{chapter}{\bibname}\fi}
+\renewcommand{\bibsection}{\chapter*{\bibname}
+\ifKV@printbib@intoc
+\phantomsection
+\addcontentsline{toc}{chapter}{\bibname}
+\fi}
 \fi}{\renewcommand{\bibsection}{\subsection*{\bibname}}}
 \bibliographystyle{plain}
 \bibliography{#3}
 \endgroup}
-
 \makeatother
 
 %%%%%%%%%%%%%%%%%%%% 索引宏包 %%%%%%%%%%%%%%%%%%%%
@@ -312,7 +322,7 @@ marginparsep=-\@marginlen,marginparwidth=\@marginlen,reversemarginpar]{geometry}
 \begin{filecontents*}{indexstyle.ist}
 headings_flag 1
 heading_prefix "\n\\centering\\Large\\bfseries\\color{ColorA}"
-heading_suffix "\\normalsize\\normalfont\\color{black}\\nopagebreak\n"
+heading_suffix "\\large\\normalfont\\color{black}\\nopagebreak\n"
 delim_0 " \\hfill " 
 delim_1 " \\hfill "
 delim_2 " \\hfill "
@@ -320,9 +330,10 @@ delim_2 " \\hfill "
 
 \makeatletter
 %%添加新关键字envlevel（环境中索引层次）%%
-\def\imki@envindexlevel{
-\@ifundefined{chapter}{\section}{\chapter}*}
+\def\imki@envindexlevel{\@ifundefined{chapter}{\section}{\chapter}*}
 \define@key{imkiindex}{envlevel}{\def\imki@envindexlevel{#1}}
+%%设置默认键值（不要引入noclearpage选项，否则会出现目录页码错误）%%
+\setkeys{imkiindex}{level=\chapter*,envlevel=\chapter,toclevel=chapter,firstpagestyle=empty}
 %%修改索引环境%%
 \ifimki@original
 \expandafter\def\expandafter\theindex\expandafter{\expandafter
@@ -330,12 +341,14 @@ delim_2 " \\hfill "
 \else
 \global\let\imki@idxprologue\relax
 \renewenvironment{theindex}{
-\imki@maybeaddtotoc
 %%%%%%%%%% 修改部分开始 %%%%%%%%%%
 \if@appendix%判断索引所在环境
+\def\imki@maybeaddtotoc{}%索引在环境内则不额外生成目录
 \imki@envindexlevel{\indexname}
+\imki@maybeaddtotoc
 \else
 \imki@indexlevel{\indexname}
+\imki@maybeaddtotoc
 \fi
 %\imki@indexheaders%注释掉页眉设置
 %%%%%%%%%% 修改部分结束 %%%%%%%%%%
@@ -362,12 +375,11 @@ delim_2 " \\hfill "
 \end{multicols}
 \fi}\fi
 \makeatother
-
-%%索引预设（只能放置在导言区，不要引入noclearpage选项，否则会出现目录页码错误）%%
-\indexsetup{level=\chapter*,envlevel=\chapter,toclevel=chapter,firstpagestyle=empty}
+%%定义中文索引命令，#2是中文，#3是全拼（首字母）%%
+\NewDocumentCommand{\zhindex}{omm}{\IfValueTF{#1}{\index[#1]{#3@#2}}{\index{#3@#2}}}
 
 %%%%%%%%%%%%%%%%%%%% 术语表宏包 %%%%%%%%%%%%%%%%%%%%
-\RequirePackage[notocbasic]{nomencl}%引入术语表
+\RequirePackage{nomencl}%引入术语表
 %%生成主要符号表的方法：主文件先用XeLaTeX编译一次，然后建立一个.bat文件，内容为：makeindex <filename>.nlo -s nomencl.ist -o <filename>.nls -t <filename>.nlg，运行，再用XeLaTeX编译主文件两次即可生成%%
 \makenomenclature%写入数据文件
 \renewcommand{\nomname}{主要符号表}%更改符号表标题
@@ -376,14 +388,16 @@ delim_2 " \\hfill "
 %%设置符号表输出命令键%%
 \define@key{nomen}{columns}{\def\nomen@columns{#1}}
 \define@key{nomen}{columnsep}{\def\nomen@columnsep{#1}}
-\define@key{nomen}{columnseprule}{\def\nomen@columnseprule{#1}}
+\define@boolkey{nomen}{columnseprule}[true]{}
 \define@boolkey{nomen}{intoc}[true]{}
 %%设置默认键值%%
-\setkeys{nomen}{columns=2,columnsep=2.0em,columnseprule=0pt}
+\setkeys{nomen}{columns=2,columnsep=2.0em}
 %%定义符号表设置命令%%
 \newcommand{\nomensetup}[1]{\setkeys{nomen}{#1}}
 %%修改符号表环境%%
 \renewcommand{\thenomenclature}{
+%%%%%%%%%% 修改部分开始 %%%%%%%%%%
+\@nomencl@tocbasicfalse%使得以下部分失效
 \providecommand*{\listofnlsname}{\nomname}
 \if@nomencl@tocbasic
 \let\list@fname\listofnlsname
@@ -392,21 +406,30 @@ delim_2 " \\hfill "
 \else
 \@ifundefined{chapter}
 {\section*{\nomname}
-%%%%%%%%%% 修改部分开始 %%%%%%%%%%
-%\if@intoc\addcontentsline{toc}{section}{\nomname}\fi%注释掉原宏包自带的intoc键
-\ifKV@nomen@intoc\addcontentsline{toc}{section}{\nomname}\fi}%插入新定义的intoc键，使其能够在主文件中被修改
-{\if@appendix%判断符号表所在环境
+%\if@intoc\addcontentsline{toc}{section}{\nomname}\fi
+\ifKV@nomen@intoc
+\phantomsection
+\addcontentsline{toc}{section}{\nomname}
+\fi}{
+\if@appendix%判断符号表所在环境
 \chapter{\nomname}
 \else
 \chapter*{\nomname}
 %\@mkboth{\nomname}{\nomname}%注释掉页眉设置
-%\if@intoc\addcontentsline{toc}{chapter}{\nomname}\fi%注释掉原宏包自带的intoc键
-\ifKV@nomen@intoc\addcontentsline{toc}{chapter}{\nomname}\fi%插入新定义的intoc键，使其能够在主文件中被修改
+%\if@intoc\addcontentsline{toc}{chapter}{\nomname}\fi
+\ifKV@nomen@intoc
+\phantomsection
+\addcontentsline{toc}{chapter}{\nomname}
+\fi
 \fi}
 \fi
 %\nompreamble
-\begin{multicols}{\nomen@columns}[\setlength{\columnsep}{\nomen@columnsep}
-\setlength{\columnseprule}{\nomen@columnseprule}]
+\ifnum\nomen@columns>\@ne%多列符号表设置
+\begin{multicols}{\nomen@columns}
+\columnsep\nomen@columnsep
+\columnseprule
+\ifKV@nomen@columnseprule0.4\p@\else\z@\fi
+\fi
 %%%%%%%%%% 修改部分结束 %%%%%%%%%%
 \if@nomentbl
 \let\itemOrig=\item
@@ -428,8 +451,13 @@ delim_2 " \\hfill "
 \else
 \endlist
 \fi
+%%%%%%%%%% 修改部分开始 %%%%%%%%%%
 %\nompostamble
-\end{multicols}}
+\ifnum\nomen@columns>\@ne
+\end{multicols}
+\fi
+%%%%%%%%%% 修改部分结束 %%%%%%%%%%
+}
 \makeatother
 
 %%%%%%%%%%%%%%%%%%%% 数学符号宏包 %%%%%%%%%%%%%%%%%%%%
@@ -498,11 +526,15 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 %%%%%%%%%%%%%%%%%%%% 列表环境 %%%%%%%%%%%%%%%%%%%%%%
 %%设置题号%%
 \newcommand*\cir[1]{\tikz[baseline=($0.3*(current bounding box.west)+0.7*(current bounding box.south west)$)]{
-\node[shape=circle,fill=ListColor,draw=ListColor,minimum size=5.0mm,align=center,inner sep=0pt,font=\FontSize{11pt}\bfseries,text=white]{#1};}}
-%%设置序号%%
+\node[shape=circle,fill=ListColor,draw=ListColor,minimum size=5.0mm,align=center,inner sep=0pt,font=\FontSize{11pt}\bfseries,text=white]{\maxsizebox{4.5mm}{!}{#1}};}}
+%%设置概念序号%%
 \newcommand*\preconcept{\raisebox{-0.05em}{\tikz{\draw[ListColor,fill=white,line width=2.5pt](0,0)circle(1.5mm);}}}
-%%章末总结基本概念列表环境%%
+%%概念列表环境%%
 \newenvironment{Concept}{\begin{multicols}{2}\itshape\begin{itemize}[label=\protect\preconcept,itemindent=-0.5em]}{\end{itemize}\end{multicols}\colorlet{ListColor}{ColorA}}
+%%题目列表环境%%
+\newenvironment{QsNum}{\begin{enumerate}[label=\protect\cir{\arabic*},itemindent=-0.5em]}
+{\end{enumerate}\colorlet{ListColor}{ColorA}}
+
 %%设置星级%%
 \NewDocumentCommand{\score}{mm O{ColorB}}{
 \begin{tikzpicture}[baseline]
@@ -511,9 +543,7 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 \edef\circlecolor{\pgfmathresult}
 \draw(\i*1.25em,0)node[name=circle\i,circle,inner sep=0mm,minimum size=0.35cm,draw=#3,very thick,fill=\circlecolor]{};}
 \end{tikzpicture}}
-%%单栏题目环境%%
-\newenvironment{QsNum}{\begin{enumerate}[label=\protect\cir{\arabic*},itemindent=-0.5em]}
-{\end{enumerate}\colorlet{ListColor}{ColorA}}
+
 %%选择题的4个选项，根据选项内容长度自动排版%%
 \colorlet{ListColor}{ColorA}
 \newlength{\la}\newlength{\lb}\newlength{\lc}\newlength{\ld}
@@ -573,7 +603,7 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 \renewcommand{\sectionmark}[1]{\markright{第~\thesection~节\quad#1}}
 \extramarks{\protect\@title}{\protect\@title}
 \newcommand{\pageframe}{
-\mbox{\begin{tikzpicture}[remember picture,overlay]
+\begin{tikzpicture}[remember picture,overlay]
 %%根据页数的奇偶生成%%
 \ifodd\value{page}
 \coordinate(A)at(current page.north west);
@@ -588,13 +618,13 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 \draw[fill=ColorB!7.5,ColorB!7.5,line width=0.1pt,sharp corners]
 (A)--(B)--(C)--(D)--(E)[rounded corners=5.0mm]--(F)[rounded corners=5.0mm]--(G)[sharp corners]--(H)--cycle;
 \draw[ColorA,fill=ColorA,line width=1.0pt]
-([xshift=-\@outerlen+0.25cm]current page.north east)[rounded corners=1.0mm]--
-([xshift=-\@outerlen+0.25cm,yshift=-1.35cm]current page.north east)[rounded corners=1.0mm]--
-([xshift=-0.75cm,yshift=-1.35cm]current page.north east)[sharp corners]--
-([xshift=-0.75cm]current page.north east)--
+([xshift=-\@outerlen+0.25cm]B)[rounded corners=1.0mm]--
+([xshift=-\@outerlen+0.25cm,yshift=-1.35cm]B)[rounded corners=1.0mm]--
+([xshift=-0.75cm,yshift=-1.35cm]B)[sharp corners]--
+([xshift=-0.75cm]B)--
 cycle;
-\node[font=\numberfont\FontSize{14pt},text=white,anchor=south,align=center](P)at([xshift=-\@outerlen/2-0.25cm,yshift=-1.3cm]current page.north east){\maxsizebox{\@outerlen-1.1cm}{!}{\thepage}};
-\draw[draw=ColorA,fill=ColorA,sharp corners]node[append after command={(T.north west)--(T.north east)--(T.south east)[rounded corners]--(T.south west)[rounded corners]--cycle},font=\FontSize{13pt}\bfseries,text=white,text width=6.5mm,align=center,inner xsep=1.5mm,inner ysep=3.5mm,anchor=east](T)at([yshift=\MarkY]current page.north east){\rotatebox[origin=c]{90}{\maxsizebox{\SepH+\DeltaH-2.5cm}{!}{\lastxmark}}};
+\node[font=\numberfont\FontSize{14pt},text=white,anchor=south,align=center](P)at([xshift=-\@outerlen/2-0.25cm,yshift=-1.3cm]B){\maxsizebox{\@outerlen-1.1cm}{!}{\thepage}};
+\draw[draw=ColorA,fill=ColorA,sharp corners]node[append after command={(T.north west)--(T.north east)--(T.south east)[rounded corners]--(T.south west)[rounded corners]--cycle},font=\FontSize{13pt}\bfseries,text=white,text width=6.5mm,align=center,inner xsep=1.5mm,inner ysep=3.5mm,anchor=east](T)at([yshift=\MarkY]B){\rotatebox[origin=c]{90}{\maxsizebox{\SepH+\DeltaH-2.5cm}{!}{\lastxmark}}};
 \else
 \coordinate(A)at(current page.north east);
 \coordinate(B)at(current page.north west);
@@ -608,15 +638,15 @@ cycle;
 \draw[fill=ColorB!7.5,ColorB!7.5,line width=0.1pt,sharp corners]
 (A)--(B)--(C)--(D)--(E)[rounded corners=5.0mm]--(F)[rounded corners=5.0mm]--(G)[sharp corners]--(H)--cycle;
 \draw[ColorA,fill=ColorA,line width=1.0pt]
-([xshift=\@outerlen-0.25cm]current page.north west)[rounded corners=1.0mm]--
-([xshift=\@outerlen-0.25cm,yshift=-1.35cm]current page.north west)[rounded corners=1.0mm]--
-([xshift=0.75cm,yshift=-1.35cm]current page.north west)[sharp corners]--
-([xshift=0.75cm]current page.north west)--
+([xshift=\@outerlen-0.25cm]B)[rounded corners=1.0mm]--
+([xshift=\@outerlen-0.25cm,yshift=-1.35cm]B)[rounded corners=1.0mm]--
+([xshift=0.75cm,yshift=-1.35cm]B)[sharp corners]--
+([xshift=0.75cm]B)--
 cycle;
-\node[font=\numberfont\FontSize{14},text=white,anchor=south,align=center](P)at([xshift=\@outerlen/2+0.25cm,yshift=-1.3cm]current page.north west){\maxsizebox{\@outerlen-1.1cm}{!}{\thepage}};
-\draw[draw=ColorA,fill=ColorA,sharp corners]node[append after command={(T.north west)[rounded corners]--(T.north east)[rounded corners]--(T.south east)[sharp corners]--(T.south west)--cycle},font=\FontSize{13pt}\bfseries,text=white,text width=6.5mm,align=center,inner xsep=1.5mm,inner ysep=3.5mm,anchor=west](T)at([yshift=\MarkY]current page.north west){\rotatebox[origin=c]{270}{\maxsizebox{\SepH+\DeltaH-2.5cm}{!}{\firstxmark}}};
+\node[font=\numberfont\FontSize{14},text=white,anchor=south,align=center](P)at([xshift=\@outerlen/2+0.25cm,yshift=-1.3cm]B){\maxsizebox{\@outerlen-1.1cm}{!}{\thepage}};
+\draw[draw=ColorA,fill=ColorA,sharp corners]node[append after command={(T.north west)[rounded corners]--(T.north east)[rounded corners]--(T.south east)[sharp corners]--(T.south west)--cycle},font=\FontSize{13pt}\bfseries,text=white,text width=6.5mm,align=center,inner xsep=1.5mm,inner ysep=3.5mm,anchor=west](T)at([yshift=\MarkY]B){\rotatebox[origin=c]{270}{\maxsizebox{\SepH+\DeltaH-2.5cm}{!}{\firstxmark}}};
 \fi
-\end{tikzpicture}}}
+\end{tikzpicture}}
 \makeatother
 %%定义主页面样式%%
 \fancypagestyle{MainPage}{
@@ -633,8 +663,7 @@ cycle;
 \makeatletter
 \newcommand*{\partintro}[1]{\def\@partintro{\hspace*{2.0em}#1}}
 \newcommand{\partstyle}[2]{
-%加上\makebox是为了防止盒子overfull
-\mbox{\begin{tikzpicture}[remember picture,overlay]
+\begin{tikzpicture}[remember picture,overlay]
 \draw[ColorB!7.5,fill=ColorB!7.5](current page.north west)rectangle(current page.south east);
 \ifodd\value{page}%判断奇偶页
 %%坐标%%
@@ -689,7 +718,7 @@ cycle;
 \node[anchor=south east](C)at([xshift=-\@innerlen-0.25in,yshift=\@botlen]current page.south east){\begin{varwidth}{\textwidth}\printcontents[part]{l}{0}{\setcounter{tocdepth}{0}}\end{varwidth}};
 \node[font=\FontSize{13pt}\bfseries,text=ColorB!95!black,anchor=south west](R)at(C.north west){部分概要};
 \fi
-\end{tikzpicture}}}
+\end{tikzpicture}}
 
 %%定义小半圆%%
 \newcommand{\halfcircle}[2]{
@@ -702,7 +731,7 @@ cycle;
 %%不编号部分页样式%%
 \newcommand{\partstarstyle}[1]{
 \settowidth{\partstarlen}{\bfseries{\FontSize{40pt}{#1}}}
-\mbox{\begin{tikzpicture}[remember picture,overlay]
+\begin{tikzpicture}[remember picture,overlay]
 \draw[ColorB!7.5,fill=ColorB!7.5](current page.north west)rectangle(current page.south east);
 \ifodd\value{page}%判断奇偶页
 %%坐标%%
@@ -785,7 +814,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 \node[anchor=south east](C)at([xshift=-\@innerlen-0.25in,yshift=\@botlen]current page.south east){\begin{varwidth}{\textwidth}\printcontents[part]{l}{0}{\setcounter{tocdepth}{0}}\end{varwidth}};
 \node[font=\FontSize{13pt}\bfseries,text=ColorB!95!black,anchor=south west](W)at(C.north west){部分概要};
 \fi
-\end{tikzpicture}}}
+\end{tikzpicture}}
 %%编号部分页%%
 \titleformat{\part}
 {}{}{0em}
@@ -817,7 +846,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 \newcommand*\chapterimage[1]{\def\@chapterimage{#1}}
 %%编号章节页样式%%
 \newcommand{\chapterstyle}[2]{
-\mbox{\begin{tikzpicture}[remember picture,overlay]
+\begin{tikzpicture}[remember picture,overlay]
 \ifodd\value{page}%判断奇偶页
 %%坐标%%
 \coordinate(A)at(current page.north west);
@@ -834,20 +863,20 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 \draw[fill=ColorB!7.5,ColorB!7.5,line width=0.1pt,sharp corners]
 (A)--(B)--(C)--(D)--(E)--(F)[in=180,out=0]to(G)[rounded corners=2.5mm]--(H)[rounded corners=5.0mm]--(I)[sharp corners]--(J)--cycle;
 %%编号%%
-\draw[draw=ColorA,fill=ColorA,sharp corners]node[append after command={(T.south west)[rounded corners=2.5mm]--(T.south east)[sharp corners]--([yshift=0.65cm]T.north east)--([yshift=0.65cm]T.north west)[rounded corners=2.5mm]--cycle},anchor=north east,font=\bfseries\FontSize{25pt},text=white,inner sep=0.4cm](T)at([xshift=-\@outerlen-0.25in,yshift=-0.65cm]current page.north east){#1};
+\draw[draw=ColorA,fill=ColorA,sharp corners]node[append after command={(T.south west)[rounded corners=2.5mm]--(T.south east)[sharp corners]--([yshift=0.65cm]T.north east)--([yshift=0.65cm]T.north west)[rounded corners=2.5mm]--cycle},anchor=north east,font=\bfseries\FontSize{25pt},text=white,inner sep=0.4cm](T)at([xshift=-\@outerlen-0.25in,yshift=-0.65cm]B){#1};
 %%渐变带%%
 \draw[ColorB!40,fill=ColorB!40,line width=0pt]
-([yshift=-2.79cm]current page.north west)rectangle([yshift=-3.09cm]current page.north east);
+([yshift=-2.79cm]A)rectangle([yshift=-3.09cm]B);
 %%标题%%
-\node[anchor=east,font=\bfseries\FontSize{27.5pt},text=ColorA](P)at([xshift=-\@outerlen-0.25in+0.25cm,yshift=-3.95cm]current page.north east){\maxsizebox{\textwidth-0.5in}{!}{#2}};
+\node[anchor=east,font=\bfseries\FontSize{27.5pt},text=ColorA](P)at([xshift=-\@outerlen-0.25in+0.25cm,yshift=-3.95cm]B){\maxsizebox{\textwidth-0.5in}{!}{#2}};
 %%副标题%%
-\node[anchor=west,font=\itshape\fontsize{12}{0.75\baselineskip}\selectfont,text=ColorA,text width=\paperwidth-\@innerlen-5.0cm](S)at([xshift=\@innerlen,yshift=1.0cm]current page.south west){\ifdefvoid{\@chaptersaying}{}{\@chaptersaying}};
+\node[anchor=west,font=\itshape\fontsize{12}{0.75\baselineskip}\selectfont,text=ColorA,text width=\paperwidth-\@innerlen-5.0cm](S)at([xshift=\@innerlen,yshift=1.0cm]D){\ifdefvoid{\@chaptersaying}{}{\@chaptersaying}};
 %%章节图片%%
-\node[anchor=north west,inner sep=0mm](I)at(current page.north west){\ifdefvoid{\@chapterimage}{}{\includegraphics[height=5.022cm]{\@chapterimage}}};
+\node[anchor=north west,inner sep=0mm](I)at(A){\ifdefvoid{\@chapterimage}{}{\includegraphics[height=5.022cm]{\@chapterimage}}};
 %%页码%%
 \draw[ColorA,fill=ColorA,rounded corners=1.5mm]
-([xshift=-1.6cm,yshift=1.6cm]current page.south east)rectangle([xshift=-0.6cm,yshift=0.6cm]current page.south east);
-\node[font=\numberfont\FontSize{14pt},text=white,anchor=center,align=center](P)at([xshift=-1.1cm,yshift=1.0cm]current page.south east){\maxsizebox{0.9cm}{!}{\thepage}};
+([xshift=-1.6cm,yshift=1.6cm]current page.south east)rectangle([xshift=-0.6cm,yshift=0.6cm]C);
+\node[font=\numberfont\FontSize{14pt},text=white,anchor=center,align=center](P)at([xshift=-1.1cm,yshift=1.0cm]C){\maxsizebox{0.9cm}{!}{\thepage}};
 \else
 %%坐标%%
 \coordinate(A)at(current page.north east);
@@ -864,25 +893,25 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 \draw[fill=ColorB!7.5,ColorB!7.5,line width=0.1pt,sharp corners]
 (A)--(B)--(C)--(D)--(E)--(F)[in=0,out=180]to(G)[rounded corners=2.5mm]--(H)[rounded corners=5.0mm]--(I)[sharp corners]--(J)--cycle;
 %%编号%%
-\draw[draw=ColorA,fill=ColorA,sharp corners]node[append after command={(T.south west)[rounded corners=2.5mm]--(T.south east)[sharp corners]--([yshift=0.65cm]T.north east)--([yshift=0.65cm]T.north west)[rounded corners=2.5mm]--cycle},anchor=north west,font=\bfseries\FontSize{25pt},text=white,inner sep=0.4cm](T)at([xshift=\@outerlen+0.25in,yshift=-0.65cm]current page.north west){#1};
+\draw[draw=ColorA,fill=ColorA,sharp corners]node[append after command={(T.south west)[rounded corners=2.5mm]--(T.south east)[sharp corners]--([yshift=0.65cm]T.north east)--([yshift=0.65cm]T.north west)[rounded corners=2.5mm]--cycle},anchor=north west,font=\bfseries\FontSize{25pt},text=white,inner sep=0.4cm](T)at([xshift=\@outerlen+0.25in,yshift=-0.65cm]B){#1};
 %%渐变带%%
 \draw[ColorB!40,fill=ColorB!40,line width=0pt]
-([yshift=-2.79cm]current page.north east)rectangle([yshift=-3.09cm]current page.north west);
+([yshift=-2.79cm]A)rectangle([yshift=-3.09cm]B);
 %%标题%%
-\node[anchor=west,font=\bfseries\FontSize{27.5pt},text=ColorA](P)at([xshift=\@outerlen+0.25in-0.25cm,yshift=-3.95cm]current page.north west){\maxsizebox{\textwidth-0.5in}{!}{#2}};
+\node[anchor=west,font=\bfseries\FontSize{27.5pt},text=ColorA](P)at([xshift=\@outerlen+0.25in-0.25cm,yshift=-3.95cm]B){\maxsizebox{\textwidth-0.5in}{!}{#2}};
 %%副标题%%
-\node[anchor=west,font=\itshape\fontsize{12}{0.75\baselineskip}\selectfont,text=ColorA,text width=\paperwidth-\@innerlen-4.0cm](S)at([xshift=4.0cm,yshift=1.0cm]current page.south west){\ifdefvoid{\@chaptersaying}{}{\@chaptersaying}};
+\node[anchor=west,font=\itshape\fontsize{12}{0.75\baselineskip}\selectfont,text=ColorA,text width=\paperwidth-\@innerlen-4.0cm](S)at([xshift=4.0cm,yshift=1.0cm]C){\ifdefvoid{\@chaptersaying}{}{\@chaptersaying}};
 %%章节图片%%
-\node[anchor=north east,inner sep=0mm](I)at(current page.north east){\ifdefvoid{\@chapterimage}{}{\includegraphics[height=5.022cm]{\@chapterimage}}};
+\node[anchor=north east,inner sep=0mm](I)at(A){\ifdefvoid{\@chapterimage}{}{\includegraphics[height=5.022cm]{\@chapterimage}}};
 %%页码%%
 \draw[ColorA,fill=ColorA,rounded corners=1.5mm]
-([xshift=1.6cm,yshift=1.6cm]current page.south west)rectangle([xshift=0.6cm,yshift=0.6cm]current page.south west);
-\node[font=\numberfont\FontSize{14pt},text=white,anchor=center,align=center](P)at([xshift=1.1cm,yshift=1.0cm]current page.south west){\maxsizebox{0.9cm}{!}{\thepage}};
+([xshift=1.6cm,yshift=1.6cm]current page.south west)rectangle([xshift=0.6cm,yshift=0.6cm]C);
+\node[font=\numberfont\FontSize{14pt},text=white,anchor=center,align=center](P)at([xshift=1.1cm,yshift=1.0cm]C){\maxsizebox{0.9cm}{!}{\thepage}};
 \fi
-\end{tikzpicture}}}
+\end{tikzpicture}}
 %%不编号章节样式%%
 \newcommand{\chapterstarstyle}[2]{
-\mbox{\begin{tikzpicture}[remember picture,overlay]
+\begin{tikzpicture}[remember picture,overlay]
 \ifodd\value{page}%判断奇偶页
 %%坐标点%%
 \coordinate(A)at(current page.north west);
@@ -940,7 +969,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 ([xshift=1.6cm,yshift=1.6cm]current page.south west)rectangle([xshift=0.6cm,yshift=0.6cm]current page.south west);
 \node[font=\numberfont\FontSize{14pt},text=white,anchor=center,align=center](P)at([xshift=1.1cm,yshift=1.0cm]current page.south west){\maxsizebox{0.9cm}{!}{\thepage}};
 \fi
-\end{tikzpicture}}}
+\end{tikzpicture}}
 %%制定章节页的侧标更新规则%%
 \newcommand{\pagesiderule}{
 \ifnum\value{@currenttotalpart}=0%若文档中到当前章时还没有部分层次
@@ -974,11 +1003,11 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 [\global\chaptersubtitle{}%清空\chaptersubtitle
 \global\chapterimage{}]%清空\chapterimage
 %%间距设置%%
-\titlespacing*{\chapter}{0pt}{30pt}{50pt}
+\titlespacing*{\chapter}{0pt}{40pt}{40pt}
 %%节样式%%
 %%编号节样式%%
 \newcommand{\sectionlabel}[1]{
-\tikz{\node[inner sep=0mm,anchor=west,font=\FontSize{17pt}\bfseries](P)at(0,0){第};
+\tikz{\node[inner sep=0mm,anchor=west,font=\FontSize{17pt}\bfseries](P){第};
 \node[inner sep=0mm,anchor=west,font=\FontSize{17pt}\bfseries](S)at([xshift=1.2cm]P.east){节};
 \coordinate(R)at($0.5*(P.east)+0.5*(S.west)$);
 \draw[ColorA,fill=ColorA](R)circle(0.375cm);
@@ -986,10 +1015,8 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 %%
 \newcommand{\sectionstyle}[2]{
 \begin{center}
-\mbox{\begin{tikzpicture}
-\node[anchor=west,inner sep=0mm](L)at(0,0){\sectionlabel{#1}};
-\node[anchor=north west,font=\FontSize{17pt}\bfseries,inner ysep=0.96mm](Q)at([xshift=0.75cm]L.north east){\begin{varwidth}{\linewidth-2.5cm}#2\end{varwidth}};
-\end{tikzpicture}}
+\tikz{\node[anchor=west,inner sep=0mm](L){\sectionlabel{#1}};
+\node[anchor=north west,font=\FontSize{17pt}\bfseries,inner ysep=0.96mm](Q)at([xshift=0.75cm]L.north east){\begin{varwidth}{\linewidth-2.5cm}#2\end{varwidth}};}
 \end{center}}
 %%不编号节样式%%
 \newcommand{\sectionstarlabel}{
@@ -998,14 +1025,12 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 %%
 \newcommand{\sectionstarstyle}[1]{
 \begin{flushleft}
-\mbox{\begin{tikzpicture}
-\node[anchor=west,inner xsep=-1.0mm,inner ysep=0mm](C)at(0,0){\sectionstarlabel};
-\node[anchor=north west,font=\FontSize{17pt}\bfseries,text=ColorA,inner ysep=1.425mm](P)at([xshift=0.25cm]C.north east){\begin{varwidth}{\linewidth-1.0cm}#1\end{varwidth}};
-\end{tikzpicture}}
+\tikz{\node[anchor=west,inner xsep=-1.0mm,inner ysep=0mm](C){\sectionstarlabel};
+\node[anchor=north west,font=\FontSize{17pt}\bfseries,text=ColorA,inner ysep=1.425mm](P)at([xshift=0.25cm]C.north east){\begin{varwidth}{\linewidth-1.0cm}#1\end{varwidth}};}
 \end{flushleft}}
 %%环境内节样式%%
 \newcommand{\envsectionlabel}[2]{
-\tikz{\node[inner sep=0mm,anchor=west,font=\FontSize{17pt}\bfseries](P)at(0,0){#1};
+\tikz{\node[inner sep=0mm,anchor=west,font=\FontSize{17pt}\bfseries](P){#1};
 \coordinate(R)at([xshift=0.65cm]P.east);
 \draw[ColorA,fill=ColorA](R)circle(0.375cm);
 \node[inner sep=0mm,anchor=center,font=\FontSize{17pt}\bfseries,text=white](N)at(R){\maxsizebox{0.45cm}{0.45cm}{#2}};}}
@@ -1014,10 +1039,8 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 \newcommand{\envsectionstyle}[3]{
 \settowidth{\sectionlabelwidth}{\FontSize{17pt}{\textbf{#1}}}
 \begin{flushleft}
-\mbox{\begin{tikzpicture}
-\node[anchor=west,inner xsep=-1.0mm,inner ysep=0mm](L)at(0,0){\envsectionlabel{#1}{#2}};
-\node[anchor=north west,font=\FontSize{17pt}\bfseries,inner ysep=0.96mm](Q)at([xshift=0.75cm]L.north east){\begin{varwidth}{\linewidth-\sectionlabelwidth-1.5cm}#3\end{varwidth}};
-\end{tikzpicture}}
+\tikz{\node[anchor=west,inner xsep=-1.0mm,inner ysep=0mm](L){\envsectionlabel{#1}{#2}};
+\node[anchor=north west,font=\FontSize{17pt}\bfseries,inner ysep=0.96mm](Q)at([xshift=0.75cm]L.north east){\begin{varwidth}{\linewidth-\sectionlabelwidth-1.5cm}#3\end{varwidth}};}
 \end{flushleft}}
 %%编号节样式%%
 \titleformat{\section}
@@ -1042,7 +1065,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 %%编号小节标题样式%%
 %%设置\subsection的标题%%
 \newcommand{\subsectiontitle}[3]{\tikz{
-\node[anchor=west,draw=ColorA,fill=ColorA,line width=3.0pt,minimum height=0.7cm,rounded corners=0.35cm,font=\bfseries\FontSize{13.5pt},text=white,inner xsep=4.0mm](N)at(0,0){#1\hspace*{0.5cm}};
+\node[anchor=west,draw=ColorA,fill=ColorA,line width=3.0pt,minimum height=0.7cm,rounded corners=0.35cm,font=\bfseries\FontSize{13.5pt},text=white,inner xsep=4.0mm](N){#1\hspace*{0.5cm}};
 \draw[draw=white,fill=white,line width=7.5pt](N.east)circle(0.45cm);
 \draw[ColorB!7.5,fill=ColorB!7.5,rounded corners=0.4cm]([xshift=-0.4cm,yshift=0.4cm]N.east)rectangle(\linewidth+1.0mm,-0.4cm);
 \draw[draw=ColorA,fill=white,line width=3.0pt](N.east)circle(0.375cm);
@@ -1052,9 +1075,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 \newcommand{\subsectionstyle}[3]{
 \settowidth{\subsectionlabelwidth}{\FontSize{13.5pt}{\textbf{#1}}}
 \begin{flushleft}
-\begin{tikzpicture}
-\node[anchor=west,inner ysep=0mm,inner xsep=-0.95mm](G)at(0,0){\subsectiontitle{#1}{#2}{#3}};
-\end{tikzpicture}
+\tikz{\node[inner ysep=0mm,inner xsep=-0.95mm](G){\subsectiontitle{#1}{#2}{#3}};}
 \end{flushleft}}
 
 %%不编号小节标题样式%%
@@ -1070,15 +1091,12 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 %%
 \newcommand{\subsectionstarstyle}[1]{
 \begin{flushleft}
-\begin{tikzpicture}
-\node[anchor=west,inner ysep=0mm,inner xsep=-1.7mm-2.25pt](G)at(0,0){\subsectionstartitle{#1}};
-\end{tikzpicture}
+\tikz{\node[inner ysep=0mm,inner xsep=-1.7mm-2.25pt](G){\subsectionstartitle{#1}};}
 \end{flushleft}}
 
 %%编号小节样式%%
 \titleformat{\subsection}
-{}
-{}{0em}
+{}{}{0em}
 {\subsectionstyle{课时}{\arabic{subsection}}{#1}}
 %%不编号小节样式%%
 \titleformat{name=\subsection,numberless}
@@ -1090,13 +1108,11 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 \titleformat{\subsubsection}
 {}{}{0em}
 {\begin{flushleft}
-\mbox{\begin{tikzpicture}
-\node[inner sep=0mm,anchor=west,font=\FontSize{24pt}\bfseries,text=ColorB](T)at(0,0){\ding{119}};
-\node[inner ysep=0.815mm,anchor=north west,font=\FontSize{13pt}\bfseries,text=ColorB](Q)at([xshift=2.0mm]T.north east){\begin{varwidth}{\linewidth-0.5cm}#1\end{varwidth}};
-\end{tikzpicture}}
+\tikz{\node[inner sep=0mm,anchor=west,font=\FontSize{24pt}\bfseries,text=ColorB](T){\ding{119}};
+\node[inner ysep=0.815mm,anchor=north west,font=\FontSize{13pt}\bfseries,text=ColorB](Q)at([xshift=2.0mm]T.north east){\begin{varwidth}{\linewidth-0.5cm}#1\end{varwidth}};}
 \end{flushleft}}
 %%间距设置%%
-\titlespacing*{\subsubsection}{0pt}{15pt}{-20pt}
+\titlespacing*{\subsubsection}{0pt}{15pt}{-15pt}
 %%修改段落样式%%
 \renewcommand\paragraph{
 \@startsection{paragraph}{4}{\z@}
@@ -1109,7 +1125,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 \colorlet{ListColor}{#1}
 \begin{center}
 \begin{tikzpicture}[remember picture]
-\node[draw=#1,fill=#1,ultra thick,minimum height=0.7cm,rounded corners=0.35cm,font=\bfseries\FontSize{13pt},text=white,inner xsep=0.5cm](E)at(0,0){\maxsizebox{\linewidth-6.0cm}{!}{#2}};
+\node[draw=#1,fill=#1,ultra thick,minimum height=0.7cm,rounded corners=0.35cm,font=\bfseries\FontSize{13pt},text=white,inner xsep=0.5cm](E){\maxsizebox{\linewidth-6.0cm}{!}{#2}};
 \draw[#1,fill=#1]([xshift=0.5cm]E.east)circle(0.26cm);
 \draw[#1!85,fill=#1!85]([xshift=1.2cm]E.east)circle(0.235cm);
 \draw[#1!70,fill=#1!70]([xshift=1.85cm]E.east)circle(0.21cm);
@@ -1436,7 +1452,7 @@ right=0mm,boxsep=0mm,
 parbox=false,before upper=\par,before lower=\par,
 before=\par\bigskip\noindent,after=\par,
 fonttitle=\bfseries\color{white}\FontSize{12pt},
-attach boxed title to top left={xshift=3.05mm,yshift*=-\tcboxedtitleheight},
+attach boxed title to top left={xshift=3.0mm,yshift*=-\tcboxedtitleheight},
 code={\colorlet{ListColor}{#3}},
 boxed title style={empty,left=8.35mm,right=3.5mm,height=0.7cm,valign=center},
 underlay boxed title={
@@ -1983,7 +1999,7 @@ opacity node/.style={anchor=north west,font=\FontSize{100pt}\bfseries,text=Color
 %%背景1%%
 \draw[ColorB!5,fill=ColorB!5,sharp corners](D)rectangle(B);
 %%半透明文字%%
-\node[opacity node,text opacity=1.0](O_1)at(current page.north west){\ifetdef};
+\node[opacity node,text opacity=1.0](O_1)at(A){\ifetdef};
 \foreach \x[evaluate=\x as \botpoint using int(\x-1),
 evaluate=\x as \opa using 1.2-0.2*\x] in {2,...,10}{
 \node[opacity node,text opacity=\opa](O_\x)at(O_\botpoint.south west){\ifetdef};}
@@ -2027,7 +2043,7 @@ opacity node/.style={anchor=north east,font=\FontSize{100pt}\bfseries,text=Color
 %%背景1%%
 \draw[ColorB!5,fill=ColorB!5,sharp corners](D)rectangle(B);
 %%半透明文字%%
-\node[opacity node,text opacity=1.0](O_1)at(current page.north east){\ifestdef};
+\node[opacity node,text opacity=1.0](O_1)at(B){\ifestdef};
 \foreach \x[evaluate=\x as \botpoint using int(\x-1),
 evaluate=\x as \opa using 1.2-0.2*\x] in {2,...,10}{
 \node[opacity node,text opacity=\opa](O_\x)at(O_\botpoint.south east){\ifestdef};}
