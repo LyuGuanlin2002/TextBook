@@ -1225,8 +1225,8 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 \tikz[baseline=($0.7*(current bounding box.west)+0.3*(current bounding box.south west)$)]{\node[inner xsep=-0.95mm](E){#1};}}
 %%设置例题命令%%
 \newcommand{\egextitle}[3]{
-\tikz{\node[font=\FontSize{11pt}\bfseries,text=white,draw=#2!90!ColorD,fill=#2!90!ColorD,rounded corners=0.75em,inner xsep=3.5mm,ultra thick,minimum height=1.5em](T){#1\hspace*{0.5cm}};
-\node[anchor=west,font=\FontSize{11.5pt}\bfseries,text=#2!90!ColorD,draw=#2!90!ColorD,fill=white,rounded corners=0.75em,inner xsep=2.5mm,ultra thick,minimum height=1.5em](N)at([xshift=-1.85em]T.east){#3};}}
+\tikz{\node[font=\FontSize{11pt}\bfseries,text=white,draw=#2!90!ColorD,fill=#2!90!ColorD,rounded corners=0.75em,inner xsep=3.5mm,ultra thick,minimum height=1.5em](T){#1\hspace*{0.55cm}};
+\node[anchor=west,font=\FontSize{11.5pt}\bfseries,text=#2!90!ColorD,draw=#2!90!ColorD,fill=white,rounded corners=0.75em,inner xsep=2.5mm,ultra thick,minimum height=1.5em](N)at([xshift=-1.65em]T.east){#3};}}
 %%设置解答命令%%
 \newcommand{\ansanatitle}[2]{
 \tikz{\node[font=\FontSize{11pt}\bfseries,text=white,draw=#2!90!ColorD,fill=#2!90!ColorD,rounded corners=0.75em,inner xsep=3.5mm,ultra thick,minimum height=1.5em](T){#1};}}
