@@ -125,9 +125,7 @@
 {\color{ColorA}
 T\kern-0.25em\lower0.215ex\hbox{\footnotesize E}\kern-0.075em{\small X}\kern-0.1875em\lower0.125ex\hbox{\footnotesize T}\kern-0.125emB\kern-0.075em\lower-0.025ex\hbox{\footnotesize O}\kern-0.275em\lower-0.025ex\hbox{\footnotesize O}\kern-0.125emK
 }}
-\makeatother
 %%定义书籍信息%%
-\makeatletter
 \newcommand*\coverimage[1]{\def\@coverimage{#1}}
 \newcommand*\backimage[1]{\def\@backimage{#1}}
 \newcommand*\series[1]{\def\@series{#1}}
