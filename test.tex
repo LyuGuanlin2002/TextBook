@@ -1,6 +1,6 @@
 % !TEX program = bibtex
 % !Mode:: "TeX:UTF-8"
-\documentclass[color=blue,openany]{textbook-cn}
+\documentclass[color=orange,openany]{textbook-cn}
 \usepackage{zhlipsum,lipsum}%乱数假文（测试文字）
 \graphicspath{{./figure/}{./figures/}{./image/}{./images/}{./graphics/}{./graphic/}{./pictures/}{./picture/}}%提供多种图片路径
 
@@ -154,7 +154,8 @@ E&=mc^2+\int_a^bx{\rm d}x
 
 \begin{Paracol}
 \subsection{Look and Read}
-\Example{\lipsum[3]}
+\Example{\zhlipsum[1-2]}
+
 
 \subsubsection{化学帮我们正确认识物质}
 
@@ -180,6 +181,7 @@ E&=mc^2+\int_a^bx{\rm d}x
 \end{Axiom*}
 
 Just like Definition~\ref{Def.3.1.1} on page \pageref{Def.3.1.1}
+
 \DeepThink*{\lipsum[1][1]}
 \RelaInfo*{\lipsum[1][1]}
 \Remark*{\lipsum[1][1]}
@@ -252,10 +254,13 @@ Just like Definition~\ref{Def.3.1.1} on page \pageref{Def.3.1.1}
 
 \subsection*{测试小节}
 
-\Example{\inputlogo{PLUS.pdf}\lipsum[1][1-5]}
-{\centering\includegraphics[width=\linewidth/2]{example-image-a}\figcaption{例题图}}
-\medskip
-\lipsum[1][6-10]
+\Example{\inputlogo{PLUS.pdf}\lipsum[1][1-5]
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth/2]{example-image-a}
+\caption{例题图}
+\end{figure}
+\lipsum[1][6-10]}
 \Answer{\lipsum[1][1-7]}
 
 
@@ -1258,6 +1263,8 @@ Just like \ref{Thm.3.1.1} on page \pageref{Thm.3.1.1}
 
 
 \backmatter
+
+\stopcontents[part]
 
 \chaptersubtitle{测试文字测试文字}
 \printindex[video]

@@ -163,6 +163,7 @@ T\kern-0.25em\lower0.215ex\hbox{\footnotesize E}\kern-0.075em{\small X}\kern-0.1
 \newcommand{\FontSize}[1]{\fontsize{#1}{\baselineskip}\selectfont}
 
 %%%%%%%%%%%%%%%%%%%% 页面布局设定宏包 %%%%%%%%%%%%%%%%%%%%
+\RequirePackage{ragged2e}%对齐设置
 %%页面布局设置%%
 \makeatletter
 \newlength{\@innerlen}
@@ -603,6 +604,7 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 \renewcommand{\sectionmark}[1]{\markright{第~\thesection~节\quad#1}}
 \extramarks{\protect\@title}{\protect\@title}
 \newcommand{\pageframe}{
+\makebox[0pt][l]{
 \begin{tikzpicture}[remember picture,overlay]
 %%根据页数的奇偶生成%%
 \ifodd\value{page}
@@ -646,7 +648,7 @@ cycle;
 \node[font=\numberfont\FontSize{14},text=white,anchor=south,align=center](P)at([xshift=\@outerlen/2+0.25cm,yshift=-1.3cm]B){\maxsizebox{\@outerlen-1.1cm}{!}{\thepage}};
 \draw[draw=ColorA,fill=ColorA,sharp corners]node[append after command={(T.north west)[rounded corners]--(T.north east)[rounded corners]--(T.south east)[sharp corners]--(T.south west)--cycle},font=\FontSize{13pt}\bfseries,text=white,text width=6.5mm,align=center,inner xsep=1.5mm,inner ysep=3.5mm,anchor=west](T)at([yshift=\MarkY]B){\rotatebox[origin=c]{270}{\maxsizebox{\SepH+\DeltaH-2.5cm}{!}{\firstxmark}}};
 \fi
-\end{tikzpicture}}
+\end{tikzpicture}}}
 \makeatother
 %%定义主页面样式%%
 \fancypagestyle{MainPage}{
@@ -663,6 +665,7 @@ cycle;
 \makeatletter
 \newcommand*{\partintro}[1]{\def\@partintro{\hspace*{2.0em}#1}}
 \newcommand{\partstyle}[2]{
+\makebox[0pt][l]{
 \begin{tikzpicture}[remember picture,overlay]
 \draw[ColorB!7.5,fill=ColorB!7.5](current page.north west)rectangle(current page.south east);
 \ifodd\value{page}%判断奇偶页
@@ -718,7 +721,7 @@ cycle;
 \node[anchor=south east](C)at([xshift=-\@innerlen-0.25in,yshift=\@botlen]current page.south east){\begin{varwidth}{\textwidth}\printcontents[part]{l}{0}{\setcounter{tocdepth}{0}}\end{varwidth}};
 \node[font=\FontSize{13pt}\bfseries,text=ColorB!95!black,anchor=south west](R)at(C.north west){部分概要};
 \fi
-\end{tikzpicture}}
+\end{tikzpicture}}}
 
 %%定义小半圆%%
 \newcommand{\halfcircle}[2]{
@@ -731,6 +734,7 @@ cycle;
 %%不编号部分页样式%%
 \newcommand{\partstarstyle}[1]{
 \settowidth{\partstarlen}{\bfseries{\FontSize{40pt}{#1}}}
+\makebox[0pt][l]{
 \begin{tikzpicture}[remember picture,overlay]
 \draw[ColorB!7.5,fill=ColorB!7.5](current page.north west)rectangle(current page.south east);
 \ifodd\value{page}%判断奇偶页
@@ -814,7 +818,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 \node[anchor=south east](C)at([xshift=-\@innerlen-0.25in,yshift=\@botlen]current page.south east){\begin{varwidth}{\textwidth}\printcontents[part]{l}{0}{\setcounter{tocdepth}{0}}\end{varwidth}};
 \node[font=\FontSize{13pt}\bfseries,text=ColorB!95!black,anchor=south west](W)at(C.north west){部分概要};
 \fi
-\end{tikzpicture}}
+\end{tikzpicture}}}
 %%编号部分页%%
 \titleformat{\part}
 {}{}{0em}
@@ -846,6 +850,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 \newcommand*\chapterimage[1]{\def\@chapterimage{#1}}
 %%编号章节页样式%%
 \newcommand{\chapterstyle}[2]{
+\makebox[0pt][l]{
 \begin{tikzpicture}[remember picture,overlay]
 \ifodd\value{page}%判断奇偶页
 %%坐标%%
@@ -908,9 +913,11 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 ([xshift=1.6cm,yshift=1.6cm]current page.south west)rectangle([xshift=0.6cm,yshift=0.6cm]C);
 \node[font=\numberfont\FontSize{14pt},text=white,anchor=center,align=center](P)at([xshift=1.1cm,yshift=1.0cm]C){\maxsizebox{0.9cm}{!}{\thepage}};
 \fi
-\end{tikzpicture}}
+\end{tikzpicture}}}
+
 %%不编号章节样式%%
 \newcommand{\chapterstarstyle}[2]{
+\makebox[0pt][l]{
 \begin{tikzpicture}[remember picture,overlay]
 \ifodd\value{page}%判断奇偶页
 %%坐标点%%
@@ -969,7 +976,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 ([xshift=1.6cm,yshift=1.6cm]current page.south west)rectangle([xshift=0.6cm,yshift=0.6cm]current page.south west);
 \node[font=\numberfont\FontSize{14pt},text=white,anchor=center,align=center](P)at([xshift=1.1cm,yshift=1.0cm]current page.south west){\maxsizebox{0.9cm}{!}{\thepage}};
 \fi
-\end{tikzpicture}}
+\end{tikzpicture}}}
 %%制定章节页的侧标更新规则%%
 \newcommand{\pagesiderule}{
 \ifnum\value{@currenttotalpart}=0%若文档中到当前章时还没有部分层次
@@ -1143,7 +1150,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 \newcommand{\PartContents}[1]{
 \draw[ColorB!7.5,fill=ColorB!7.5,line width=0.1pt,rounded corners=0.38cm]
 (0,0.38cm)rectangle(\linewidth,-0.38cm);
-\draw[draw=ColorA,fill=ColorA,sharp corners]node[append after command={(T.north west)--(T.north east)[sharp corners]--(T.south east)[rounded corners=0.38cm]--(T.south west)[rounded corners=0.38cm]--cycle},font=\FontSize{13pt}\bfseries,text=white,align=center,inner xsep=4.0mm,minimum height=0.76cm,anchor=west](T)at(0,0){\maxsizebox{\linewidth/2-1.0cm}{!}{#1}};}
+\draw[draw=ColorA,fill=ColorA,sharp corners]node[append after command={(T.north west)--(T.north east)[sharp corners]--(T.south east)[rounded corners=0.38cm]--(T.south west)[rounded corners=0.38cm]--cycle},font=\FontSize{13pt}\bfseries,text=white,align=center,inner xsep=4.5mm,minimum height=0.76cm,anchor=west](T)at(0,0){\maxsizebox{\linewidth/2-1.0cm}{!}{#1}};}
 %%编号部分目录样式%%
 \newcommand{\tocentrypartnumbered}[1]{
 \contentslabel[\tikz{
@@ -1161,7 +1168,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 {\tocentrypartnumbered}
 {\tocentrypartunnumbered}{}
 %%章目录样式%%
-\titlecontents{chapter}[2.5cm]
+\titlecontents{chapter}[2.55cm]
 {\addvspace{5pt}\FontSize{13pt}\bfseries\color{ColorB}\hypersetup{linkcolor=ColorB}}
 {\color{ColorB}\contentslabel[\if@appendix%如果章在相应环境里，则修改目录前缀
 附录~\thecontentslabel~
@@ -1174,7 +1181,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 {\color{ColorB}\hspace*{-2.0cm}}%不编号章节
 {\titlerule*[6pt]{ }\color{ColorB}\FontSize{13pt}\thecontentspage}
 %%节目录样式%%
-\titlecontents{section}[2.5cm]
+\titlecontents{section}[2.55cm]
 {\addvspace{-0.5pt}\FontSize{12pt}\xbsong}
 {\contentslabel[\if@topic%如果节在相应环境里，则修改目录前缀
 专题~\thecontentslabel~
@@ -1220,37 +1227,34 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 \tikz[baseline=($0.7*(current bounding box.west)+0.3*(current bounding box.south west)$)]{\node[inner xsep=-0.95mm](E){#1};}}
 %%设置例题命令%%
 \newcommand{\egextitle}[3]{
-\tikz{\node[font=\FontSize{11.5pt}\bfseries,text=white,draw=#2!90!ColorD,fill=#2!90!ColorD,rounded corners=0.8em,inner xsep=3.5mm,ultra thick,minimum height=1.6em](T){#1\hspace*{0.5cm}};
-\node[anchor=west,font=\FontSize{11.5pt}\bfseries,text=#2!90!ColorD,draw=#2!90!ColorD,fill=white,rounded corners=0.8em,inner xsep=2.5mm,ultra thick,minimum height=1.6em](N)at([xshift=-1.85em]T.east){#3};}}
+\tikz{\node[font=\FontSize{11pt}\bfseries,text=white,draw=#2!90!ColorD,fill=#2!90!ColorD,rounded corners=0.75em,inner xsep=3.5mm,ultra thick,minimum height=1.5em](T){#1\hspace*{0.5cm}};
+\node[anchor=west,font=\FontSize{11.5pt}\bfseries,text=#2!90!ColorD,draw=#2!90!ColorD,fill=white,rounded corners=0.75em,inner xsep=2.5mm,ultra thick,minimum height=1.5em](N)at([xshift=-1.85em]T.east){#3};}}
 %%设置解答命令%%
 \newcommand{\ansanatitle}[2]{
-\tikz{\node[font=\FontSize{11.5pt}\bfseries,text=white,draw=#2!90!ColorD,fill=#2!90!ColorD,rounded corners=0.8em,inner xsep=3.5mm,ultra thick,minimum height=1.6em](T){#1};}}
+\tikz{\node[font=\FontSize{11pt}\bfseries,text=white,draw=#2!90!ColorD,fill=#2!90!ColorD,rounded corners=0.75em,inner xsep=3.5mm,ultra thick,minimum height=1.5em](T){#1};}}
 %%解答%%
 \NewExpandableDocumentCommand{\Answer}{sm}{
-\begin{flushleft}
-\begin{varwidth}{\linewidth}
+\begin{FlushLeft}
+\justifying
 \IfBooleanTF{#1}
-{\basenode{\ansanatitle{延展}{ColorA}}\hspace{1.0em}\vspace{0.25em}#2}%带星号*
-{\basenode{\ansanatitle{解答}{ColorA}}\hspace{1.0em}\vspace{0.25em}#2}
-\end{varwidth}
-\end{flushleft}}
+{\basenode{\ansanatitle{延展}{ColorF}}\hspace{1.0em}\vspace{0.25em}#2}%带星号*
+{\basenode{\ansanatitle{解答}{ColorG}}\hspace{1.0em}\vspace{0.25em}#2}
+\end{FlushLeft}}
 %%例题%%
 \makeatletter
 \newcommand{\Example}[1]{
 \stepcounter{@egnum}
-\begin{flushleft}
-\begin{varwidth}{\linewidth}
+\begin{FlushLeft}
+\justifying
 \basenode{\egextitle{例题}{ColorA}{\thechapter.\the@egnum}}\hspace{1.0em}\vspace{0.25em}#1
-\end{varwidth}
-\end{flushleft}}
+\end{FlushLeft}}
 %%变式%%
 \newcommand{\Variety}[1]{
 \stepcounter{@varnum}
-\begin{flushleft}
-\begin{varwidth}{\linewidth}
+\begin{FlushLeft}
+\justifying
 \basenode{\egextitle{变式}{ColorB}{\thechapter.\the@varnum}}\hspace{1.0em}\vspace{0.25em}#1
-\end{varwidth}
-\end{flushleft}}
+\end{FlushLeft}}
 \makeatother
 
 %%以下为本文档类内置栏目，请谨慎修改%%
@@ -1261,9 +1265,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 \newif\if@test
 \newif\if@project
 \newif\if@topic
-\makeatother
 
-\makeatletter
 %%设置附录环境%%
 \newcounter{@beforeappendixcounter}%储存环境前的章计数器数值
 \newcounter{@innerappendixcounter}%储存环境中的章计数器数值
@@ -1802,7 +1804,7 @@ parbox=false,before upper=\par,before lower=\par}
 enhanced standard,breakable,
 pad before break=3.0mm,pad after break=4.5mm,
 top=3.5mm,bottom=3.0mm,toptitle=3.0mm,bottomtitle=-2.5mm,
-rounded corners,arc=5.0pt,
+rounded corners,arc=7.5pt,
 before=\par\noindent\medskip,after=\par\medskip,
 parbox=false,before upper=\par,before lower=\par,
 fonttitle=\FontSize{12pt}\bfseries\color{ColorA},
@@ -1816,9 +1818,9 @@ title={#1},#2}
 \DeclareDocumentEnvironment{Block*}{O{}}{\begin{box8}[#1]
 [empty,overlay={
 \ifodd\value{page}
-\draw[ColorB!7.5,fill=ColorB!7.5](frame.north east)[rounded corners=5.0pt]--(frame.south east)[sharp corners]--([xshift=-\@innerlen]frame.south west)[sharp corners]--([xshift=-\@innerlen]frame.north west)[rounded corners=5.0pt]--cycle;
+\draw[ColorB!7.5,fill=ColorB!7.5](frame.north east)[rounded corners=7.5pt]--(frame.south east)[sharp corners]--([xshift=-\@innerlen]frame.south west)[sharp corners]--([xshift=-\@innerlen]frame.north west)[rounded corners=7.5pt]--cycle;
 \else
-\draw[ColorB!7.5,fill=ColorB!7.5](frame.north west)[rounded corners=5.0pt]--(frame.south west)[sharp corners]--([xshift=\@innerlen]frame.south east)[sharp corners]--([xshift=\@innerlen]frame.north east)[rounded corners=5.0pt]--cycle;
+\draw[ColorB!7.5,fill=ColorB!7.5](frame.north west)[rounded corners=7.5pt]--(frame.south west)[sharp corners]--([xshift=\@innerlen]frame.south east)[sharp corners]--([xshift=\@innerlen]frame.north east)[rounded corners=7.5pt]--cycle;
 \fi}]}{\end{box8}}
 \makeatother
 
