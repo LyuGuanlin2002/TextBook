@@ -266,7 +266,7 @@ marginparsep=-\@marginlen,marginparwidth=\@marginlen,reversemarginpar]{geometry}
 }
 %%重定义\shorttableofcontents%%
 \RenewDocumentCommand{\shorttableofcontents}{s O{}}{
-\bgroup%确保计数器值只在局部生效
+\begingroup%确保计数器值只在局部生效
 \c@tocdepth=0
 \chapter*{\shorttocname}
 \IfBooleanTF{#1}{
@@ -276,7 +276,7 @@ marginparsep=-\@marginlen,marginparwidth=\@marginlen,reversemarginpar]{geometry}
 #2
 \end{paracol}}
 {\@startshorttoc{toc}}
-\egroup}
+\endgroup}
 \makeatother
 
 %%%%%%%%%%%%%%%%%%%% 参考文献宏包 %%%%%%%%%%%%%%%%%%%%
@@ -297,6 +297,7 @@ marginparsep=-\@marginlen,marginparwidth=\@marginlen,reversemarginpar]{geometry}
 \setkeys{printbib}{}
 %%参考文献输出设置%%
 \NewDocumentCommand{\printbib}{s O{} m}{
+\colorlet{ListColor}{ColorA}
 \begingroup
 \setkeys{printbib}{#2}
 \IfBooleanTF{#1}{
@@ -318,14 +319,14 @@ marginparsep=-\@marginlen,marginparwidth=\@marginlen,reversemarginpar]{geometry}
 \RequirePackage{filecontents}%在tex内编写数据文件
 \RequirePackage[splitindex]{imakeidx}%索引设置，splitindex参数自动分割索引
 %%索引风格文件indexstyle.ist%%
-\begin{filecontents*}{indexstyle.ist}
+\begin{filecontents}[overwrite]{indexstyle.ist}
 headings_flag 1
 heading_prefix "\n\\centering\\Large\\bfseries\\color{ColorA}"
 heading_suffix "\\large\\normalfont\\color{black}\\nopagebreak\n"
 delim_0 " \\hfill " 
 delim_1 " \\hfill "
 delim_2 " \\hfill "
-\end{filecontents*}
+\end{filecontents}
 
 \makeatletter
 %%添加新关键字envlevel（环境中索引层次）%%
@@ -529,10 +530,10 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 %%设置概念序号%%
 \newcommand*\preconcept{\raisebox{-0.05em}{\tikz{\draw[ListColor,fill=white,line width=2.5pt](0,0)circle(1.5mm);}}}
 %%概念列表环境%%
-\newenvironment{Concept}{\begin{multicols}{2}\itshape\begin{itemize}[label=\protect\preconcept,itemindent=-0.5em]}{\end{itemize}\end{multicols}\colorlet{ListColor}{ColorA}}
+\newenvironment{Concept}{\begin{multicols}{2}\itshape\begin{itemize}[label=\protect\preconcept,itemindent=-0.5em]}{\end{itemize}\end{multicols}\global\colorlet{ListColor}{ColorA}}
 %%题目列表环境%%
 \newenvironment{QsNum}{\begin{enumerate}[label=\protect\cir{\arabic*},itemindent=-0.5em]}
-{\end{enumerate}\colorlet{ListColor}{ColorA}}
+{\end{enumerate}\global\colorlet{ListColor}{ColorA}}
 
 %%设置星级%%
 \NewDocumentCommand{\score}{mm O{ColorB}}{
@@ -1800,8 +1801,8 @@ parbox=false,before upper=\par,before lower=\par}
 
 \DeclareTColorBox{box8}{O{}O{}}{
 enhanced standard,breakable,
-pad before break=3.0mm,pad after break=4.5mm,
-top=3.5mm,bottom=3.0mm,toptitle=3.0mm,bottomtitle=-2.5mm,
+pad before break=3.0mm,pad after break=5.0mm,
+top=3.5mm,bottom=3.0mm,toptitle=4.0mm,bottomtitle=-2.5mm,
 rounded corners,arc=7.5pt,
 before=\par\noindent\medskip,after=\par\medskip,
 parbox=false,before upper=\par,before lower=\par,
