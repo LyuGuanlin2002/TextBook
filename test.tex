@@ -1,6 +1,6 @@
 % !TEX program = bibtex
 % !Mode:: "TeX:UTF-8"
-\documentclass[color=orange,openany]{textbook-cn}
+\documentclass[color=orange,splitbib,openany]{textbook-cn}
 \usepackage{zhlipsum,lipsum}%乱数假文（测试文字）
 \graphicspath{{./figure/}{./figures/}{./image/}{./images/}{./graphics/}{./graphic/}{./pictures/}{./picture/}}%提供多种图片路径
 
@@ -81,7 +81,10 @@
 
 \shorttableofcontents
 
-\tableofcontents
+\tableofcontents*[
+\begin{flushleft}
+\includegraphics[width=0.2\textwidth]{Lipsum.pdf}
+\end{flushleft}]
 
 \listoffigures
 
@@ -114,7 +117,6 @@ E&=mc^2+\int_a^bx{\rm d}x
 
 
 \chapter{绪论\quad 测试文字}
-
 
 \lipsum
 \begin{figure}[htbp]
@@ -1329,8 +1331,8 @@ void CacuSS( double E, double u, double *xo, double *yo, double *uo, double *vo,
 
 
 
-\chaptersubtitle{参考文献}
-\printbib*[intoc]{Reference}
+%\chaptersubtitle{参考文献}
+%\printbib*[intoc]{Reference}
 
 
 

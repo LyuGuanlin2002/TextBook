@@ -212,7 +212,7 @@ marginparsep=-\@marginlen,marginparwidth=\@marginlen,reversemarginpar]{geometry}
 \makeatletter
 \newcommand{\marginpic}[2]{
 \marginpar{
-\centering\includegraphics[width=\@marginlen-1.0cm]{#1}
+\centering\includegraphics[width=\@marginlen-0.5em]{#1}
 \centering\figcaption{#2}}}
 \newcommand{\margintab}[2]{
 \marginpar{
@@ -238,9 +238,9 @@ marginparsep=-\@marginlen,marginparwidth=\@marginlen,reversemarginpar]{geometry}
 \begin{paracol}{2}
 \@starttoc{toc}
 \switchcolumn
-{\narrowragged\noindent#2}
-\end{paracol}}{
-\@starttoc{toc}}
+#2
+\end{paracol}}
+{\@starttoc{toc}}
 }
 %%重定义\listoffigures%%
 \RenewDocumentCommand{\listoffigures}{s O{}}{
@@ -249,9 +249,9 @@ marginparsep=-\@marginlen,marginparwidth=\@marginlen,reversemarginpar]{geometry}
 \begin{paracol}{2}
 \@starttoc{lof}
 \switchcolumn
-{\narrowragged\noindent#2}
-\end{paracol}}{
-\@starttoc{lof}}
+#2
+\end{paracol}}
+{\@starttoc{lof}}
 }
 %%重定义\listoftables%%
 \RenewDocumentCommand{\listoftables}{s O{}}{
@@ -260,9 +260,9 @@ marginparsep=-\@marginlen,marginparwidth=\@marginlen,reversemarginpar]{geometry}
 \begin{paracol}{2}
 \@starttoc{lot}
 \switchcolumn
-{\narrowragged\noindent#2}
-\end{paracol}}{
-\@starttoc{lot}}
+#2
+\end{paracol}}
+{\@starttoc{lot}}
 }
 %%重定义\shorttableofcontents%%
 \RenewDocumentCommand{\shorttableofcontents}{s O{}}{
@@ -273,16 +273,16 @@ marginparsep=-\@marginlen,marginparwidth=\@marginlen,reversemarginpar]{geometry}
 \begin{paracol}{2}
 \@startshorttoc{toc}
 \switchcolumn
-{\narrowragged\noindent#2}
-\end{paracol}}{
-\@startshorttoc{toc}}
+#2
+\end{paracol}}
+{\@startshorttoc{toc}}
 \egroup}
 \makeatother
 
 %%%%%%%%%%%%%%%%%%%% 参考文献宏包 %%%%%%%%%%%%%%%%%%%%
 %%参考文献编译方式：先用XeLaTeX编译主文件.tex一次；再用BibTeX编译主文件（或各子文件）.tex一次；然后用XeLaTeX编译主文件.tex两次%%
 \RequirePackage[numbers,sectionbib]{natbib}%参考文献格式
-\renewcommand{\bibnumfmt}[1]{\hskip1.75mm\protect\cir{#1}}%修改参考文献序号样式
+\renewcommand{\bibnumfmt}[1]{\hskip1.0mm\protect\cir{#1}}%修改参考文献序号样式
 \renewcommand{\citenumfont}[1]{\textbf{\color{ColorA}{\FontSize{12pt}#1}}}%修改引用样式
 \bibpunct{\color{ColorA}{[}}{\color{ColorA}{]}}{,}{n}{}{;}%修改方括号颜色
 \renewcommand{\bibname}{参考文献}%修改参考文献标题
@@ -1225,11 +1225,11 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 \tikz[baseline=($0.7*(current bounding box.west)+0.3*(current bounding box.south west)$)]{\node[inner xsep=-0.95mm](E){#1};}}
 %%设置例题命令%%
 \newcommand{\egextitle}[3]{
-\tikz{\node[font=\FontSize{11pt}\bfseries,text=white,draw=#2!90!ColorD,fill=#2!90!ColorD,rounded corners=0.75em,inner xsep=3.5mm,ultra thick,minimum height=1.5em](T){#1\hspace*{0.55cm}};
-\node[anchor=west,font=\FontSize{11.5pt}\bfseries,text=#2!90!ColorD,draw=#2!90!ColorD,fill=white,rounded corners=0.75em,inner xsep=2.5mm,ultra thick,minimum height=1.5em](N)at([xshift=-1.65em]T.east){#3};}}
+\tikz{\node[font=\FontSize{11pt}\bfseries,text=white,draw=#2!90!ColorD,fill=#2!90!ColorD,rounded corners=0.8em,inner xsep=3.5mm,ultra thick,minimum height=1.6em](T){#1\hspace*{0.55cm}};
+\node[anchor=west,font=\FontSize{11.5pt}\bfseries,text=#2!90!ColorD,draw=#2!90!ColorD,fill=white,rounded corners=0.8em,inner xsep=2.5mm,ultra thick,minimum height=1.6em](N)at([xshift=-1.7em]T.east){#3};}}
 %%设置解答命令%%
 \newcommand{\ansanatitle}[2]{
-\tikz{\node[font=\FontSize{11pt}\bfseries,text=white,draw=#2!90!ColorD,fill=#2!90!ColorD,rounded corners=0.75em,inner xsep=3.5mm,ultra thick,minimum height=1.5em](T){#1};}}
+\tikz{\node[font=\FontSize{11pt}\bfseries,text=white,draw=#2!90!ColorD,fill=#2!90!ColorD,rounded corners=0.8em,inner xsep=3.5mm,ultra thick,minimum height=1.6em](T){#1};}}
 %%解答%%
 \NewExpandableDocumentCommand{\Answer}{sm}{
 \begin{FlushLeft}
