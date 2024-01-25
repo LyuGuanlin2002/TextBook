@@ -1,6 +1,7 @@
 % !TEX program = bibtex
 % !Mode:: "TeX:UTF-8"
 \documentclass[color=orange,openany]{textbook-cn}
+\input{./styles/Cover.tex}
 \usepackage{zhlipsum,lipsum}%乱数假文（测试文字）splitbib
 \graphicspath{{./figure/}{./figures/}{./image/}{./images/}{./graphics/}{./graphic/}{./pictures/}{./picture/}}%提供多种图片路径
 
@@ -51,39 +52,42 @@
 \frontmatter
 
 
-
+\chaptersubtitle{Preface}
 \chapter*{序言}
 \subsubsection{关于作者}\footnote{英明睿智的作者}
 \lipsum
 \subsubsection{关于本书}
-\begin{center}
-\scalebox{8}{\TextBook}\\[7.5pt]
-\scalebox{8}{\TextBook*}
-\end{center}
 
+
+\chaptersubtitle{For Readers}
 \chapter*{写在前面}
 \lipsum
+
 
 
 
 \input{nomencl.tex}
 
 
-\chaptersubtitle{符号表}
+\chaptersubtitle{Nomenclature}
 \printnomenclature
 
 
-
+\chaptersubtitle{Brief Contents}
 \shorttableofcontents
 
+
+\chaptersubtitle{Contents}
 \tableofcontents*[
 \begin{flushleft}
 \includegraphics[width=0.2\textwidth]{Lipsum.pdf}
 \end{flushleft}]
 
+
+\chaptersubtitle{Figures}
 \listoffigures
 
-
+\chaptersubtitle{Tables}
 \listoftables
 
 \mainmatter
@@ -1161,7 +1165,7 @@ Just like \ref{Thm.3.1.1} on page \pageref{Thm.3.1.1}
 
 \Remark{\lipsum[2]}
 
-\clearpage
+
 \input{index/indexvideo.tex}
 \input{index/indexnoun.tex}
 
@@ -1186,7 +1190,6 @@ Just like \ref{Thm.3.1.1} on page \pageref{Thm.3.1.1}
 \begin{Reading}{文章标题}{5}{3}
 \lipsum[2]
 \end{Reading}
-
 
 
 \begin{Cloze}{文章标题}{5}{4.5}
@@ -1223,7 +1226,7 @@ Just like \ref{Thm.3.1.1} on page \pageref{Thm.3.1.1}
 \zhlipsum\zhlipsum
 \end{Article}
 
-\begin{Paracol}
+
 \begin{Vocabulary}{词汇}
 \lipsum[2][1-5]
 \tcbsubtitle{派生词}
@@ -1231,25 +1234,13 @@ Just like \ref{Thm.3.1.1} on page \pageref{Thm.3.1.1}
 \tcbsubtitle{例句}
 \lipsum[3][1-5]
 \end{Vocabulary}
-\end{Paracol}
 
 
 
-\section*{不编号节不编号节不编号节不编号节不编号节不编号节不编号节不编号节不编号节}
 
-
-\subsection{测试文字}
-
-\subsection*{测试文字}
-
-
-
-\chaptersubtitle{测试文字测试文字}
 \printindex[video]
 
 
-
-\chaptersubtitle{测试文字测试文字}
 \printindex[noun]
 
 
@@ -1269,7 +1260,7 @@ Just like \ref{Thm.3.1.1} on page \pageref{Thm.3.1.1}
 \stopcontents[part]
 
 
-\chaptersubtitle{测试文字}
+\chaptersubtitle{PostScript}
 \chapter*{后记}
 \lipsum
 \lipsum
@@ -1303,7 +1294,7 @@ Just like \ref{Thm.3.1.1} on page \pageref{Thm.3.1.1}
 
 
 
-\chaptersubtitle{参考文献}
+\chaptersubtitle{Reference}
 \printbib{Reference}
 
 

@@ -117,14 +117,8 @@
 \colorlet{ColorH}{DarkGoldenrod1}
 \colorlet{ColorI}{HotPink1}
 }{\relax}
-%%设计Logo%%
+
 \makeatletter
-\DeclareRobustCommand{\TextBook}{
-\@ifstar
-{T\kern-0.25em\lower0.215ex\hbox{\footnotesize E}\kern-0.075em{\small X}\kern-0.1875em\lower0.125ex\hbox{\footnotesize T}\kern-0.125emB\kern-0.075em\lower-0.025ex\hbox{\footnotesize O}\kern-0.275em\lower-0.025ex\hbox{\footnotesize O}\kern-0.125emK}
-{\color{ColorA}
-T\kern-0.25em\lower0.215ex\hbox{\footnotesize E}\kern-0.075em{\small X}\kern-0.1875em\lower0.125ex\hbox{\footnotesize T}\kern-0.125emB\kern-0.075em\lower-0.025ex\hbox{\footnotesize O}\kern-0.275em\lower-0.025ex\hbox{\footnotesize O}\kern-0.125emK
-}}
 %%定义书籍信息%%
 \newcommand*\coverimage[1]{\def\@coverimage{#1}}
 \newcommand*\backimage[1]{\def\@backimage{#1}}
@@ -228,7 +222,7 @@ marginparsep=-\@marginlen,marginparwidth=\@marginlen,reversemarginpar]{geometry}
 \renewcommand{\contentsname}{目录}%更改目录标题
 \renewcommand{\listfigurename}{插图目录}%更改图片目录标题
 \renewcommand{\listtablename}{表格目录}%更改表格目录标题
-\renewcommand{\shorttocname}{简洁目录}%更改简洁目录标题
+\renewcommand{\shorttocname}{内容概览}%更改简洁目录标题
 
 \makeatletter
 %%重定义\tableofcontents%%
@@ -1354,17 +1348,14 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 \justifying
 \@basenode{\@egextitle{变式}{ColorB}{\thechapter.\the@varnum}}\hspace{1.0em}\vspace{0.25em}#1
 \end{FlushLeft}}
-\makeatother
 
 %%以下为本文档类内置栏目，请谨慎修改%%
 %设置环境布尔变量
-\makeatletter
 \newif\if@appendix
 \newif\if@quiz
 \newif\if@test
 \newif\if@project
 \newif\if@topic
-
 %%设置附录环境%%
 \newcounter{@beforeappendixcounter}%储存环境前的章计数器数值
 \newcounter{@innerappendixcounter}%储存环境中的章计数器数值
@@ -1527,9 +1518,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 %将节计数器值恢复为环境前的值
 \setcounter{section}{\value{@beforeprojectcounter}}
 }
-\makeatother
 
-\makeatletter
 %%重定义\frontmatter%%
 \renewcommand{\frontmatter}{
 \cleardoublepage
@@ -2028,7 +2017,6 @@ before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
 enhanced standard,breakable,colframe=ColorB!7.5,colback=ColorB!7.5,
 rounded corners,arc=5.0pt,#1}
 
-
 \makeatletter
 %%重定义标题页%%
 \renewcommand{\maketitle}{
@@ -2078,122 +2066,6 @@ rounded corners,arc=5.0pt,#1}
 {\FontSize{15pt}\ifdefvoid{\@presslogo}{}{\raisebox{-0.2cm}{\mbox{\includegraphics[width=0.75cm]{\@presslogo}}}}\hskip0.25cm\@pressname\par}
 \end{center}
 \end{titlepage}}
-
-%%设计封面%%
-\newcommand{\ifetdef}{
-\maxsizebox{\paperwidth}{!}{\ifdefvoid{\@englishtitle}{}{\@englishtitle}}
-}
-\newcommand{\makecover}{
-\tikzset{coverup node/.style={text=ColorA,anchor=north west,inner sep=0mm},
-coverdown node/.style={text=white,anchor=west,inner sep=0mm},
-opacity node/.style={anchor=north west,font=\FontSize{100pt}\bfseries,text=ColorB!25}
-}
-\begin{titlepage}
-\begin{tikzpicture}[remember picture,overlay]
-\coordinate(A)at(current page.north west);
-\coordinate(B)at(current page.north east);
-\coordinate(C)at(current page.south east);
-\coordinate(D)at(current page.south west);
-\coordinate(E)at([yshift=5.25cm]current page.west);
-\coordinate(F)at([yshift=5.25cm]current page.east);
-\coordinate(G)at($0.5*(E)+0.5*(C)$);
-%%背景1%%
-\draw[ColorB!5,fill=ColorB!5,sharp corners](D)rectangle(B);
-%%半透明文字%%
-\node[opacity node,text opacity=1.0](O_1)at(A){\ifetdef};
-\foreach \x[evaluate=\x as \botpoint using int(\x-1),
-evaluate=\x as \opa using 1.2-0.2*\x] in {2,...,10}{
-\node[opacity node,text opacity=\opa](O_\x)at(O_\botpoint.south west){\ifetdef};}
-%%背景2%%
-\draw[ColorA!80,fill=ColorA!80](E)rectangle(C);
-%%封面图%%
-\node[inner sep=0mm,anchor=center](CI)at(G){\ifdefvoid{\@coverimage}{}{\includegraphics[width=\paperwidth,height=\paperheight/2+5.25cm]{\@coverimage}}};
-%%标题%%
-\node[font=\FontSize{55pt}\bfseries,coverup node](T)at(current page text area.north west){\@title};
-%%英文标题%%
-\node[font=\FontSize{20pt}\bfseries,coverup node](ET)at([yshift=-0.5cm]T.south west){\ifdefvoid{\@englishtitle}{}{\@englishtitle}};
-%%副标题%%
-\node[font=\FontSize{30pt}\bfseries,coverup node](ST)at([yshift=-0.5cm]ET.south west){\ifdefvoid{\@subtitle}{}{\@subtitle}};
-%%英文副标题%%
-\node[font=\FontSize{15pt}\bfseries,coverup node](EST)at([yshift=-0.5cm]ST.south west){\ifdefvoid{\@englishsubtitle}{}{\@englishsubtitle}};
-%%作者%%
-\node[font=\FontSize{15pt}\bfseries,coverdown node](A)at([yshift=4.0cm]current page text area.west){主编\quad\@author};
-%%出版社%%
-\node[coverdown node](PL)at(current page text area.south west){\ifdefvoid{\@presslogo}{}{\includegraphics[width=0.75cm]{\@presslogo}}};
-\node[font=\FontSize{15pt}\bfseries,coverdown node](PN)at([xshift=0.25cm]PL.east){\ifdefvoid{\@pressname}{}{\@pressname}};
-\end{tikzpicture}
-\end{titlepage}}
-
-%%设计封底%%
-\newcommand{\ifestdef}{
-\maxsizebox{\paperwidth}{!}{\ifdefvoid{\@englishsubtitle}{}{\@englishsubtitle}}
-}
-\NewDocumentCommand{\makeback}{oo}{
-\tikzset{backup node/.style={text=ColorA,anchor=north east,inner sep=0mm,text width=\textwidth},
-backdown node/.style={text=white,anchor=west,inner sep=0mm},
-opacity node/.style={anchor=north east,font=\FontSize{100pt}\bfseries,text=ColorB!25}}
-\begin{titlepage}
-\begin{tikzpicture}[remember picture,overlay]
-\coordinate(A)at(current page.north west);
-\coordinate(B)at(current page.north east);
-\coordinate(C)at(current page.south east);
-\coordinate(D)at(current page.south west);
-\coordinate(E)at([yshift=5.25cm]current page.west);
-\coordinate(F)at([yshift=5.25cm]current page.east);
-\coordinate(G)at($0.5*(E)+0.5*(C)$);
-%%背景1%%
-\draw[ColorB!5,fill=ColorB!5,sharp corners](D)rectangle(B);
-%%半透明文字%%
-\node[opacity node,text opacity=1.0](O_1)at(B){\ifestdef};
-\foreach \x[evaluate=\x as \botpoint using int(\x-1),
-evaluate=\x as \opa using 1.2-0.2*\x] in {2,...,10}{
-\node[opacity node,text opacity=\opa](O_\x)at(O_\botpoint.south east){\ifestdef};}
-%%背景2%%
-\draw[ColorA!80,fill=ColorA!80](E)rectangle(C);
-%%封底图%%
-\node[inner sep=0mm,anchor=center](BI)at(G){\ifdefvoid{\@backimage}{}{\scalebox{-1}[1]{\includegraphics[width=\paperwidth,height=\paperheight/2+5.25cm]{\@backimage}}}};
-%%条形码%%
-\IfValueTF{#2}{
-\node[draw=white,fill=white,inner xsep=0mm,anchor=south east](BC)at([yshift=-0.5cm]current page text area.south east){\includegraphics[width=5.0cm]{#2}};}{\relax}
-%%说明文字%%
-\node[font=\FontSize{12pt}\bfseries,backup node](BT)at(current page text area.north east){\hspace*{2.0em}#1};
-%%书籍系列%%
-\node[font=\FontSize{15pt}\bfseries,backdown node](S)at([yshift=4.0cm]current page text area.west){\ifdefvoid{\@series}{}{\@series}};
-%%书籍系列%%
-\node[font=\FontSize{15pt}\bfseries,backdown node](V)at([yshift=-0.5cm]S.south west){\ifdefvoid{\@version}{}{第{\@version}版}};
-\end{tikzpicture}
-\end{titlepage}}
-
-%%设计书脊%%
-\NewDocumentCommand{\makespine}{O{1.0cm}}{
-\newlength{\SpineWidth}
-\setlength{\SpineWidth}{#1}
-\tikzset{spine title/.style={font=\FontSize{20pt}\bfseries,text=white,text width=1.0cm,align=center},
-spine subtitle/.style={font=\FontSize{15pt}\bfseries,text=white,text width=1.0cm,align=center},
-spine englishtitle/.style={font=\FontSize{20pt}\bfseries,text=ColorA,inner sep=0mm}}
-\begin{titlepage}
-\begin{tikzpicture}[remember picture,overlay]
-\coordinate(A)at(current page.north);
-\coordinate(B)at(current page.south);
-\coordinate(C)at([yshift=5.25cm]current page.center);
-%%背景%%
-\draw[ColorB!5,fill=ColorB!5]
-([xshift=-\SpineWidth/2]A)rectangle([xshift=\SpineWidth/2]B);
-\draw[ColorA!80,fill=ColorA!80]
-([xshift=-\SpineWidth/2]C)rectangle([xshift=\SpineWidth/2]B);
-%%书脊英文标题%%
-\node[spine englishtitle,anchor=north](ET)at([yshift=-0.5cm]A){\ifdefvoid{\@englishtitle}{}{\rotatebox[origin=c]{-90}{\maxsizebox{\paperheight/2-5.25cm}{\SpineWidth}{\@englishtitle}}}};
-%%书脊标题%%
-\node[spine title,anchor=north](T)at([yshift=-0.5cm]C){\@title};
-%%书脊副标题%%
-\node[spine subtitle,anchor=north](ST)at([yshift=-0.5cm]T.south){\ifdefvoid{\@subtitle}{}{\@subtitle}};
-%%书脊出版社名称%%
-\node[spine subtitle,anchor=south](PN)at([yshift=0.5cm]B){\ifdefvoid{\@pressname}{}{\@pressname}};
-%%书脊出版社logo%%
-\node[spine subtitle,anchor=south](PL)at([yshift=0.25cm]PN.north){\ifdefvoid{\@presslogo}{}{\includegraphics[width=0.8cm]{\@presslogo}}};
-\end{tikzpicture}
-\end{titlepage}}
-
 \makeatother
 
 
