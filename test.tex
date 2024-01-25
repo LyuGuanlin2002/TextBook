@@ -1,15 +1,20 @@
 % !TEX program = bibtex
 % !Mode:: "TeX:UTF-8"
-\documentclass[color=orange,splitbib,openany]{textbook-cn}
-\usepackage{zhlipsum,lipsum}%乱数假文（测试文字）
+\documentclass[color=orange,openany]{textbook-cn}
+\usepackage{zhlipsum,lipsum}%乱数假文（测试文字）splitbib,
 \graphicspath{{./figure/}{./figures/}{./image/}{./images/}{./graphics/}{./graphic/}{./pictures/}{./picture/}}%提供多种图片路径
 
 %%设置符号表样式%%
-\nomensetup{columns=3,columnsep=2.0em}
+\nomensetup{columnsep=2.0em,columns=3}
+\makenomenclature
 
-%%设置索引栏目%%
-\makeindex[name=noun,title=名词索引,columns=3,columnsep=2.0em,intoc,options=-s indexstyle.ist]
+%%设置索引样式%%
+\indexsetup{level=\chapter*,envlevel=\chapter,toclevel=chapter,envtoclevel=chapter}
+\makeindex[name=noun,title=名词索引,columns=3,intoc,columnsep=2.0em,options=-s indexstyle.ist]
 \makeindex[name=video,title=视频索引,columnsep=2.0em,intoc,options=-s indexstyle.ist]
+
+%%设置参考文献样式%%
+\bibsetup{level=\chapter*,envlevel=\chapter,toclevel=chapter,envtoclevel=chapter,intoc}
 
 %%设置书籍信息%%
 \series{物理学系列教材}
@@ -27,11 +32,9 @@
 
 
 \newcommand{\indexnoun}[1]{\index[noun]{#1}}
-
 \newcommand{\indexvideo}[1]{\index[video]{#1}}
 
 \newcommand{\zhindexnoun}[2]{\zhindex[noun]{#1}{#2}}
-
 \newcommand{\zhindexvideo}[2]{\zhindex[video]{#1}{#2}}
 
 \newcommand{\inputlogo}[1]{\raisebox{-0.5em}{\includegraphics[width=1.5cm]{#1}}~~}
@@ -57,8 +60,6 @@
 \subsubsection{关于作者}\footnote{英明睿智的作者}
 \lipsum
 \subsubsection{关于本书}
-
-
 \begin{center}
 \scalebox{8}{\TextBook}\\[7.5pt]
 \scalebox{8}{\TextBook*}
@@ -68,8 +69,6 @@
 \lipsum
 
 
-\chapter{写在前面}
-\lipsum
 
 \input{nomencl.tex}
 
@@ -96,11 +95,14 @@
 
 
 
+  
+
 
 
 
 \chapter{前置章节}
 \lipsum\lipsum\lipsum
+
 
 
 
@@ -545,6 +547,7 @@ for n in range(0, file_num): #
 
 \begin{Topic}
 \section{专题名专题名专题名专题名专题名专题名专题名专题名专题名}
+
 \begin{Paracol}
 \subsection{题型名称题型名称}
 
@@ -1086,7 +1089,6 @@ Just like \ref{Thm.3.1.1} on page \pageref{Thm.3.1.1}
 
 
 \part*{自我检测}
-\part*{自我检测自我检测}
 
 
 \begin{Quiz}
@@ -1172,9 +1174,6 @@ Just like \ref{Thm.3.1.1} on page \pageref{Thm.3.1.1}
 \end{Block*}
 
 
-\chaptersubtitle{视频索引测试文字}
-\printindex[video]
-
 \chaptersubtitle{副标题副标题副标题副标题副标题}
 \chapter*{章节名称章节名称章节名称章节名称}
 \lipsum
@@ -1250,11 +1249,6 @@ Just like \ref{Thm.3.1.1} on page \pageref{Thm.3.1.1}
 
 
 
-
-%\printbib{Reference}
-
-\printnomenclature
-
 \end{Appendix}
 
 
@@ -1280,15 +1274,10 @@ Just like \ref{Thm.3.1.1} on page \pageref{Thm.3.1.1}
 \chaptersubtitle{测试文字}
 \chapter*{后记}
 \lipsum
+\lipsum
 %\cite{1}\cite{2}\cite{3}\cite{4}\cite{5}\cite{6}\cite{7}\cite{8}\cite{9}\cite{10}
-\lipsum
 %\cite{11}\cite{12}\cite{13}\cite{14}\cite{15}\cite{16}\cite{17}\cite{18}\cite{19}\cite{20}
-
-
-\chapter{后记}
-\lipsum
 %\cite{21}\cite{22}\cite{23}\cite{24}\cite{25}\cite{26}\cite{27}\cite{28}\cite{29}\cite{30}
-\lipsum
 \cite{31}\cite{32}\cite{33}\cite{34}\cite{35}\cite{36}\cite{37}\cite{38}\cite{39}\cite{40}
 
 
@@ -1310,30 +1299,14 @@ Just like \ref{Thm.3.1.1} on page \pageref{Thm.3.1.1}
 \end{box6}
 \end{TCBCODE}
 
-\begin{CppBox}{有限元分析}
-void FN( double A, double B, double *N, int *Ele );
-void FNA( double A, double B, double *NA, int *Ele );
-void FNB( double A, double B, double *NB, int *Ele );
-double Inv_jaco( double A, double B, double *xo, double *yo, double *Nx, double *Ny, int *Ele );
-void eld( double E, double u, double (*D)[3], int Iopt );
-void CacuEKF( double E, double u, double Thick , double *xo, double *yo, double (*stress)[3], double *uo, double *vo, double *ef, double *ek, int *Ele, int nGauss , int Iopt );
-void AssembleUF( double *ef, double (*UF)[2], int *Ele );
-void skdd( int *jd, int (*Element)[8], int NN, int ND, int NE );
-void SetStiff( int i, int j, double Value , double *Stiff , int *jd );
-double GetStiff( int i, int j, double *Stiff , int *jd );
-void AssembleK( double *ek, int *je, int EFN, double *Stiff, int *jd );
-void Fix( int k, double a, double *Stiff , double *Load , int *jd, int NF );
-void LLT( int *jd, double *zk, double *F, int NF );
-void CacuSS( double E, double u, double *xo, double *yo, double *uo, double *vo, double (*SS)[4], int *Ele, int Iopt );
-\end{CppBox}
 
 
 
 
 
-%\chaptersubtitle{参考文献}
-%\printbib*[intoc]{Reference}
 
+\chaptersubtitle{参考文献}
+\printbib{Reference}
 
 
 

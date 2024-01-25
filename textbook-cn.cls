@@ -293,26 +293,34 @@ marginparsep=-\@marginlen,marginparwidth=\@marginlen,reversemarginpar]{geometry}
 \fi
 %%设置参考文献输出命令键%%
 \define@boolkey{printbib}{intoc}[true]{}
+\def\prtbib@envbiblevel{\@ifundefined{chapter}{\section}{\chapter}*}
+\define@key{printbib}{envlevel}{\def\prtbib@envbiblevel{#1}}
+\def\prtbib@biblevel{\@ifundefined{chapter}{\section}{\chapter}*}
+\define@key{printbib}{level}{\def\prtbib@biblevel{#1}}
+\def\prtbib@toclevel{\@ifundefined{chapter}{section}{chapter}}
+\define@key{printbib}{toclevel}{\def\prtbib@toclevel{#1}}
+\def\prtbib@envtoclevel{\@ifundefined{chapter}{section}{chapter}}
+\define@key{printbib}{envtoclevel}{\def\prtbib@envtoclevel{#1}}
 %%设置默认键值%%
-\setkeys{printbib}{}
+\setkeys{printbib}{level=\chapter*,envlevel=\chapter,toclevel=chapter,envtoclevel=chapter}
+%%参考文献样式设置命令%%
+\newcommand{\bibsetup}[1]{\setkeys{printbib}{#1}}
 %%参考文献输出设置%%
-\NewDocumentCommand{\printbib}{s O{} m}{
+\newcommand{\printbib}[1]{
 \colorlet{ListColor}{ColorA}
-\begingroup
-\setkeys{printbib}{#2}
-\IfBooleanTF{#1}{
 \if@appendix
-\renewcommand{\bibsection}{\chapter{\bibname}}
+\renewcommand{\bibsection}{
+\prtbib@envbiblevel{\bibname}
+\ifKV@printbib@intoc\phantomsection
+\addcontentsline{toc}{\prtbib@envtoclevel}{\bibname}\fi}
 \else
-\renewcommand{\bibsection}{\chapter*{\bibname}
-\ifKV@printbib@intoc
-\phantomsection
-\addcontentsline{toc}{chapter}{\bibname}
-\fi}
-\fi}{\renewcommand{\bibsection}{\subsection*{\bibname}}}
+\renewcommand{\bibsection}{
+\prtbib@biblevel{\bibname}
+\ifKV@printbib@intoc\phantomsection
+\addcontentsline{toc}{\prtbib@toclevel}{\bibname}\fi}
+\fi
 \bibliographystyle{plain}
-\bibliography{#3}
-\endgroup}
+\bibliography{#1}}
 \makeatother
 
 %%%%%%%%%%%%%%%%%%%% 索引宏包 %%%%%%%%%%%%%%%%%%%%
@@ -332,8 +340,11 @@ delim_2 " \\hfill "
 %%添加新关键字envlevel（环境中索引层次）%%
 \def\imki@envindexlevel{\@ifundefined{chapter}{\section}{\chapter}*}
 \define@key{imkiindex}{envlevel}{\def\imki@envindexlevel{#1}}
+%%添加新关键字envtoclevel（环境中索引的目录层次）%%
+\def\imki@envtoclevel{\@ifundefined{chapter}{section}{chapter}}
+\define@key{imkiindex}{envtoclevel}{\def\imki@envtoclevel{#1}}
 %%设置默认键值（不要引入noclearpage选项，否则会出现目录页码错误）%%
-\setkeys{imkiindex}{level=\chapter*,envlevel=\chapter,toclevel=chapter,firstpagestyle=empty}
+\setkeys{imkiindex}{level=\chapter*,envlevel=\chapter,toclevel=chapter,envtoclevel=chapter}
 %%修改索引环境%%
 \ifimki@original
 \expandafter\def\expandafter\theindex\expandafter{\expandafter
@@ -343,16 +354,14 @@ delim_2 " \\hfill "
 \renewenvironment{theindex}{
 %%%%%%%%%% 修改部分开始 %%%%%%%%%%
 \if@appendix%判断索引所在环境
-\def\imki@maybeaddtotoc{}%索引在环境内则不额外生成目录
 \imki@envindexlevel{\indexname}
-\imki@maybeaddtotoc
 \else
 \imki@indexlevel{\indexname}
-\imki@maybeaddtotoc
 \fi
+\imki@maybeaddtotoc%添加目录
 %\imki@indexheaders%注释掉页眉设置
+%\thispagestyle{\imki@firstpagestyle}%注释掉首页页面样式
 %%%%%%%%%% 修改部分结束 %%%%%%%%%%
-\thispagestyle{\imki@firstpagestyle}
 \ifnum\imki@columns>\@ne
 \columnsep\imki@columnsep
 \ifx\imki@idxprologue\relax
@@ -365,7 +374,7 @@ delim_2 " \\hfill "
 \fi
 \global\let\imki@idxprologue\relax
 \parindent\z@
-\parskip\z@ \@plus 0.3\p@\relax
+\parskip\z@\@plus0.3\p@\relax
 \columnseprule
 \ifKV@imki@columnseprule0.4\p@\else\z@\fi
 \raggedright
@@ -373,62 +382,152 @@ delim_2 " \\hfill "
 \imki@othercode}{
 \ifnum\imki@columns>\@ne
 \end{multicols}
-\fi}\fi
+\fi}
+\fi
+
+%%修改目录添加%%
+\def\imki@putindexsplit#1{
+\ifimki@nonewpage\else
+\imki@clearpage
+\ifimki@disableautomatic\else
+\immediate\closeout\csname #1@idxfile\endcsname
+\fi\fi
+\let\imki@indexname\indexname
+\@nameuse{imki@set@#1}\imki@decide
+\if@tempswa
+\imki@exec{\imki@program\imki@options#1.idx}
+\else
+\imki@finalmessage{#1}
+\fi
+%%%%%%%%%% 修改部分开始 %%%%%%%%%%
+\ifKV@imki@intoc
+\if@appendix
+\def\imki@maybeaddtotoc{\@nameuse{phantomsection}
+\addcontentsline{toc}{\imki@envtoclevel}{\imki@title}}
+\else
+\def\imki@maybeaddtotoc{\@nameuse{phantomsection}
+\addcontentsline{toc}{\imki@toclevel}{\imki@title}}
+\fi
+\else
+\def\imki@maybeaddtotoc{}
+\fi
+%%%%%%%%%% 修改部分结束 %%%%%%%%%%
+\ifx\imki@title\imki@check@indexname\else
+\def\indexname{\imki@title}
+\fi
+\@input@{#1.ind}
+\let\indexname\imki@indexname}
+%%%%
+\def\imki@putindexunique#1{
+\ifimki@nonewpage\else
+\imki@clearpage
+\fi
+\let\imki@indexname\indexname
+\@nameuse{imki@set@#1}\imki@decide
+\if@tempswa
+\ifimki@splitdone\else
+\ifimki@disableautomatic\else
+\immediate\closeout\@indexfile
+\fi
+\imki@exec{splitindex \imki@splitindexoptions\space\imki@jobname.idx}
+\global\imki@splitdonetrue
+\fi
+\else
+\ifimki@splitdone\else
+\imki@splitindexmessage\global\imki@splitdonetrue
+\fi\fi
+\if@tempswa
+\imki@exec{\imki@program\imki@options\imki@jobname-#1.idx}
+\fi
+%%%%%%%%%% 修改部分开始 %%%%%%%%%%
+\ifKV@imki@intoc
+\if@appendix
+\def\imki@maybeaddtotoc{\@nameuse{phantomsection}
+\addcontentsline{toc}{\imki@envtoclevel}{\imki@title}}
+\else
+\def\imki@maybeaddtotoc{\@nameuse{phantomsection}
+\addcontentsline{toc}{\imki@toclevel}{\imki@title}}
+\fi
+\else
+\def\imki@maybeaddtotoc{}
+\fi
+%%%%%%%%%% 修改部分结束 %%%%%%%%%%
+\ifx\imki@title\imki@check@indexname\else
+\def\indexname{\imki@title}
+\fi
+\@input@{\imki@jobname-#1.ind}
+\let\indexname\imki@indexname}
+
 \makeatother
+
 %%定义中文索引命令，#2是中文，#3是全拼（首字母）%%
 \NewDocumentCommand{\zhindex}{omm}{\IfValueTF{#1}{\index[#1]{#3@#2}}{\index{#3@#2}}}
 
 %%%%%%%%%%%%%%%%%%%% 术语表宏包 %%%%%%%%%%%%%%%%%%%%
 \RequirePackage{nomencl}%引入术语表
 %%生成主要符号表的方法：主文件先用XeLaTeX编译一次，然后建立一个.bat文件，内容为：makeindex <filename>.nlo -s nomencl.ist -o <filename>.nls -t <filename>.nlg，运行，再用XeLaTeX编译主文件两次即可生成%%
-\makenomenclature%写入数据文件
 \renewcommand{\nomname}{主要符号表}%更改符号表标题
 
 \makeatletter
+%%以下命令会令nomencl宏包选项失效，符号表的具体设置需要在主文件中进行%%
 %%设置符号表输出命令键%%
-\define@key{nomen}{columns}{\def\nomen@columns{#1}}
-\define@key{nomen}{columnsep}{\def\nomen@columnsep{#1}}
-\define@boolkey{nomen}{columnseprule}[true]{}
-\define@boolkey{nomen}{intoc}[true]{}
+\newif\if@nomencl@columnseprule
+\define@key{nomen}{columns}{\def\@nomencl@columns{#1}}
+\define@key{nomen}{columnsep}{\def\@nomencl@columnsep{#1}}
+%%添加新关键字level%%
+\def\@nomencl@level{\@ifundefined{chapter}{\section}{\chapter}*}
+\define@key{nomen}{level}{\def\@nomencl@level{#1}}
+%%添加新关键字envlevel%%
+\def\@nomencl@envlevel{\@ifundefined{chapter}{\section}{\chapter}*}
+\define@key{nomen}{envlevel}{\def\@nomencl@envlevel{#1}}
+%%添加新关键字toclevel%%
+\def\@nomencl@toclevel{\@ifundefined{chapter}{section}{chapter}}
+\define@key{nomen}{toclevel}{\def\@nomencl@toclevel{#1}}
+%%添加新关键字envtoclevel%%
+\def\@nomencl@envtoclevel{\@ifundefined{chapter}{section}{chapter}}
+\define@key{nomen}{envtoclevel}{\def\@nomencl@envtoclevel{#1}}
+%%定义产生一对布尔键的命令%%
+\newcommand{\@nomen@define@pairboolkeys}[4]{
+\define@boolkey{nomen}{#1}[true]{#2}
+\define@boolkey{nomen}{#3}[true]{#4}}
+%%
+\@nomen@define@pairboolkeys{columnseprule}{\@nomencl@columnsepruletrue}{nocolumnseprule}{\@nomencl@columnseprulefalse}
+\@nomen@define@pairboolkeys{intoc}{\@intoctrue}{notintoc}{\@intocfalse}
+\@nomen@define@pairboolkeys{tocbasic}{\@nomencl@tocbasictrue}{notocbasic}{\@nomencl@tocbasicfalse}
 %%设置默认键值%%
-\setkeys{nomen}{columns=2,columnsep=2.0em}
+\setkeys{nomen}{level=\chapter*,envlevel=\chapter,toclevel=chapter,envtoclevel=chapter,
+columns=2,columnsep=2.0em,notintoc,notocbasic,nocolumnseprule}
 %%定义符号表设置命令%%
 \newcommand{\nomensetup}[1]{\setkeys{nomen}{#1}}
 %%修改符号表环境%%
 \renewcommand{\thenomenclature}{
 %%%%%%%%%% 修改部分开始 %%%%%%%%%%
-\@nomencl@tocbasicfalse%使得以下部分失效
+\clearpage
 \providecommand*{\listofnlsname}{\nomname}
 \if@nomencl@tocbasic
 \let\list@fname\listofnlsname
 \def\@currext{nls}
 \tocbasic@listhead{\list@fname}
 \else
-\@ifundefined{chapter}
-{\section*{\nomname}
-%\if@intoc\addcontentsline{toc}{section}{\nomname}\fi
-\ifKV@nomen@intoc
+\if@appendix%判断索引所在环境
+\@nomencl@envlevel{\nomname}
+\if@intoc%判断是否存在intoc参数
 \phantomsection
-\addcontentsline{toc}{section}{\nomname}
-\fi}{
-\if@appendix%判断符号表所在环境
-\chapter{\nomname}
+\addcontentsline{toc}{\@nomencl@envtoclevel}{\nomname}
+\fi
 \else
-\chapter*{\nomname}
-%\@mkboth{\nomname}{\nomname}%注释掉页眉设置
-%\if@intoc\addcontentsline{toc}{chapter}{\nomname}\fi
-\ifKV@nomen@intoc
+\@nomencl@level{\nomname}
+\if@intoc%判断是否存在intoc参数
 \phantomsection
-\addcontentsline{toc}{chapter}{\nomname}
+\addcontentsline{toc}{\@nomencl@toclevel}{\nomname}
+\fi\fi
 \fi
-\fi}
-\fi
-%\nompreamble
-\ifnum\nomen@columns>\@ne%多列符号表设置
-\begin{multicols}{\nomen@columns}
-\columnsep\nomen@columnsep
+\nompreamble
+\ifnum\@nomencl@columns>\@ne%多列符号表设置
+\begin{multicols}{\@nomencl@columns}
+\columnsep\@nomencl@columnsep
 \columnseprule
-\ifKV@nomen@columnseprule0.4\p@\else\z@\fi
+\if@nomencl@columnseprule0.4\p@\else\z@\fi
 \fi
 %%%%%%%%%% 修改部分结束 %%%%%%%%%%
 \if@nomentbl
@@ -452,8 +551,8 @@ delim_2 " \\hfill "
 \endlist
 \fi
 %%%%%%%%%% 修改部分开始 %%%%%%%%%%
-%\nompostamble
-\ifnum\nomen@columns>\@ne
+\nompostamble
+\ifnum\@nomencl@columns>\@ne
 \end{multicols}
 \fi
 %%%%%%%%%% 修改部分结束 %%%%%%%%%%
@@ -602,7 +701,7 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 \renewcommand{\chaptermark}[1]{\markboth{第~\thechapter~章\quad#1}{第~\thechapter~章\quad#1}}
 \renewcommand{\sectionmark}[1]{\markright{第~\thesection~节\quad#1}}
 \extramarks{\protect\@title}{\protect\@title}
-\newcommand{\pageframe}{
+\newcommand{\@pageframe}{
 \makebox[0pt][l]{
 \begin{tikzpicture}[remember picture,overlay]
 %%根据页数的奇偶生成%%
@@ -648,22 +747,23 @@ cycle;
 \draw[draw=ColorA,fill=ColorA,sharp corners]node[append after command={(T.north west)[rounded corners]--(T.north east)[rounded corners]--(T.south east)[sharp corners]--(T.south west)--cycle},font=\FontSize{13pt}\bfseries,text=white,text width=6.5mm,align=center,inner xsep=1.5mm,inner ysep=3.5mm,anchor=west](T)at([yshift=\MarkY]B){\rotatebox[origin=c]{270}{\maxsizebox{\SepH+\DeltaH-2.5cm}{!}{\firstxmark}}};
 \fi
 \end{tikzpicture}}}
-\makeatother
+
 %%定义主页面样式%%
 \fancypagestyle{MainPage}{
 \fancyhead{}
 \fancyfoot{}
-\fancyfoot[C]{\pageframe}
+\fancyfoot[C]{\@pageframe}
 \fancyhead[RO]{\textbf{\color{ColorA}{\FontSize{12.5pt}{\rightmark}}}}
 \fancyhead[LE]{\textbf{\color{ColorA}{\FontSize{12.5pt}{\leftmark}}}}
 }
+\makeatother
 
 %%%%%%%%%%%%%%%%%%%% 书籍层次样式 %%%%%%%%%%%%%%%%%%%%%%
 %%部分页样式%%
 %%编号部分页样式%%
 \makeatletter
 \newcommand*{\partintro}[1]{\def\@partintro{\hspace*{2.0em}#1}}
-\newcommand{\partstyle}[2]{
+\newcommand{\@partstyle}[2]{
 \makebox[0pt][l]{
 \begin{tikzpicture}[remember picture,overlay]
 \draw[ColorB!7.5,fill=ColorB!7.5](current page.north west)rectangle(current page.south east);
@@ -731,7 +831,7 @@ cycle;
 \newlength{\criticstarlen}
 \setlength{\criticstarlen}{\textwidth-5.0cm}
 %%不编号部分页样式%%
-\newcommand{\partstarstyle}[1]{
+\newcommand{\@partstarstyle}[1]{
 \settowidth{\partstarlen}{\bfseries{\FontSize{40pt}{#1}}}
 \makebox[0pt][l]{
 \begin{tikzpicture}[remember picture,overlay]
@@ -826,7 +926,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 \gaddtolength{\MarkY}{-\SepH}%更新侧标位置
 \extramarks{第~\thepart~部分\quad#1}{第~\thepart~部分\quad#1}%修改侧标内容
 \startcontents[part]%开启小目录
-\partstyle{第~\thepart~部分}{#1}%部分样式
+\@partstyle{第~\thepart~部分}{#1}%部分样式
 \thispagestyle{empty}}
 [\global\partintro{}]%清空\partintro
 %%不编号部分页%%
@@ -837,7 +937,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 \gaddtolength{\MarkY}{-\SepH}%更新侧标位置
 \extramarks{#1}{#1}%修改侧标内容
 \startcontents[part]%开启小目录
-\partstarstyle{#1}%部分样式
+\@partstarstyle{#1}%部分样式
 \thispagestyle{empty}}
 [\global\partintro{}]%清空\partintro
 %%间距设置%%
@@ -848,7 +948,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 \newcommand*\chaptersubtitle[1]{\def\@chaptersubtitle{#1}}
 \newcommand*\chapterimage[1]{\def\@chapterimage{#1}}
 %%编号章节页样式%%
-\newcommand{\chapterstyle}[2]{
+\newcommand{\@chapterstyle}[2]{
 \makebox[0pt][l]{
 \begin{tikzpicture}[remember picture,overlay]
 \ifodd\value{page}%判断奇偶页
@@ -915,7 +1015,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 \end{tikzpicture}}}
 
 %%不编号章节样式%%
-\newcommand{\chapterstarstyle}[2]{
+\newcommand{\@chapterstarstyle}[2]{
 \makebox[0pt][l]{
 \begin{tikzpicture}[remember picture,overlay]
 \ifodd\value{page}%判断奇偶页
@@ -929,7 +1029,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 \coordinate(G)at([xshift=-1.0cm,yshift=-5.022cm]current page.north east);
 \coordinate(H)at([yshift=-5.022cm]current page.north west);
 %%框架%%
-\draw[fill=ColorB!7.5,ColorB!7.5,line width=0.1pt,sharp corners,overlay]
+\draw[fill=ColorB!7.5,ColorB!7.5,line width=0.1pt,sharp corners]
 (A)--(B)--(C)--(D)--(E)[rounded corners=5.0mm]--(F)[rounded corners=5.0mm]--(G)[sharp corners]--(H)--cycle;
 %%标题%%
 \node[inner sep=0mm,anchor=west](T)at([xshift=\@innerlen+0.25in,yshift=-1.79cm]current page.north west){\halfcircle{ColorA}{0.5cm}};
@@ -957,7 +1057,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 \coordinate(G)at([xshift=1.0cm,yshift=-5.022cm]current page.north west);
 \coordinate(H)at([yshift=-5.022cm]current page.north east);
 %%框架%%
-\draw[fill=ColorB!7.5,ColorB!7.5,line width=0.1pt,sharp corners,overlay]
+\draw[fill=ColorB!7.5,ColorB!7.5,line width=0.1pt,sharp corners]
 (A)--(B)--(C)--(D)--(E)[rounded corners=5.0mm]--(F)[rounded corners=5.0mm]--(G)[sharp corners]--(H)--cycle;
 %%标题%%
 \node[anchor=east,font=\bfseries\FontSize{30pt},text=ColorA,minimum height=1.45cm](T)at([xshift=-\@innerlen-0.25in,yshift=-1.79cm]current page.north east){\maxsizebox{\textwidth-0.5in-1.5cm}{!}{#1}};
@@ -977,7 +1077,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 \fi
 \end{tikzpicture}}}
 %%制定章节页的侧标更新规则%%
-\newcommand{\pagesiderule}{
+\newcommand{\@pagesiderule}{
 \ifnum\value{@currenttotalpart}=0%若文档中到当前章时还没有部分层次
 \extramarks{\protect\@title}{\protect\@title}%侧标内容为书名
 \if@mainmatter%如果在mainmatter中
@@ -992,8 +1092,8 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 %%编号章节页%%
 \titleformat{\chapter}
 {}{}{0em}
-{\pagesiderule
-\chapterstyle{第~\thechapter~章}{#1}%章样式
+{\@pagesiderule
+\@chapterstyle{第~\thechapter~章}{#1}%章样式
 \enlargethispage{-1.25cm}%修改页面大小
 \thispagestyle{empty}}
 [\global\chaptersubtitle{}%清空\chaptersubtitle
@@ -1001,9 +1101,9 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 %%不编号章节页%%
 \titleformat{name=\chapter,numberless}
 {}{}{0em}
-{\pagesiderule
+{\@pagesiderule
 \markboth{#1\ifdefvoid{\@chaptersubtitle}{}{\quad\@chaptersubtitle}}{#1\ifdefvoid{\@chaptersubtitle}{}{\quad\@chaptersubtitle}}%修改页眉内容
-\chapterstarstyle{#1}{\ifdefvoid{\@chaptersubtitle}{}{\@chaptersubtitle}}%章样式
+\@chapterstarstyle{#1}{\ifdefvoid{\@chaptersubtitle}{}{\@chaptersubtitle}}%章样式
 \enlargethispage{-0.25cm}%修改页面大小
 \thispagestyle{empty}}
 [\global\chaptersubtitle{}%清空\chaptersubtitle
@@ -1012,51 +1112,51 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 \titlespacing*{\chapter}{0pt}{40pt}{40pt}
 %%节样式%%
 %%编号节样式%%
-\newcommand{\sectionlabel}[1]{
+\newcommand{\@sectionlabel}[1]{
 \tikz{\node[inner sep=0mm,anchor=west,font=\FontSize{17pt}\bfseries](P){第};
 \node[inner sep=0mm,anchor=west,font=\FontSize{17pt}\bfseries](S)at([xshift=1.2cm]P.east){节};
 \coordinate(R)at($0.5*(P.east)+0.5*(S.west)$);
 \draw[ColorA,fill=ColorA](R)circle(0.375cm);
 \node[inner sep=0mm,anchor=center,font=\FontSize{17pt}\bfseries,text=white](N)at(R){\maxsizebox{0.45cm}{0.45cm}{#1}};}}
 %%
-\newcommand{\sectionstyle}[2]{
-\begin{center}
-\tikz{\node[anchor=west,inner sep=0mm](L){\sectionlabel{#1}};
-\node[anchor=north west,font=\FontSize{17pt}\bfseries,inner ysep=0.96mm](Q)at([xshift=0.75cm]L.north east){\begin{varwidth}{\linewidth-2.5cm}#2\end{varwidth}};}
-\end{center}}
+\newcommand{\@sectionstyle}[2]{
+\begin{flushleft}
+\tikz{\node[inner sep=-1.0mm,inner ysep=0mm](L){\@sectionlabel{#1}};
+\node[anchor=north west,font=\FontSize{17pt}\bfseries,inner ysep=0.96mm](Q)at([xshift=0.75cm]L.north east){\begin{varwidth}{\linewidth-3.0cm}#2\end{varwidth}};}
+\end{flushleft}}
 %%不编号节样式%%
-\newcommand{\sectionstarlabel}{
+\newcommand{\@sectionstarlabel}{
 \tikz{\draw[ColorA!50,fill=ColorA!50,line width=3.0pt](0,0)circle(0.375cm);
 \draw[white,fill=ColorA,line width=2.5pt](0,0)circle(0.25cm);}}
 %%
-\newcommand{\sectionstarstyle}[1]{
+\newcommand{\@sectionstarstyle}[1]{
 \begin{flushleft}
-\tikz{\node[anchor=west,inner xsep=-1.0mm,inner ysep=0mm](C){\sectionstarlabel};
+\tikz{\node[inner xsep=-1.0mm,inner ysep=0mm](C){\@sectionstarlabel};
 \node[anchor=north west,font=\FontSize{17pt}\bfseries,text=ColorA,inner ysep=1.425mm](P)at([xshift=0.25cm]C.north east){\begin{varwidth}{\linewidth-1.0cm}#1\end{varwidth}};}
 \end{flushleft}}
 %%环境内节样式%%
-\newcommand{\envsectionlabel}[2]{
+\newcommand{\@envsectionlabel}[2]{
 \tikz{\node[inner sep=0mm,anchor=west,font=\FontSize{17pt}\bfseries](P){#1};
 \coordinate(R)at([xshift=0.65cm]P.east);
 \draw[ColorA,fill=ColorA](R)circle(0.375cm);
 \node[inner sep=0mm,anchor=center,font=\FontSize{17pt}\bfseries,text=white](N)at(R){\maxsizebox{0.45cm}{0.45cm}{#2}};}}
 %%
 \newlength{\sectionlabelwidth}
-\newcommand{\envsectionstyle}[3]{
+\newcommand{\@envsectionstyle}[3]{
 \settowidth{\sectionlabelwidth}{\FontSize{17pt}{\textbf{#1}}}
 \begin{flushleft}
-\tikz{\node[anchor=west,inner xsep=-1.0mm,inner ysep=0mm](L){\envsectionlabel{#1}{#2}};
+\tikz{\node[inner xsep=-1.0mm,inner ysep=0mm](L){\@envsectionlabel{#1}{#2}};
 \node[anchor=north west,font=\FontSize{17pt}\bfseries,inner ysep=0.96mm](Q)at([xshift=0.75cm]L.north east){\begin{varwidth}{\linewidth-\sectionlabelwidth-1.5cm}#3\end{varwidth}};}
 \end{flushleft}}
 %%编号节样式%%
 \titleformat{\section}
 {}{}{0em}
-{\sectionstyle{\thesection}{#1}}
+{\@sectionstyle{\thesection}{#1}}
 %%不编号节样式%%
 \titleformat{name=\section,numberless}
 {}{}{0em}
 {\markright{#1}
-\sectionstarstyle{#1}}
+\@sectionstarstyle{#1}}
 %%间距设置%%
 \titlespacing*{\section}{0pt}{0pt}{0pt}
 %%修改章节断页方式，使\section另起一页，而\section*不换页%%
@@ -1070,7 +1170,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 \newlength{\subsectionlabelwidth}
 %%编号小节标题样式%%
 %%设置\subsection的标题%%
-\newcommand{\subsectiontitle}[3]{\tikz{
+\newcommand{\@subsectiontitle}[3]{\tikz{
 \node[anchor=west,draw=ColorA,fill=ColorA,line width=3.0pt,minimum height=0.7cm,rounded corners=0.35cm,font=\bfseries\FontSize{13.5pt},text=white,inner xsep=4.0mm](N){#1\hspace*{0.5cm}};
 \draw[draw=white,fill=white,line width=7.5pt](N.east)circle(0.45cm);
 \draw[ColorB!7.5,fill=ColorB!7.5,rounded corners=0.4cm]([xshift=-0.4cm,yshift=0.4cm]N.east)rectangle(\linewidth+1.0mm,-0.4cm);
@@ -1078,16 +1178,16 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 \node[anchor=center,font=\bfseries\FontSize{16pt},text=ColorA](S)at(N.east){\maxsizebox{0.5cm}{!}{#2}};
 \node[anchor=west,font=\bfseries\FontSize{13.75pt},text=ColorA,inner ysep=0mm,inner xsep=2.5mm](T)at([xshift=4.0mm]S.east){\maxsizebox{\linewidth-\subsectionlabelwidth-3.0cm}{!}{#3}};}}
 %%
-\newcommand{\subsectionstyle}[3]{
+\newcommand{\@subsectionstyle}[3]{
 \settowidth{\subsectionlabelwidth}{\FontSize{13.5pt}{\textbf{#1}}}
 \begin{flushleft}
-\tikz{\node[inner ysep=0mm,inner xsep=-0.95mm](G){\subsectiontitle{#1}{#2}{#3}};}
+\tikz{\node[inner ysep=0mm,inner xsep=-0.95mm](G){\@subsectiontitle{#1}{#2}{#3}};}
 \end{flushleft}}
 
 %%不编号小节标题样式%%
 \newcommand*\subsectionsubtitle[1]{\def\@subsectionsubtitle{#1}}
 %%设置\subsection*的标题%%
-\newcommand{\subsectionstartitle}[1]{\tikz{
+\newcommand{\@subsectionstartitle}[1]{\tikz{
 \draw[ColorB!7.5,fill=ColorB!7.5,rounded corners=0.4cm](0,0.4cm)rectangle(\linewidth+1.0mm,-0.4cm);
 \node[anchor=west,draw=ColorA,fill=ColorA,line width=3.0pt,minimum height=0.7cm,rounded corners=0.35cm,font=\bfseries\FontSize{13.5pt},text=white,inner xsep=4.0mm](N)at(0,0){\maxsizebox{\linewidth-1.5cm}{!}{\hspace*{0.875cm+1.5pt}#1}};
 \draw[draw=white,fill=white,line width=7.5pt]([xshift=0.375cm+1.5pt]N.west)circle(0.45cm);
@@ -1095,19 +1195,19 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 \draw[draw=ColorA,fill=ColorA]([xshift=0.375cm+1.5pt]N.west)circle(0.2cm);
 \node[font=\bfseries\FontSize{12pt},text=ColorA,anchor=east,inner xsep=5.0mm,inner ysep=0mm](S)at(\linewidth+2.0mm,0){\ifdefvoid{\@subsectionsubtitle}{}{\@subsectionsubtitle}};}}
 %%
-\newcommand{\subsectionstarstyle}[1]{
+\newcommand{\@subsectionstarstyle}[1]{
 \begin{flushleft}
-\tikz{\node[inner ysep=0mm,inner xsep=-1.7mm-2.25pt](G){\subsectionstartitle{#1}};}
+\tikz{\node[inner ysep=0mm,inner xsep=-1.7mm-2.25pt](G){\@subsectionstartitle{#1}};}
 \end{flushleft}}
 
 %%编号小节样式%%
 \titleformat{\subsection}
 {}{}{0em}
-{\subsectionstyle{课时}{\arabic{subsection}}{#1}}
+{\@subsectionstyle{课时}{\arabic{subsection}}{#1}}
 %%不编号小节样式%%
 \titleformat{name=\subsection,numberless}
 {}{}{0em}
-{\subsectionstarstyle{#1}}
+{\@subsectionstarstyle{#1}}
 %%间距设置%%
 \titlespacing*{\subsection}{0pt}{-20pt}{-20pt}
 %%点样式%%
@@ -1130,7 +1230,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 \NewDocumentCommand{\ExerciseTitle}{O{ColorA} m}{
 \colorlet{ListColor}{#1}
 \begin{center}
-\begin{tikzpicture}[remember picture]
+\begin{tikzpicture}
 \node[draw=#1,fill=#1,ultra thick,minimum height=0.7cm,rounded corners=0.35cm,font=\bfseries\FontSize{13pt},text=white,inner xsep=0.5cm](E){\maxsizebox{\linewidth-6.0cm}{!}{#2}};
 \draw[#1,fill=#1]([xshift=0.5cm]E.east)circle(0.26cm);
 \draw[#1!85,fill=#1!85]([xshift=1.2cm]E.east)circle(0.235cm);
@@ -1146,26 +1246,26 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 \contentsmargin{2.25mm}
 \makeatletter
 %%标签绘制%%
-\newcommand{\PartContents}[1]{
+\newcommand{\@PartContents}[1]{
 \draw[ColorB!7.5,fill=ColorB!7.5,line width=0.1pt,rounded corners=0.38cm]
 (0,0.38cm)rectangle(\linewidth,-0.38cm);
 \draw[draw=ColorA,fill=ColorA,sharp corners]node[append after command={(T.north west)--(T.north east)[sharp corners]--(T.south east)[rounded corners=0.38cm]--(T.south west)[rounded corners=0.38cm]--cycle},font=\FontSize{13pt}\bfseries,text=white,align=center,inner xsep=4.5mm,minimum height=0.76cm,anchor=west](T)at(0,0){\maxsizebox{\linewidth/2-1.0cm}{!}{#1}};}
 %%编号部分目录样式%%
-\newcommand{\tocentrypartnumbered}[1]{
+\newcommand{\@tocentrypartnumbered}[1]{
 \contentslabel[\tikz{
-\PartContents{\maxsizebox{2.8cm}{!}{第~\thecontentslabel~部分}}
+\@PartContents{\maxsizebox{2.8cm}{!}{第~\thecontentslabel~部分}}
 \node[font=\FontSize{13pt}\bfseries,text=ColorA,anchor=west,inner xsep=0mm](S)at([xshift=3.5mm]T.east){\maxsizebox{\linewidth-4.0cm}{!}{#1}};
 \node[font=\FontSize{14pt}\bfseries,text=ColorA,anchor=east,inner xsep=0mm](P)at(\linewidth-0.35cm,0){\thecontentspage};}]{1.25cm}}
 %%不编号部分目录样式%%
-\newcommand{\tocentrypartunnumbered}[1]{
+\newcommand{\@tocentrypartunnumbered}[1]{
 \contentslabel[\tikz{
-\PartContents{#1}
+\@PartContents{#1}
 \node[font=\FontSize{14pt}\bfseries,text=ColorA,anchor=east,inner xsep=0mm](P)at(\linewidth-0.35cm,0){\thecontentspage};}]{1.25cm}}
 %%部分目录样式%%
 \titlecontents{part}[1.25cm]
 {\addvspace{20pt}\bfseries\hypersetup{linkcolor=white}}
-{\tocentrypartnumbered}
-{\tocentrypartunnumbered}{}
+{\@tocentrypartnumbered}
+{\@tocentrypartunnumbered}{}
 %%章目录样式%%
 \titlecontents{chapter}[2.55cm]
 {\addvspace{5pt}\FontSize{13pt}\bfseries\color{ColorB}\hypersetup{linkcolor=ColorB}}
@@ -1222,37 +1322,37 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 \makeatother
 
 %%%%%%%%%%%%%%%%%% 环境定义和命令定义 %%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\basenode}[1]{
+\makeatletter
+\newcommand{\@basenode}[1]{
 \tikz[baseline=($0.7*(current bounding box.west)+0.3*(current bounding box.south west)$)]{\node[inner xsep=-0.95mm](E){#1};}}
 %%设置例题命令%%
-\newcommand{\egextitle}[3]{
+\newcommand{\@egextitle}[3]{
 \tikz{\node[font=\FontSize{11pt}\bfseries,text=white,draw=#2!90!ColorD,fill=#2!90!ColorD,rounded corners=0.8em,inner xsep=3.5mm,ultra thick,minimum height=1.6em](T){#1\hspace*{0.55cm}};
 \node[anchor=west,font=\FontSize{11.5pt}\bfseries,text=#2!90!ColorD,draw=#2!90!ColorD,fill=white,rounded corners=0.8em,inner xsep=2.5mm,ultra thick,minimum height=1.6em](N)at([xshift=-1.7em]T.east){#3};}}
 %%设置解答命令%%
-\newcommand{\ansanatitle}[2]{
+\newcommand{\@ansanatitle}[2]{
 \tikz{\node[font=\FontSize{11pt}\bfseries,text=white,draw=#2!90!ColorD,fill=#2!90!ColorD,rounded corners=0.8em,inner xsep=3.5mm,ultra thick,minimum height=1.6em](T){#1};}}
 %%解答%%
 \NewExpandableDocumentCommand{\Answer}{sm}{
 \begin{FlushLeft}
 \justifying
 \IfBooleanTF{#1}
-{\basenode{\ansanatitle{延展}{ColorF}}\hspace{1.0em}\vspace{0.25em}#2}%带星号*
-{\basenode{\ansanatitle{解答}{ColorG}}\hspace{1.0em}\vspace{0.25em}#2}
+{\@basenode{\@ansanatitle{延展}{ColorF}}\hspace{1.0em}\vspace{0.25em}#2}%带星号*
+{\@basenode{\@ansanatitle{解答}{ColorG}}\hspace{1.0em}\vspace{0.25em}#2}
 \end{FlushLeft}}
 %%例题%%
-\makeatletter
 \newcommand{\Example}[1]{
 \stepcounter{@egnum}
 \begin{FlushLeft}
 \justifying
-\basenode{\egextitle{例题}{ColorA}{\thechapter.\the@egnum}}\hspace{1.0em}\vspace{0.25em}#1
+\@basenode{\@egextitle{例题}{ColorA}{\thechapter.\the@egnum}}\hspace{1.0em}\vspace{0.25em}#1
 \end{FlushLeft}}
 %%变式%%
 \newcommand{\Variety}[1]{
 \stepcounter{@varnum}
 \begin{FlushLeft}
 \justifying
-\basenode{\egextitle{变式}{ColorB}{\thechapter.\the@varnum}}\hspace{1.0em}\vspace{0.25em}#1
+\@basenode{\@egextitle{变式}{ColorB}{\thechapter.\the@varnum}}\hspace{1.0em}\vspace{0.25em}#1
 \end{FlushLeft}}
 \makeatother
 
@@ -1280,8 +1380,8 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 %修改有编号章样式
 \titleformat{\chapter}
 {}{}{0em}
-{\pagesiderule
-\chapterstarstyle{附录~\thechapter~}{##1}%章样式
+{\@pagesiderule
+\@chapterstarstyle{附录~\thechapter~}{##1}%章样式
 \enlargethispage{-0.25cm}%修改页面大小
 \thispagestyle{empty}}
 [\global\chaptersubtitle{}%清空\chaptersubtitle
@@ -1312,8 +1412,8 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 %修改有编号章样式
 \titleformat{\chapter}
 {}{}{0em}
-{\pagesiderule
-\chapterstarstyle{试题~\thechapter~}{##1}%章样式
+{\@pagesiderule
+\@chapterstarstyle{试题~\thechapter~}{##1}%章样式
 \enlargethispage{-0.25cm}%修改页面大小
 \thispagestyle{empty}}
 [\global\chaptersubtitle{}%清空\chaptersubtitle
@@ -1321,7 +1421,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 %修改有编号小节样式
 \titleformat{\subsection}
 {}{}{0em}
-{\subsectionstyle{题目}{\arabic{subsection}}{##1}}
+{\@subsectionstyle{题目}{\arabic{subsection}}{##1}}
 %将环境前的章计数器值储存在beforecounter中
 \setcounter{@beforetestcounter}{\value{chapter}}
 %将章计数器置为环境中章计数器值
@@ -1347,11 +1447,11 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 %修改有编号节样式
 \titleformat{\section}
 {}{}{0em}
-{\envsectionstyle{测试}{\thesection}{##1}}
+{\@envsectionstyle{测试}{\thesection}{##1}}
 %修改有编号小节样式
 \titleformat{\subsection}
 {}{}{0em}
-{\subsectionstyle{题目}{\arabic{subsection}}{##1}}
+{\@subsectionstyle{题目}{\arabic{subsection}}{##1}}
 %将环境前的节计数器值储存在beforecounter中
 \setcounter{@beforequizcounter}{\value{section}}
 %将节计数器置为环境中节计数器值
@@ -1377,17 +1477,17 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 %修改有编号节样式
 \titleformat{\section}
 {}{}{0em}
-{\envsectionstyle{专题}{\thesection}{##1}}
+{\@envsectionstyle{专题}{\thesection}{##1}}
 %修改有编号小节样式
 \titleformat{\subsection}
 {}{}{0em}
-{\subsectionstyle{重难点}{\arabic{subsection}}{##1}}
+{\@subsectionstyle{重难点}{\arabic{subsection}}{##1}}
 %修改例题样式
 \renewcommand{\Example}[1]{
 \stepcounter{@classic}
 \begin{flushleft}
 \begin{varwidth}{\linewidth}
-\basenode{\egextitle{典例}{ColorA}{\thesection.\the@classic}}\hspace{1.0em}\vspace{0.25em}##1
+\@basenode{\@egextitle{典例}{ColorA}{\thesection.\the@classic}}\hspace{1.0em}\vspace{0.25em}##1
 \end{varwidth}
 \end{flushleft}}
 %将环境前的节计数器值储存在beforecounter中
@@ -1415,7 +1515,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 %修改有编号节样式
 \titleformat{\section}
 {}{}{0em}
-{\envsectionstyle{课题}{\thesection}{##1}}
+{\@envsectionstyle{课题}{\thesection}{##1}}
 %将环境前的节计数器值储存在beforecounter中
 \setcounter{@beforeprojectcounter}{\value{section}}
 %将节计数器置为环境中节计数器值
