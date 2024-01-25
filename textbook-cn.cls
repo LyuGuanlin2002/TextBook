@@ -1158,7 +1158,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 {\markright{#1}
 \@sectionstarstyle{#1}}
 %%间距设置%%
-\titlespacing*{\section}{0pt}{0pt}{0pt}
+\titlespacing*{\section}{0pt}{0pt}{15pt}
 %%修改章节断页方式，使\section另起一页，而\section*不换页%%
 \let\origsection\section
 \renewcommand{\section}{

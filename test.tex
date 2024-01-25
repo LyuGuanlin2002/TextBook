@@ -1,7 +1,7 @@
 % !TEX program = bibtex
 % !Mode:: "TeX:UTF-8"
-\documentclass[color=blue,openany]{textbook-cn}
-\usepackage{zhlipsum,lipsum}%乱数假文（测试文字）splitbib,
+\documentclass[color=orange,openany]{textbook-cn}
+\usepackage{zhlipsum,lipsum}%乱数假文（测试文字）splitbib
 \graphicspath{{./figure/}{./figures/}{./image/}{./images/}{./graphics/}{./graphic/}{./pictures/}{./picture/}}%提供多种图片路径
 
 %%设置符号表样式%%
@@ -9,12 +9,12 @@
 \makenomenclature
 
 %%设置索引样式%%
-\indexsetup{level=\chapter*,envlevel=\chapter,toclevel=chapter,envtoclevel=chapter}
+\indexsetup{}
 \makeindex[name=noun,title=名词索引,columns=3,columnsep=2.0em,options=-s indexstyle.ist]
 \makeindex[name=video,title=视频索引,columnsep=2.0em,options=-s indexstyle.ist]
 
 %%设置参考文献样式%%
-\bibsetup{level=\chapter*,envlevel=\chapter,toclevel=chapter,envtoclevel=chapter,intoc}
+\bibsetup{intoc}
 
 %%设置书籍信息%%
 \series{物理学系列教材}
