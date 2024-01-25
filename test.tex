@@ -1,6 +1,6 @@
 % !TEX program = bibtex
 % !Mode:: "TeX:UTF-8"
-\documentclass[color=orange,openany]{textbook-cn}
+\documentclass[color=blue,openany]{textbook-cn}
 \usepackage{zhlipsum,lipsum}%乱数假文（测试文字）splitbib,
 \graphicspath{{./figure/}{./figures/}{./image/}{./images/}{./graphics/}{./graphic/}{./pictures/}{./picture/}}%提供多种图片路径
 
@@ -10,8 +10,8 @@
 
 %%设置索引样式%%
 \indexsetup{level=\chapter*,envlevel=\chapter,toclevel=chapter,envtoclevel=chapter}
-\makeindex[name=noun,title=名词索引,columns=3,intoc,columnsep=2.0em,options=-s indexstyle.ist]
-\makeindex[name=video,title=视频索引,columnsep=2.0em,intoc,options=-s indexstyle.ist]
+\makeindex[name=noun,title=名词索引,columns=3,columnsep=2.0em,options=-s indexstyle.ist]
+\makeindex[name=video,title=视频索引,columnsep=2.0em,options=-s indexstyle.ist]
 
 %%设置参考文献样式%%
 \bibsetup{level=\chapter*,envlevel=\chapter,toclevel=chapter,envtoclevel=chapter,intoc}
@@ -29,8 +29,6 @@
 \coverimage{coverimage.pdf}
 \backimage{coverimage.pdf}
 
-
-
 \newcommand{\indexnoun}[1]{\index[noun]{#1}}
 \newcommand{\indexvideo}[1]{\index[video]{#1}}
 
@@ -38,8 +36,6 @@
 \newcommand{\zhindexvideo}[2]{\zhindex[video]{#1}{#2}}
 
 \newcommand{\inputlogo}[1]{\raisebox{-0.5em}{\includegraphics[width=1.5cm]{#1}}~~}
-
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
@@ -1185,7 +1181,7 @@ Just like \ref{Thm.3.1.1} on page \pageref{Thm.3.1.1}
 
 
 \newcounter{wxcounter}
-\newcommand{\wx}{\underline{~~\small\thewxcounter\refstepcounter{wxcounter}~~}}
+\newcommand{\wx}{\underline{~~\thewxcounter\refstepcounter{wxcounter}~~}}
 
 \begin{Reading}{文章标题}{5}{3}
 \lipsum[2]
@@ -1248,6 +1244,16 @@ Just like \ref{Thm.3.1.1} on page \pageref{Thm.3.1.1}
 
 
 
+\chaptersubtitle{测试文字测试文字}
+\printindex[video]
+
+
+
+\chaptersubtitle{测试文字测试文字}
+\printindex[noun]
+
+
+
 
 \end{Appendix}
 
@@ -1261,14 +1267,6 @@ Just like \ref{Thm.3.1.1} on page \pageref{Thm.3.1.1}
 \backmatter
 
 \stopcontents[part]
-
-\chaptersubtitle{测试文字测试文字}
-\printindex[video]
-
-
-
-\chaptersubtitle{测试文字测试文字}
-\printindex[noun]
 
 
 \chaptersubtitle{测试文字}

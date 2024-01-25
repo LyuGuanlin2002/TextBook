@@ -32,7 +32,7 @@
 \renewcommand*{\bottomfraction}{0.8}
 %%设置浮动环境占页比例阈值%%
 \renewcommand*{\floatpagefraction}{0.85}%\floatpagefraction的数值必须小于\topfraction
-\RequirePackage[table,dvipsnames,svgnames,x11names]{xcolor}%颜色宏包
+\RequirePackage[table,dvipsnames,svgnames,x11names]{xcolor}%颜色宏包，必须放在tikz之前
 %%蓝色主题%%
 \ifdefstring{\TextBook@color}{blue}{
 \definecolor{ColorA}{RGB}{68,114,210}
