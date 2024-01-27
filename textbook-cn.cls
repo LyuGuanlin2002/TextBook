@@ -561,8 +561,7 @@ columns=2,columnsep=2.0em,notintoc,notocbasic,nocolumnseprule}
 \tcbuselibrary{xparse}
 \tcbuselibrary{minted}
 \RequirePackage{empheq}%数学公式盒子
-\RequirePackage{adjustbox}%根据内容多少自动调整字体大小的盒子
-\RequirePackage{varwidth}%固定可变长度盒子
+\RequirePackage{adjustbox,varwidth}%自动调整字体大小的盒子%固定可变长度盒子
 \RequirePackage{enumitem,hlist}%控制列表环境格式%对齐列表环境
 %%设置列表参数%%
 \setlength{\itemsep}{0pt}
@@ -618,8 +617,9 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 
 %%%%%%%%%%%%%%%%%%%% 列表环境 %%%%%%%%%%%%%%%%%%%%%%
 %%设置题号%%
-\newcommand*\cir[1]{\tikz[baseline=($0.3*(current bounding box.west)+0.7*(current bounding box.south west)$)]{
-\node[shape=circle,fill=ListColor,draw=ListColor,minimum size=5.0mm,align=center,inner sep=0pt,font=\FontSize{11pt}\bfseries,text=white]{\maxsizebox{4.5mm}{!}{#1}};}}
+\newcommand*\cir[1]{\tikz[baseline=($0.3*(current bounding box.west)+0.7*(current bounding box.south west)$)]{\node[shape=circle,fill=ListColor,draw=ListColor,
+minimum size=5.0mm,align=center,inner sep=0pt,
+font=\FontSize{11pt}\bfseries,text=white]{\maxsizebox{4.5mm}{!}{#1}};}}
 %%设置概念序号%%
 \newcommand*\preconcept{\raisebox{-0.05em}{\tikz{\draw[ListColor,fill=white,line width=2.5pt](0,0)circle(1.5mm);}}}
 %%概念列表环境%%
@@ -686,7 +686,7 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 \ifthenelse{\totvalue{@pagesidenumber}=0\or\totvalue{@pagesidenumber}=1}
 {\setlength{\SepH}{0cm}
 \setlength{\MarkY}{-\paperheight/2}}
-{\setlength{\SepH}{\dimexpr(\paperheight-2\DeltaH)/\totvalue{@pagesidenumber}\relax}%设置侧标每次移动的距离
+{\setlength{\SepH}{\dimexpr(\paperheight-2\DeltaH)/\totvalue{@pagesidenumber}}%设置侧标每次移动的距离
 \setlength{\MarkY}{-\DeltaH}%设置侧标上下两侧锚点坐标的初值
 \makeatother}}
 %%绘制页面框架%%
@@ -772,7 +772,7 @@ cycle;
 \coordinate(G)at([xshift=-2.1cm]current page.south east);
 \coordinate(H)at(current page.south east);
 %%背景%%
-\draw[white,fill=white](A)--(B)[rounded corners=5.0mm]--(C)[sharp corners]--(D)--(E)[rounded corners=5.0mm]--(F)[sharp corners]--(G)--(H)--cycle;
+\draw[white,fill=white](A)--(B)[rounded corners=2.5mm]--(C)[sharp corners]--(D)--(E)[rounded corners=2.5mm]--(F)[sharp corners]--(G)--(H)--cycle;
 \draw[ColorA,fill=ColorA](A)--([xshift=0.35cm]B)[rounded corners=2.5mm]--([xshift=0.35cm]C)[sharp corners]--([xshift=2.1cm]C)--cycle;
 \draw[ColorA,fill=ColorA](H)--([xshift=0.35cm]G)[rounded corners=2.5mm]--([xshift=0.35cm]F)[sharp corners]--([xshift=2.1cm]F)--cycle;
 \draw[ColorB!20,fill=ColorB!20]([yshift=-0.35cm]D)--([yshift=0.35cm]E)[rounded corners=2.5mm]--([xshift=\paperwidth/2+1.45cm,yshift=0.35cm]E)--([xshift=\paperwidth/2+1.45cm,yshift=-0.35cm]D)[sharp corners]--cycle;
@@ -798,7 +798,7 @@ cycle;
 \coordinate(G)at([xshift=2.1cm]current page.south west);
 \coordinate(H)at(current page.south west);
 %%背景%%
-\draw[white,fill=white](A)--(B)[rounded corners=5.0mm]--(C)[sharp corners]--(D)--(E)[rounded corners=5.0mm]--(F)[sharp corners]--(G)--(H)--cycle;
+\draw[white,fill=white](A)--(B)[rounded corners=2.5mm]--(C)[sharp corners]--(D)--(E)[rounded corners=2.5mm]--(F)[sharp corners]--(G)--(H)--cycle;
 \draw[ColorA,fill=ColorA](A)--([xshift=-0.35cm]B)[rounded corners=2.5mm]--([xshift=-0.35cm]C)[sharp corners]--([xshift=-2.1cm]C)--cycle;
 \draw[ColorA,fill=ColorA](H)--([xshift=-0.35cm]G)[rounded corners=2.5mm]--([xshift=-0.35cm]F)[sharp corners]--([xshift=-2.1cm]F)--cycle;
 \draw[ColorB!20,fill=ColorB!20]([yshift=-0.35cm]D)--([yshift=0.35cm]E)[rounded corners=2.5mm]--([xshift=-\paperwidth/2-1.45cm,yshift=0.35cm]E)--([xshift=-\paperwidth/2-1.45cm,yshift=-0.35cm]D)[sharp corners]--cycle;
@@ -841,7 +841,7 @@ cycle;
 \coordinate(G)at([xshift=-2.1cm]current page.south east);
 \coordinate(H)at(current page.south east);
 %%背景%%
-\draw[white,fill=white](A)--(B)[rounded corners=5.0mm]--(C)[sharp corners]--(D)--(E)[rounded corners=5.0mm]--(F)[sharp corners]--(G)--(H)--cycle;
+\draw[white,fill=white](A)--(B)[rounded corners=2.5mm]--(C)[sharp corners]--(D)--(E)[rounded corners=2.5mm]--(F)[sharp corners]--(G)--(H)--cycle;
 \draw[ColorA,fill=ColorA](A)--([xshift=0.35cm]B)[rounded corners=2.5mm]--([xshift=0.35cm]C)[sharp corners]--([xshift=2.1cm]C)--cycle;
 \draw[ColorA,fill=ColorA](H)--([xshift=0.35cm]G)[rounded corners=2.5mm]--([xshift=0.35cm]F)[sharp corners]--([xshift=2.1cm]F)--cycle;
 \draw[ColorB!50,fill=ColorB!50]([xshift=2.1cm,yshift=-0.35cm]C)--([xshift=2.1cm,yshift=0.35cm]F)[rounded corners=2.5mm]--([xshift=-1.0cm,yshift=0.35cm]F)--([xshift=-1.0cm,yshift=-0.35cm]C)[sharp corners]--cycle;
@@ -881,7 +881,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=-1.4cm,yshift=0.25cm]C){
 \coordinate(G)at([xshift=2.1cm]current page.south west);
 \coordinate(H)at(current page.south west);
 %%背景%%
-\draw[white,fill=white](A)--(B)[rounded corners=5.0mm]--(C)[sharp corners]--(D)--(E)[rounded corners=5.0mm]--(F)[sharp corners]--(G)--(H)--cycle;
+\draw[white,fill=white](A)--(B)[rounded corners=2.5mm]--(C)[sharp corners]--(D)--(E)[rounded corners=2.5mm]--(F)[sharp corners]--(G)--(H)--cycle;
 \draw[ColorA,fill=ColorA](A)--([xshift=-0.35cm]B)[rounded corners=2.5mm]--([xshift=-0.35cm]C)[sharp corners]--([xshift=-2.1cm]C)--cycle;
 \draw[ColorA,fill=ColorA](H)--([xshift=-0.35cm]G)[rounded corners=2.5mm]--([xshift=-0.35cm]F)[sharp corners]--([xshift=-2.1cm]F)--cycle;
 \draw[ColorB!50,fill=ColorB!50]([xshift=-2.1cm,yshift=-0.35cm]C)--([xshift=-2.1cm,yshift=0.35cm]F)[rounded corners=2.5mm]--([xshift=1.0cm,yshift=0.35cm]F)--([xshift=1.0cm,yshift=-0.35cm]C)[sharp corners]--cycle;
@@ -2026,10 +2026,10 @@ rounded corners,arc=5.0pt,#1}
 \coordinate(B)at(current page.north east);
 \coordinate(C)at(current page.south east);
 \coordinate(D)at(current page.south west);
-\coordinate(E)at([yshift=-0.85cm]current page.north west);
-\coordinate(F)at([xshift=-0.85cm,yshift=-0.85cm]current page.north east);
-\coordinate(G)at([xshift=-0.85cm,yshift=0.85cm]current page.south east);
-\coordinate(H)at([yshift=0.85cm]current page.south west);
+\coordinate(E)at([yshift=-0.75cm]current page.north west);
+\coordinate(F)at([xshift=-0.75cm,yshift=-0.85cm]current page.north east);
+\coordinate(G)at([xshift=-0.75cm,yshift=0.85cm]current page.south east);
+\coordinate(H)at([yshift=0.75cm]current page.south west);
 %%背景%%
 \draw[ColorB!5,fill=ColorB!5,sharp corners](D)rectangle(B);
 \draw[ColorA!80,fill=ColorA!80](A)--(B)--(C)--(D)--(H)[rounded corners=5.0mm]--(G)[rounded corners=5.0mm]--(F)[sharp corners]--(E)--cycle;
