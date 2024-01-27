@@ -709,8 +709,8 @@ font=\FontSize{11pt}\bfseries,text=white]{\maxsizebox{4.5mm}{!}{#1}};}}
 \coordinate(G)at([xshift=-0.75cm,yshift=-0.75cm]current page.north east);
 \coordinate(H)at([yshift=-0.75cm]current page.north west);
 %%绘制页面框架%%
-\draw[fill=ColorB!7.5,ColorB!7.5,line width=0.1pt,sharp corners]
-(A)--(B)--(C)--(D)--(E)[rounded corners=5.0mm]--(F)[rounded corners=5.0mm]--(G)[sharp corners]--(H)--cycle;
+\draw[fill=ColorB!7.5,ColorB!7.5,sharp corners]
+(A)--(B)--(C)--(D)--(E)[rounded corners=3.5mm]--(F)[rounded corners=3.5mm]--(G)[sharp corners]--(H)--cycle;
 \draw[ColorA,fill=ColorA,line width=1.0pt]
 ([xshift=-\@outerlen+0.25cm]B)[rounded corners=1.0mm]--
 ([xshift=-\@outerlen+0.25cm,yshift=-1.35cm]B)[rounded corners=1.0mm]--
@@ -729,8 +729,8 @@ cycle;
 \coordinate(G)at([xshift=0.75cm,yshift=-0.75cm]current page.north west);
 \coordinate(H)at([yshift=-0.75cm]current page.north east);
 %%绘制页面框架%%
-\draw[fill=ColorB!7.5,ColorB!7.5,line width=0.1pt,sharp corners]
-(A)--(B)--(C)--(D)--(E)[rounded corners=5.0mm]--(F)[rounded corners=5.0mm]--(G)[sharp corners]--(H)--cycle;
+\draw[fill=ColorB!7.5,ColorB!7.5,sharp corners]
+(A)--(B)--(C)--(D)--(E)[rounded corners=3.5mm]--(F)[rounded corners=3.5mm]--(G)[sharp corners]--(H)--cycle;
 \draw[ColorA,fill=ColorA,line width=1.0pt]
 ([xshift=\@outerlen-0.25cm]B)[rounded corners=1.0mm]--
 ([xshift=\@outerlen-0.25cm,yshift=-1.35cm]B)[rounded corners=1.0mm]--
@@ -958,7 +958,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 \coordinate(I)at([xshift=-1.0cm,yshift=-5.022cm]current page.north east);
 \coordinate(J)at([yshift=-5.022cm]current page.north west);
 %%框架%%
-\draw[fill=ColorB!7.5,ColorB!7.5,line width=0.1pt,sharp corners]
+\draw[fill=ColorB!7.5,ColorB!7.5,sharp corners]
 (A)--(B)--(C)--(D)--(E)--(F)[in=180,out=0]to(G)[rounded corners=2.5mm]--(H)[rounded corners=5.0mm]--(I)[sharp corners]--(J)--cycle;
 %%编号%%
 \draw[draw=ColorA,fill=ColorA,sharp corners]node[append after command={(T.south west)[rounded corners=2.5mm]--(T.south east)[sharp corners]--([yshift=0.65cm]T.north east)--([yshift=0.65cm]T.north west)[rounded corners=2.5mm]--cycle},anchor=north east,font=\bfseries\FontSize{25pt},text=white,inner sep=0.4cm](T)at([xshift=-\@outerlen-0.25in,yshift=-0.65cm]B){#1};
@@ -988,7 +988,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 \coordinate(I)at([xshift=1.0cm,yshift=-5.022cm]current page.north west);
 \coordinate(J)at([yshift=-5.022cm]current page.north east);
 %%框架%%
-\draw[fill=ColorB!7.5,ColorB!7.5,line width=0.1pt,sharp corners]
+\draw[fill=ColorB!7.5,ColorB!7.5,sharp corners]
 (A)--(B)--(C)--(D)--(E)--(F)[in=0,out=180]to(G)[rounded corners=2.5mm]--(H)[rounded corners=5.0mm]--(I)[sharp corners]--(J)--cycle;
 %%编号%%
 \draw[draw=ColorA,fill=ColorA,sharp corners]node[append after command={(T.south west)[rounded corners=2.5mm]--(T.south east)[sharp corners]--([yshift=0.65cm]T.north east)--([yshift=0.65cm]T.north west)[rounded corners=2.5mm]--cycle},anchor=north west,font=\bfseries\FontSize{25pt},text=white,inner sep=0.4cm](T)at([xshift=\@outerlen+0.25in,yshift=-0.65cm]B){#1};
@@ -1023,7 +1023,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 \coordinate(G)at([xshift=-1.0cm,yshift=-5.022cm]current page.north east);
 \coordinate(H)at([yshift=-5.022cm]current page.north west);
 %%框架%%
-\draw[fill=ColorB!7.5,ColorB!7.5,line width=0.1pt,sharp corners]
+\draw[fill=ColorB!7.5,ColorB!7.5,sharp corners]
 (A)--(B)--(C)--(D)--(E)[rounded corners=5.0mm]--(F)[rounded corners=5.0mm]--(G)[sharp corners]--(H)--cycle;
 %%标题%%
 \node[inner sep=0mm,anchor=west](T)at([xshift=\@innerlen+0.25in,yshift=-1.79cm]current page.north west){\halfcircle{ColorA}{0.5cm}};
@@ -1051,7 +1051,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 \coordinate(G)at([xshift=1.0cm,yshift=-5.022cm]current page.north west);
 \coordinate(H)at([yshift=-5.022cm]current page.north east);
 %%框架%%
-\draw[fill=ColorB!7.5,ColorB!7.5,line width=0.1pt,sharp corners]
+\draw[fill=ColorB!7.5,ColorB!7.5,sharp corners]
 (A)--(B)--(C)--(D)--(E)[rounded corners=5.0mm]--(F)[rounded corners=5.0mm]--(G)[sharp corners]--(H)--cycle;
 %%标题%%
 \node[anchor=east,font=\bfseries\FontSize{30pt},text=ColorA,minimum height=1.45cm](T)at([xshift=-\@innerlen-0.25in,yshift=-1.79cm]current page.north east){\maxsizebox{\textwidth-0.5in-1.5cm}{!}{#1}};
@@ -1241,7 +1241,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 \makeatletter
 %%标签绘制%%
 \newcommand{\@PartContents}[1]{
-\draw[ColorB!7.5,fill=ColorB!7.5,line width=0.1pt,rounded corners=0.38cm]
+\draw[ColorB!7.5,fill=ColorB!7.5,rounded corners=0.38cm]
 (0,0.38cm)rectangle(\linewidth,-0.38cm);
 \draw[draw=ColorA,fill=ColorA,sharp corners]node[append after command={(T.north west)--(T.north east)[sharp corners]--(T.south east)[rounded corners=0.38cm]--(T.south west)[rounded corners=0.38cm]--cycle},font=\FontSize{13pt}\bfseries,text=white,align=center,inner xsep=4.5mm,minimum height=0.76cm,anchor=west](T)at(0,0){\maxsizebox{\linewidth/2-1.0cm}{!}{#1}};}
 %%编号部分目录样式%%
@@ -2027,12 +2027,12 @@ rounded corners,arc=5.0pt,#1}
 \coordinate(C)at(current page.south east);
 \coordinate(D)at(current page.south west);
 \coordinate(E)at([yshift=-0.75cm]current page.north west);
-\coordinate(F)at([xshift=-0.75cm,yshift=-0.85cm]current page.north east);
-\coordinate(G)at([xshift=-0.75cm,yshift=0.85cm]current page.south east);
+\coordinate(F)at([xshift=-0.75cm,yshift=-0.75cm]current page.north east);
+\coordinate(G)at([xshift=-0.75cm,yshift=0.75cm]current page.south east);
 \coordinate(H)at([yshift=0.75cm]current page.south west);
 %%背景%%
 \draw[ColorB!5,fill=ColorB!5,sharp corners](D)rectangle(B);
-\draw[ColorA!80,fill=ColorA!80](A)--(B)--(C)--(D)--(H)[rounded corners=5.0mm]--(G)[rounded corners=5.0mm]--(F)[sharp corners]--(E)--cycle;
+\draw[ColorA!80,fill=ColorA!80](A)--(B)--(C)--(D)--(H)[rounded corners=3.5mm]--(G)[rounded corners=3.5mm]--(F)[sharp corners]--(E)--cycle;
 \end{tikzpicture}
 \begin{center}
 \color{ColorA}\bfseries
