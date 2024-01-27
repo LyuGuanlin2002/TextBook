@@ -1288,19 +1288,19 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 第~\thecontentslabel~节
 \fi\fi\fi]{1.9cm}}
 {\hspace*{-1.9cm}}%不编号章节
-{\titlerule*[6pt]{.}\FontSize{12pt}\xbsong\thecontentspage}
+{\titlerule*[6pt]{ }\FontSize{12pt}\xbsong\thecontentspage}
 %%图片目录样式%%
 \titlecontents{figure}[2.5cm]
 {\addvspace{-0.5pt}\FontSize{12pt}\xbsong}
 {\contentslabel[图~\thecontentslabel~]{1.9cm}}
 {\hspace*{-1.9cm}}%不编号图表
-{\titlerule*[6pt]{.}\FontSize{12pt}\xbsong\thecontentspage}
+{\titlerule*[6pt]{ }\FontSize{12pt}\xbsong\thecontentspage}
 %%表格目录样式%%
 \titlecontents{table}[2.5cm]
 {\addvspace{-0.5pt}\FontSize{12pt}\xbsong}
 {\contentslabel[表~\thecontentslabel~]{1.9cm}}
 {\hspace*{-1.9cm}}%不编号图表
-{\titlerule*[6pt]{.}\FontSize{12pt}\xbsong\thecontentspage}
+{\titlerule*[6pt]{ }\FontSize{12pt}\xbsong\thecontentspage}
 %%部分页上的小目录章样式%%
 \titlecontents{lchapter}[0.75cm]
 {\addvspace{5pt}\FontSize{12.5pt}\bfseries\hypersetup{linkcolor=ColorB}}
