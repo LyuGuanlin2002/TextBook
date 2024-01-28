@@ -152,7 +152,7 @@
 \newCJKfontfamily\kaishu{FZKai-Z03}
 %%简化字体命令%%
 \newcommand{\numberfont}{\bfseries\sffamily}
-\newcommand{\FontSize}[1]{\fontsize{#1}{\baselineskip}\selectfont}
+\NewDocumentCommand{\FontSize}{O{1.0} m}{\fontsize{#2}{#1\baselineskip}\selectfont}
 
 %%%%%%%%%%%%%%%%%%%% 页面布局设定宏包 %%%%%%%%%%%%%%%%%%%%
 \RequirePackage{ragged2e}%对齐设置
@@ -197,7 +197,7 @@ marginparsep=\@marginparseplen,marginparwidth=\@marginparwidthlen,reversemarginp
 }{\end{paracol}}
 %%脚注格式%%
 \gdef\footnoterule{}
-\gdef\footnotesize{\fontsize{11pt}{0.8\baselineskip}\selectfont\itshape}
+\gdef\footnotesize{\FontSize[0.8]{11pt}\itshape}
 
 %%%%%%%%%%%%%%%%%%%% 图表插入宏包 %%%%%%%%%%%%%%%%%%%%
 \RequirePackage{graphicx}%插入图片路径
@@ -976,8 +976,8 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 ([yshift=-2.79cm]A)rectangle([yshift=-3.09cm]B);
 %%标题%%
 \node[anchor=east,font=\bfseries\FontSize{27.5pt},text=ColorA](P)at([xshift=-\@outerlen-0.25in+0.25cm,yshift=-3.95cm]B){\maxsizebox{\textwidth-0.5in}{!}{#2}};
-%%副标题%%
-\node[anchor=west,font=\itshape\fontsize{12}{0.75\baselineskip}\selectfont,text=ColorA,text width=\paperwidth-\@innerlen-5.0cm](S)at([xshift=\@innerlen,yshift=1.0cm]D){\ifdefvoid{\@chaptersaying}{}{\@chaptersaying}};
+%%底部文字%%
+\node[anchor=west,font=\itshape,text=ColorA,text width=\paperwidth-\@innerlen-5.0cm](S)at([xshift=\@innerlen,yshift=1.0cm]D){\ifdefvoid{\@chaptersaying}{}{\FontSize[0.8]{12pt}\@chaptersaying}};
 %%章节图片%%
 \node[anchor=north west,inner sep=0mm](I)at(A){\ifdefvoid{\@chapterimage}{}{\includegraphics[height=5.022cm]{\@chapterimage}}};
 %%页码%%
@@ -1006,8 +1006,8 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 ([yshift=-2.79cm]A)rectangle([yshift=-3.09cm]B);
 %%标题%%
 \node[anchor=west,font=\bfseries\FontSize{27.5pt},text=ColorA](P)at([xshift=\@outerlen+0.25in-0.25cm,yshift=-3.95cm]B){\maxsizebox{\textwidth-0.5in}{!}{#2}};
-%%副标题%%
-\node[anchor=west,font=\itshape\fontsize{12}{0.75\baselineskip}\selectfont,text=ColorA,text width=\paperwidth-\@innerlen-4.0cm](S)at([xshift=4.0cm,yshift=1.0cm]C){\ifdefvoid{\@chaptersaying}{}{\@chaptersaying}};
+%%底部文字%%
+\node[anchor=west,font=\itshape,text=ColorA,text width=\paperwidth-\@innerlen-4.0cm](S)at([xshift=4.0cm,yshift=1.0cm]C){\ifdefvoid{\@chaptersaying}{}{\FontSize[0.8]{12pt}\@chaptersaying}};
 %%章节图片%%
 \node[anchor=north east,inner sep=0mm](I)at(A){\ifdefvoid{\@chapterimage}{}{\includegraphics[height=5.022cm]{\@chapterimage}}};
 %%页码%%
@@ -1099,7 +1099,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 \@chapterstyle{第~\thechapter~章}{#1}%章样式
 \enlargethispage{-1.25cm}%修改页面大小
 \thispagestyle{empty}}
-[\global\chaptersubtitle{}%清空\chaptersubtitle
+[\global\chaptersaying{}%清空\chaptersaying
 \global\chapterimage{}]%清空\chapterimage
 %%不编号章节页%%
 \titleformat{name=\chapter,numberless}
@@ -1330,11 +1330,11 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 \tikz[baseline=($0.7*(current bounding box.west)+0.3*(current bounding box.south west)$)]{\node[inner xsep=-0.95mm](E){#1};}}
 %%设置例题命令%%
 \newcommand{\@egextitle}[3]{
-\tikz{\node[font=\FontSize{11pt}\bfseries,text=white,draw=#2,fill=#2,rounded corners=0.8em,inner xsep=3.5mm,ultra thick,minimum height=1.6em](T){#1\hspace*{0.55cm}};
-\node[anchor=west,font=\FontSize{11.5pt}\bfseries,text=#2,draw=#2,fill=white,rounded corners=0.8em,inner xsep=2.5mm,ultra thick,minimum height=1.6em](N)at([xshift=-1.7em]T.east){#3};}}
+\tikz{\node[font=\FontSize{12pt}\bfseries,text=white,draw=#2,fill=#2,rounded corners=0.8em,inner xsep=3.5mm,ultra thick,minimum height=1.6em](T){#1\hspace*{0.55cm}};
+\node[anchor=west,font=\FontSize{12.5pt}\bfseries,text=#2,draw=#2,fill=white,rounded corners=0.8em,inner xsep=2.5mm,ultra thick,minimum height=1.6em](N)at([xshift=-1.7em]T.east){#3};}}
 %%设置解答命令%%
 \newcommand{\@ansanatitle}[2]{
-\tikz{\node[font=\FontSize{11pt}\bfseries,text=white,draw=#2,fill=#2,rounded corners=0.8em,inner xsep=3.5mm,ultra thick,minimum height=1.6em](T){#1};}}
+\tikz{\node[font=\FontSize{12pt}\bfseries,text=white,draw=#2,fill=#2,rounded corners=0.8em,inner xsep=3.5mm,ultra thick,minimum height=1.6em](T){#1};}}
 %%解答%%
 \NewExpandableDocumentCommand{\Answer}{sm}{
 \begin{FlushLeft}
@@ -1853,7 +1853,7 @@ attach boxed title to top left={yshift=-0.25mm-\tcboxedtitleheight/2,yshifttext=
 IfBooleanTF={#1}{
 top=1.0mm,boxsep=0.25mm,left=0mm,right=0mm,boxsep=0mm,
 fonttitle=\bfseries\FontSize{11pt}\color{#3},
-fontupper=\itshape\fontsize{11pt}{0.75\baselineskip}\selectfont,
+fontupper=\itshape\FontSize[0.8]{11pt},
 boxed title style={empty,top=2.0mm,bottom=2.0mm,left=0mm},
 underlay boxed title={
 \node[anchor=east,align=center,font=\bfseries\FontSize{12pt},text=#3,
