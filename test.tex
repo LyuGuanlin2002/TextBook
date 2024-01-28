@@ -38,6 +38,12 @@
 
 \newcommand{\inputlogo}[1]{\raisebox{-0.5em}{\includegraphics[width=1.5cm]{#1}}~~}
 
+%%盒子代码与实际效果对比%%
+\newtcblisting{TCBCODE}{enhanced standard,breakable,
+before=\par\noindent\medskip,after=\par\medskip,
+colback=white,colbacklower=white,colframe=ColorH,
+before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
 
@@ -158,7 +164,9 @@ E&=mc^2+\int_a^bx{\rm d}x
 
 \begin{Paracol}
 \subsection{Look and Read}
-\Example{\zhlipsum[1-2]}
+\Example{\zhlipsum[1-2]\footnote{\lipsum[1][1-4]}}
+
+
 
 
 \subsubsection{化学帮我们正确认识物质}
@@ -1156,7 +1164,7 @@ Just like \ref{Thm.3.1.1} on page \pageref{Thm.3.1.1}
 
 \lipsum[3-4]
 
-\section*{测试文字}
+\section*{测试文字测试文字测试文字测试文字测试文字测试文字测试文字测试文字测试文字}
 \lipsum[1-8]
 \RelaInfo{\lipsum[1-2]}
 
@@ -1168,9 +1176,11 @@ Just like \ref{Thm.3.1.1} on page \pageref{Thm.3.1.1}
 \input{index/indexvideo.tex}
 \input{index/indexnoun.tex}
 
-\begin{Block*}[测试标题]
-\lipsum\lipsum
-\end{Block*}
+
+\clearpage
+\begin{Block}[测试标题]
+\lipsum[1-4]\par\lipsum[5][1-4]
+\end{Block}
 
 
 \chaptersubtitle{副标题副标题副标题副标题副标题}

@@ -162,33 +162,42 @@
 \newlength{\@outerlen}
 \newlength{\@toplen}
 \newlength{\@botlen}
-\newlength{\@marginlen}
+\newlength{\@marginparwidthlen}
+\newlength{\@marginparseplen}
+\newlength{\@handseplen}
+\newlength{\@footskiplen}
 \setlength{\@innerlen}{2.0cm}
 \setlength{\@outerlen}{2.0cm}
 \setlength{\@toplen}{2.25cm}
 \setlength{\@botlen}{2.25cm}
-\setlength{\@marginlen}{\textwidth-0.8\textwidth+2.0em}
+\setlength{\@marginparwidthlen}{0.2\textwidth+2.0em}
+\setlength{\@marginparseplen}{-\@marginparwidthlen+0.75em}
+\setlength{\@handseplen}{0.925cm}
+\setlength{\@footskiplen}{0.925cm}
 \RequirePackage[letterpaper,
 inner=\@innerlen,outer=\@outerlen,top=\@toplen,bottom=\@botlen,
-headsep=0.925cm,footskip=1.3cm,
-marginparsep=-\@marginlen,marginparwidth=\@marginlen,reversemarginpar]{geometry}
+headsep=\@handseplen,footskip=\@footskiplen,
+marginparsep=\@marginparseplen,marginparwidth=\@marginparwidthlen,reversemarginpar]{geometry}
 \makeatother
 \RequirePackage{emptypage,setspace,fancyhdr,lscape}%清除空页%行距%页眉页脚%旋转页面
 \RequirePackage{extramarks}%创建额外的标记，使用方法类似于\markboth和\markright
 \RequirePackage[strict]{changepage}%换页
 \RequirePackage[noadjust]{marginnote}%边注
-\renewcommand*{\raggedleftmarginnote}{}
-\renewcommand*{\raggedrightmarginnote}{}
 \RequirePackage{multicol,paracol}%双栏%分栏、边注、中英对照
 \columnratio{0.8}
-\footnotelayout{m}
+\footnotelayout{c}
 \twosided[pcm]
 %%设置栏间距和分割线颜色%%
 \setlength{\columnsep}{2.0em}
 \setlength{\columnseprule}{0em}
 \renewcommand{\columnseprulecolor}{\color{ColorA}}
 %%设置默认正文分栏环境%%
-\NewDocumentEnvironment{Paracol}{O{2}}{\begin{paracol}{#1}}{\end{paracol}}
+\newenvironment{Paracol}[1][2]{
+\begin{paracol}{#1}
+}{\end{paracol}}
+%%脚注格式%%
+\gdef\footnoterule{}
+\gdef\footnotesize{\fontsize{11pt}{0.8\baselineskip}\selectfont\itshape}
 
 %%%%%%%%%%%%%%%%%%%% 图表插入宏包 %%%%%%%%%%%%%%%%%%%%
 \RequirePackage{graphicx}%插入图片路径
@@ -206,7 +215,7 @@ marginparsep=-\@marginlen,marginparwidth=\@marginlen,reversemarginpar]{geometry}
 \makeatletter
 \newcommand{\marginpic}[2]{
 \marginpar{
-\centering\includegraphics[width=\@marginlen-0.5em]{#1}
+\centering\includegraphics[width=\@marginparwidthlen-0.5em]{#1}
 \centering\figcaption{#2}}}
 \newcommand{\margintab}[2]{
 \marginpar{
@@ -1321,11 +1330,11 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 \tikz[baseline=($0.7*(current bounding box.west)+0.3*(current bounding box.south west)$)]{\node[inner xsep=-0.95mm](E){#1};}}
 %%设置例题命令%%
 \newcommand{\@egextitle}[3]{
-\tikz{\node[font=\FontSize{11pt}\bfseries,text=white,draw=#2!90!ColorD,fill=#2!90!ColorD,rounded corners=0.8em,inner xsep=3.5mm,ultra thick,minimum height=1.6em](T){#1\hspace*{0.55cm}};
-\node[anchor=west,font=\FontSize{11.5pt}\bfseries,text=#2!90!ColorD,draw=#2!90!ColorD,fill=white,rounded corners=0.8em,inner xsep=2.5mm,ultra thick,minimum height=1.6em](N)at([xshift=-1.7em]T.east){#3};}}
+\tikz{\node[font=\FontSize{11pt}\bfseries,text=white,draw=#2,fill=#2,rounded corners=0.8em,inner xsep=3.5mm,ultra thick,minimum height=1.6em](T){#1\hspace*{0.55cm}};
+\node[anchor=west,font=\FontSize{11.5pt}\bfseries,text=#2,draw=#2,fill=white,rounded corners=0.8em,inner xsep=2.5mm,ultra thick,minimum height=1.6em](N)at([xshift=-1.7em]T.east){#3};}}
 %%设置解答命令%%
 \newcommand{\@ansanatitle}[2]{
-\tikz{\node[font=\FontSize{11pt}\bfseries,text=white,draw=#2!90!ColorD,fill=#2!90!ColorD,rounded corners=0.8em,inner xsep=3.5mm,ultra thick,minimum height=1.6em](T){#1};}}
+\tikz{\node[font=\FontSize{11pt}\bfseries,text=white,draw=#2,fill=#2,rounded corners=0.8em,inner xsep=3.5mm,ultra thick,minimum height=1.6em](T){#1};}}
 %%解答%%
 \NewExpandableDocumentCommand{\Answer}{sm}{
 \begin{FlushLeft}
@@ -1849,8 +1858,8 @@ boxed title style={empty,top=2.0mm,bottom=2.0mm,left=0mm},
 underlay boxed title={
 \node[anchor=east,align=center,font=\bfseries\FontSize{12pt},text=#3,
 inner sep=0mm](T)at([xshift=-0.75mm]title.west){#4};},
-if odd page={grow to left by=0mm,grow to right by=5.0mm}
-{grow to left by=5.0mm,grow to right by=0mm}
+if odd page={grow to left by=2.5mm,grow to right by=2.5mm}
+{grow to left by=2.5mm,grow to right by=2.5mm}
 }{breakable,
 top=2.0mm,bottom=0mm,left=0mm,right=0mm,boxsep=0mm,
 fonttitle=\FontSize{12pt}\bfseries\color{#3},
@@ -2005,12 +2014,6 @@ overlay unbroken and first={\CodeSubtitle{#1}{Cpp}}}
 \newtcblisting{JavaBox}[1]{
 Code,minted language=java,
 overlay unbroken and first={\CodeSubtitle{#1}{Java}}}
-
-%%盒子代码与实际效果对比%%
-\newtcblisting{TCBCODE}{enhanced standard,breakable,
-before=\par\noindent\medskip,after=\par\medskip,
-colback=white,colbacklower=white,colframe=ColorH,
-before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
 
 %%数学公式小盒子%%
 \newtcbox{\Formula}[1][]{nobeforeafter,math upper,tcbox raise base,
