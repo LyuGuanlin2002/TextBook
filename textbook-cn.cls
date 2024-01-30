@@ -1529,16 +1529,16 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 }
 
 %%重定义\frontmatter%%
-\renewcommand{\frontmatter}{
+\renewcommand{\frontmatter}[1][roman]{
 \cleardoublepage
 \@mainmatterfalse
-\pagenumbering{roman}
+\pagenumbering{#1}
 \pagestyle{MainPage}}
 %%重定义\backmatter%%
-\renewcommand{\backmatter}{
+\renewcommand{\backmatter}[1][Roman]{
 \cleardoublepage
 \@mainmatterfalse
-\pagenumbering{Roman}}
+\pagenumbering{#1}}
 \makeatother
 
 %%%%%%%%%%%%%%%%%% 盒子定义 %%%%%%%%%%%%%%%%%%%%%%%%
