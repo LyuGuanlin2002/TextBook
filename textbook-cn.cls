@@ -236,7 +236,9 @@ marginparsep=\@marginparseplen,marginparwidth=\@marginparwidthlen,reversemarginp
 \makeatletter
 %%重定义\tableofcontents%%
 \RenewDocumentCommand{\tableofcontents}{s O{}}{
+\begingroup%确保计数器值只在局部生效
 \chapter*{\contentsname}
+\c@tocdepth=1%预设目录深度为1
 \IfBooleanTF{#1}{
 \begin{paracol}{2}
 \@starttoc{toc}
@@ -244,7 +246,7 @@ marginparsep=\@marginparseplen,marginparwidth=\@marginparwidthlen,reversemarginp
 #2
 \end{paracol}}
 {\@starttoc{toc}}
-}
+\endgroup}
 %%重定义\listoffigures%%
 \RenewDocumentCommand{\listoffigures}{s O{}}{
 \chapter*{\listfigurename}
@@ -270,8 +272,8 @@ marginparsep=\@marginparseplen,marginparwidth=\@marginparwidthlen,reversemarginp
 %%重定义\shorttableofcontents%%
 \RenewDocumentCommand{\shorttableofcontents}{s O{}}{
 \begingroup%确保计数器值只在局部生效
-\c@tocdepth=0
 \chapter*{\shorttocname}
+\c@tocdepth=0%预设目录深度为0
 \IfBooleanTF{#1}{
 \begin{paracol}{2}
 \@startshorttoc{toc}
