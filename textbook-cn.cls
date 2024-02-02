@@ -1925,8 +1925,7 @@ title={#1},#2}
 \fi}]}{\end{box8}}
 \makeatother
 
-
-\DeclareTColorBox{box9}{O{} m m O{ColorA} O{}}{
+\DeclareTColorBox{box9}{O{} m O{} O{ColorA} O{}}{
 Box,before upper=\par,left=10.0mm,
 frame style={left color=#4!50,right color=#4!50,middle color=#4},
 attach boxed title to top left={yshift*=-\tcboxedtitleheight},
@@ -1947,10 +1946,9 @@ overlay middle and last={
 subtitle style={empty,fontupper=\FontSize{12pt}\bfseries\color{#4}},
 title={#2},#1}
 
-\newenvironment{Reading}[3]{\begin{box9}{阅读理解}{#1}[ColorB][\score{#2}{#3}[ColorB]]}{\end{box9}}
-\newenvironment{Cloze}[3]{\begin{box9}{完形填空}{#1}[ColorA][\score{#2}{#3}[ColorA]]}{\end{box9}}
-\newenvironment{Article}[3]{\begin{box9}{文本解读}{#1}[ColorC][\score{#2}{#3}[ColorC]]}{\end{box9}}
-
+\NewDocumentEnvironment{Reading}{O{}mm}{\begin{box9}{阅读理解}[#1][ColorB][\score{#2}{#3}[ColorB]]}{\end{box9}}
+\NewDocumentEnvironment{Cloze}{O{}mm}{\begin{box9}{完形填空}[#1][ColorA][\score{#2}{#3}[ColorA]]}{\end{box9}}
+\NewDocumentEnvironment{Article}{O{}mm}{\begin{box9}{文本解读}[#1][ColorC][\score{#2}{#3}[ColorC]]}{\end{box9}}
 
 \DeclareTColorBox{box10}{O{} m m O{ColorA}}{
 Box,before upper=\par,
@@ -2018,6 +2016,10 @@ overlay unbroken and first={\CodeSubtitle{#1}{Cpp}}}
 \newtcblisting{JavaBox}[1]{
 Code,minted language=java,
 overlay unbroken and first={\CodeSubtitle{#1}{Java}}}
+
+\newtcblisting{CodeBox}[2]{
+Code,minted language={#1},
+overlay unbroken and first={\CodeSubtitle{#2}{\uppercase{#1}}}}
 
 %%数学公式小盒子%%
 \newtcbox{\Formula}[1][]{nobeforeafter,math upper,tcbox raise base,
