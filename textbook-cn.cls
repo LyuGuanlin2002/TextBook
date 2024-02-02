@@ -1238,7 +1238,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 \colorlet{ListColor}{#1}
 \begin{center}
 \begin{tikzpicture}
-\node[draw=#1,fill=#1,ultra thick,minimum height=0.7cm,rounded corners=0.35cm,font=\bfseries\FontSize{13pt},text=white,inner xsep=0.5cm](E){\maxsizebox{\linewidth-6.0cm}{!}{#2}};
+\node[draw=#1,fill=#1,ultra thick,minimum height=0.75cm,rounded corners=0.375cm,font=\bfseries\FontSize{13pt},text=white,inner xsep=0.5cm](E){\maxsizebox{\linewidth-6.0cm}{!}{#2}};
 \draw[#1,fill=#1]([xshift=0.5cm]E.east)circle(0.26cm);
 \draw[#1!85,fill=#1!85]([xshift=1.2cm]E.east)circle(0.235cm);
 \draw[#1!70,fill=#1!70]([xshift=1.85cm]E.east)circle(0.21cm);
