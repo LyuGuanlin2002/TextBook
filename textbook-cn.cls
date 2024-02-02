@@ -166,7 +166,7 @@
 \newlength{\@marginparseplen}
 \newlength{\@handseplen}
 \newlength{\@footskiplen}
-\setlength{\@innerlen}{2.0cm}
+\setlength{\@innerlen}{2.25cm}
 \setlength{\@outerlen}{2.0cm}
 \setlength{\@toplen}{2.25cm}
 \setlength{\@botlen}{2.25cm}
