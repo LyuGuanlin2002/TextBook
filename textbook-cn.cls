@@ -120,15 +120,15 @@
 
 \makeatletter
 %%定义书籍信息%%
-\newcommand*\coverimage[1]{\def\@coverimage{#1}}
-\newcommand*\backimage[1]{\def\@backimage{#1}}
-\newcommand*\series[1]{\def\@series{#1}}
-\newcommand*\version[1]{\def\@version{#1}}
-\newcommand*\subtitle[1]{\def\@subtitle{#1}}
-\newcommand*\englishtitle[1]{\def\@englishtitle{#1}}
-\newcommand*\englishsubtitle[1]{\def\@englishsubtitle{#1}}
-\newcommand*\presslogo[1]{\def\@presslogo{#1}}
-\newcommand*\pressname[1]{\def\@pressname{#1}}
+\newcommand*{\coverimage}[1]{\def\@coverimage{#1}}
+\newcommand*{\backimage}[1]{\def\@backimage{#1}}
+\newcommand*{\series}[1]{\def\@series{#1}}
+\newcommand*{\version}[1]{\def\@version{#1}}
+\newcommand*{\subtitle}[1]{\def\@subtitle{#1}}
+\newcommand*{\englishtitle}[1]{\def\@englishtitle{#1}}
+\newcommand*{\englishsubtitle}[1]{\def\@englishsubtitle{#1}}
+\newcommand*{\presslogo}[1]{\def\@presslogo{#1}}
+\newcommand*{\pressname}[1]{\def\@pressname{#1}}
 \makeatother
 
 %%%%%%%%%%%%%%%%%%%% 字体设置 %%%%%%%%%%%%%%%%%%%%
@@ -202,15 +202,16 @@ marginparsep=\@marginparseplen,marginparwidth=\@marginparwidthlen,reversemarginp
 %%%%%%%%%%%%%%%%%%%% 图表插入宏包 %%%%%%%%%%%%%%%%%%%%
 \RequirePackage{graphicx}%插入图片路径
 \RequirePackage[font={large,bf,color=ColorA},labelsep=colon]{caption}%图表标签
-\RequirePackage[font={large,bf,color=ColorA},labelsep=colon]{subcaption}%图表标签
+\RequirePackage[font={large,bf,color=ColorA},labelsep=colon,labelformat=simple]{subcaption}%图表标签
 %%设置图片和表格格式%%
 \captionsetup[figure]{name={图}}
-\captionsetup[subfigure]{name={图}}
 \captionsetup[table]{name={表}}
-\captionsetup[subtable]{name={表}}
+\renewcommand{\subfigurename}{图}
+\renewcommand{\subtablename}{表}
+
 %%定义非浮动体标签%%
-\newcommand\figcaption{\setcaptiontype{figure}\caption} 
-\newcommand\tabcaption{\setcaptiontype{table}\caption}
+\newcommand{\figcaption}{\setcaptiontype{figure}\caption} 
+\newcommand{\tabcaption}{\setcaptiontype{table}\caption}
 %%设置边注中的图片和表格%%
 \makeatletter
 \newcommand{\marginpic}[2]{
@@ -622,7 +623,8 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 \newcounter{@colry}[section]
 \newcounter{@prop}[section]
 \makeatother
-\renewcommand{\thesubfigure}{\alpha{subfigure}}
+\renewcommand{\thesubfigure}{\thefigure.\Alph{subfigure}}
+\renewcommand{\thesubtable}{\thetable.\Alph{subtable}}
 \renewcommand{\thepart}{\arabic{part}}
 \renewcommand{\thesection}{\arabic{section}}
 
@@ -794,7 +796,7 @@ cycle;
 %%标题%%
 \node[align=left,anchor=north east,font=\bfseries\FontSize{37.5pt},text=ColorA,minimum height=2.0cm](P)at([yshift=-2.6cm]T.south east){\maxsizebox{\textwidth-2.45cm}{!}{#2}};
 %%介绍%%
-\node[align=right,inner xsep=3.0mm,anchor=north east,font=\FontSize{12pt}\itshape,text=ColorA](W)at([yshift=-0.75cm]P.south east){\begin{varwidth}{\textwidth-2.75cm}\ifdefvoid{\@partintro}{}{\@partintro}\end{varwidth}};
+\node[align=right,inner xsep=3.0mm,anchor=north east,font=\itshape,text=ColorA](W)at([yshift=-0.75cm]P.south east){\begin{varwidth}{\textwidth-2.75cm}\ifdefvoid{\@partintro}{}{\FontSize[0.8]{12pt}\@partintro}\end{varwidth}};
 %%小目录%%
 \node[anchor=south west](C)at([xshift=\@innerlen+0.25in,yshift=\@botlen]current page.south west){\begin{varwidth}{\textwidth}\printcontents[part]{l}{0}{\setcounter{tocdepth}{0}}\end{varwidth}};
 \node[font=\FontSize{13pt}\bfseries,text=ColorB!95!black,anchor=south west](R)at(C.north west){部分概要};
@@ -820,7 +822,7 @@ cycle;
 %%标题%%
 \node[align=left,anchor=north west,font=\bfseries\FontSize{37.5pt},text=ColorA,minimum height=2.0cm](P)at([yshift=-2.6cm]T.south west){\maxsizebox{\textwidth-2.45cm}{!}{#2}};
 %%介绍%%
-\node[align=left,inner xsep=3.0mm,anchor=north west,font=\FontSize{12pt}\itshape,text=ColorA](W)at([yshift=-0.75cm]P.south west){\begin{varwidth}{\textwidth-2.75cm}\ifdefvoid{\@partintro}{}{\@partintro}\end{varwidth}};
+\node[align=left,inner xsep=3.0mm,anchor=north west,font=\itshape,text=ColorA](W)at([yshift=-0.75cm]P.south west){\begin{varwidth}{\textwidth-2.75cm}\ifdefvoid{\@partintro}{}{\FontSize[0.8]{12pt}\@partintro}\end{varwidth}};
 %%小目录%%
 \node[anchor=south east](C)at([xshift=-\@innerlen-0.25in,yshift=\@botlen]current page.south east){\begin{varwidth}{\textwidth}\printcontents[part]{l}{0}{\setcounter{tocdepth}{0}}\end{varwidth}};
 \node[font=\FontSize{13pt}\bfseries,text=ColorB!95!black,anchor=south west](R)at(C.north west){部分概要};
@@ -877,7 +879,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=-1.4cm,yshift=0.25cm]C){
 \node[inner xsep=0mm,minimum height=2.0cm,anchor=east](Q)at(S.west){\halfcircle{ColorA!80}{0.7cm}};
 \node[inner xsep=0mm,minimum height=2.0cm,anchor=east](R)at(Q.west){\halfcircle{ColorA}{0.7cm}};
 %%介绍%%
-\node[align=right,inner xsep=2.0mm,anchor=north east,font=\FontSize{12pt}\itshape,text=ColorA](W)at([yshift=-3.5cm]P.south east){\begin{varwidth}{\textwidth-2.75cm}\ifdefvoid{\@partintro}{}{\@partintro}\end{varwidth}};
+\node[align=right,inner xsep=2.0mm,anchor=north east,font=\itshape,text=ColorA](W)at([yshift=-3.5cm]P.south east){\begin{varwidth}{\textwidth-2.75cm}\ifdefvoid{\@partintro}{}{\FontSize[0.8]{12pt}\@partintro}\end{varwidth}};
 %%小目录%%
 \node[anchor=south west](C)at([xshift=\@innerlen+0.25in,yshift=\@botlen]current page.south west){\begin{varwidth}{\textwidth}\printcontents[part]{l}{0}{\setcounter{tocdepth}{0}}\end{varwidth}};
 \node[font=\FontSize{13pt}\bfseries,text=ColorB!95!black,anchor=south west](W)at(C.north west){部分概要};
@@ -917,7 +919,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=-1.4cm,yshift=0.25cm]C){
 \node[align=left,inner xsep=0mm,minimum height=2.0cm,anchor=west,
 font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebox{\textwidth-5.0cm}{!}{#1}};
 %%介绍%%
-\node[align=left,inner xsep=2.0mm,anchor=north west,font=\FontSize{12pt}\itshape,text=ColorA](W)at([yshift=-3.5cm]S.south west){\begin{varwidth}{\textwidth-2.75cm}\ifdefvoid{\@partintro}{}{\@partintro}\end{varwidth}};
+\node[align=left,inner xsep=2.0mm,anchor=north west,font=\itshape,text=ColorA](W)at([yshift=-3.5cm]S.south west){\begin{varwidth}{\textwidth-2.75cm}\ifdefvoid{\@partintro}{}{\FontSize[0.8]{12pt}\@partintro}\end{varwidth}};
 %%小目录%%
 \node[anchor=south east](C)at([xshift=-\@innerlen-0.25in,yshift=\@botlen]current page.south east){\begin{varwidth}{\textwidth}\printcontents[part]{l}{0}{\setcounter{tocdepth}{0}}\end{varwidth}};
 \node[font=\FontSize{13pt}\bfseries,text=ColorB!95!black,anchor=south west](W)at(C.north west){部分概要};
@@ -949,9 +951,9 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 \titlespacing*{\part}{0pt}{0pt}{0pt}
 
 %%章节页样式%%
-\newcommand*\chaptersaying[1]{\def\@chaptersaying{\hspace*{2.0em}#1}}
-\newcommand*\chaptersubtitle[1]{\def\@chaptersubtitle{#1}}
-\newcommand*\chapterimage[1]{\def\@chapterimage{#1}}
+\newcommand*{\chaptersaying}[1]{\def\@chaptersaying{\hspace*{2.0em}#1}}
+\newcommand*{\chaptersubtitle}[1]{\def\@chaptersubtitle{#1}}
+\newcommand*{\chapterimage}[1]{\def\@chapterimage{#1}}
 %%编号章节页样式%%
 \newcommand{\@chapterstyle}[2]{
 \makebox[0pt][l]{
@@ -1225,7 +1227,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 %%间距设置%%
 \titlespacing*{\subsubsection}{0pt}{15pt}{-15pt}
 %%修改段落样式%%
-\renewcommand\paragraph{
+\renewcommand{\paragraph}{
 \@startsection{paragraph}{4}{\z@}
 {3.25ex \@plus1.0ex \@minus0.2ex}{-1em}
 {\FontSize{12pt}\bfseries\color{ColorA}}}
