@@ -1142,6 +1142,8 @@ Just like \ref{Thm.3.1.1} on page \pageref{Thm.3.1.1}
 
 \chapter*{测试文字}
 
+\pagestyle{SubPage}
+
 
 
 
@@ -1164,7 +1166,9 @@ Just like \ref{Thm.3.1.1} on page \pageref{Thm.3.1.1}
 
 \lipsum[3-4]
 
-\section*{测试文字测试文字测试文字测试文字测试文字测试文字测试文字测试文字测试文字}
+
+
+\section*{测试文字测试文字测试文字}
 \lipsum[1-8]
 \RelaInfo{\lipsum[1-2]}
 
@@ -1176,7 +1180,7 @@ Just like \ref{Thm.3.1.1} on page \pageref{Thm.3.1.1}
 \input{index/indexvideo.tex}
 \input{index/indexnoun.tex}
 
-
+\pagestyle{MainPage}
 \clearpage
 \begin{Block}[测试标题]
 \lipsum[1-4]\par\lipsum[5][1-4]
@@ -1196,12 +1200,12 @@ Just like \ref{Thm.3.1.1} on page \pageref{Thm.3.1.1}
 \newcounter{wxcounter}
 \newcommand{\wx}{\underline{~~\thewxcounter\refstepcounter{wxcounter}~~}}
 
-\begin{Reading}{文章标题}{5}{3}
+\begin{Reading}{5}{3}
 \lipsum[2]
 \end{Reading}
 
 
-\begin{Cloze}{文章标题}{5}{4.5}
+\begin{Cloze}[文章标题]{5}{4.5}
 \setcounter{wxcounter}{1}
 	I made up my mind to drive to South Carolina to meet my friends in my used car. Though I had only been there once \wx and did not know the, \wx very well. I was on the \wx after I had made some inquiries.\par
 	At Ashvelle, there was a crossroad where I could go on along the main road or I could take a shortcut. The short cut was to \wx several hills and was dangerous, I hesitated for a little while and then chose the main road, for I wanted to be \wx.\par
@@ -1231,9 +1235,13 @@ Just like \ref{Thm.3.1.1} on page \pageref{Thm.3.1.1}
 \end{QsNum}
 \end{Cloze}
 
-\begin{Article}{乱数假文}{5}{1}
-\zhlipsum\zhlipsum
+\begin{Article}[乱数假文]{5}{1}
+\zhlipsum
 \end{Article}
+
+\begin{box9}{语法填空}
+\lipsum[2]
+\end{box9}
 
 
 \begin{Vocabulary}{词汇}
@@ -1291,13 +1299,24 @@ Just like \ref{Thm.3.1.1} on page \pageref{Thm.3.1.1}
 \end{box6}
 
 
-\begin{TCBCODE}
-\begin{box6}{自选盒子}
-\lipsum[2][1-3]
-\end{box6}
-\end{TCBCODE}
 
 
+\begin{CodeBox}{cpp}{有限元分析}
+void FN( double A, double B, double *N, int *Ele );
+void FNA( double A, double B, double *NA, int *Ele );
+void FNB( double A, double B, double *NB, int *Ele );
+double Inv_jaco( double A, double B, double *xo, double *yo, double *Nx, double *Ny, int *Ele );
+void eld( double E, double u, double (*D)[3], int Iopt );
+void CacuEKF( double E, double u, double Thick , double *xo, double *yo, double (*stress)[3], double *uo, double *vo, double *ef, double *ek, int *Ele, int nGauss , int Iopt );
+void AssembleUF( double *ef, double (*UF)[2], int *Ele );
+void skdd( int *jd, int (*Element)[8], int NN, int ND, int NE );
+void SetStiff( int i, int j, double Value , double *Stiff , int *jd );
+double GetStiff( int i, int j, double *Stiff , int *jd );
+void AssembleK( double *ek, int *je, int EFN, double *Stiff, int *jd );
+void Fix( int k, double a, double *Stiff , double *Load , int *jd, int NF );
+void LLT( int *jd, double *zk, double *F, int NF );
+void CacuSS( double E, double u, double *xo, double *yo, double *uo, double *vo, double (*SS)[4], int *Ele, int Iopt );
+\end{CodeBox}
 
 
 

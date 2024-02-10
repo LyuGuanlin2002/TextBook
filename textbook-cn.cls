@@ -708,7 +708,7 @@ font=\FontSize{11pt}\bfseries,text=white]{\maxsizebox{4.5mm}{!}{#1}};}}
 \renewcommand{\chaptermark}[1]{\markboth{第~\thechapter~章\quad#1}{第~\thechapter~章\quad#1}}
 \renewcommand{\sectionmark}[1]{\markright{第~\thesection~节\quad#1}}
 \extramarks{\protect\@title}{\protect\@title}
-\newcommand{\@pageframe}{
+\newcommand{\@mainpageframe}{
 \makebox[0pt][l]{
 \begin{tikzpicture}[remember picture,overlay]
 %%根据页数的奇偶生成%%
@@ -759,9 +759,22 @@ cycle;
 \fancypagestyle{MainPage}{
 \fancyhead{}
 \fancyfoot{}
-\fancyfoot[C]{\@pageframe}
+\fancyfoot[C]{\@mainpageframe}
 \fancyhead[RO]{\textbf{\color{ColorA}{\FontSize{12.5pt}{\rightmark}}}}
 \fancyhead[LE]{\textbf{\color{ColorA}{\FontSize{12.5pt}{\leftmark}}}}
+}
+%%定义其他页面样式%%
+\tikzset{headfootstyle/.style={draw=ColorA,fill=ColorA,font=\bfseries\FontSize{12pt},text=white,
+inner xsep=3.5mm,minimum height=7.5mm,rounded corners=3.75mm},
+nodestyle/.style={inner ysep=0mm,inner sep=-1.0mm}}
+\newcommand{\@subpageframe}[1]{\tikz[baseline]{\node[nodestyle]{\tikz{\node[headfootstyle]{#1};}};}}
+\fancypagestyle{SubPage}{
+\fancyhead{}
+\fancyfoot{}
+\fancyhead[RO]{\@subpageframe{\maxsizebox{\textwidth-7.5mm}{!}{\rightmark}}}
+\fancyhead[LE]{\@subpageframe{\maxsizebox{\textwidth-7.5mm}{!}{\leftmark}}}
+\fancyfoot[RO]{\@subpageframe{\thepage}}
+\fancyfoot[LE]{\@subpageframe{\thepage}}
 }
 \makeatother
 
