@@ -708,6 +708,7 @@ font=\FontSize{11pt}\bfseries,text=white]{\maxsizebox{4.5mm}{!}{#1}};}}
 \renewcommand{\chaptermark}[1]{\markboth{第~\thechapter~章\quad#1}{第~\thechapter~章\quad#1}}
 \renewcommand{\sectionmark}[1]{\markright{第~\thesection~节\quad#1}}
 \extramarks{\protect\@title}{\protect\@title}
+%%绘制主页面样式%%
 \newcommand{\@mainpageframe}{
 \makebox[0pt][l]{
 \begin{tikzpicture}[remember picture,overlay]
@@ -724,14 +725,15 @@ font=\FontSize{11pt}\bfseries,text=white]{\maxsizebox{4.5mm}{!}{#1}};}}
 %%绘制页面框架%%
 \draw[fill=ColorB!7.5,ColorB!7.5,sharp corners]
 (A)--(B)--(C)--(D)--(E)[rounded corners=3.5mm]--(F)[rounded corners=3.5mm]--(G)[sharp corners]--(H)--cycle;
+%%绘制页码%%
 \draw[ColorA,fill=ColorA,line width=1.0pt]
 ([xshift=-\@outerlen+0.25cm]B)[rounded corners=1.0mm]--
 ([xshift=-\@outerlen+0.25cm,yshift=-1.35cm]B)[rounded corners=1.0mm]--
 ([xshift=-0.75cm,yshift=-1.35cm]B)[sharp corners]--
-([xshift=-0.75cm]B)--
-cycle;
+([xshift=-0.75cm]B)--cycle;
 \node[font=\numberfont\FontSize{14pt},text=white,anchor=south,align=center](P)at([xshift=-\@outerlen/2-0.25cm,yshift=-1.3cm]B){\maxsizebox{\@outerlen-1.1cm}{!}{\thepage}};
-\draw[draw=ColorA,fill=ColorA,sharp corners]node[append after command={(T.north west)--(T.north east)--(T.south east)[rounded corners]--(T.south west)[rounded corners]--cycle},font=\FontSize{13pt}\bfseries,text=white,text width=6.5mm,align=center,inner xsep=1.5mm,inner ysep=3.5mm,anchor=east](T)at([yshift=\MarkY]B){\rotatebox[origin=c]{90}{\maxsizebox{\SepH+\DeltaH-2.5cm}{!}{\lastxmark}}};
+%%绘制侧标%%
+\draw[draw=ColorA,fill=ColorA,sharp corners,line width=1.0pt]node[append after command={(T.north west)--(T.north east)--(T.south east)[rounded corners]--(T.south west)[rounded corners]--cycle},font=\FontSize{13pt}\bfseries,text=white,text width=6.5mm,align=center,inner xsep=1.5mm,inner ysep=3.5mm,anchor=east](T)at([yshift=\MarkY]B){\rotatebox[origin=c]{90}{\maxsizebox{\SepH+\DeltaH-2.5cm}{!}{\lastxmark}}};
 \else
 \coordinate(A)at(current page.north east);
 \coordinate(B)at(current page.north west);
@@ -744,14 +746,15 @@ cycle;
 %%绘制页面框架%%
 \draw[fill=ColorB!7.5,ColorB!7.5,sharp corners]
 (A)--(B)--(C)--(D)--(E)[rounded corners=3.5mm]--(F)[rounded corners=3.5mm]--(G)[sharp corners]--(H)--cycle;
+%%绘制页码%%
 \draw[ColorA,fill=ColorA,line width=1.0pt]
 ([xshift=\@outerlen-0.25cm]B)[rounded corners=1.0mm]--
 ([xshift=\@outerlen-0.25cm,yshift=-1.35cm]B)[rounded corners=1.0mm]--
 ([xshift=0.75cm,yshift=-1.35cm]B)[sharp corners]--
-([xshift=0.75cm]B)--
-cycle;
+([xshift=0.75cm]B)--cycle;
 \node[font=\numberfont\FontSize{14},text=white,anchor=south,align=center](P)at([xshift=\@outerlen/2+0.25cm,yshift=-1.3cm]B){\maxsizebox{\@outerlen-1.1cm}{!}{\thepage}};
-\draw[draw=ColorA,fill=ColorA,sharp corners]node[append after command={(T.north west)[rounded corners]--(T.north east)[rounded corners]--(T.south east)[sharp corners]--(T.south west)--cycle},font=\FontSize{13pt}\bfseries,text=white,text width=6.5mm,align=center,inner xsep=1.5mm,inner ysep=3.5mm,anchor=west](T)at([yshift=\MarkY]B){\rotatebox[origin=c]{270}{\maxsizebox{\SepH+\DeltaH-2.5cm}{!}{\firstxmark}}};
+%%绘制侧标%%
+\draw[draw=ColorA,fill=ColorA,sharp corners,line width=1.0pt]node[append after command={(T.north west)[rounded corners]--(T.north east)[rounded corners]--(T.south east)[sharp corners]--(T.south west)--cycle},font=\FontSize{13pt}\bfseries,text=white,text width=6.5mm,align=center,inner xsep=1.5mm,inner ysep=3.5mm,anchor=west](T)at([yshift=\MarkY]B){\rotatebox[origin=c]{270}{\maxsizebox{\SepH+\DeltaH-2.5cm}{!}{\firstxmark}}};
 \fi
 \end{tikzpicture}}}
 
@@ -763,19 +766,58 @@ cycle;
 \fancyhead[RO]{\textbf{\color{ColorA}{\FontSize{12.5pt}{\rightmark}}}}
 \fancyhead[LE]{\textbf{\color{ColorA}{\FontSize{12.5pt}{\leftmark}}}}
 }
+%%绘制其他页面样式%%
+\newcommand{\@subpageframe}{
+\makebox[0pt][l]{
+\begin{tikzpicture}[remember picture,overlay]
+%%根据页数的奇偶生成%%
+\ifodd\value{page}
+\coordinate(A)at(current page.north west);
+\coordinate(B)at(current page.north east);
+\coordinate(C)at(current page.south east);
+\coordinate(D)at(current page.south west);
+\coordinate(E)at([yshift=1.0cm]current page.south west);
+\coordinate(F)at([xshift=-1.0cm,yshift=1.0cm]current page.south east);
+\coordinate(G)at([xshift=-1.0cm,yshift=-1.0cm]current page.north east);
+\coordinate(H)at([yshift=-1.0cm]current page.north west);
+%%绘制页面框架%%
+\draw[fill=ColorB!7.5,ColorB!7.5,sharp corners](A)rectangle([yshift=-1.0cm]B);
+\draw[fill=ColorB!7.5,ColorB!7.5,sharp corners](C)rectangle([yshift=1.0cm]D);
+%%绘制页眉%%
+\node[draw=ColorA,fill=ColorA,font=\bfseries\FontSize{12pt},text=white,
+inner xsep=3.75mm,minimum height=7.5mm,rounded corners=3.75mm,
+anchor=east,align=right](H)at([xshift=-\@outerlen+1.0mm,yshift=-1.0cm]B){\maxsizebox{\textwidth-7.5mm}{!}{\rightmark}};
+%%绘制页码%%
+\node[draw=ColorA,fill=ColorA,font=\bfseries\FontSize{13pt},text=white,
+inner xsep=3.75mm,minimum height=7.5mm,rounded corners=3.75mm,
+anchor=east,align=right](P)at([xshift=-\@outerlen+1.0mm,yshift=1.0cm]C){\maxsizebox{\textwidth-7.5mm}{!}{\thepage}};
+\else
+\coordinate(A)at(current page.north east);
+\coordinate(B)at(current page.north west);
+\coordinate(C)at(current page.south west);
+\coordinate(D)at(current page.south east);
+\coordinate(E)at([yshift=1.0cm]current page.south east);
+\coordinate(F)at([xshift=1.0cm,yshift=1.0cm]current page.south west);
+\coordinate(G)at([xshift=1.0cm,yshift=-1.0cm]current page.north west);
+\coordinate(H)at([yshift=-1.0cm]current page.north east);
+%%绘制页面框架%%
+\draw[fill=ColorB!7.5,ColorB!7.5,sharp corners](A)rectangle([yshift=-1.0cm]B);
+\draw[fill=ColorB!7.5,ColorB!7.5,sharp corners](C)rectangle([yshift=1.0cm]D);
+%%绘制页眉%%
+\node[draw=ColorA,fill=ColorA,font=\bfseries\FontSize{12pt},text=white,
+inner xsep=3.75mm,minimum height=7.5mm,rounded corners=3.75mm,
+anchor=west,align=left](H)at([xshift=\@outerlen-1.0mm,yshift=-1.0cm]B){\maxsizebox{\textwidth-7.5mm}{!}{\leftmark}};
+%%绘制页码%%
+\node[draw=ColorA,fill=ColorA,font=\bfseries\FontSize{13pt},text=white,
+inner xsep=3.75mm,minimum height=7.5mm,rounded corners=3.75mm,
+anchor=west,align=left](P)at([xshift=\@outerlen-1.0mm,yshift=1.0cm]C){\maxsizebox{\textwidth-7.5mm}{!}{\thepage}};
+\fi
+\end{tikzpicture}}}
 %%定义其他页面样式%%
-\tikzset{headfootstyle/.style={draw=ColorA,fill=ColorA,font=\bfseries\FontSize{12pt},text=white,
-inner xsep=3.5mm,minimum height=7.5mm,rounded corners=3.75mm},
-nodestyle/.style={inner ysep=0mm,inner sep=-1.0mm}}
-\newcommand{\@subpageframe}[1]{\tikz[baseline]{\node[nodestyle]{\tikz{\node[headfootstyle]{#1};}};}}
 \fancypagestyle{SubPage}{
 \fancyhead{}
 \fancyfoot{}
-\fancyhead[RO]{\@subpageframe{\maxsizebox{\textwidth-7.5mm}{!}{\rightmark}}}
-\fancyhead[LE]{\@subpageframe{\maxsizebox{\textwidth-7.5mm}{!}{\leftmark}}}
-\fancyfoot[RO]{\@subpageframe{\thepage}}
-\fancyfoot[LE]{\@subpageframe{\thepage}}
-}
+\fancyfoot[C]{\@subpageframe}}
 \makeatother
 
 %%%%%%%%%%%%%%%%%%%% 书籍层次样式 %%%%%%%%%%%%%%%%%%%%%%
