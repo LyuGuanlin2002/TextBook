@@ -770,19 +770,15 @@ font=\FontSize{11pt}\bfseries,text=white]{\maxsizebox{4.5mm}{!}{#1}};}}
 \newcommand{\@subpageframe}{
 \makebox[0pt][l]{
 \begin{tikzpicture}[remember picture,overlay]
+%%绘制页面框架%%
+\draw[fill=ColorB!7.5,ColorB!7.5,sharp corners]
+(current page.north west)rectangle([yshift=-1.0cm]current page.north east);
+\draw[fill=ColorB!7.5,ColorB!7.5,sharp corners]
+(current page.south west)rectangle([yshift=1.0cm]current page.south east);
 %%根据页数的奇偶生成%%
 \ifodd\value{page}
-\coordinate(A)at(current page.north west);
 \coordinate(B)at(current page.north east);
 \coordinate(C)at(current page.south east);
-\coordinate(D)at(current page.south west);
-\coordinate(E)at([yshift=1.0cm]current page.south west);
-\coordinate(F)at([xshift=-1.0cm,yshift=1.0cm]current page.south east);
-\coordinate(G)at([xshift=-1.0cm,yshift=-1.0cm]current page.north east);
-\coordinate(H)at([yshift=-1.0cm]current page.north west);
-%%绘制页面框架%%
-\draw[fill=ColorB!7.5,ColorB!7.5,sharp corners](A)rectangle([yshift=-1.0cm]B);
-\draw[fill=ColorB!7.5,ColorB!7.5,sharp corners](C)rectangle([yshift=1.0cm]D);
 %%绘制页眉%%
 \node[draw=ColorA,fill=ColorA,font=\bfseries\FontSize{12pt},text=white,
 inner xsep=3.75mm,minimum height=7.5mm,rounded corners=3.75mm,
@@ -790,19 +786,13 @@ anchor=east,align=right](H)at([xshift=-\@outerlen+1.0mm,yshift=-1.0cm]B){\maxsiz
 %%绘制页码%%
 \node[draw=ColorA,fill=ColorA,font=\bfseries\FontSize{13pt},text=white,
 inner xsep=3.75mm,minimum height=7.5mm,rounded corners=3.75mm,
-anchor=east,align=right](P)at([xshift=-\@outerlen+1.0mm,yshift=1.0cm]C){\maxsizebox{\textwidth-7.5mm}{!}{\thepage}};
+anchor=east,align=right](P)at([xshift=-\@outerlen+1.0mm,yshift=1.0cm]C){\maxsizebox{1.0cm}{!}{\thepage}};
+%%绘制侧标%%
+\draw[draw=ColorA,fill=ColorA,sharp corners,line width=1.0pt]node[append after command={(T.east)--([yshift=1.2cm]T.east) arc (90:270:1.2cm)--cycle},font=\FontSize{13pt}\bfseries,text=white,align=center,text width=6.0mm,
+inner xsep=1.5mm,inner ysep=3.5mm,anchor=east](T)at([yshift=\MarkY]B){\rotatebox[origin=c]{90}{\maxsizebox{1.7cm}{!}{\lastxmark}}};
 \else
-\coordinate(A)at(current page.north east);
 \coordinate(B)at(current page.north west);
 \coordinate(C)at(current page.south west);
-\coordinate(D)at(current page.south east);
-\coordinate(E)at([yshift=1.0cm]current page.south east);
-\coordinate(F)at([xshift=1.0cm,yshift=1.0cm]current page.south west);
-\coordinate(G)at([xshift=1.0cm,yshift=-1.0cm]current page.north west);
-\coordinate(H)at([yshift=-1.0cm]current page.north east);
-%%绘制页面框架%%
-\draw[fill=ColorB!7.5,ColorB!7.5,sharp corners](A)rectangle([yshift=-1.0cm]B);
-\draw[fill=ColorB!7.5,ColorB!7.5,sharp corners](C)rectangle([yshift=1.0cm]D);
 %%绘制页眉%%
 \node[draw=ColorA,fill=ColorA,font=\bfseries\FontSize{12pt},text=white,
 inner xsep=3.75mm,minimum height=7.5mm,rounded corners=3.75mm,
@@ -810,7 +800,10 @@ anchor=west,align=left](H)at([xshift=\@outerlen-1.0mm,yshift=-1.0cm]B){\maxsizeb
 %%绘制页码%%
 \node[draw=ColorA,fill=ColorA,font=\bfseries\FontSize{13pt},text=white,
 inner xsep=3.75mm,minimum height=7.5mm,rounded corners=3.75mm,
-anchor=west,align=left](P)at([xshift=\@outerlen-1.0mm,yshift=1.0cm]C){\maxsizebox{\textwidth-7.5mm}{!}{\thepage}};
+anchor=west,align=left](P)at([xshift=\@outerlen-1.0mm,yshift=1.0cm]C){\maxsizebox{1.0cm}{!}{\thepage}};
+%%绘制侧标%%
+\draw[draw=ColorA,fill=ColorA,sharp corners,line width=1.0pt]node[append after command={(T.west)--([yshift=1.2cm]T.west) arc (90:-90:1.2cm)--cycle},font=\FontSize{13pt}\bfseries,text=white,align=center,text width=6.0mm,
+inner xsep=1.5mm,inner ysep=3.5mm,anchor=west](T)at([yshift=\MarkY]B){\rotatebox[origin=c]{270}{\maxsizebox{1.7cm}{!}{\firstxmark}}};
 \fi
 \end{tikzpicture}}}
 %%定义其他页面样式%%
@@ -986,7 +979,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 {\stepcounter{@currenttotalpart}%部分数计数
 \stepcounter{@pagesidenumber}%侧标数计数
 \gaddtolength{\MarkY}{-\SepH}%更新侧标位置
-\extramarks{第~\thepart~部分\quad#1}{第~\thepart~部分\quad#1}%修改侧标内容
+\extramarks{第~\thepart~部分}{第~\thepart~部分}%修改侧标内容
 \startcontents[part]%开启小目录
 \@partstyle{第~\thepart~部分}{#1}%部分样式
 \thispagestyle{empty}}
