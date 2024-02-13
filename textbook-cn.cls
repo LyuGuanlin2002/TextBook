@@ -731,7 +731,7 @@ font=\FontSize{11pt}\bfseries,text=white]{\maxsizebox{4.5mm}{!}{#1}};}}
 ([xshift=-\@outerlen+0.25cm,yshift=-1.35cm]B)[rounded corners=1.0mm]--
 ([xshift=-0.75cm,yshift=-1.35cm]B)[sharp corners]--
 ([xshift=-0.75cm]B)--cycle;
-\node[font=\numberfont\FontSize{14pt},text=white,anchor=south,align=center](P)at([xshift=-\@outerlen/2-0.25cm,yshift=-1.3cm]B){\maxsizebox{\@outerlen-1.1cm}{!}{\thepage}};
+\node[font=\numberfont\FontSize{16pt},text=white,anchor=south,align=center](P)at([xshift=-\@outerlen/2-0.25cm,yshift=-1.3cm]B){\maxsizebox{\@outerlen-1.2cm}{!}{\thepage}};
 %%绘制侧标%%
 \draw[draw=ColorA,fill=ColorA,sharp corners,line width=1.0pt]node[append after command={(T.north west)--(T.north east)--(T.south east)[rounded corners]--(T.south west)[rounded corners]--cycle},font=\FontSize{13pt}\bfseries,text=white,text width=6.5mm,align=center,inner xsep=1.5mm,inner ysep=3.5mm,anchor=east](T)at([yshift=\MarkY]B){\rotatebox[origin=c]{90}{\maxsizebox{\SepH+\DeltaH-2.5cm}{!}{\lastxmark}}};
 \else
@@ -752,7 +752,7 @@ font=\FontSize{11pt}\bfseries,text=white]{\maxsizebox{4.5mm}{!}{#1}};}}
 ([xshift=\@outerlen-0.25cm,yshift=-1.35cm]B)[rounded corners=1.0mm]--
 ([xshift=0.75cm,yshift=-1.35cm]B)[sharp corners]--
 ([xshift=0.75cm]B)--cycle;
-\node[font=\numberfont\FontSize{14},text=white,anchor=south,align=center](P)at([xshift=\@outerlen/2+0.25cm,yshift=-1.3cm]B){\maxsizebox{\@outerlen-1.1cm}{!}{\thepage}};
+\node[font=\numberfont\FontSize{16},text=white,anchor=south,align=center](P)at([xshift=\@outerlen/2+0.25cm,yshift=-1.3cm]B){\maxsizebox{\@outerlen-1.2cm}{!}{\thepage}};
 %%绘制侧标%%
 \draw[draw=ColorA,fill=ColorA,sharp corners,line width=1.0pt]node[append after command={(T.north west)[rounded corners]--(T.north east)[rounded corners]--(T.south east)[sharp corners]--(T.south west)--cycle},font=\FontSize{13pt}\bfseries,text=white,text width=6.5mm,align=center,inner xsep=1.5mm,inner ysep=3.5mm,anchor=west](T)at([yshift=\MarkY]B){\rotatebox[origin=c]{270}{\maxsizebox{\SepH+\DeltaH-2.5cm}{!}{\firstxmark}}};
 \fi
@@ -787,10 +787,11 @@ anchor=east,align=right](H)at([xshift=-\@outerlen+1.0mm,yshift=-1.0cm]B){\maxsiz
 \node[draw=ColorA,fill=ColorA,font=\bfseries\FontSize{13pt},text=white,
 inner xsep=3.75mm,minimum height=7.5mm,rounded corners=3.75mm,
 anchor=east,align=right](P)at([xshift=-\@outerlen+1.0mm,yshift=1.0cm]C){\maxsizebox{1.0cm}{!}{\thepage}};
+\if@mainmatter
 %%绘制侧标%%
 \draw[draw=ColorA,fill=ColorA,sharp corners,line width=1.0pt]node[append after command={(T.east)--([yshift=1.2cm]T.east) arc (90:270:1.2cm)--cycle},font=\FontSize{13pt}\bfseries,text=white,align=center,text width=6.0mm,
 inner xsep=1.5mm,inner ysep=3.5mm,anchor=east](T)at([yshift=\MarkY]B){\rotatebox[origin=c]{90}{\maxsizebox{1.7cm}{!}{\lastxmark}}};
-\else
+\fi\else
 \coordinate(B)at(current page.north west);
 \coordinate(C)at(current page.south west);
 %%绘制页眉%%
@@ -801,10 +802,11 @@ anchor=west,align=left](H)at([xshift=\@outerlen-1.0mm,yshift=-1.0cm]B){\maxsizeb
 \node[draw=ColorA,fill=ColorA,font=\bfseries\FontSize{13pt},text=white,
 inner xsep=3.75mm,minimum height=7.5mm,rounded corners=3.75mm,
 anchor=west,align=left](P)at([xshift=\@outerlen-1.0mm,yshift=1.0cm]C){\maxsizebox{1.0cm}{!}{\thepage}};
+\if@mainmatter
 %%绘制侧标%%
 \draw[draw=ColorA,fill=ColorA,sharp corners,line width=1.0pt]node[append after command={(T.west)--([yshift=1.2cm]T.west) arc (90:-90:1.2cm)--cycle},font=\FontSize{13pt}\bfseries,text=white,align=center,text width=6.0mm,
 inner xsep=1.5mm,inner ysep=3.5mm,anchor=west](T)at([yshift=\MarkY]B){\rotatebox[origin=c]{270}{\maxsizebox{1.7cm}{!}{\firstxmark}}};
-\fi
+\fi\fi
 \end{tikzpicture}}}
 %%定义其他页面样式%%
 \fancypagestyle{SubPage}{
@@ -1035,7 +1037,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 %%页码%%
 \draw[ColorA,fill=ColorA,rounded corners=1.5mm]
 ([xshift=-1.6cm,yshift=1.6cm]current page.south east)rectangle([xshift=-0.6cm,yshift=0.6cm]C);
-\node[font=\numberfont\FontSize{14pt},text=white,anchor=center,align=center](P)at([xshift=-1.1cm,yshift=1.0cm]C){\maxsizebox{0.9cm}{!}{\thepage}};
+\node[font=\numberfont\FontSize{16pt},text=white,anchor=center,align=center](P)at([xshift=-1.1cm,yshift=1.1cm]C){\maxsizebox{0.75cm}{!}{\thepage}};
 \else
 %%坐标%%
 \coordinate(A)at(current page.north east);
@@ -1065,7 +1067,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 %%页码%%
 \draw[ColorA,fill=ColorA,rounded corners=1.5mm]
 ([xshift=1.6cm,yshift=1.6cm]current page.south west)rectangle([xshift=0.6cm,yshift=0.6cm]C);
-\node[font=\numberfont\FontSize{14pt},text=white,anchor=center,align=center](P)at([xshift=1.1cm,yshift=1.0cm]C){\maxsizebox{0.9cm}{!}{\thepage}};
+\node[font=\numberfont\FontSize{16pt},text=white,anchor=center,align=center](P)at([xshift=1.1cm,yshift=1.1cm]C){\maxsizebox{0.75cm}{!}{\thepage}};
 \fi
 \end{tikzpicture}}}
 
@@ -1098,9 +1100,8 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 %%章节图片%%
 \node[anchor=north east,inner sep=0mm](I)at(current page.north east){\ifdefvoid{\@chapterimage}{}{\includegraphics[height=5.022cm]{\@chapterimage}}};
 %%页码%%
-\draw[ColorA,fill=ColorA,rounded corners=1.5mm]
-([xshift=-1.6cm,yshift=1.6cm]current page.south east)rectangle([xshift=-0.6cm,yshift=0.6cm]current page.south east);
-\node[font=\numberfont\FontSize{14pt},text=white,anchor=center,align=center](P)at([xshift=-1.1cm,yshift=1.0cm]current page.south east){\maxsizebox{0.9cm}{!}{\thepage}};
+\draw[ColorA,fill=ColorA]([xshift=-1.1cm,yshift=1.1cm]current page.south east)circle(0.5cm);
+\node[font=\numberfont\FontSize{16pt},text=white,anchor=center,align=center](P)at([xshift=-1.1cm,yshift=1.1cm]current page.south east){\maxsizebox{0.75cm}{!}{\thepage}};
 \else
 %%坐标点%%
 \coordinate(A)at(current page.north east);
@@ -1126,9 +1127,8 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 %%章节图片%%
 \node[anchor=north west,inner sep=0mm](I)at(current page.north west){\ifdefvoid{\@chapterimage}{}{\includegraphics[height=5.022cm]{\@chapterimage}}};
 %%页码%%
-\draw[ColorA,fill=ColorA,rounded corners=1.5mm]
-([xshift=1.6cm,yshift=1.6cm]current page.south west)rectangle([xshift=0.6cm,yshift=0.6cm]current page.south west);
-\node[font=\numberfont\FontSize{14pt},text=white,anchor=center,align=center](P)at([xshift=1.1cm,yshift=1.0cm]current page.south west){\maxsizebox{0.9cm}{!}{\thepage}};
+\draw[ColorA,fill=ColorA]([xshift=1.1cm,yshift=1.1cm]current page.south west)circle(0.5cm);
+\node[font=\numberfont\FontSize{16pt},text=white,anchor=center,align=center](P)at([xshift=1.1cm,yshift=1.1cm]current page.south west){\maxsizebox{0.75cm}{!}{\thepage}};
 \fi
 \end{tikzpicture}}}
 %%制定章节页的侧标更新规则%%

@@ -1,6 +1,6 @@
 % !TEX program = bibtex
 % !Mode:: "TeX:UTF-8"
-\documentclass[color=orange,openany]{textbook-cn}
+\documentclass[color=orange]{textbook-cn}%openany
 \input{./styles/Cover.tex}
 \usepackage{zhlipsum,lipsum}%乱数假文（测试文字）splitbib
 \graphicspath{{./figure/}{./figures/}{./image/}{./images/}{./graphics/}{./graphic/}{./pictures/}{./picture/}}%提供多种图片路径
@@ -121,7 +121,6 @@ E&=mc^2+\int_a^bx{\rm d}x
 
 \partintro{\lipsum[3]}
 \part{运动学}
-
 
 
 \chapter{绪论\quad 测试文字}
@@ -818,7 +817,7 @@ Just like \ref{Thm.3.1.1} on page \pageref{Thm.3.1.1}
 
 
 \section{回顾与总结}
-\pagestyle{SubPage}
+
 \begin{Point*}
 \lipsum[2]
 \end{Point*}
@@ -919,7 +918,6 @@ Just like \ref{Thm.3.1.1} on page \pageref{Thm.3.1.1}
 
 \part{静力学}
 
-\pagestyle{MainPage}
 \include{Ch1}
 
 \begin{Quiz}
@@ -1144,7 +1142,7 @@ Just like \ref{Thm.3.1.1} on page \pageref{Thm.3.1.1}
 
 \chapter*{测试文字}
 
-\pagestyle{SubPage}
+
 
 
 
@@ -1181,7 +1179,7 @@ Just like \ref{Thm.3.1.1} on page \pageref{Thm.3.1.1}
 \input{index/indexvideo.tex}
 \input{index/indexnoun.tex}
 
-\pagestyle{MainPage}
+
 \clearpage
 \begin{Block}[测试标题]
 \lipsum[1-4]\par\lipsum[5][1-4]
