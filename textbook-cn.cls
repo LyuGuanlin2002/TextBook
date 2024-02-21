@@ -172,7 +172,7 @@
 \setlength{\@botlen}{2.5cm}
 \setlength{\@marginparwidthlen}{0.25\textwidth+2.0em}
 \setlength{\@marginparseplen}{-\@marginparwidthlen+0.75em}
-\setlength{\@handseplen}{0.95cm}
+\setlength{\@handseplen}{0.875cm}
 \setlength{\@footskiplen}{0.95cm}
 \RequirePackage[letterpaper,
 inner=\@innerlen,outer=\@outerlen,top=\@toplen,bottom=\@botlen,
@@ -197,7 +197,7 @@ marginparsep=\@marginparseplen,marginparwidth=\@marginparwidthlen,reversemarginp
 }{\end{paracol}}
 %%脚注格式%%
 \gdef\footnoterule{}
-\gdef\footnotesize{\FontSize[0.8]{11pt}\itshape}
+\gdef\footnotesize{\FontSize[0.8]{12pt}\itshape}
 
 %%%%%%%%%%%%%%%%%%%% 图表插入宏包 %%%%%%%%%%%%%%%%%%%%
 \RequirePackage{graphicx}%插入图片路径
@@ -289,7 +289,7 @@ marginparsep=\@marginparseplen,marginparwidth=\@marginparwidthlen,reversemarginp
 %%参考文献编译方式：先用XeLaTeX编译主文件.tex一次；再用BibTeX编译主文件（或各子文件）.tex一次；然后用XeLaTeX编译主文件.tex两次%%
 \RequirePackage[numbers,sectionbib]{natbib}%参考文献格式
 \renewcommand{\bibnumfmt}[1]{\hskip1.0mm\protect\cir{#1}}%修改参考文献序号样式
-\renewcommand{\citenumfont}[1]{\textbf{\color{ColorA}{\FontSize{12pt}#1}}}%修改引用样式
+\renewcommand{\citenumfont}[1]{\textbf{\color{ColorA}{\FontSize{13pt}#1}}}%修改引用样式
 \bibpunct{\color{ColorA}{[}}{\color{ColorA}{]}}{,}{n}{}{;}%修改方括号颜色
 \renewcommand{\bibname}{参考文献}%修改参考文献标题
 %%根据类布尔参数splitbib的存在与否来判断是否加载宏包chapterbib%%
@@ -583,7 +583,7 @@ columns=2,columnsep=2.0em,notintoc,notocbasic,nocolumnseprule}
 \usemintedstyle{xcode}
 %为了使宏包minted正常工作，需要在xelatex编译器参数中添加-shell-escape
 \RequirePackage{lineno}%行号宏包
-\renewcommand{\linenumberfont}{\FontSize{11.5pt}\numberfont\color{ColorA}}%修改行号字体
+\renewcommand{\linenumberfont}{\FontSize{12.5pt}\numberfont\color{ColorA}}%修改行号字体
 \setlength{\linenumbersep}{5.5mm}%修改行号与正文的间距
 
 %%%%%%%%%%%%%%%%%%%% 绘图与表格宏包 %%%%%%%%%%%%%%%%%%%%
@@ -632,7 +632,7 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 %%设置题号%%
 \newcommand*\cir[1]{\tikz[baseline=($0.3*(current bounding box.west)+0.7*(current bounding box.south west)$)]{\node[shape=circle,fill=ListColor,draw=ListColor,
 minimum size=5.0mm,align=center,inner sep=0pt,
-font=\FontSize{11pt}\bfseries,text=white]{\maxsizebox{4.5mm}{!}{#1}};}}
+font=\FontSize{12pt}\bfseries,text=white]{\maxsizebox{4.5mm}{!}{#1}};}}
 %%设置概念序号%%
 \newcommand*\preconcept{\raisebox{-0.05em}{\tikz{\draw[ListColor,fill=white,line width=2.5pt](0,0)circle(1.5mm);}}}
 %%概念列表环境%%
@@ -666,20 +666,20 @@ font=\FontSize{11pt}\bfseries,text=white]{\maxsizebox{4.5mm}{!}{#1}};}}
 \setlength{\lhalf}{0.5\linewidth}
 \setlength{\lquarter}{0.25\linewidth}
 \ifthenelse{\lengthtest{\lmax>\lhalf}}
-{\begin{hlist}[pre skip=0pt,item skip=0pt,item offset={1.5em},label={\textbf{\color{ListColor}{\FontSize{13pt}{\Alpha{hlisti}.}}}},pre label={}]1
+{\begin{hlist}[pre skip=0pt,item skip=0pt,item offset={1.5em},label={\textbf{\color{ListColor}{\FontSize{14pt}{\Alpha{hlisti}.}}}},pre label={}]1
 \hitem #1
 \hitem #2
 \hitem #3
 \hitem #4
 \end{hlist}}
 {\ifthenelse{\lengthtest{\lmax>\lquarter}}
-{\begin{hlist}[pre skip=0pt,item skip=0pt,item offset={1.5em},label={\textbf{\color{ListColor}{\FontSize{13pt}{\Alpha{hlisti}.}}}},pre label={}]2
+{\begin{hlist}[pre skip=0pt,item skip=0pt,item offset={1.5em},label={\textbf{\color{ListColor}{\FontSize{14pt}{\Alpha{hlisti}.}}}},pre label={}]2
 \hitem #1
 \hitem #2
 \hitem #3
 \hitem #4
 \end{hlist}}
-{\begin{hlist}[\parskip=0pt,pre skip=0pt,item skip=0pt,item offset={1.5em}, label={\textbf{\color{ListColor}{\FontSize{13pt}{\Alpha{hlisti}.}}}},pre label={}]4
+{\begin{hlist}[\parskip=0pt,pre skip=0pt,item skip=0pt,item offset={1.5em}, label={\textbf{\color{ListColor}{\FontSize{14pt}{\Alpha{hlisti}.}}}},pre label={}]4
 \hitem #1
 \hitem #2
 \hitem #3
@@ -728,10 +728,10 @@ font=\FontSize{11pt}\bfseries,text=white]{\maxsizebox{4.5mm}{!}{#1}};}}
 %%绘制页码%%
 \draw[ColorA,fill=ColorA,line width=1.0pt]
 ([xshift=-\@outerlen+0.25cm]B)[rounded corners=1.5mm]--
-([xshift=-\@outerlen+0.25cm,yshift=-1.6cm]B)[rounded corners=1.5mm]--
-([xshift=-0.85cm,yshift=-1.6cm]B)[sharp corners]--
+([xshift=-\@outerlen+0.25cm,yshift=-1.65cm]B)[rounded corners=1.5mm]--
+([xshift=-0.85cm,yshift=-1.65cm]B)[sharp corners]--
 ([xshift=-0.85cm]B)--cycle;
-\node[font=\numberfont\FontSize{16pt},text=white,anchor=south,align=center](P)at([xshift=-\@outerlen/2-0.3cm,yshift=-1.5cm]B){\maxsizebox{0.8cm}{!}{\thepage}};
+\node[font=\numberfont\FontSize{16pt},text=white,anchor=south,align=center](P)at([xshift=-\@outerlen/2-0.3cm,yshift=-1.55cm]B){\maxsizebox{0.8cm}{!}{\thepage}};
 %%绘制侧标%%
 \draw[draw=ColorA,fill=ColorA,sharp corners,line width=1.0pt]node[append after command={(T.north west)--(T.north east)--(T.south east)[rounded corners=1.75mm]--(T.south west)[rounded corners=1.75mm]--cycle},font=\FontSize{14pt}\bfseries,text=white,text width=8.0mm,align=center,inner xsep=1.5mm,inner ysep=3.5mm,anchor=east](T)at([yshift=\MarkY]B){\rotatebox[origin=c]{90}{\maxsizebox{\SepH+\DeltaH-2.5cm}{!}{\lastxmark}}};
 \else
@@ -749,10 +749,10 @@ font=\FontSize{11pt}\bfseries,text=white]{\maxsizebox{4.5mm}{!}{#1}};}}
 %%绘制页码%%
 \draw[ColorA,fill=ColorA,line width=1.0pt]
 ([xshift=\@outerlen-0.25cm]B)[rounded corners=1.5mm]--
-([xshift=\@outerlen-0.25cm,yshift=-1.6cm]B)[rounded corners=1.5mm]--
-([xshift=0.85cm,yshift=-1.6cm]B)[sharp corners]--
+([xshift=\@outerlen-0.25cm,yshift=-1.65cm]B)[rounded corners=1.5mm]--
+([xshift=0.85cm,yshift=-1.65cm]B)[sharp corners]--
 ([xshift=0.85cm]B)--cycle;
-\node[font=\numberfont\FontSize{16},text=white,anchor=south,align=center](P)at([xshift=\@outerlen/2+0.3cm,yshift=-1.5cm]B){\maxsizebox{0.8cm}{!}{\thepage}};
+\node[font=\numberfont\FontSize{16},text=white,anchor=south,align=center](P)at([xshift=\@outerlen/2+0.3cm,yshift=-1.55cm]B){\maxsizebox{0.8cm}{!}{\thepage}};
 %%绘制侧标%%
 \draw[draw=ColorA,fill=ColorA,sharp corners,line width=1.0pt]node[append after command={(T.north west)[rounded corners=1.75mm]--(T.north east)[rounded corners=1.75mm]--(T.south east)[sharp corners]--(T.south west)--cycle},font=\FontSize{14pt}\bfseries,text=white,text width=8.0mm,align=center,inner xsep=1.5mm,inner ysep=3.5mm,anchor=west](T)at([yshift=\MarkY]B){\rotatebox[origin=c]{270}{\maxsizebox{\SepH+\DeltaH-2.5cm}{!}{\firstxmark}}};
 \fi
@@ -1149,7 +1149,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 {}{}{0em}
 {\@pagesiderule
 \@chapterstyle{第~\thechapter~章}{#1}%章样式
-\enlargethispage{-1.0cm}%修改页面大小
+\enlargethispage{-0.75cm}%修改页面大小
 \thispagestyle{empty}}
 [\global\chaptersaying{}%清空\chaptersaying
 \global\chapterimage{}]%清空\chapterimage
@@ -1163,7 +1163,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 [\global\chaptersubtitle{}%清空\chaptersubtitle
 \global\chapterimage{}]%清空\chapterimage
 %%间距设置%%
-\titlespacing*{\chapter}{0pt}{40pt}{40pt}
+\titlespacing*{\chapter}{0pt}{35pt}{35pt}
 %%节样式%%
 %%编号节样式%%
 \newcommand{\@sectionlabel}[1]{
@@ -1268,8 +1268,8 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 \titleformat{\subsubsection}
 {}{}{0em}
 {\begin{flushleft}
-\tikz{\node[inner sep=0mm,anchor=west,font=\FontSize{24pt}\bfseries,text=ColorB](T){\ding{119}};
-\node[inner ysep=0.815mm,anchor=north west,font=\FontSize{13pt}\bfseries,text=ColorB](Q)at([xshift=2.0mm]T.north east){\begin{varwidth}{\linewidth-0.5cm}#1\end{varwidth}};}
+\tikz{\node[inner sep=0mm,anchor=west,font=\FontSize{25pt}\bfseries,text=ColorB](T){\ding{119}};
+\node[inner ysep=0.825mm,anchor=north west,font=\FontSize{14pt}\bfseries,text=ColorB](Q)at([xshift=2.0mm]T.north east){\begin{varwidth}{\linewidth-0.5cm}#1\end{varwidth}};}
 \end{flushleft}}
 %%间距设置%%
 \titlespacing*{\subsubsection}{0pt}{15pt}{-15pt}
@@ -1601,7 +1601,7 @@ top=5.0mm,bottom=3.0mm,
 right=0mm,boxsep=0mm,
 parbox=false,before upper=\par,before lower=\par,
 before=\par\bigskip\noindent,after=\par,
-fonttitle=\bfseries\color{white}\FontSize{12pt},
+fonttitle=\bfseries\color{white}\FontSize{13pt},
 attach boxed title to top left={xshift=3.0mm,yshift*=-\tcboxedtitleheight},
 code={\colorlet{ListColor}{#3}},
 boxed title style={empty,left=8.35mm,right=3.5mm,height=0.7cm,valign=center},
@@ -1613,7 +1613,7 @@ underlay boxed title={
 \draw[#3,fill=#3,ultra thin]([xshift=-15.5mm,yshift=-\tcboxedtitleheight/2]frame.north east)circle({\tcboxedtitleheight/2-1.15mm});
 \draw[#3!90,fill=#3!90,ultra thin]([xshift=-9.0mm,yshift=-\tcboxedtitleheight/2]frame.north east)circle({\tcboxedtitleheight/2-1.15mm});
 \draw[#3!80,fill=#3!80,ultra thin]([xshift=-2.5mm,yshift=-\tcboxedtitleheight/2]frame.north east)circle({\tcboxedtitleheight/2-1.15mm});},
-subtitle style={empty,before upper=\par,fontupper=\centering\FontSize{13pt}\bfseries\color{#3}},
+subtitle style={empty,before upper=\par,fontupper=\centering\FontSize{14pt}\bfseries\color{#3}},
 title={\maxsizebox{\linewidth-2.0cm}{!}{#2}},#1}
 
 \newenvironment{Point}{\begin{box0}[left=0mm]{本章要点}[ColorA]}{\end{box0}}
@@ -1632,11 +1632,11 @@ right=0mm,left=-2.775mm+0.5em,boxsep=0mm,
 attach boxed title to top left={xshift=0.5mm},
 after=\par\medskip,
 parbox=false,before upper=\par,before lower=\par,
-fonttitle=\FontSize{12.5pt}\bfseries\color{white},
+fonttitle=\FontSize{13.5pt}\bfseries\color{white},
 boxed title style={empty,left=3.5mm,right=8.5mm,top=0mm,bottom=0mm},
 lowerbox=ignored,
 code={\colorlet{ListColor}{ColorA}},
-subtitle style={empty,fontupper=\FontSize{13pt}\centering\bfseries\color{ColorA}}
+subtitle style={empty,fontupper=\FontSize{14pt}\centering\bfseries\color{ColorA}}
 }}
 
 \makeatletter
@@ -1691,7 +1691,7 @@ left=0mm,right=0mm,boxsep=0mm,
 rounded corners,arc=5.0pt,
 before=\par\noindent,after=\par,
 parbox=false,before upper=\par,before lower=\par,
-fonttitle=\FontSize{12pt}\bfseries\color{ColorA},
+fonttitle=\FontSize{13pt}\bfseries\color{ColorA},
 title={原题见第~\pageref{question@#1}~页},
 phantomlabel={solution@#1}
 }{\input{#2}}
@@ -1707,7 +1707,7 @@ colback=white,colframe=white,
 top=3.0mm,bottom=2.5mm,
 before=\par\noindent\medskip,after=\par\medskip,
 parbox=false,before lower=\par,
-fonttitle=\FontSize{12pt}\bfseries\color{white}
+fonttitle=\FontSize{13pt}\bfseries\color{white}
 }}
 
 %%判断标题长度并决定其放置位置%%
@@ -1717,20 +1717,20 @@ fonttitle=\FontSize{12pt}\bfseries\color{white}
 \def\@BoxedBeforeTitleText{}
 \newlength{\@BoxedTitleWidth}
 \newcommand{\JudgeTitle}[3]{
-\settowidth{\@BoxedTitleWidth}{\textbf{\FontSize{12pt}{#2}}}
+\settowidth{\@BoxedTitleWidth}{\textbf{\FontSize{13pt}{#2}}}
 \ifthenelse{\isempty{#2}}{%若无标题名称
 \def\@BoxedTitleText{}%标题置空
 \def\@BoxedBeforeUpperText{\par}
-\def\@BoxedBeforeTitleText{\textbf{\color{white}{\FontSize{12pt}{#1}}}}%无标题名称前分隔符
+\def\@BoxedBeforeTitleText{\textbf{\color{white}{\FontSize{13pt}{#1}}}}%无标题名称前分隔符
 }{%若有标题名称
 \ifthenelse{\lengthtest{\@BoxedTitleWidth>0.4\linewidth}}{%判断标题名称长度
 \def\@BoxedTitleText{}%若过长，则标题置空
-\def\@BoxedBeforeUpperText{{\textbf{\color{#3}{\FontSize{12pt}{#2}}}\quad}}
+\def\@BoxedBeforeUpperText{{\textbf{\color{#3}{\FontSize{13pt}{#2}}}\quad}}
 \def\@BoxedBeforeTitleText{\textbf{\color{white}{#1}}}%无标题名称前分隔符
 }{
 \def\@BoxedTitleText{#2}%若较短，则将名称放置在标题盒子中
 \def\@BoxedBeforeUpperText{\par}
-\def\@BoxedBeforeTitleText{\textbf{\color{white}{\FontSize{12pt}{#1:~}}}}%有标题名称前分隔符
+\def\@BoxedBeforeTitleText{\textbf{\color{white}{\FontSize{13pt}{#1:~}}}}%有标题名称前分隔符
 }}
 }
 \makeatother
@@ -1749,7 +1749,7 @@ underlay boxed title={
 \draw[#3,fill=#3](title.west)circle({2*\tcboxedtitleheight/3});
 \node[circle,align=center,inner sep=0mm,font=\FontSize{16pt}\bfseries,text=white](P)at(title.west){#4};
 },
-subtitle style={empty,fontupper=\FontSize{12pt}\bfseries\color{#3}},
+subtitle style={empty,fontupper=\FontSize{13pt}\bfseries\color{#3}},
 #1}
 
 \newenvironment{Warning}{\begin{box1}{易错点警示}[ColorF][\faExclamation]}{\end{box1}}
@@ -1781,7 +1781,7 @@ underlay boxed title={
 ([xshift={sqrt(3)*\tcboxedtitleheight/2}]title.south west) arc (-30:30:{\tcboxedtitleheight})--
 cycle;
 \node[circle,align=center,inner sep=0mm,font=\FontSize{16pt}\bfseries,text=white](T)at(title.west){#5};},
-subtitle style={empty,fontupper=\FontSize{12pt}\bfseries\color{#4}},
+subtitle style={empty,fontupper=\FontSize{13pt}\bfseries\color{#4}},
 #1}
 \makeatother
 
@@ -1862,7 +1862,7 @@ underlay boxed title={
 \fill[white,draw=white,line width=12.5pt](title.west)circle({2*\tcboxedtitleheight/3});
 \fill[white,draw=#3,line width=2.75pt](title.west)circle({2*\tcboxedtitleheight/3});
 \node[circle,align=center,inner sep=0mm,font=\FontSize{16pt}\bfseries,text=#3] at (title.west){#4};},
-subtitle style={empty,top=-3.5mm,fontupper=\FontSize{12pt}\bfseries\centering\color{#3}},
+subtitle style={empty,top=-3.5mm,fontupper=\FontSize{13pt}\bfseries\centering\color{#3}},
 #1}
 
 \newenvironment{Link}{\begin{box5}{拓展链接}[ColorE][\faLink]}{\end{box5}}
@@ -1890,7 +1890,7 @@ underlay boxed title={
 ([xshift={sqrt(3)*\tcboxedtitleheight/2}]title.south west) arc (-30:30:{\tcboxedtitleheight})--
 cycle;
 \node[circle,align=center,inner sep=0mm,font=\FontSize{16pt}\bfseries,text=#3] at (title.west){#4};},
-subtitle style={empty,fontupper=\FontSize{12pt}\bfseries\color{#3}},
+subtitle style={empty,fontupper=\FontSize{13pt}\bfseries\color{#3}},
 #1}
 
 \newenvironment{Information}{\begin{box6}{资料卡片}[ColorI][\faFile*]}{\end{box6}}
@@ -1955,8 +1955,8 @@ top=3.5mm,bottom=3.0mm,toptitle=4.0mm,bottomtitle=-2.5mm,
 rounded corners,arc=7.5pt,
 before=\par\noindent\medskip,after=\par\medskip,
 parbox=false,before upper=\par,before lower=\par,
-fonttitle=\FontSize{12pt}\bfseries\color{ColorA},
-subtitle style={empty,fontupper=\FontSize{12pt}\bfseries\color{ColorA}},
+fonttitle=\FontSize{13pt}\bfseries\color{ColorA},
+subtitle style={empty,fontupper=\FontSize{13pt}\bfseries\color{ColorA}},
 title={#1},#2}
 
 \makeatletter
@@ -1990,7 +1990,7 @@ overlay middle and last={
 \begin{tcbclipinterior}
 \fill[#4!7.5,draw=#4!7.5](frame.south west)rectangle([xshift=\tcboxedtitleheight]frame.north west);
 \end{tcbclipinterior}},
-subtitle style={empty,fontupper=\FontSize{12pt}\bfseries\color{#4}},
+subtitle style={empty,fontupper=\FontSize{13pt}\bfseries\color{#4}},
 title={#2},#1}
 
 \NewDocumentEnvironment{Reading}{O{}mm}{\begin{box9}{阅读理解}[#1][ColorB][\score{#2}{#3}[ColorB]]}{\end{box9}}
@@ -2010,7 +2010,7 @@ underlay boxed title={
 \node[font=\bfseries,text=#4,anchor=west,inner xsep=3.5mm](T)at([yshift=-0.5mm]title.east){\maxsizebox{\linewidth-2.5cm}{!}{#3}};},
 subtitle style={frame hidden,colback=#4!7.5,
 valign=center,height=\tcboxedtitleheight+0.75pt,
-fontupper=\FontSize{12pt}\bfseries\color{#4}},
+fontupper=\FontSize{13pt}\bfseries\color{#4}},
 title={#2},#1}
 
 \newenvironment{Vocabulary}[1]{\begin{box10}{词汇解析}{#1}[ColorE]}{\end{box10}}
@@ -2028,7 +2028,7 @@ colback=ColorB!2.5,colframe=white,
 top=3.0mm,bottom=2.5mm,left=10.0mm,
 before=\par\noindent\medskip,after=\par\medskip,
 parbox=false,before upper=\par,before lower=\par,
-fonttitle=\FontSize{12pt}\bfseries\color{white},
+fonttitle=\FontSize{13pt}\bfseries\color{white},
 frame style={left color=ColorA!50,right color=ColorA!50,middle color=ColorA},
 attach boxed title to top left={yshift*=-\tcboxedtitleheight},
 boxed title style={empty,top=1.25mm,left=3.5mm,right=3.5mm},
@@ -2042,7 +2042,7 @@ overlay middle and last={
 \begin{tcbclipinterior}
 \fill[ColorA!7.5,draw=ColorA!7.5](frame.south west)rectangle([xshift=\tcboxedtitleheight]frame.north west);
 \end{tcbclipinterior}},
-subtitle style={empty,fontupper=\FontSize{12pt}\bfseries\color{ColorA}},
+subtitle style={empty,fontupper=\FontSize{13pt}\bfseries\color{ColorA}},
 title={代码示例},
 minted options={breaklines,autogobble,linenos,numbersep=5.5mm},
 listing only,
