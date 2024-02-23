@@ -2082,13 +2082,13 @@ rounded corners,arc=5.0pt,#1}
 \coordinate(B)at(current page.north east);
 \coordinate(C)at(current page.south east);
 \coordinate(D)at(current page.south west);
-\coordinate(E)at([yshift=-0.75cm]current page.north west);
-\coordinate(F)at([xshift=-0.75cm,yshift=-0.75cm]current page.north east);
-\coordinate(G)at([xshift=-0.75cm,yshift=0.75cm]current page.south east);
-\coordinate(H)at([yshift=0.75cm]current page.south west);
+\coordinate(E)at([yshift=-1.0cm]current page.north west);
+\coordinate(F)at([xshift=-1.0cm,yshift=-1.0cm]current page.north east);
+\coordinate(G)at([xshift=-1.0cm,yshift=1.0cm]current page.south east);
+\coordinate(H)at([yshift=1.0cm]current page.south west);
 %%背景%%
 \draw[ColorB!5,fill=ColorB!5,sharp corners](D)rectangle(B);
-\draw[ColorA!80,fill=ColorA!80](A)--(B)--(C)--(D)--(H)[rounded corners=3.5mm]--(G)[rounded corners=3.5mm]--(F)[sharp corners]--(E)--cycle;
+\draw[ColorA!80,fill=ColorA!80](A)--(B)--(C)--(D)--(H)[rounded corners=5.0mm]--(G)[rounded corners=5.0mm]--(F)[sharp corners]--(E)--cycle;
 \end{tikzpicture}
 \begin{center}
 \color{ColorA}\bfseries
