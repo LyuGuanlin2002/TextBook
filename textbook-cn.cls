@@ -1281,18 +1281,24 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 \makeatother
 
 %%练习题面板标题%%
+\newlength{\ExerciseTitleHeight}
 \newcommand{\ExerciseTitle}[1]{
+\settoheight{\ExerciseTitleHeight}{\textbf{\FontSize{12pt}{#1}}}
 \begingroup
 \pgfdeclarelayer{top}
+\pgfdeclarelayer{middle}
 \pgfdeclarelayer{bottom}
-\pgfsetlayers{bottom,top}
+\pgfsetlayers{bottom,middle,top}
 \begin{center}
 \begin{tikzpicture}
 \begin{pgfonlayer}{top}
-\node[draw=ColorB,fill=ColorB,ultra thick,minimum height=0.75cm,rounded corners=0.375cm,font=\bfseries\FontSize{14pt},text=white,inner xsep=0.5cm](E){\maxsizebox{\linewidth-3.0cm}{!}{#1}};
+\node[font=\bfseries\FontSize{12pt},text=white,inner sep=0mm](E){\maxsizebox{\linewidth-3.0cm}{!}{#1}};
+\end{pgfonlayer}
+\begin{pgfonlayer}{middle}
+\draw[ColorB,fill=ColorB,ultra thick,rounded corners=1.0mm]([xshift=-4.0mm,yshift=1.0mm]E.north west)rectangle([xshift=4.0mm,yshift=-1.0mm]E.south east);
 \end{pgfonlayer}
 \begin{pgfonlayer}{bottom}
-\draw[draw=ColorB!50,fill=ColorB!50,ultra thick,rounded corners=0.36cm]([xshift=-0.5cm,yshift=0.36cm]E.west)rectangle([xshift=0.5cm,yshift=-0.36cm]E.east);
+\draw[draw=ColorB!50,fill=ColorB!50,ultra thick,rounded corners={\ExerciseTitleHeight/2+2.25mm}]([xshift=-9.0mm,yshift=2.0mm]E.north west)rectangle([xshift=9.0mm,yshift=-2.0mm]E.south east);
 \end{pgfonlayer}
 \end{tikzpicture}
 \end{center}
