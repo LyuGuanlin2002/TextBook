@@ -1283,7 +1283,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 %%练习题面板标题%%
 \newlength{\ExerciseTitleHeight}
 \newcommand{\ExerciseTitle}[1]{
-\settoheight{\ExerciseTitleHeight}{\textbf{\FontSize{12pt}{#1}}}
+\settoheight{\ExerciseTitleHeight}{\textbf{\FontSize{13pt}{#1}}}
 \begingroup
 \pgfdeclarelayer{top}
 \pgfdeclarelayer{middle}
@@ -1292,7 +1292,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 \begin{center}
 \begin{tikzpicture}
 \begin{pgfonlayer}{top}
-\node[font=\bfseries\FontSize{12pt},text=white,inner sep=0mm](E){\maxsizebox{\linewidth-3.0cm}{!}{#1}};
+\node[font=\bfseries\FontSize{13pt},text=white,inner sep=0mm](E){\maxsizebox{\linewidth-3.0cm}{!}{#1}};
 \end{pgfonlayer}
 \begin{pgfonlayer}{middle}
 \draw[ColorB,fill=ColorB,ultra thick,rounded corners=1.0mm]([xshift=-4.0mm,yshift=1.0mm]E.north west)rectangle([xshift=4.0mm,yshift=-1.0mm]E.south east);
