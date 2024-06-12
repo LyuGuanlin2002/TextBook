@@ -125,8 +125,8 @@
 \newcommand*{\series}[1]{\def\@series{#1}}
 \newcommand*{\version}[1]{\def\@version{#1}}
 \newcommand*{\subtitle}[1]{\def\@subtitle{#1}}
-\newcommand*{\englishtitle}[1]{\def\@englishtitle{#1}}
-\newcommand*{\englishsubtitle}[1]{\def\@englishsubtitle{#1}}
+\newcommand*{\englishtitle}[1]{\def\@englishtitle{\MakeUppercase{#1}}}
+\newcommand*{\englishsubtitle}[1]{\def\@englishsubtitle{\MakeUppercase{#1}}}
 \newcommand*{\presslogo}[1]{\def\@presslogo{#1}}
 \newcommand*{\pressname}[1]{\def\@pressname{#1}}
 \makeatother
@@ -242,33 +242,45 @@ marginparsep=\@marginparseplen,marginparwidth=\@marginparwidthlen,reversemarginp
 \c@tocdepth=1%预设目录深度为1
 \IfBooleanTF{#1}{
 \begin{paracol}{2}
+\begin{spacing}{1.5}%段落行距设置
 \@starttoc{toc}
 \switchcolumn
 #2
+\end{spacing}
 \end{paracol}}
-{\@starttoc{toc}}
+{\begin{spacing}{1.5}%段落行距设置
+\@starttoc{toc}
+\end{spacing}}
 \endgroup}
 %%重定义\listoffigures%%
 \RenewDocumentCommand{\listoffigures}{s O{}}{
 \chapter*{\listfigurename}
 \IfBooleanTF{#1}{
 \begin{paracol}{2}
+\begin{spacing}{1.5}%段落行距设置
 \@starttoc{lof}
 \switchcolumn
 #2
+\end{spacing}
 \end{paracol}}
-{\@starttoc{lof}}
+{\begin{spacing}{1.5}%段落行距设置
+\@starttoc{lof}
+\end{spacing}}
 }
 %%重定义\listoftables%%
 \RenewDocumentCommand{\listoftables}{s O{}}{
 \chapter*{\listtablename}
 \IfBooleanTF{#1}{
 \begin{paracol}{2}
+\begin{spacing}{1.5}%段落行距设置
 \@starttoc{lot}
 \switchcolumn
 #2
+\end{spacing}
 \end{paracol}}
-{\@starttoc{lot}}
+{\begin{spacing}{1.5}%段落行距设置
+\@starttoc{lot}
+\end{spacing}}
 }
 %%重定义\shorttableofcontents%%
 \RenewDocumentCommand{\shorttableofcontents}{s O{}}{
@@ -277,11 +289,15 @@ marginparsep=\@marginparseplen,marginparwidth=\@marginparwidthlen,reversemarginp
 \c@tocdepth=0%预设目录深度为0
 \IfBooleanTF{#1}{
 \begin{paracol}{2}
+\begin{spacing}{1.5}%段落行距设置
 \@startshorttoc{toc}
 \switchcolumn
 #2
+\end{spacing}
 \end{paracol}}
-{\@startshorttoc{toc}}
+{\begin{spacing}{1.5}%段落行距设置
+\@startshorttoc{toc}
+\end{spacing}}
 \endgroup}
 \makeatother
 
@@ -331,12 +347,12 @@ marginparsep=\@marginparseplen,marginparwidth=\@marginparwidthlen,reversemarginp
 
 %%%%%%%%%%%%%%%%%%%% 索引宏包 %%%%%%%%%%%%%%%%%%%%
 \RequirePackage{filecontents}%在tex内编写数据文件
-\RequirePackage[splitindex]{imakeidx}%索引设置，splitindex参数自动分割索引
-%%索引风格文件indexstyle.ist%%
+\RequirePackage[splitindex]{imakeidx}%索引设置，splitindex参数自动分割索引\\Large
+%%索引风格文件indexstyle.ist%%\\large
 \begin{filecontents}[overwrite]{indexstyle.ist}
 headings_flag 1
-heading_prefix "\n\\centering\\Large\\bfseries\\color{ColorA}"
-heading_suffix "\\large\\normalfont\\color{black}\\nopagebreak\n"
+heading_prefix "\n\\centering\\bfseries\\color{ColorA}"
+heading_suffix "\\normalfont\\color{black}\\nopagebreak\n"
 delim_0 " \\hfill " 
 delim_1 " \\hfill "
 delim_2 " \\hfill "
@@ -846,9 +862,20 @@ inner xsep=1.5mm,inner ysep=3.5mm,anchor=west](T)at([yshift=\MarkY]B){\rotatebox
 %%标题%%
 \node[align=left,anchor=north east,font=\bfseries\FontSize{37.5pt},text=ColorA,minimum height=2.0cm](P)at([yshift=-2.6cm]T.south east){\maxsizebox{\textwidth-2.45cm}{!}{#2}};
 %%介绍%%
-\node[align=right,inner xsep=3.0mm,anchor=north east,font=\itshape,text=ColorA](W)at([yshift=-0.75cm]P.south east){\begin{varwidth}{\textwidth-2.75cm}\ifdefvoid{\@partintro}{}{\FontSize[0.8]{12pt}\@partintro}\end{varwidth}};
+\node[align=right,inner xsep=3.0mm,anchor=north east,font=\itshape,text=ColorA](W)at([yshift=-0.75cm]P.south east){
+\begin{varwidth}{\textwidth-2.75cm}
+\ifdefvoid{\@partintro}{}{
+\begin{spacing}{1.2}%段落行距设置
+\FontSize{12pt}\@partintro
+\end{spacing}}
+\end{varwidth}};
 %%小目录%%
-\node[anchor=south west](C)at([xshift=\@innerlen+0.25in,yshift=\@botlen]current page.south west){\begin{varwidth}{\textwidth}\printcontents[part]{l}{0}{\setcounter{tocdepth}{0}}\end{varwidth}};
+\node[anchor=south west](C)at([xshift=\@innerlen+0.25in,yshift=\@botlen]current page.south west){
+\begin{varwidth}{\textwidth}
+\begin{spacing}{1.5}
+\printcontents[part]{l}{0}{\setcounter{tocdepth}{0}}
+\end{spacing}
+\end{varwidth}};
 \node[font=\FontSize{13pt}\bfseries,text=ColorB!95!black,anchor=south west](R)at(C.north west){部分概要};
 \else
 %%坐标%%
@@ -872,9 +899,20 @@ inner xsep=1.5mm,inner ysep=3.5mm,anchor=west](T)at([yshift=\MarkY]B){\rotatebox
 %%标题%%
 \node[align=left,anchor=north west,font=\bfseries\FontSize{37.5pt},text=ColorA,minimum height=2.0cm](P)at([yshift=-2.6cm]T.south west){\maxsizebox{\textwidth-2.45cm}{!}{#2}};
 %%介绍%%
-\node[align=left,inner xsep=3.0mm,anchor=north west,font=\itshape,text=ColorA](W)at([yshift=-0.75cm]P.south west){\begin{varwidth}{\textwidth-2.75cm}\ifdefvoid{\@partintro}{}{\FontSize[0.8]{12pt}\@partintro}\end{varwidth}};
+\node[align=left,inner xsep=3.0mm,anchor=north west,font=\itshape,text=ColorA](W)at([yshift=-0.75cm]P.south west){
+\begin{varwidth}{\textwidth-2.75cm}
+\ifdefvoid{\@partintro}{}{
+\begin{spacing}{1.2}%段落行距设置
+\FontSize{12pt}\@partintro
+\end{spacing}}
+\end{varwidth}};
 %%小目录%%
-\node[anchor=south east](C)at([xshift=-\@innerlen-0.25in,yshift=\@botlen]current page.south east){\begin{varwidth}{\textwidth}\printcontents[part]{l}{0}{\setcounter{tocdepth}{0}}\end{varwidth}};
+\node[anchor=south east](C)at([xshift=-\@innerlen-0.25in,yshift=\@botlen]current page.south east){
+\begin{varwidth}{\textwidth}
+\begin{spacing}{1.5}%段落行距设置
+\printcontents[part]{l}{0}{\setcounter{tocdepth}{0}}
+\end{spacing}
+\end{varwidth}};
 \node[font=\FontSize{13pt}\bfseries,text=ColorB!95!black,anchor=south west](R)at(C.north west){部分概要};
 \fi
 \end{tikzpicture}}}
@@ -929,9 +967,19 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=-1.4cm,yshift=0.25cm]C){
 \node[inner xsep=0mm,minimum height=2.0cm,anchor=east](Q)at(S.west){\halfcircle{ColorA!80}{0.7cm}};
 \node[inner xsep=0mm,minimum height=2.0cm,anchor=east](R)at(Q.west){\halfcircle{ColorA}{0.7cm}};
 %%介绍%%
-\node[align=right,inner xsep=2.0mm,anchor=north east,font=\itshape,text=ColorA](W)at([yshift=-3.5cm]P.south east){\begin{varwidth}{\textwidth-2.75cm}\ifdefvoid{\@partintro}{}{\FontSize[0.8]{12pt}\@partintro}\end{varwidth}};
+\node[align=right,inner xsep=2.0mm,anchor=north east,font=\itshape,text=ColorA](W)at([yshift=-3.5cm]P.south east){
+\begin{varwidth}{\textwidth-2.75cm}
+\begin{spacing}{1.2}%段落行距设置
+\ifdefvoid{\@partintro}{}{\FontSize{12pt}\@partintro}
+\end{spacing}
+\end{varwidth}};
 %%小目录%%
-\node[anchor=south west](C)at([xshift=\@innerlen+0.25in,yshift=\@botlen]current page.south west){\begin{varwidth}{\textwidth}\printcontents[part]{l}{0}{\setcounter{tocdepth}{0}}\end{varwidth}};
+\node[anchor=south west](C)at([xshift=\@innerlen+0.25in,yshift=\@botlen]current page.south west){
+\begin{varwidth}{\textwidth}
+\begin{spacing}{1.5}%段落行距设置
+\printcontents[part]{l}{0}{\setcounter{tocdepth}{0}}
+\end{spacing}
+\end{varwidth}};
 \node[font=\FontSize{13pt}\bfseries,text=ColorB!95!black,anchor=south west](W)at(C.north west){部分概要};
 \else
 %%坐标%%
@@ -969,9 +1017,19 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=-1.4cm,yshift=0.25cm]C){
 \node[align=left,inner xsep=0mm,minimum height=2.0cm,anchor=west,
 font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebox{\textwidth-5.0cm}{!}{#1}};
 %%介绍%%
-\node[align=left,inner xsep=2.0mm,anchor=north west,font=\itshape,text=ColorA](W)at([yshift=-3.5cm]S.south west){\begin{varwidth}{\textwidth-2.75cm}\ifdefvoid{\@partintro}{}{\FontSize[0.8]{12pt}\@partintro}\end{varwidth}};
+\node[align=left,inner xsep=2.0mm,anchor=north west,font=\itshape,text=ColorA](W)at([yshift=-3.5cm]S.south west){
+\begin{varwidth}{\textwidth-2.75cm}
+\begin{spacing}{1.2}%段落行距设置
+\ifdefvoid{\@partintro}{}{\FontSize{12pt}\@partintro}
+\end{spacing}
+\end{varwidth}};
 %%小目录%%
-\node[anchor=south east](C)at([xshift=-\@innerlen-0.25in,yshift=\@botlen]current page.south east){\begin{varwidth}{\textwidth}\printcontents[part]{l}{0}{\setcounter{tocdepth}{0}}\end{varwidth}};
+\node[anchor=south east](C)at([xshift=-\@innerlen-0.25in,yshift=\@botlen]current page.south east){
+\begin{varwidth}{\textwidth}
+\begin{spacing}{1.5}%段落行距设置
+\printcontents[part]{l}{0}{\setcounter{tocdepth}{0}}
+\end{spacing}
+\end{varwidth}};
 \node[font=\FontSize{13pt}\bfseries,text=ColorB!95!black,anchor=south west](W)at(C.north west){部分概要};
 \fi
 \end{tikzpicture}}}
@@ -1031,7 +1089,10 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 %%标题%%
 \node[anchor=east,font=\bfseries\FontSize{27.5pt},text=ColorA](P)at([xshift=-\@outerlen-0.25in+0.25cm,yshift=-3.95cm]B){\maxsizebox{\textwidth-0.5in}{!}{#2}};
 %%底部文字%%
-\node[anchor=west,font=\itshape,text=ColorA,text width=\paperwidth-\@innerlen-5.0cm](S)at([xshift=\@innerlen,yshift=1.0cm]D){\ifdefvoid{\@chaptersaying}{}{\FontSize[0.8]{12pt}\@chaptersaying}};
+\node[anchor=west,font=\itshape,text=ColorA,text width=\paperwidth-\@innerlen-5.0cm](S)at([xshift=\@innerlen,yshift=0.85cm]D){
+\begin{spacing}{1.2}%段落行距设置
+\ifdefvoid{\@chaptersaying}{}{\FontSize{12pt}\@chaptersaying}
+\end{spacing}};
 %%章节图片%%
 \node[anchor=north west,inner sep=0mm](I)at(A){\ifdefvoid{\@chapterimage}{}{\includegraphics[height=5.022cm]{\@chapterimage}}};
 %%页码%%
@@ -1061,7 +1122,10 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 %%标题%%
 \node[anchor=west,font=\bfseries\FontSize{27.5pt},text=ColorA](P)at([xshift=\@outerlen+0.25in-0.25cm,yshift=-3.95cm]B){\maxsizebox{\textwidth-0.5in}{!}{#2}};
 %%底部文字%%
-\node[anchor=west,font=\itshape,text=ColorA,text width=\paperwidth-\@innerlen-4.0cm](S)at([xshift=4.0cm,yshift=1.0cm]C){\ifdefvoid{\@chaptersaying}{}{\FontSize[0.8]{12pt}\@chaptersaying}};
+\node[anchor=west,font=\itshape,text=ColorA,text width=\paperwidth-\@innerlen-4.0cm](S)at([xshift=4.0cm,yshift=0.85cm]C){
+\begin{spacing}{1.2}%段落行距设置
+\ifdefvoid{\@chaptersaying}{}{\FontSize{12pt}\@chaptersaying}
+\end{spacing}};
 %%章节图片%%
 \node[anchor=north east,inner sep=0mm](I)at(A){\ifdefvoid{\@chapterimage}{}{\includegraphics[height=5.022cm]{\@chapterimage}}};
 %%页码%%
@@ -1331,7 +1395,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 {\@tocentrypartunnumbered}{}
 %%章目录样式%%
 \titlecontents{chapter}[2.55cm]
-{\addvspace{5pt}\FontSize{13pt}\bfseries\color{ColorB}\hypersetup{linkcolor=ColorB}}
+{\addvspace{0pt}\FontSize{13pt}\bfseries\color{ColorB}\hypersetup{linkcolor=ColorB}}
 {\color{ColorB}\contentslabel[\if@appendix%如果章在相应环境里，则修改目录前缀
 附录~\thecontentslabel~
 \else
@@ -1344,7 +1408,7 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 {\titlerule*[6pt]{ }\color{ColorB}\FontSize{13pt}\thecontentspage}
 %%节目录样式%%
 \titlecontents{section}[2.55cm]
-{\addvspace{-0.5pt}\FontSize{12pt}\xbsong}
+{\addvspace{-5.0pt}\FontSize{12pt}\xbsong}
 {\contentslabel[\if@topic%如果节在相应环境里，则修改目录前缀
 专题~\thecontentslabel~
 \else
@@ -1360,25 +1424,25 @@ font=\bfseries\FontSize{40pt},text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebo
 {\titlerule*[6pt]{ }\FontSize{12pt}\xbsong\thecontentspage}
 %%图片目录样式%%
 \titlecontents{figure}[2.5cm]
-{\addvspace{-0.5pt}\FontSize{12pt}\xbsong}
+{\addvspace{-5.0pt}\FontSize{12pt}\xbsong}
 {\contentslabel[图~\thecontentslabel~]{1.9cm}}
 {\hspace*{-1.9cm}}%不编号图表
 {\titlerule*[6pt]{ }\FontSize{12pt}\xbsong\thecontentspage}
 %%表格目录样式%%
 \titlecontents{table}[2.5cm]
-{\addvspace{-0.5pt}\FontSize{12pt}\xbsong}
+{\addvspace{-5.0pt}\FontSize{12pt}\xbsong}
 {\contentslabel[表~\thecontentslabel~]{1.9cm}}
 {\hspace*{-1.9cm}}%不编号图表
 {\titlerule*[6pt]{ }\FontSize{12pt}\xbsong\thecontentspage}
 %%部分页上的小目录章样式%%
 \titlecontents{lchapter}[0.75cm]
-{\addvspace{5pt}\FontSize{12.5pt}\bfseries\hypersetup{linkcolor=ColorB}}
+{\addvspace{0pt}\FontSize{12.5pt}\bfseries\hypersetup{linkcolor=ColorB}}
 {\color{ColorB}\contentslabel[\raisebox{-0.25mm}{\FontSize{15.5pt}\bfseries\faGenderless}]{0.6cm}}
 {\color{ColorB}\contentslabel[\raisebox{-0.25mm}{\FontSize{15.5pt}\bfseries\faGenderless}]{0.6cm}}%不编号章节
 {}
 %%部分页上的小目录节样式%%
 \titlecontents{lsection}[0.9cm]
-{\addvspace{-0.5pt}\FontSize{11pt}\xbsong}
+{\addvspace{-5.0pt}\FontSize{11pt}\xbsong}
 {\contentslabel[\faGenderless]{0.5cm}}
 {\contentslabel[\faGenderless]{0.5cm}}%不编号章节
 {}
