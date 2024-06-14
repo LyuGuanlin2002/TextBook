@@ -1,5 +1,6 @@
-\documentclass[color=red]{textbook-cn}%openany
+\documentclass[color=purple]{textbook-cn}%openany
 \input{./styles/Cover.tex}
+\input{./styles/Logo.tex}
 \usepackage{zhlipsum,lipsum}%乱数假文（测试文字）splitbib
 \graphicspath{{./figure/}{./figures/}{./image/}{./images/}{./graphics/}{./graphic/}{./pictures/}{./picture/}}%提供多种图片路径
 
@@ -31,8 +32,8 @@
 \author{RQCEN}
 \pressname{BILIBILI教育出版社}
 \presslogo{gj.pdf}
-\coverimage{coverimage.pdf}
-\backimage{coverimage.pdf}
+\coverimage{purple.jpg}
+\backimage{purple.jpg}
 
 \newcommand{\indexnoun}[1]{\index[noun]{#1}}
 \newcommand{\indexvideo}[1]{\index[video]{#1}}
@@ -40,7 +41,17 @@
 \newcommand{\zhindexnoun}[2]{\zhindex[noun]{#1}{#2}}
 \newcommand{\zhindexvideo}[2]{\zhindex[video]{#1}{#2}}
 
-\newcommand{\inputlogo}[1]{\raisebox{-0.5em}{\includegraphics[width=1.5cm]{#1}}~~}
+
+\newcommand{\inputplus}{\raisebox{-0.5em}{\Logo[0.07]{physics}{PLUS}{\faPlus}}~~~}
+\newcommand{\inputlook}{\raisebox{-0.5em}{\Logo[0.07]{physics}{LOOK}{\faPlay}}~~~}
+\newcommand{\inputlisten}{\raisebox{-0.5em}{\Logo[0.07]{physics}{LISTEN}{\faVolumeDown}}~~~}
+\newcommand{\inputread}{\raisebox{-0.5em}{\Logo[0.07]{physics}{READ}{\faStickyNote}}~~~}
+
+
+
+
+
+
 
 %%盒子代码与实际效果对比%%
 \newtcblisting{TCBCODE}{enhanced standard,breakable,
@@ -231,7 +242,13 @@ before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
 \subsection{时刻与时间间隔}
 
 
+\inputplus\lipsum[2]
 
+\inputlook\lipsum[2]
+
+\inputlisten\lipsum[2]
+
+\inputread\lipsum[2]
 
 
 
@@ -291,11 +308,8 @@ before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
 \lipsum[1][1-4]
 \end{Axiom}
 
-\begin{Axiom*}[公理名称公理名称公理名称公理名称公理名称]
-\lipsum[1][1-4]
-\end{Axiom*}
 
-Just like Definition~\ref{Def.3.1.1} on page \pageref{Def.3.1.1}
+
 
 \DeepThink*{\lipsum[1][1]}
 \RelaInfo*{\lipsum[1][1]}
@@ -303,6 +317,14 @@ Just like Definition~\ref{Def.3.1.1} on page \pageref{Def.3.1.1}
 \lipsum[2]
 
 
+
+\begin{Axiom*}[公理名称公理名称公理名称公理名称公理名称]
+	\lipsum[1][1-4]
+\end{Axiom*}
+
+
+
+Just like Definition~\ref{Def.3.1.1} on page \pageref{Def.3.1.1}
 
 \begin{Corollary}
 \lipsum[2][1-7]
@@ -368,7 +390,8 @@ Just like Definition~\ref{Def.3.1.1} on page \pageref{Def.3.1.1}
 \subsection{测试小节}
 
 
-\Example{\inputlogo{PLUS.pdf}\lipsum[1][1-5]
+\Example{\inputplus
+\lipsum[1][1-5]
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\linewidth/2]{example-image-a}
@@ -410,7 +433,7 @@ Just like \ref{Def.3.1.1} on page \pageref{Def.3.1.1}
 \subsubsection{标题名称}
 \lipsum[1]
 
-\Example{\inputlogo{LOOK.pdf}\lipsum[1][1-5]}
+\Example{\inputlook\lipsum[1][1-5]}
 \Answer{\lipsum[1][1-5]}
 
 
@@ -423,11 +446,11 @@ Just like \ref{Def.3.1.1} on page \pageref{Def.3.1.1}
 \marginpic{qrcode.pdf}{图片名}
 
 
-\Example{\inputlogo{LISTEN.pdf}\zhlipsum[1]}
+\Example{\inputlisten\zhlipsum[1]}
 \Answer{\lipsum[1][1-5]}
 \Answer*{\lipsum[1][1-5]}
 
-\Variety{\inputlogo{READ.pdf}\lipsum[1][1-5]}
+\Variety{\inputread\lipsum[1][1-5]}
 \Answer{\lipsum[1][1-5]}
 
 

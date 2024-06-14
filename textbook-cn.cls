@@ -202,13 +202,14 @@ marginparsep=\@marginparseplen,marginparwidth=\@marginparwidthlen,reversemarginp
 
 %%%%%%%%%%%%%%%%%%%% 图表插入宏包 %%%%%%%%%%%%%%%%%%%%
 \RequirePackage{graphicx}%插入图片路径
-\RequirePackage[font={large,bf,color=ColorA},labelsep=colon]{caption}%图表标签
-\RequirePackage[font={large,bf,color=ColorA},labelsep=colon,labelformat=simple]{subcaption}%图表标签
+\RequirePackage[labelsep=colon]{caption}%图表标签
+\RequirePackage[labelsep=colon,labelformat=simple]{subcaption}%图表标签
 %%设置图片和表格格式%%
 \captionsetup[figure]{name={图}}
 \captionsetup[table]{name={表}}
 \renewcommand{\subfigurename}{图}
 \renewcommand{\subtablename}{表}
+\renewcommand{\captionfont}{\color{ColorA}\FontSize{12pt}\bfseries\titlefont}
 
 %%定义非浮动体标签%%
 \newcommand{\figcaption}{\setcaptiontype{figure}\caption} 
@@ -1452,12 +1453,40 @@ font=\FontSize{40pt}\bfseries\titlefont,text=ColorA](P)at([xshift=0.5cm]R.east){
 \newcommand{\@basenode}[1]{
 \tikz[baseline=($0.7*(current bounding box.west)+0.3*(current bounding box.south west)$)]{\node[inner xsep=-0.95mm](E){#1};}}
 %%设置例题命令%%
+\newlength{\EgHeight}
+\newlength{\EgWidth}
+\newlength{\EgSep}
+\setlength{\EgSep}{1.5mm}
+\newlength{\EgVskip}
+\setlength{\EgVskip}{0.6cm}
+\newlength{\NumWidth}
 \newcommand{\@egextitle}[3]{
-\tikz{\node[font=\FontSize{12pt}\bfseries\titlefont,text=white,draw=#2,fill=#2,rounded corners=0.8em,inner xsep=3.5mm,ultra thick,minimum height=1.6em](T){#1\hspace*{0.55cm}};
-\node[anchor=west,font=\FontSize{12.5pt}\bfseries\titlefont,text=#2,draw=#2,fill=white,rounded corners=0.8em,inner xsep=2.5mm,ultra thick,minimum height=1.6em](N)at([xshift=-1.7em]T.east){#3};}}
+\begin{tikzpicture}
+%%为了使长度定义命令在tikz中生效而插入\pgfinterruptpicture\endpgfinterruptpicture%%
+\settoheight{\EgHeight}{\pgfinterruptpicture\FontSize{12pt}{\textbf{\titlefont{#1}}}\endpgfinterruptpicture}
+\settowidth{\EgWidth}{\pgfinterruptpicture\FontSize{12pt}{\textbf{\titlefont{#1}}}\endpgfinterruptpicture}
+\settowidth{\NumWidth}{\pgfinterruptpicture\FontSize{12.5pt}{\textbf{\titlefont{#3}}}\endpgfinterruptpicture}
+\draw[#2,fill=#2,ultra thick]
+(0,0) arc(90:270:{\EgHeight/2+\EgSep})--(\EgWidth+\EgVskip,-\EgHeight-2\EgSep) arc(-90:90:{\EgHeight/2+\EgSep})--cycle;
+\node[font=\FontSize{12pt}\bfseries\titlefont,text=white,anchor=west,inner sep=0mm](L)at(0,-\EgHeight/2-\EgSep){#1};
+\draw[#2,fill=white,ultra thick]
+(\EgWidth+\EgHeight+\EgSep,0) arc(90:270:{\EgHeight/2+\EgSep})--(\EgWidth+\NumWidth+\EgHeight+\EgSep,-\EgHeight-2\EgSep) arc(-90:90:{\EgHeight/2+\EgSep})--cycle;
+\node[font=\FontSize{12.5pt}\bfseries\titlefont,text=#2,anchor=west,inner sep=0mm](N)at([xshift=\EgHeight+\EgSep]L.east){#3};
+\end{tikzpicture}}
 %%设置解答命令%%
+\newlength{\SvHeight}
+\newlength{\SvWidth}
+\newlength{\SvSep}
+\setlength{\SvSep}{1.5mm}
 \newcommand{\@ansanatitle}[2]{
-\tikz{\node[font=\FontSize{12pt}\bfseries\titlefont,text=white,draw=#2,fill=#2,rounded corners=0.8em,inner xsep=3.5mm,ultra thick,minimum height=1.6em](T){#1};}}
+\begin{tikzpicture}
+%%为了使长度定义命令在tikz中生效而插入\pgfinterruptpicture\endpgfinterruptpicture%%
+\settoheight{\SvHeight}{\pgfinterruptpicture\FontSize{12pt}{\textbf{\titlefont{#1}}}\endpgfinterruptpicture}
+\settowidth{\SvWidth}{\pgfinterruptpicture\FontSize{12pt}{\textbf{\titlefont{#1}}}\endpgfinterruptpicture}
+\draw[#2,fill=#2,ultra thick]
+(0,0) arc(90:270:{\SvHeight/2+\SvSep})--(\SvWidth,-\SvHeight-2\SvSep) arc(-90:90:{\SvHeight/2+\SvSep})--cycle;
+\node[font=\FontSize{12pt}\bfseries\titlefont,text=white,anchor=west,inner sep=0mm](L)at(0,-\SvHeight/2-\SvSep){#1};
+\end{tikzpicture}}
 %%解答%%
 \NewExpandableDocumentCommand{\Answer}{sm}{
 \begin{FlushLeft}

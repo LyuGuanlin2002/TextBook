@@ -1,0 +1,16 @@
+\makeatletter
+
+
+\NewDocumentCommand{\Logo}{O{0.5}mmm}{
+\def\globalscale{#1}
+\begin{tikzpicture}[y=1.0pt,x=1.0pt,yscale=-\globalscale,xscale=\globalscale,every node/.append style={scale=\globalscale},inner sep=0pt,outer sep=0pt]
+\path[draw,draw opacity=0,left color=ColorB,right color=ColorA,even odd rule,line width=0pt,miter limit=8.0] (291.5,56.6) .. controls (372.9,58.3) and (460.0,93.2) .. (530.6,159.7) .. controls (572.1,198.8) and (603.1,244.2) .. (622.9,291.6) -- (623.6,293.4) -- (616.4,280.9).. controls (600.2,254.0) and (579.9,228.7) .. (555.6,205.8) .. controls (426.2,83.9) and (232.6,79.3) .. (123.1,195.5) .. controls (78.7,242.7) and (55.0,302.6) .. (51.1,365.2) -- (50.7,377.5) -- (47.8,365.6) .. controls (28.4,279.0) and (46.0,192.0) .. (103.8,130.6) .. controls (152.0,79.5) and (219.5,55.1) .. (291.5,56.6) -- cycle;
+\draw[white,line width={\globalscale*10.0pt},fill=ColorH](600,270)circle(50);
+\node[font=\bfseries\sffamily\FontSize{90},text=white,inner sep=0mm](P)at(600,270){\maxsizebox{1.5cm}{!}{#4}};
+\node[font=\bfseries\sffamily\FontSize{90},text=ColorH,anchor=north,inner xsep=0mm,minimum height=2.0cm](T)at(315,190){\maxsizebox{12.0cm}{!}{\MakeUppercase{#2}}};
+\node[font=\bfseries\sffamily\FontSize{150},text=ColorA,anchor=north,inner xsep=0mm,minimum height=4.0cm](S)at([yshift=30]T.south){\maxsizebox{16.0cm}{!}{\MakeUppercase{#3}}};
+\draw[ColorB,line width={\globalscale*10.0pt},line cap=round]([xshift=-20,yshift=20]S.south west)--([xshift=20,yshift=20]S.south east);
+\end{tikzpicture}}
+
+\makeatother
+
