@@ -721,6 +721,8 @@ font=\FontSize{12pt}\bfseries,text=white]{\maxsizebox{4.5mm}{!}{#1}};}}
 \setlength{\MarkY}{-\DeltaH}%设置侧标上下两侧锚点坐标的初值
 \makeatother}}
 %%绘制页面框架%%
+\newlength{\FrameWidth}
+\setlength{\FrameWidth}{1.0cm}
 \makeatletter
 \renewcommand{\headrulewidth}{0pt}
 \renewcommand{\chaptermark}[1]{\markboth{第~\thechapter~章\quad#1}{第~\thechapter~章\quad#1}}
@@ -736,43 +738,43 @@ font=\FontSize{12pt}\bfseries,text=white]{\maxsizebox{4.5mm}{!}{#1}};}}
 \coordinate(B)at(current page.north east);
 \coordinate(C)at(current page.south east);
 \coordinate(D)at(current page.south west);
-\coordinate(E)at([yshift=1.0cm]current page.south west);
-\coordinate(F)at([xshift=-1.0cm,yshift=1.0cm]current page.south east);
-\coordinate(G)at([xshift=-1.0cm,yshift=-1.0cm]current page.north east);
-\coordinate(H)at([yshift=-1.0cm]current page.north west);
+\coordinate(E)at([yshift=\FrameWidth]current page.south west);
+\coordinate(F)at([xshift=-\FrameWidth,yshift=\FrameWidth]current page.south east);
+\coordinate(G)at([xshift=-\FrameWidth,yshift=-\FrameWidth]current page.north east);
+\coordinate(H)at([yshift=-\FrameWidth]current page.north west);
 %%绘制页面框架%%
 \draw[fill=ColorB!7.5,ColorB!7.5,sharp corners]
 (A)--(B)--(C)--(D)--(E)[rounded corners=5.0mm]--(F)[rounded corners=5.0mm]--(G)[sharp corners]--(H)--cycle;
 %%绘制页码%%
 \draw[ColorA,fill=ColorA,line width=1.0pt]
 ([xshift=-\@outerlen+0.25cm]B)[rounded corners=1.5mm]--
-([xshift=-\@outerlen+0.25cm,yshift=-1.65cm]B)[rounded corners=1.5mm]--
-([xshift=-0.85cm,yshift=-1.65cm]B)[sharp corners]--
-([xshift=-0.85cm]B)--cycle;
+([xshift=-\@outerlen+0.25cm,yshift=-\@toplen+\@handseplen-0.025cm]B)[rounded corners=1.5mm]--
+([xshift=-\FrameWidth+0.15cm,yshift=-\@toplen+\@handseplen-0.025cm]B)[sharp corners]--
+([xshift=-\FrameWidth+0.15cm]B)--cycle;
 \node[font=\numberfont\FontSize{16pt},text=white,anchor=south,align=center](P)at([xshift=-\@outerlen/2-0.3cm,yshift=-1.55cm]B){\maxsizebox{0.8cm}{!}{\thepage}};
 %%绘制侧标%%
-\draw[draw=ColorA,fill=ColorA,sharp corners,line width=1.0pt]node[append after command={(T.north west)--(T.north east)--(T.south east)[rounded corners=1.75mm]--(T.south west)[rounded corners=1.75mm]--cycle},font=\FontSize{14pt}\bfseries\titlefont,text=white,text width=8.0mm,align=center,inner xsep=1.5mm,inner ysep=3.5mm,anchor=east](T)at([yshift=\MarkY]B){\rotatebox[origin=c]{90}{\maxsizebox{\SepH+\DeltaH-2.5cm}{!}{\lastxmark}}};
+\draw[draw=ColorA,fill=ColorA,sharp corners,line width=1.0pt]node[append after command={(T.north west)--(T.north east)--(T.south east)[rounded corners=1.75mm]--(T.south west)[rounded corners=1.75mm]--cycle},font=\FontSize{14pt}\bfseries\titlefont,text=white,text width=\FrameWidth-2.0mm,align=center,inner xsep=1.5mm,inner ysep=3.5mm,anchor=east](T)at([yshift=\MarkY]B){\rotatebox[origin=c]{90}{\maxsizebox{\SepH+\DeltaH-2.5cm}{!}{\lastxmark}}};
 \else
 \coordinate(A)at(current page.north east);
 \coordinate(B)at(current page.north west);
 \coordinate(C)at(current page.south west);
 \coordinate(D)at(current page.south east);
-\coordinate(E)at([yshift=1.0cm]current page.south east);
-\coordinate(F)at([xshift=1.0cm,yshift=1.0cm]current page.south west);
-\coordinate(G)at([xshift=1.0cm,yshift=-1.0cm]current page.north west);
-\coordinate(H)at([yshift=-1.0cm]current page.north east);
+\coordinate(E)at([yshift=\FrameWidth]current page.south east);
+\coordinate(F)at([xshift=\FrameWidth,yshift=\FrameWidth]current page.south west);
+\coordinate(G)at([xshift=\FrameWidth,yshift=-\FrameWidth]current page.north west);
+\coordinate(H)at([yshift=-\FrameWidth]current page.north east);
 %%绘制页面框架%%
 \draw[fill=ColorB!7.5,ColorB!7.5,sharp corners]
 (A)--(B)--(C)--(D)--(E)[rounded corners=5.0mm]--(F)[rounded corners=5.0mm]--(G)[sharp corners]--(H)--cycle;
 %%绘制页码%%
 \draw[ColorA,fill=ColorA,line width=1.0pt]
 ([xshift=\@outerlen-0.25cm]B)[rounded corners=1.5mm]--
-([xshift=\@outerlen-0.25cm,yshift=-1.65cm]B)[rounded corners=1.5mm]--
-([xshift=0.85cm,yshift=-1.65cm]B)[sharp corners]--
-([xshift=0.85cm]B)--cycle;
+([xshift=\@outerlen-0.25cm,yshift=-\@toplen+\@handseplen-0.025cm]B)[rounded corners=1.5mm]--
+([xshift=\FrameWidth-0.15cm,yshift=-\@toplen+\@handseplen-0.025cm]B)[sharp corners]--
+([xshift=\FrameWidth-0.15cm]B)--cycle;
 \node[font=\numberfont\FontSize{16},text=white,anchor=south,align=center](P)at([xshift=\@outerlen/2+0.3cm,yshift=-1.55cm]B){\maxsizebox{0.8cm}{!}{\thepage}};
 %%绘制侧标%%
-\draw[draw=ColorA,fill=ColorA,sharp corners,line width=1.0pt]node[append after command={(T.north west)[rounded corners=1.75mm]--(T.north east)[rounded corners=1.75mm]--(T.south east)[sharp corners]--(T.south west)--cycle},font=\FontSize{14pt}\bfseries\titlefont,text=white,text width=8.0mm,align=center,inner xsep=1.5mm,inner ysep=3.5mm,anchor=west](T)at([yshift=\MarkY]B){\rotatebox[origin=c]{270}{\maxsizebox{\SepH+\DeltaH-2.5cm}{!}{\firstxmark}}};
+\draw[draw=ColorA,fill=ColorA,sharp corners,line width=1.0pt]node[append after command={(T.north west)[rounded corners=1.75mm]--(T.north east)[rounded corners=1.75mm]--(T.south east)[sharp corners]--(T.south west)--cycle},font=\FontSize{14pt}\bfseries\titlefont,text=white,text width=\FrameWidth-2.0mm,align=center,inner xsep=1.5mm,inner ysep=3.5mm,anchor=west](T)at([yshift=\MarkY]B){\rotatebox[origin=c]{270}{\maxsizebox{\SepH+\DeltaH-2.5cm}{!}{\firstxmark}}};
 \fi
 \end{tikzpicture}}}
 
@@ -837,83 +839,169 @@ inner xsep=1.5mm,inner ysep=3.5mm,anchor=west](T)at([yshift=\MarkY]B){\rotatebox
 %%部分页样式%%
 %%编号部分页样式%%
 \makeatletter
+\newlength{\StripeWidth}
+\newlength{\BlockWidth}
+\newlength{\NBlockHeight}
+\newlength{\MBlockLength}
+\newlength{\MDarkBlockLen}
+\setlength{\StripeWidth}{0.35cm}
+\setlength{\BlockWidth}{1.75cm}
+\setlength{\NBlockHeight}{\paperheight/2-6.1cm}
+\setlength{\MBlockLength}{4.0cm}
+\setlength{\MDarkBlockLen}{5.6cm}
+%%奇数页布局%%
+\newcommand{\OddPartPageBlock}{
+%%右上角色块坐标%%
+\coordinate(A)at(current page.north east);
+\coordinate(B)at([xshift=-\BlockWidth]current page.north east);
+\coordinate(C)at([xshift=-\BlockWidth,yshift=-\NBlockHeight]current page.north east);
+\coordinate(D)at([yshift=-\NBlockHeight]current page.north east);
+%%右上角色块%%
+\draw[ColorA,fill=ColorA](A)--(B)[rounded corners=2.5mm]--(C)[sharp corners]--(D)--cycle;
+%%右侧色块坐标%%
+\coordinate(Q)at([yshift=-\StripeWidth]D);
+\coordinate(R)at([xshift=-\MBlockLength]Q);
+\coordinate(T)at([yshift=-\BlockWidth]Q);
+\coordinate(S)at([xshift=-\MBlockLength]T);
+%%右侧色块%%
+\draw[ColorB!20,fill=ColorB!20](Q)[rounded corners=2.5mm]--(R)--(S)[sharp corners]--(T)--cycle;
+%%右下角色块坐标%%
+\coordinate(E)at([yshift=-\StripeWidth]T);
+\coordinate(F)at([xshift=-\BlockWidth]E);
+\coordinate(H)at(current page.south east);
+\coordinate(G)at([xshift=-\BlockWidth]H);
+%%右下角色块%%
+\draw[ColorA,fill=ColorA](E)[rounded corners=2.5mm]--(F)[sharp corners]--(G)--(H)--cycle;
+%%左上角色块坐标%%
+\coordinate(I)at([xshift=-\StripeWidth]B);
+\coordinate(J)at(current page.north west);
+\coordinate(K)at([yshift=-\NBlockHeight]J);
+\coordinate(L)at([xshift=-\StripeWidth]C);
+%%左上角色块%%
+\draw[ColorB!7.5,fill=ColorB!7.5](I)--(J)--(K)[rounded corners=2.5mm]--(L)[sharp corners]--cycle;
+%%左下角色块坐标%%
+\coordinate(M)at([xshift=-\StripeWidth]F);
+\coordinate(N)at([xshift=-\paperwidth]E);
+\coordinate(O)at(current page.south west);
+\coordinate(P)at([xshift=-\StripeWidth]G);
+%%左下角色块%%
+\draw[ColorB!7.5,fill=ColorB!7.5](M)[sharp corners]--(N)--(O)--(P)[rounded corners=2.5mm]--cycle;
+%%页面中部色块坐标%%
+\coordinate(U)at([xshift=-\StripeWidth]R);
+\coordinate(V)at([xshift=-\MDarkBlockLen]U);
+\coordinate(X)at([xshift=-\StripeWidth]S);
+\coordinate(W)at([xshift=-\MDarkBlockLen]X);
+%%页面中部色块%%
+\draw[ColorB!50,fill=ColorB!50,rounded corners=2.5mm](U)rectangle(W);
+%%左侧色块坐标%%
+\coordinate(Y)at([xshift=-\StripeWidth]V);
+\coordinate(Z)at([yshift=-\StripeWidth]K);
+\coordinate(YY)at([yshift=\StripeWidth]N);
+\coordinate(ZZ)at([xshift=-\StripeWidth]W);
+%%左侧色块%%
+\draw[ColorB!20,fill=ColorB!20](Y)[sharp corners]--(Z)--(YY)[rounded corners=2.5mm]--(ZZ)--cycle;}
+%%偶数页布局%%
+\newcommand{\EvenPartPageBlock}{
+%%右上角色块坐标%%
+\coordinate(A)at(current page.north west);
+\coordinate(B)at([xshift=\BlockWidth]current page.north west);
+\coordinate(C)at([xshift=\BlockWidth,yshift=-\NBlockHeight]current page.north west);
+\coordinate(D)at([yshift=-\NBlockHeight]current page.north west);
+%%右上角色块%%
+\draw[ColorA,fill=ColorA](A)--(B)[rounded corners=2.5mm]--(C)[sharp corners]--(D)--cycle;
+%%右侧色块坐标%%
+\coordinate(Q)at([yshift=-\StripeWidth]D);
+\coordinate(R)at([xshift=\MBlockLength]Q);
+\coordinate(T)at([yshift=-\BlockWidth]Q);
+\coordinate(S)at([xshift=\MBlockLength]T);
+%%右侧色块%%
+\draw[ColorB!20,fill=ColorB!20](Q)[rounded corners=2.5mm]--(R)--(S)[sharp corners]--(T)--cycle;
+%%右下角色块坐标%%
+\coordinate(E)at([yshift=-\StripeWidth]T);
+\coordinate(F)at([xshift=\BlockWidth]E);
+\coordinate(H)at(current page.south west);
+\coordinate(G)at([xshift=\BlockWidth]H);
+%%右下角色块%%
+\draw[ColorA,fill=ColorA](E)[rounded corners=2.5mm]--(F)[sharp corners]--(G)--(H)--cycle;
+%%左上角色块坐标%%
+\coordinate(I)at([xshift=\StripeWidth]B);
+\coordinate(J)at(current page.north east);
+\coordinate(K)at([yshift=-\NBlockHeight]J);
+\coordinate(L)at([xshift=\StripeWidth]C);
+%%左上角色块%%
+\draw[ColorB!7.5,fill=ColorB!7.5](I)--(J)--(K)[rounded corners=2.5mm]--(L)[sharp corners]--cycle;
+%%左下角色块坐标%%
+\coordinate(M)at([xshift=\StripeWidth]F);
+\coordinate(N)at([xshift=\paperwidth]E);
+\coordinate(O)at(current page.south east);
+\coordinate(P)at([xshift=\StripeWidth]G);
+%%左下角色块%%
+\draw[ColorB!7.5,fill=ColorB!7.5](M)[sharp corners]--(N)--(O)--(P)[rounded corners=2.5mm]--cycle;
+%%页面中部色块坐标%%
+\coordinate(U)at([xshift=\StripeWidth]R);
+\coordinate(V)at([xshift=\MDarkBlockLen]U);
+\coordinate(X)at([xshift=\StripeWidth]S);
+\coordinate(W)at([xshift=\MDarkBlockLen]X);
+%%页面中部色块%%
+\draw[ColorB!50,fill=ColorB!50,rounded corners=2.5mm](U)rectangle(W);
+%%左侧色块坐标%%
+\coordinate(Y)at([xshift=\StripeWidth]V);
+\coordinate(Z)at([yshift=-\StripeWidth]K);
+\coordinate(YY)at([yshift=\StripeWidth]N);
+\coordinate(ZZ)at([xshift=\StripeWidth]W);
+%%左侧色块%%
+\draw[ColorB!20,fill=ColorB!20](Y)[sharp corners]--(Z)--(YY)[rounded corners=2.5mm]--(ZZ)--cycle;}
+%%部分介绍%%
 \newcommand*{\partintro}[1]{\def\@partintro{\hspace*{2.0em}#1}}
 \newcommand{\@partstyle}[2]{
 \makebox[0pt][l]{
 \begin{tikzpicture}[remember picture,overlay]
-\draw[ColorB!7.5,fill=ColorB!7.5](current page.north west)rectangle(current page.south east);
+%%白色背景%%
+\draw[white,fill=white](current page.south west)rectangle(current page.north east);
 \ifodd\value{page}%判断奇偶页
-%%坐标%%
-\coordinate(A)at(current page.north east);
-\coordinate(B)at([xshift=-2.1cm]current page.north east);
-\coordinate(C)at([xshift=-2.1cm,yshift=6.1cm]current page.east);
-\coordinate(D)at([yshift=6.1cm]current page.west);
-\coordinate(E)at([yshift=4.0cm]current page.west);
-\coordinate(F)at([xshift=-2.1cm,yshift=4.0cm]current page.east);
-\coordinate(G)at([xshift=-2.1cm]current page.south east);
-\coordinate(H)at(current page.south east);
-%%背景%%
-\draw[white,fill=white](A)--(B)[rounded corners=2.5mm]--(C)[sharp corners]--(D)--(E)[rounded corners=2.5mm]--(F)[sharp corners]--(G)--(H)--cycle;
-\draw[ColorA,fill=ColorA](A)--([xshift=0.35cm]B)[rounded corners=2.5mm]--([xshift=0.35cm]C)[sharp corners]--([xshift=2.1cm]C)--cycle;
-\draw[ColorA,fill=ColorA](H)--([xshift=0.35cm]G)[rounded corners=2.5mm]--([xshift=0.35cm]F)[sharp corners]--([xshift=2.1cm]F)--cycle;
-\draw[ColorB!20,fill=ColorB!20]([yshift=-0.35cm]D)--([yshift=0.35cm]E)[rounded corners=2.5mm]--([xshift=\paperwidth/2+1.45cm,yshift=0.35cm]E)--([xshift=\paperwidth/2+1.45cm,yshift=-0.35cm]D)[sharp corners]--cycle;
-\draw[ColorB!20,fill=ColorB!20]([xshift=2.1cm,yshift=-0.35cm]C)--([xshift=2.1cm,yshift=0.35cm]F)[rounded corners=2.5mm]--([xshift=-1.0cm,yshift=0.35cm]F)--([xshift=-1.0cm,yshift=-0.35cm]C)[sharp corners]--cycle;
-\draw[ColorB!50,fill=ColorB!50,rounded corners=2.5mm]([xshift=\paperwidth/2+1.8cm,yshift=0.35cm]E)rectangle([xshift=-1.35cm,yshift=-0.35cm]C);
-%%编号%%
-\node[align=left,anchor=south east,font=\FontSize{37.5pt}\bfseries\titlefont,text=ColorA,minimum height=2.0cm](T)at([xshift=-1.4cm,yshift=0.25cm]C){\maxsizebox{\textwidth-2.45cm}{!}{#1}};
-%%标题%%
-\node[align=left,anchor=north east,font=\FontSize{37.5pt}\bfseries\titlefont,text=ColorA,minimum height=2.0cm](P)at([yshift=-2.6cm]T.south east){\maxsizebox{\textwidth-2.45cm}{!}{#2}};
-%%介绍%%
-\node[align=right,inner xsep=3.0mm,anchor=north east,font=\itshape\kaishu,text=ColorA](W)at([yshift=-0.75cm]P.south east){
-\begin{varwidth}{\textwidth-2.75cm}
+\OddPartPageBlock
+%%部分编号%%
+\node[align=left,anchor=south east,font=\FontSize{37.5pt}\bfseries\titlefont,text=ColorA,minimum height=2.0cm,inner xsep=0mm](NL)at([yshift=\StripeWidth+0.25cm]U){\maxsizebox{\textwidth-2.45cm}{!}{#1}};
+%%部分名%%
+\node[align=left,anchor=north east,font=\FontSize{37.5pt}\bfseries\titlefont,text=ColorA,minimum height=2.0cm,inner xsep=0mm](PT)at([yshift=-\StripeWidth-0.25cm]X){\maxsizebox{\textwidth-2.45cm}{!}{#2}};
+%%部分简介%%
+\node[align=right,inner xsep=3.0mm,anchor=north east,font=\itshape\kaishu,text=ColorA](IT)at([yshift=-0.5cm]PT.south east){
+\begin{varwidth}{\textwidth-3.0cm}
 \begin{spacing}{1.2}%段落行距设置
 \ifdefvoid{\@partintro}{}{\FontSize{13pt}\@partintro}
 \end{spacing}
 \end{varwidth}};
-%%小目录%%
-\node[anchor=south west](C)at([xshift=\@innerlen+0.25in,yshift=\@botlen]current page.south west){
+%%部分目录%%
+\node[anchor=south west](SC)at([xshift=\@innerlen+0.25in,yshift=\@botlen]current page.south west){
 \begin{varwidth}{\textwidth}
 \begin{spacing}{1.5}
 \printcontents[part]{l}{0}{\setcounter{tocdepth}{0}}
 \end{spacing}
 \end{varwidth}};
-\node[font=\FontSize{13.5pt}\bfseries\titlefont,text=ColorB!95!black,anchor=south west](R)at(C.north west){部分概要};
+%%部分目录标题%%
+\node[font=\FontSize{13.5pt}\bfseries\titlefont,text=ColorB!95!black,anchor=south west](ST)at(SC.north west){部分概要};
 \else
-%%坐标%%
-\coordinate(A)at(current page.north west);
-\coordinate(B)at([xshift=2.1cm]current page.north west);
-\coordinate(C)at([xshift=2.1cm,yshift=6.1cm]current page.west);
-\coordinate(D)at([yshift=6.1cm]current page.east);
-\coordinate(E)at([yshift=4.0cm]current page.east);
-\coordinate(F)at([xshift=2.1cm,yshift=4.0cm]current page.west);
-\coordinate(G)at([xshift=2.1cm]current page.south west);
-\coordinate(H)at(current page.south west);
-%%背景%%
-\draw[white,fill=white](A)--(B)[rounded corners=2.5mm]--(C)[sharp corners]--(D)--(E)[rounded corners=2.5mm]--(F)[sharp corners]--(G)--(H)--cycle;
-\draw[ColorA,fill=ColorA](A)--([xshift=-0.35cm]B)[rounded corners=2.5mm]--([xshift=-0.35cm]C)[sharp corners]--([xshift=-2.1cm]C)--cycle;
-\draw[ColorA,fill=ColorA](H)--([xshift=-0.35cm]G)[rounded corners=2.5mm]--([xshift=-0.35cm]F)[sharp corners]--([xshift=-2.1cm]F)--cycle;
-\draw[ColorB!20,fill=ColorB!20]([yshift=-0.35cm]D)--([yshift=0.35cm]E)[rounded corners=2.5mm]--([xshift=-\paperwidth/2-1.45cm,yshift=0.35cm]E)--([xshift=-\paperwidth/2-1.45cm,yshift=-0.35cm]D)[sharp corners]--cycle;
-\draw[ColorB!20,fill=ColorB!20]([xshift=-2.1cm,yshift=-0.35cm]C)--([xshift=-2.1cm,yshift=0.35cm]F)[rounded corners=2.5mm]--([xshift=1.0cm,yshift=0.35cm]F)--([xshift=1.0cm,yshift=-0.35cm]C)[sharp corners]--cycle;
-\draw[ColorB!50,fill=ColorB!50,rounded corners=2.5mm]([xshift=-\paperwidth/2-1.8cm,yshift=0.35cm]E)rectangle([xshift=1.35cm,yshift=-0.35cm]C);
-%%编号%%
-\node[align=left,anchor=south west,font=\FontSize{37.5pt}\bfseries\titlefont,text=ColorA,minimum height=2.0cm](T)at([xshift=1.4cm,yshift=0.25cm]C){\maxsizebox{\textwidth-2.45cm}{!}{#1}};
-%%标题%%
-\node[align=left,anchor=north west,font=\FontSize{37.5pt}\bfseries\titlefont,text=ColorA,minimum height=2.0cm](P)at([yshift=-2.6cm]T.south west){\maxsizebox{\textwidth-2.45cm}{!}{#2}};
-%%介绍%%
-\node[align=left,inner xsep=3.0mm,anchor=north west,font=\itshape\kaishu,text=ColorA](W)at([yshift=-0.75cm]P.south west){
-\begin{varwidth}{\textwidth-2.75cm}
+\EvenPartPageBlock
+%%部分编号%%
+\node[align=right,anchor=south west,font=\FontSize{37.5pt}\bfseries\titlefont,text=ColorA,minimum height=2.0cm,inner xsep=0mm](NL)at([yshift=\StripeWidth+0.25cm]U){\maxsizebox{\textwidth-2.45cm}{!}{#1}};
+%%部分名%%
+\node[align=right,anchor=north west,font=\FontSize{37.5pt}\bfseries\titlefont,text=ColorA,minimum height=2.0cm,inner xsep=0mm](PT)at([yshift=-\StripeWidth-0.25cm]X){\maxsizebox{\textwidth-2.45cm}{!}{#2}};
+%%部分简介%%
+\node[align=left,inner xsep=3.0mm,anchor=north west,font=\itshape\kaishu,text=ColorA](IT)at([yshift=-0.5cm]PT.south west){
+\begin{varwidth}{\textwidth-3.0cm}
 \begin{spacing}{1.2}%段落行距设置
 \ifdefvoid{\@partintro}{}{\FontSize{13pt}\@partintro}
 \end{spacing}
 \end{varwidth}};
-%%小目录%%
-\node[anchor=south east](C)at([xshift=-\@innerlen-0.25in,yshift=\@botlen]current page.south east){
+%%部分目录%%
+\node[anchor=south east](SC)at([xshift=-\@innerlen-0.25in,yshift=\@botlen]current page.south east){
 \begin{varwidth}{\textwidth}
-\begin{spacing}{1.5}%段落行距设置
+\begin{spacing}{1.5}
 \printcontents[part]{l}{0}{\setcounter{tocdepth}{0}}
 \end{spacing}
 \end{varwidth}};
-\node[font=\FontSize{13.5pt}\bfseries\titlefont,text=ColorB!95!black,anchor=south west](R)at(C.north west){部分概要};
+%%部分目录标题%%
+\node[font=\FontSize{13.5pt}\bfseries\titlefont,text=ColorB!95!black,anchor=south west](ST)at(SC.north west){部分概要};
 \fi
 \end{tikzpicture}}}
 
@@ -925,112 +1013,183 @@ inner xsep=1.5mm,inner ysep=3.5mm,anchor=west](T)at([yshift=\MarkY]B){\rotatebox
 %%设置背景绘制临界长度%%
 \newlength{\criticstarlen}
 \setlength{\criticstarlen}{\textwidth-5.0cm}
+%%奇数页布局%%
+\newcommand{\SOddPartPageBlock}{
+%%右上角色块坐标%%
+\coordinate(A)at(current page.north east);
+\coordinate(B)at([xshift=-\BlockWidth]current page.north east);
+\coordinate(C)at([xshift=-\BlockWidth,yshift=-\NBlockHeight]current page.north east);
+\coordinate(D)at([yshift=-\NBlockHeight]current page.north east);
+%%右上角色块%%
+\draw[ColorA,fill=ColorA](A)--(B)[rounded corners=2.5mm]--(C)[sharp corners]--(D)--cycle;
+%%右侧色块坐标%%
+\coordinate(Q)at([yshift=-\StripeWidth]D);
+\coordinate(R)at([xshift=-\MBlockLength]Q);
+\coordinate(T)at([yshift=-\BlockWidth]Q);
+\coordinate(S)at([xshift=-\MBlockLength]T);
+%%右侧色块%%
+\draw[ColorB!20,fill=ColorB!20](Q)[rounded corners=2.5mm]--(R)--(S)[sharp corners]--(T)--cycle;
+%%右下角色块坐标%%
+\coordinate(E)at([yshift=-\StripeWidth]T);
+\coordinate(F)at([xshift=-\BlockWidth]E);
+\coordinate(H)at(current page.south east);
+\coordinate(G)at([xshift=-\BlockWidth]H);
+%%右下角色块%%
+\draw[ColorA,fill=ColorA](E)[rounded corners=2.5mm]--(F)[sharp corners]--(G)--(H)--cycle;
+%%左上角色块坐标%%
+\coordinate(I)at([xshift=-\StripeWidth]B);
+\coordinate(J)at(current page.north west);
+\coordinate(K)at([yshift=-\NBlockHeight]J);
+\coordinate(L)at([xshift=-\StripeWidth]C);
+%%左上角色块%%
+\draw[ColorB!7.5,fill=ColorB!7.5](I)--(J)--(K)[rounded corners=2.5mm]--(L)[sharp corners]--cycle;
+%%左下角色块坐标%%
+\coordinate(M)at([xshift=-\StripeWidth]F);
+\coordinate(N)at([xshift=-\paperwidth]E);
+\coordinate(O)at(current page.south west);
+\coordinate(P)at([xshift=-\StripeWidth]G);
+%%左下角色块%%
+\draw[ColorB!7.5,fill=ColorB!7.5](M)[sharp corners]--(N)--(O)--(P)[rounded corners=2.5mm]--cycle;
+%%页面中部色块坐标%%
+%判断标题文字长度与临界长度的关系
+\ifdim\partstarlen>\criticstarlen
+%如果标题长度大于临界长度则绘制固定长度矩形
+\coordinate(U)at([xshift=-\StripeWidth]R);
+\coordinate(V)at([xshift=-\criticstarlen-2.8cm]U);
+\coordinate(X)at([xshift=-\StripeWidth]S);
+\coordinate(W)at([xshift=-\criticstarlen-2.8cm]X);
+%如果标题长度小于临界长度则绘制变长度矩形
+\else
+\coordinate(U)at([xshift=-\StripeWidth]R);
+\coordinate(V)at([xshift=-\partstarlen-2.8cm]U);
+\coordinate(X)at([xshift=-\StripeWidth]S);
+\coordinate(W)at([xshift=-\partstarlen-2.8cm]X);
+\fi
+%%页面中部色块%%
+\draw[ColorB!50,fill=ColorB!50,rounded corners=2.5mm](U)rectangle(W);
+%%左侧色块坐标%%
+\coordinate(Y)at([xshift=-\StripeWidth]V);
+\coordinate(Z)at([yshift=-\StripeWidth]K);
+\coordinate(YY)at([yshift=\StripeWidth]N);
+\coordinate(ZZ)at([xshift=-\StripeWidth]W);
+%%左侧色块%%
+\draw[ColorB!20,fill=ColorB!20](Y)[sharp corners]--(Z)--(YY)[rounded corners=2.5mm]--(ZZ)--cycle;}
+%%奇数页布局%%
+\newcommand{\SEvenPartPageBlock}{
+%%右上角色块坐标%%
+\coordinate(A)at(current page.north west);
+\coordinate(B)at([xshift=\BlockWidth]current page.north west);
+\coordinate(C)at([xshift=\BlockWidth,yshift=-\NBlockHeight]current page.north west);
+\coordinate(D)at([yshift=-\NBlockHeight]current page.north west);
+%%右上角色块%%
+\draw[ColorA,fill=ColorA](A)--(B)[rounded corners=2.5mm]--(C)[sharp corners]--(D)--cycle;
+%%右侧色块坐标%%
+\coordinate(Q)at([yshift=-\StripeWidth]D);
+\coordinate(R)at([xshift=\MBlockLength]Q);
+\coordinate(T)at([yshift=-\BlockWidth]Q);
+\coordinate(S)at([xshift=\MBlockLength]T);
+%%右侧色块%%
+\draw[ColorB!20,fill=ColorB!20](Q)[rounded corners=2.5mm]--(R)--(S)[sharp corners]--(T)--cycle;
+%%右下角色块坐标%%
+\coordinate(E)at([yshift=-\StripeWidth]T);
+\coordinate(F)at([xshift=\BlockWidth]E);
+\coordinate(H)at(current page.south west);
+\coordinate(G)at([xshift=\BlockWidth]H);
+%%右下角色块%%
+\draw[ColorA,fill=ColorA](E)[rounded corners=2.5mm]--(F)[sharp corners]--(G)--(H)--cycle;
+%%左上角色块坐标%%
+\coordinate(I)at([xshift=\StripeWidth]B);
+\coordinate(J)at(current page.north east);
+\coordinate(K)at([yshift=-\NBlockHeight]J);
+\coordinate(L)at([xshift=\StripeWidth]C);
+%%左上角色块%%
+\draw[ColorB!7.5,fill=ColorB!7.5](I)--(J)--(K)[rounded corners=2.5mm]--(L)[sharp corners]--cycle;
+%%左下角色块坐标%%
+\coordinate(M)at([xshift=\StripeWidth]F);
+\coordinate(N)at([xshift=\paperwidth]E);
+\coordinate(O)at(current page.south east);
+\coordinate(P)at([xshift=\StripeWidth]G);
+%%左下角色块%%
+\draw[ColorB!7.5,fill=ColorB!7.5](M)[sharp corners]--(N)--(O)--(P)[rounded corners=2.5mm]--cycle;
+%%页面中部色块坐标%%
+%判断标题文字长度与临界长度的关系
+\ifdim\partstarlen>\criticstarlen
+%如果标题长度大于临界长度则绘制固定长度矩形
+\coordinate(U)at([xshift=\StripeWidth]R);
+\coordinate(V)at([xshift=\criticstarlen+2.8cm]U);
+\coordinate(X)at([xshift=\StripeWidth]S);
+\coordinate(W)at([xshift=\criticstarlen+2.8cm]X);
+%如果标题长度小于临界长度则绘制变长度矩形
+\else
+\coordinate(U)at([xshift=\StripeWidth]R);
+\coordinate(V)at([xshift=\partstarlen+2.8cm]U);
+\coordinate(X)at([xshift=\StripeWidth]S);
+\coordinate(W)at([xshift=\partstarlen+2.8cm]X);
+\fi
+%%页面中部色块%%
+\draw[ColorB!50,fill=ColorB!50,rounded corners=2.5mm](U)rectangle(W);
+%%左侧色块坐标%%
+\coordinate(Y)at([xshift=\StripeWidth]V);
+\coordinate(Z)at([yshift=-\StripeWidth]K);
+\coordinate(YY)at([yshift=\StripeWidth]N);
+\coordinate(ZZ)at([xshift=\StripeWidth]W);
+%%左侧色块%%
+\draw[ColorB!20,fill=ColorB!20](Y)[sharp corners]--(Z)--(YY)[rounded corners=2.5mm]--(ZZ)--cycle;}
 %%不编号部分页样式%%
 \newcommand{\@partstarstyle}[1]{
 \settowidth{\partstarlen}{\bfseries{\FontSize{40pt}{#1}}}
 \makebox[0pt][l]{
 \begin{tikzpicture}[remember picture,overlay]
-\draw[ColorB!7.5,fill=ColorB!7.5](current page.north west)rectangle(current page.south east);
+%%白色背景%%
+\draw[white,fill=white](current page.south west)rectangle(current page.north east);
 \ifodd\value{page}%判断奇偶页
-%%坐标%%
-\coordinate(A)at(current page.north east);
-\coordinate(B)at([xshift=-2.1cm]current page.north east);
-\coordinate(C)at([xshift=-2.1cm,yshift=6.1cm]current page.east);
-\coordinate(D)at([yshift=6.1cm]current page.west);
-\coordinate(E)at([yshift=4.0cm]current page.west);
-\coordinate(F)at([xshift=-2.1cm,yshift=4.0cm]current page.east);
-\coordinate(G)at([xshift=-2.1cm]current page.south east);
-\coordinate(H)at(current page.south east);
-%%背景%%
-\draw[white,fill=white](A)--(B)[rounded corners=2.5mm]--(C)[sharp corners]--(D)--(E)[rounded corners=2.5mm]--(F)[sharp corners]--(G)--(H)--cycle;
-\draw[ColorA,fill=ColorA](A)--([xshift=0.35cm]B)[rounded corners=2.5mm]--([xshift=0.35cm]C)[sharp corners]--([xshift=2.1cm]C)--cycle;
-\draw[ColorA,fill=ColorA](H)--([xshift=0.35cm]G)[rounded corners=2.5mm]--([xshift=0.35cm]F)[sharp corners]--([xshift=2.1cm]F)--cycle;
-\draw[ColorB!50,fill=ColorB!50]([xshift=2.1cm,yshift=-0.35cm]C)--([xshift=2.1cm,yshift=0.35cm]F)[rounded corners=2.5mm]--([xshift=-1.0cm,yshift=0.35cm]F)--([xshift=-1.0cm,yshift=-0.35cm]C)[sharp corners]--cycle;
-%判断标题文字长度与临界长度的关系
-\ifdim\partstarlen>\criticstarlen
-%如果标题长度大于临界长度则绘制固定长度矩形
-\draw[ColorB!30,fill=ColorB!30,rounded corners=2.5mm]
-([xshift=-\criticstarlen-4.15cm,yshift=0.35cm]F)rectangle
-([xshift=-1.35cm,yshift=-0.35cm]C);
-\draw[ColorB!20,fill=ColorB!20]([yshift=-0.35cm]D)--([yshift=0.35cm]E)[rounded corners=2.5mm]--([xshift=-\criticstarlen-4.5cm,yshift=0.35cm]F)--([xshift=-\criticstarlen-4.5cm,yshift=1.75cm]F)[sharp corners]--cycle;
-%如果标题长度小于临界长度则绘制变长度矩形
-\else
-\draw[ColorB!30,fill=ColorB!30,rounded corners=2.5mm]
-([xshift=-\partstarlen-4.15cm,yshift=0.35cm]F)rectangle
-([xshift=-1.35cm,yshift=-0.35cm]C);
-\draw[ColorB!20,fill=ColorB!20]([yshift=-0.35cm]D)--([yshift=0.35cm]E)[rounded corners=2.5mm]--([xshift=-\partstarlen-4.5cm,yshift=0.35cm]F)--([xshift=-\partstarlen-4.5cm,yshift=1.75cm]F)[sharp corners]--cycle;
-\fi
+\SOddPartPageBlock
 %%标题%%
 \node[align=left,inner xsep=0mm,minimum height=2.0cm,anchor=south east,
-font=\FontSize{40pt}\bfseries\titlefont,text=ColorA](P)at([xshift=-1.4cm,yshift=0.25cm]C){\maxsizebox{\textwidth-5.0cm}{!}{#1}};
-\node[inner xsep=0mm,minimum height=2.0cm,anchor=east](S)at([xshift=-0.5cm]P.west){\halfcircle{ColorA!60}{0.7cm}};
-\node[inner xsep=0mm,minimum height=2.0cm,anchor=east](Q)at(S.west){\halfcircle{ColorA!80}{0.7cm}};
-\node[inner xsep=0mm,minimum height=2.0cm,anchor=east](R)at(Q.west){\halfcircle{ColorA}{0.7cm}};
-%%介绍%%
-\node[align=right,inner xsep=2.0mm,anchor=north east,font=\itshape\kaishu,text=ColorA](W)at([yshift=-3.5cm]P.south east){
+font=\FontSize{40pt}\bfseries\titlefont,text=ColorA](PST)at([yshift=\StripeWidth+0.25cm]U){\maxsizebox{\textwidth-5.0cm}{!}{#1}};
+\node[inner xsep=0mm,minimum height=2.0cm,anchor=east](HC1)at([xshift=-0.5cm]PST.west){\halfcircle{ColorA!60}{0.7cm}};
+\node[inner xsep=0mm,minimum height=2.0cm,anchor=east](HC2)at(HC1.west){\halfcircle{ColorA!80}{0.7cm}};
+\node[inner xsep=0mm,minimum height=2.0cm,anchor=east](HC3)at(HC2.west){\halfcircle{ColorA}{0.7cm}};
+%%部分简介%%
+\node[align=right,inner xsep=2.0mm,anchor=north east,font=\itshape\kaishu,text=ColorA](IT)at([yshift=-1.25cm]X){
 \begin{varwidth}{\textwidth-2.75cm}
 \begin{spacing}{1.2}%段落行距设置
 \ifdefvoid{\@partintro}{}{\FontSize{13pt}\@partintro}
 \end{spacing}
 \end{varwidth}};
-%%小目录%%
-\node[anchor=south west](C)at([xshift=\@innerlen+0.25in,yshift=\@botlen]current page.south west){
+%%部分目录%%
+\node[anchor=south west](SC)at([xshift=\@innerlen+0.25in,yshift=\@botlen]current page.south west){
 \begin{varwidth}{\textwidth}
 \begin{spacing}{1.5}%段落行距设置
 \printcontents[part]{l}{0}{\setcounter{tocdepth}{0}}
 \end{spacing}
 \end{varwidth}};
-\node[font=\FontSize{13.5pt}\bfseries\titlefont,text=ColorB!95!black,anchor=south west](W)at(C.north west){部分概要};
+%%部分目录标题%%
+\node[font=\FontSize{13.5pt}\bfseries\titlefont,text=ColorB!95!black,anchor=south west](ST)at(SC.north west){部分概要};
 \else
-%%坐标%%
-\coordinate(A)at(current page.north west);
-\coordinate(B)at([xshift=2.1cm]current page.north west);
-\coordinate(C)at([xshift=2.1cm,yshift=6.1cm]current page.west);
-\coordinate(D)at([yshift=6.1cm]current page.east);
-\coordinate(E)at([yshift=4.0cm]current page.east);
-\coordinate(F)at([xshift=2.1cm,yshift=4.0cm]current page.west);
-\coordinate(G)at([xshift=2.1cm]current page.south west);
-\coordinate(H)at(current page.south west);
-%%背景%%
-\draw[white,fill=white](A)--(B)[rounded corners=2.5mm]--(C)[sharp corners]--(D)--(E)[rounded corners=2.5mm]--(F)[sharp corners]--(G)--(H)--cycle;
-\draw[ColorA,fill=ColorA](A)--([xshift=-0.35cm]B)[rounded corners=2.5mm]--([xshift=-0.35cm]C)[sharp corners]--([xshift=-2.1cm]C)--cycle;
-\draw[ColorA,fill=ColorA](H)--([xshift=-0.35cm]G)[rounded corners=2.5mm]--([xshift=-0.35cm]F)[sharp corners]--([xshift=-2.1cm]F)--cycle;
-\draw[ColorB!50,fill=ColorB!50]([xshift=-2.1cm,yshift=-0.35cm]C)--([xshift=-2.1cm,yshift=0.35cm]F)[rounded corners=2.5mm]--([xshift=1.0cm,yshift=0.35cm]F)--([xshift=1.0cm,yshift=-0.35cm]C)[sharp corners]--cycle;
-%判断标题文字长度与临界长度的关系
-\ifdim\partstarlen>\criticstarlen
-%如果标题长度大于临界长度则绘制固定长度矩形
-\draw[ColorB!30,fill=ColorB!30,rounded corners=2.5mm]
-([xshift=\criticstarlen+4.15cm,yshift=0.35cm]F)rectangle
-([xshift=1.35cm,yshift=-0.35cm]C);
-\draw[ColorB!20,fill=ColorB!20]([yshift=-0.35cm]D)--([yshift=0.35cm]E)[rounded corners=2.5mm]--([xshift=\criticstarlen+4.5cm,yshift=0.35cm]F)--([xshift=\criticstarlen+4.5cm,yshift=1.75cm]F)[sharp corners]--cycle;
-\else
-%如果标题长度小于临界长度则绘制变长度矩形
-\draw[ColorB!30,fill=ColorB!30,rounded corners=2.5mm]
-([xshift=\partstarlen+4.15cm,yshift=0.35cm]F)rectangle
-([xshift=1.35cm,yshift=-0.35cm]C);
-\draw[ColorB!20,fill=ColorB!20]([yshift=-0.35cm]D)--([yshift=0.35cm]E)[rounded corners=2.5mm]--([xshift=\partstarlen+4.5cm,yshift=0.35cm]F)--([xshift=\partstarlen+4.5cm,yshift=1.75cm]F)[sharp corners]--cycle;
-\fi
+\SEvenPartPageBlock
 %%标题%%
-\node[inner xsep=0mm,minimum height=2.0cm,anchor=south west](S)at([xshift=1.4cm,yshift=0.25cm]C){\halfcircle{ColorA}{0.7cm}};
-\node[inner xsep=0mm,minimum height=2.0cm,anchor=west](Q)at(S.east){\halfcircle{ColorA!80}{0.7cm}};
-\node[inner xsep=0mm,minimum height=2.0cm,anchor=west](R)at(Q.east){\halfcircle{ColorA!60}{0.7cm}};
+\node[inner xsep=0mm,minimum height=2.0cm,anchor=south west](HC1)at([yshift=\StripeWidth+0.25cm]U){\halfcircle{ColorA}{0.7cm}};
+\node[inner xsep=0mm,minimum height=2.0cm,anchor=west](HC2)at(HC1.east){\halfcircle{ColorA!80}{0.7cm}};
+\node[inner xsep=0mm,minimum height=2.0cm,anchor=west](HC3)at(HC2.east){\halfcircle{ColorA!60}{0.7cm}};
 \node[align=left,inner xsep=0mm,minimum height=2.0cm,anchor=west,
-font=\FontSize{40pt}\bfseries\titlefont,text=ColorA](P)at([xshift=0.5cm]R.east){\maxsizebox{\textwidth-5.0cm}{!}{#1}};
-%%介绍%%
-\node[align=left,inner xsep=2.0mm,anchor=north west,font=\itshape\kaishu,text=ColorA](W)at([yshift=-3.5cm]S.south west){
+font=\FontSize{40pt}\bfseries\titlefont,text=ColorA](PST)at([xshift=0.5cm]HC3.east){\maxsizebox{\textwidth-5.0cm}{!}{#1}};
+%%部分简介%%
+\node[align=left,inner xsep=2.0mm,anchor=north west,font=\itshape\kaishu,text=ColorA](IT)at([yshift=-1.25cm]X){
 \begin{varwidth}{\textwidth-2.75cm}
 \begin{spacing}{1.2}%段落行距设置
 \ifdefvoid{\@partintro}{}{\FontSize{13pt}\@partintro}
 \end{spacing}
 \end{varwidth}};
-%%小目录%%
-\node[anchor=south east](C)at([xshift=-\@innerlen-0.25in,yshift=\@botlen]current page.south east){
+%%部分目录%%
+\node[anchor=south east](SC)at([xshift=-\@innerlen-0.25in,yshift=\@botlen]current page.south east){
 \begin{varwidth}{\textwidth}
 \begin{spacing}{1.5}%段落行距设置
 \printcontents[part]{l}{0}{\setcounter{tocdepth}{0}}
 \end{spacing}
 \end{varwidth}};
-\node[font=\FontSize{13.5pt}\bfseries\titlefont,text=ColorB!95!black,anchor=south west](W)at(C.north west){部分概要};
+%%部分目录标题%%
+\node[font=\FontSize{13.5pt}\bfseries\titlefont,text=ColorB!95!black,anchor=south west](ST)at(SC.north west){部分概要};
 \fi
 \end{tikzpicture}}}
 %%编号部分页%%
@@ -1059,6 +1218,10 @@ font=\FontSize{40pt}\bfseries\titlefont,text=ColorA](P)at([xshift=0.5cm]R.east){
 \titlespacing*{\part}{0pt}{0pt}{0pt}
 
 %%章节页样式%%
+\newlength{\ChapterBlockHeight}
+\newlength{\ChapterStripeWidth}
+\setlength{\ChapterBlockHeight}{5.0cm}
+\setlength{\ChapterStripeWidth}{0.4cm}
 \newcommand*{\chaptersaying}[1]{\def\@chaptersaying{\hspace*{2.0em}#1}}
 \newcommand*{\chaptersubtitle}[1]{\def\@chaptersubtitle{#1}}
 \newcommand*{\chapterimage}[1]{\def\@chapterimage{#1}}
@@ -1072,12 +1235,12 @@ font=\FontSize{40pt}\bfseries\titlefont,text=ColorA](P)at([xshift=0.5cm]R.east){
 \coordinate(B)at(current page.north east);
 \coordinate(C)at(current page.south east);
 \coordinate(D)at(current page.south west);
-\coordinate(E)at([yshift=2.0cm]current page.south west);
-\coordinate(F)at([xshift=-5.0cm,yshift=2.0cm]current page.south east);
-\coordinate(G)at([xshift=-3.0cm,yshift=1.0cm]current page.south east);
-\coordinate(H)at([xshift=-1.0cm,yshift=1.0cm]current page.south east);
-\coordinate(I)at([xshift=-1.0cm,yshift=-5.022cm]current page.north east);
-\coordinate(J)at([yshift=-5.022cm]current page.north west);
+\coordinate(E)at([yshift=\FrameWidth+1.0cm]current page.south west);
+\coordinate(F)at([xshift=-5.0cm,yshift=\FrameWidth+1.0cm]current page.south east);
+\coordinate(G)at([xshift=-3.0cm,yshift=\FrameWidth]current page.south east);
+\coordinate(H)at([xshift=-\FrameWidth,yshift=\FrameWidth]current page.south east);
+\coordinate(I)at([xshift=-\FrameWidth,yshift=-\ChapterBlockHeight]current page.north east);
+\coordinate(J)at([yshift=-\ChapterBlockHeight]current page.north west);
 %%框架%%
 \draw[fill=ColorB!7.5,ColorB!7.5,sharp corners]
 (A)--(B)--(C)--(D)--(E)--(F)[in=180,out=0]to(G)[rounded corners=2.5mm]--(H)[rounded corners=5.0mm]--(I)[sharp corners]--(J)--cycle;
@@ -1085,7 +1248,7 @@ font=\FontSize{40pt}\bfseries\titlefont,text=ColorA](P)at([xshift=0.5cm]R.east){
 \draw[draw=ColorA,fill=ColorA,sharp corners]node[append after command={(T.south west)[rounded corners=2.5mm]--(T.south east)[sharp corners]--([yshift=0.65cm]T.north east)--([yshift=0.65cm]T.north west)[rounded corners=2.5mm]--cycle},anchor=north east,font=\FontSize{25pt}\bfseries\titlefont,text=white,inner sep=0.4cm](T)at([xshift=-\@outerlen-0.25in,yshift=-0.65cm]B){#1};
 %%渐变带%%
 \draw[ColorB!40,fill=ColorB!40,line width=0pt]
-([yshift=-2.79cm]A)rectangle([yshift=-3.09cm]B);
+([yshift=-2.79cm]A)rectangle([yshift=-\ChapterStripeWidth-2.79cm]B);
 %%标题%%
 \node[anchor=east,font=\FontSize{27.5pt}\bfseries\titlefont,text=ColorA](P)at([xshift=-\@outerlen-0.25in+0.25cm,yshift=-3.95cm]B){\maxsizebox{\textwidth-0.5in}{!}{#2}};
 %%底部文字%%
@@ -1094,10 +1257,10 @@ font=\FontSize{40pt}\bfseries\titlefont,text=ColorA](P)at([xshift=0.5cm]R.east){
 \ifdefvoid{\@chaptersaying}{}{\FontSize{13pt}\@chaptersaying}
 \end{spacing}};
 %%章节图片%%
-\node[anchor=north west,inner sep=0mm](I)at(A){\ifdefvoid{\@chapterimage}{}{\includegraphics[height=5.022cm]{\@chapterimage}}};
+\node[anchor=north west,inner sep=0mm](I)at(A){\ifdefvoid{\@chapterimage}{}{\includegraphics[height=\ChapterBlockHeight]{\@chapterimage}}};
 %%页码%%
 \draw[ColorA,fill=ColorA,rounded corners=2.0mm]
-([xshift=-1.75cm,yshift=1.75cm]current page.south east)rectangle([xshift=-0.65cm,yshift=0.65cm]C);
+([xshift=-1.75cm,yshift=1.75cm]C)rectangle([xshift=-0.65cm,yshift=0.65cm]C);
 \node[font=\numberfont\FontSize{16pt},text=white,anchor=center,align=center](P)at([xshift=-1.2cm,yshift=1.2cm]C){\maxsizebox{0.8cm}{!}{\thepage}};
 \else
 %%坐标%%
@@ -1105,12 +1268,12 @@ font=\FontSize{40pt}\bfseries\titlefont,text=ColorA](P)at([xshift=0.5cm]R.east){
 \coordinate(B)at(current page.north west);
 \coordinate(C)at(current page.south west);
 \coordinate(D)at(current page.south east);
-\coordinate(E)at([yshift=2.0cm]current page.south east);
-\coordinate(F)at([xshift=5.0cm,yshift=2.0cm]current page.south west);
-\coordinate(G)at([xshift=3.0cm,yshift=1.0cm]current page.south west);
-\coordinate(H)at([xshift=1.0cm,yshift=1.0cm]current page.south west);
-\coordinate(I)at([xshift=1.0cm,yshift=-5.022cm]current page.north west);
-\coordinate(J)at([yshift=-5.022cm]current page.north east);
+\coordinate(E)at([yshift=\FrameWidth+1.0cm]current page.south east);
+\coordinate(F)at([xshift=5.0cm,yshift=\FrameWidth+1.0cm]current page.south west);
+\coordinate(G)at([xshift=3.0cm,yshift=\FrameWidth]current page.south west);
+\coordinate(H)at([xshift=\FrameWidth,yshift=\FrameWidth]current page.south west);
+\coordinate(I)at([xshift=\FrameWidth,yshift=-\ChapterBlockHeight]current page.north west);
+\coordinate(J)at([yshift=-\ChapterBlockHeight]current page.north east);
 %%框架%%
 \draw[fill=ColorB!7.5,ColorB!7.5,sharp corners]
 (A)--(B)--(C)--(D)--(E)--(F)[in=0,out=180]to(G)[rounded corners=2.5mm]--(H)[rounded corners=5.0mm]--(I)[sharp corners]--(J)--cycle;
@@ -1118,7 +1281,7 @@ font=\FontSize{40pt}\bfseries\titlefont,text=ColorA](P)at([xshift=0.5cm]R.east){
 \draw[draw=ColorA,fill=ColorA,sharp corners]node[append after command={(T.south west)[rounded corners=2.5mm]--(T.south east)[sharp corners]--([yshift=0.65cm]T.north east)--([yshift=0.65cm]T.north west)[rounded corners=2.5mm]--cycle},anchor=north west,font=\FontSize{25pt}\bfseries\titlefont,text=white,inner sep=0.4cm](T)at([xshift=\@outerlen+0.25in,yshift=-0.65cm]B){#1};
 %%渐变带%%
 \draw[ColorB!40,fill=ColorB!40,line width=0pt]
-([yshift=-2.79cm]A)rectangle([yshift=-3.09cm]B);
+([yshift=-2.79cm]A)rectangle([yshift=-\ChapterStripeWidth-2.79cm]B);
 %%标题%%
 \node[anchor=west,font=\FontSize{27.5pt}\bfseries\titlefont,text=ColorA](P)at([xshift=\@outerlen+0.25in-0.25cm,yshift=-3.95cm]B){\maxsizebox{\textwidth-0.5in}{!}{#2}};
 %%底部文字%%
@@ -1127,10 +1290,10 @@ font=\FontSize{40pt}\bfseries\titlefont,text=ColorA](P)at([xshift=0.5cm]R.east){
 \ifdefvoid{\@chaptersaying}{}{\FontSize{13pt}\@chaptersaying}
 \end{spacing}};
 %%章节图片%%
-\node[anchor=north east,inner sep=0mm](I)at(A){\ifdefvoid{\@chapterimage}{}{\includegraphics[height=5.022cm]{\@chapterimage}}};
+\node[anchor=north east,inner sep=0mm](I)at(A){\ifdefvoid{\@chapterimage}{}{\includegraphics[height=\ChapterBlockHeight]{\@chapterimage}}};
 %%页码%%
 \draw[ColorA,fill=ColorA,rounded corners=2.0mm]
-([xshift=1.75cm,yshift=1.75cm]current page.south west)rectangle([xshift=0.65cm,yshift=0.65cm]C);
+([xshift=1.75cm,yshift=1.75cm]C)rectangle([xshift=0.65cm,yshift=0.65cm]C);
 \node[font=\numberfont\FontSize{16pt},text=white,anchor=center,align=center](P)at([xshift=1.2cm,yshift=1.2cm]C){\maxsizebox{0.8cm}{!}{\thepage}};
 \fi
 \end{tikzpicture}}}
@@ -1145,54 +1308,54 @@ font=\FontSize{40pt}\bfseries\titlefont,text=ColorA](P)at([xshift=0.5cm]R.east){
 \coordinate(B)at(current page.north east);
 \coordinate(C)at(current page.south east);
 \coordinate(D)at(current page.south west);
-\coordinate(E)at([yshift=1.0cm]current page.south west);
-\coordinate(F)at([xshift=-1.0cm,yshift=1.0cm]current page.south east);
-\coordinate(G)at([xshift=-1.0cm,yshift=-5.022cm]current page.north east);
-\coordinate(H)at([yshift=-5.022cm]current page.north west);
+\coordinate(E)at([yshift=\FrameWidth]current page.south west);
+\coordinate(F)at([xshift=-\FrameWidth,yshift=\FrameWidth]current page.south east);
+\coordinate(G)at([xshift=-\FrameWidth,yshift=-\ChapterBlockHeight]current page.north east);
+\coordinate(H)at([yshift=-\ChapterBlockHeight]current page.north west);
 %%框架%%
 \draw[fill=ColorB!7.5,ColorB!7.5,sharp corners]
 (A)--(B)--(C)--(D)--(E)[rounded corners=5.0mm]--(F)[rounded corners=5.0mm]--(G)[sharp corners]--(H)--cycle;
 %%标题%%
-\node[inner sep=0mm,anchor=west](T)at([xshift=\@innerlen+0.25in,yshift=-1.79cm]current page.north west){\halfcircle{ColorA}{0.5cm}};
+\node[inner sep=0mm,anchor=west](T)at([xshift=\@innerlen+0.25in,yshift=-1.79cm]A){\halfcircle{ColorA}{0.5cm}};
 \node[inner sep=0mm,anchor=west](P)at(T.east){\halfcircle{ColorA!90}{0.5cm}};
 \node[anchor=west,font=\FontSize{30pt}\bfseries\titlefont,text=ColorA,minimum height=1.45cm](Q)at([xshift=0.25cm]P.east){\maxsizebox{\textwidth-0.5in-1.5cm}{!}{#1}};
 %%渐变带%%
 \draw[ColorB!40,fill=ColorB!40,line width=0pt]
-([yshift=-2.79cm]current page.north west)rectangle([yshift=-3.09cm]current page.north east);
+([yshift=-2.79cm]A)rectangle([yshift=-\ChapterStripeWidth-2.79cm]B);
 %%副标题%%
-\node[anchor=east,font=\FontSize{27.5pt}\bfseries\titlefont,text=ColorA,minimum height=1.45cm](R)at([xshift=-\@outerlen-0.25in,yshift=-4.0cm]current page.north east){\maxsizebox{\textwidth-0.5in-1.5cm}{!}{#2}};
+\node[anchor=east,font=\FontSize{27.5pt}\bfseries\titlefont,text=ColorA,minimum height=1.45cm](R)at([xshift=-\@outerlen-0.25in,yshift=-4.0cm]B){\maxsizebox{\textwidth-0.5in-1.5cm}{!}{#2}};
 %%章节图片%%
-\node[anchor=north east,inner sep=0mm](I)at(current page.north east){\ifdefvoid{\@chapterimage}{}{\includegraphics[height=5.022cm]{\@chapterimage}}};
+\node[anchor=north east,inner sep=0mm](I)at(B){\ifdefvoid{\@chapterimage}{}{\includegraphics[height=\ChapterBlockHeight]{\@chapterimage}}};
 %%页码%%
-\draw[ColorA,fill=ColorA]([xshift=-1.2cm,yshift=1.2cm]current page.south east)circle(0.55cm);
-\node[font=\numberfont\FontSize{16pt},text=white,anchor=center,align=center](P)at([xshift=-1.2cm,yshift=1.2cm]current page.south east){\maxsizebox{0.8cm}{!}{\thepage}};
+\draw[ColorA,fill=ColorA]([xshift=-1.2cm,yshift=1.2cm]C)circle(0.55cm);
+\node[font=\numberfont\FontSize{16pt},text=white,anchor=center,align=center](P)at([xshift=-1.2cm,yshift=1.2cm]C){\maxsizebox{0.8cm}{!}{\thepage}};
 \else
 %%坐标点%%
 \coordinate(A)at(current page.north east);
 \coordinate(B)at(current page.north west);
 \coordinate(C)at(current page.south west);
 \coordinate(D)at(current page.south east);
-\coordinate(E)at([yshift=1.0cm]current page.south east);
-\coordinate(F)at([xshift=1.0cm,yshift=1.0cm]current page.south west);
-\coordinate(G)at([xshift=1.0cm,yshift=-5.022cm]current page.north west);
-\coordinate(H)at([yshift=-5.022cm]current page.north east);
+\coordinate(E)at([yshift=\FrameWidth]current page.south east);
+\coordinate(F)at([xshift=\FrameWidth,yshift=\FrameWidth]current page.south west);
+\coordinate(G)at([xshift=\FrameWidth,yshift=-\ChapterBlockHeight]current page.north west);
+\coordinate(H)at([yshift=-\ChapterBlockHeight]current page.north east);
 %%框架%%
 \draw[fill=ColorB!7.5,ColorB!7.5,sharp corners]
 (A)--(B)--(C)--(D)--(E)[rounded corners=5.0mm]--(F)[rounded corners=5.0mm]--(G)[sharp corners]--(H)--cycle;
 %%标题%%
-\node[anchor=east,font=\FontSize{30pt}\bfseries\titlefont,text=ColorA,minimum height=1.45cm](T)at([xshift=-\@innerlen-0.25in,yshift=-1.79cm]current page.north east){\maxsizebox{\textwidth-0.5in-1.5cm}{!}{#1}};
+\node[anchor=east,font=\FontSize{30pt}\bfseries\titlefont,text=ColorA,minimum height=1.45cm](T)at([xshift=-\@innerlen-0.25in,yshift=-1.79cm]A){\maxsizebox{\textwidth-0.5in-1.5cm}{!}{#1}};
 \node[inner sep=0mm,anchor=east](P)at([xshift=-0.25cm]T.west){\halfcircle{ColorA!90}{0.5cm}};
 \node[inner sep=0mm,anchor=east](Q)at(P.west){\halfcircle{ColorA}{0.5cm}};
 %%渐变带%%
 \draw[ColorB!40,fill=ColorB!40,line width=0pt]
-([yshift=-2.79cm]current page.north east)rectangle([yshift=-3.09cm]current page.north west);
+([yshift=-2.79cm]A)rectangle([yshift=-\ChapterStripeWidth-2.79cm]B);
 %%副标题%%
-\node[anchor=west,font=\FontSize{27.5pt}\bfseries\titlefont,text=ColorA,minimum height=1.45cm](R)at([xshift=\@outerlen+0.25in,yshift=-4.0cm]current page.north west){\maxsizebox{\textwidth-0.5in-1.5cm}{!}{#2}};
+\node[anchor=west,font=\FontSize{27.5pt}\bfseries\titlefont,text=ColorA,minimum height=1.45cm](R)at([xshift=\@outerlen+0.25in,yshift=-4.0cm]B){\maxsizebox{\textwidth-0.5in-1.5cm}{!}{#2}};
 %%章节图片%%
-\node[anchor=north west,inner sep=0mm](I)at(current page.north west){\ifdefvoid{\@chapterimage}{}{\includegraphics[height=5.022cm]{\@chapterimage}}};
+\node[anchor=north west,inner sep=0mm](I)at(B){\ifdefvoid{\@chapterimage}{}{\includegraphics[height=\ChapterBlockHeight]{\@chapterimage}}};
 %%页码%%
-\draw[ColorA,fill=ColorA]([xshift=1.2cm,yshift=1.2cm]current page.south west)circle(0.55cm);
-\node[font=\numberfont\FontSize{16pt},text=white,anchor=center,align=center](P)at([xshift=1.2cm,yshift=1.2cm]current page.south west){\maxsizebox{0.8cm}{!}{\thepage}};
+\draw[ColorA,fill=ColorA]([xshift=1.2cm,yshift=1.2cm]C)circle(0.55cm);
+\node[font=\numberfont\FontSize{16pt},text=white,anchor=center,align=center](P)at([xshift=1.2cm,yshift=1.2cm]C){\maxsizebox{0.8cm}{!}{\thepage}};
 \fi
 \end{tikzpicture}}}
 %%制定章节页的侧标更新规则%%

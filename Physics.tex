@@ -1,7 +1,7 @@
-\documentclass[color=purple]{textbook-cn}%openany
+\documentclass[color=blue]{textbook-cn}%,openany,splitbib
 \input{./styles/Cover.tex}
 \input{./styles/Logo.tex}
-\usepackage{zhlipsum,lipsum}%乱数假文（测试文字）splitbib
+\usepackage{zhlipsum,lipsum}%乱数假文（测试文字）
 \graphicspath{{./figure/}{./figures/}{./image/}{./images/}{./graphics/}{./graphic/}{./pictures/}{./picture/}}%提供多种图片路径
 
 %%设置符号表样式%%
@@ -32,8 +32,8 @@
 \author{RQCEN}
 \pressname{BILIBILI教育出版社}
 \presslogo{gj.pdf}
-\coverimage{purple.jpg}
-\backimage{purple.jpg}
+\coverimage{blue.jpg}
+\backimage{blue.jpg}
 
 \newcommand{\indexnoun}[1]{\index[noun]{#1}}
 \newcommand{\indexvideo}[1]{\index[video]{#1}}
@@ -148,6 +148,8 @@ before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
 
 \partintro{\zhlipsum[3]}
 \part{运动学}
+
+
 
 \chaptersaying{一切推理都必须从观察与实验中得来。——伽利略}
 \chapter{运动的描述与直线运动}
@@ -596,632 +598,635 @@ Just like \ref{Def.3.1.1} on page \pageref{Def.3.1.1}
 \lipsum[1]
 \end{Exercise}
 
-
-
-
-\begin{CppBox}{有限元分析}
-void FN( double A, double B, double *N, int *Ele );
-void FNA( double A, double B, double *NA, int *Ele );
-void FNB( double A, double B, double *NB, int *Ele );
-double Inv_jaco( double A, double B, double *xo, double *yo, double *Nx, double *Ny, int *Ele );
-void eld( double E, double u, double (*D)[3], int Iopt );
-void CacuEKF( double E, double u, double Thick , double *xo, double *yo, double (*stress)[3], double *uo, double *vo, double *ef, double *ek, int *Ele, int nGauss , int Iopt );
-void AssembleUF( double *ef, double (*UF)[2], int *Ele );
-void skdd( int *jd, int (*Element)[8], int NN, int ND, int NE );
-void SetStiff( int i, int j, double Value , double *Stiff , int *jd );
-double GetStiff( int i, int j, double *Stiff , int *jd );
-void AssembleK( double *ek, int *je, int EFN, double *Stiff, int *jd );
-void Fix( int k, double a, double *Stiff , double *Load , int *jd, int NF );
-void LLT( int *jd, double *zk, double *F, int NF );
-void CacuSS( double E, double u, double *xo, double *yo, double *uo, double *vo, double (*SS)[4], int *Ele, int Iopt );
-\end{CppBox}
-
-
-\begin{PythonBox}{ABAQUS~自动批处理}
-import numpy as np
-import pandas as pd
-inp_file = open('C:/Users/17939/Desktop/inp/Job.inp') # 
-origin_data = inp_file.read() # 
-inp_file.close() # 
-# 生成新文件数
-file_num = 15
-# 
-delta_x = 17.5
-delta_y = 17.5
-# 
-parameter_name = ['cailiaomidu', 'tanxingmoliang', 'bosongbi', 
-                  'chusudu', 'hengxiangpianyi', 'weizhibianliang', 
-                  'zongxiangpianyi', 'gaodupianyi', 'zongshijian', 'shijiandanwei']
-# 
-parameter_value = [np.linspace(7850, 7850, file_num), # 
-                   np.linspace(2.06e+11, 2.06e+11, file_num), # 
-                   np.linspace(0.3, 0.3, file_num), # 
-                   np.linspace(-500, -500, file_num), # 
-                   np.linspace(-delta_x, delta_x, file_num), # 
-                   np.linspace(-delta_x + 1, delta_x + 1, file_num), # 
-                   np.linspace(-delta_y, delta_y, file_num), # 
-                   np.linspace(0, 0, file_num), # 
-                   np.linspace(5, 5, file_num), # 
-                   np.linspace(1e-4, 1e-4, file_num)] # 
-# 
-for n in range(0, file_num): # 
-    for m in range(0, file_num):
-        temp_data = origin_data # 
-        temp_data = temp_data.replace('hengxiangpianyi', str(parameter_value[4][n])) # 
-        temp_data = temp_data.replace('weizhibianliang', str(parameter_value[5][n])) # 
-        temp_data = temp_data.replace('zongxiangpianyi', str(parameter_value[6][m])) # 
-        new_data = temp_data
-        if 2.5 * n - delta_x < 0:
-            x = '_' + str(abs(2.5 * n - delta_x))
-        else:
-            x = str(2.5 * n - delta_x)
-        if 2.5 * m - delta_y < 0:
-            y = '_' + str(abs(2.5 * m - delta_y))
-        else:
-            y = str(2.5 * m - delta_y)
-        new_file = open('C:/Users/17939/Desktop/inp/TEST/'+ x + 'to' + y + '.inp', 'w') # 
-        new_file.write(new_data) # 
-        new_file.close() # 
-\end{PythonBox}
-
-
-\begin{Proposition*}[命题名称命题名称命题名称命题名称命题名称]
-\zhlipsum[2]
-\end{Proposition*}
-
-\clearpage
-\ExerciseTitle{基础巩固}
-\lipsum
-
-\ExerciseTitle{能力提升}
-\lipsum
-
-
-
-\begin{Topic}
-\section{专题名专题名专题名专题名专题名专题名专题名专题名专题名}
-
-\begin{Paracol}
-\subsection{题型名称题型名称}
-
-\subsubsection{方法解析}
-\lipsum[2]
-
-
-\subsubsection{典型例题}
-\lipsum[2]
-
-\Example{\lipsum[1][1-4]}
-\Answer{\lipsum[1][1-4]}
-\Answer*{\lipsum[1][1-4]}
-
-\Example{\lipsum[1][1-4]}
-\Answer{\lipsum[1][1-4]}
-\Answer*{\lipsum[1][1-4]}
-
-\subsection{题型名称}
-
-\subsubsection{方法解析}
-\lipsum[1-2]
-
-\subsubsection{典型例题}
-\lipsum[2]
-
-\Example{\lipsum[1][1-4]}
-\Answer{\lipsum[1][1-4]}
-\Answer*{\lipsum[1][1-4]}
-
-\Example{\lipsum[1][1-4]}
-\Answer{\lipsum[1][1-4]}
-\Answer*{\lipsum[1][1-4]}
-
-\end{Paracol}
-
-
-\begin{Specific}
-\begin{QsNum}
-\item \lipsum[1][1]
-\choice{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
-\item \lipsum[1][1]
-\choice{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
-\item \lipsum[1][1]
-\choice{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
-\item \lipsum[1][1]
-\choice{polar}{saturn}{mars}{venus}
-\item \lipsum[1][1]
-\choice{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
-\item \lipsum[1][1]
-\choice{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
-\item \lipsum[1][1]
-\choice{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
-\item \lipsum[1][1]
-\choice{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
-\item \lipsum[1][1]
-\choice{polar}{saturn}{mars}{venus}
-\item \lipsum[1][1]
-\choice{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
-\end{QsNum}
-\tcblower
-\lipsum[1]
-\end{Specific}
-
-
-
-\end{Topic}
-
-\begin{Topic}
-\section{专题名}
-\begin{Paracol}
-\subsection{题型名称}
-
-\subsubsection{方法解析}
-\lipsum[1]
-
-\subsubsection{典型例题}
-
-\Example{\lipsum[1][1-4]}
-\Answer{\lipsum[1][1-4]}
-\Answer*{\lipsum[1][1-4]}
-
-\Example{\lipsum[1][1-4]}
-\Answer{\lipsum[1][1-4]}
-\Answer*{\lipsum[1][1-4]}
-
-\end{Paracol}
-
-\begin{Specific}
-\begin{QsNum}
-\item \lipsum[1][1]
-\choice{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
-\item \lipsum[1][1]
-\choice{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
-\item \lipsum[1][1]
-\choice{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
-\item \lipsum[1][1]
-\choice{polar}{saturn}{mars}{venus}
-\item \lipsum[1][1]
-\choice{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
-\item \lipsum[1][1]
-\choice{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
-\item \lipsum[1][1]
-\choice{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
-\item \lipsum[1][1]
-\choice{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
-\item \lipsum[1][1]
-\choice{polar}{saturn}{mars}{venus}
-\item \lipsum[1][1]
-\choice{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
-\end{QsNum}
-\tcblower
-\lipsum[1]
-\end{Specific}
-
-\end{Topic}
-
-
-\section{实验：实验名}
-\begin{Point}
-\lipsum[2]
-\end{Point}
-
-\begin{Case}
-\item 碳酸氢铵受热分解实验
-\item 氮气的性质和用途
-\item 铁的锈蚀实验
-\end{Case}
-
-
-\begin{Corollary*}[推论名称]
-\lipsum[2][1-7]
-\end{Corollary*}
-
-
-
-\chapter*{测试章节}
-\lipsum\lipsum
-
-
-
-
-\section{锂及其化合物}
-
-\begin{Point}
-\lipsum[2]
-\end{Point}
-
-\begin{Case}
-\item 碳酸氢铵受热分解实验
-\item 氮气的性质和用途
-\item 铁的锈蚀实验
-\end{Case}
-
-\begin{Paracol}
-\subsection{锂单质的性质}
-\lipsum[2][1-8]
-\subsubsection{锂的物理性质}
-\lipsum[1-2]
-\subsubsection{锂的化学性质}
-\lipsum[1-2]
-\subsection{锂的化合物}
-\lipsum[2][1-8]
-\subsubsection{氢氧化锂}
-\lipsum[1-2]
-\subsubsection{氧化锂}
-\lipsum[1-3]
-
-\begin{Block}[文字标题]
-\lipsum[2]
-\end{Block}
-
-
-\begin{Block}
-\lipsum[2]
-\end{Block}
-
-\subsection{锂电池}
-\lipsum[1-2]
-\subsection{锂的其他应用}
-\lipsum[1-2]
-\begin{Definition}[定义名称]
-\lipsum[1][1-3]
-\end{Definition}
-
-Just like \ref{Def.3.1.1} on page \pageref{Def.3.1.1}
-
-
-\begin{Theorem*}[定理名称]
-\lipsum[1][1-3]
-\end{Theorem*}
-
-Just like \ref{Thm.3.1.1} on page \pageref{Thm.3.1.1}
-
-\end{Paracol}
-
-
-\begin{Exercise}
-\begin{QsNum}
-\item \lipsum[1][1-2]
-\item \lipsum[1][1-2]
-\item \lipsum[1][1-2]
-\item \lipsum[1][1-2]
-\item \lipsum[1][1-2]
-\item \lipsum[1][1-2]
-\item \lipsum[1][1-2]
-\item \lipsum[1][1-2]
-\end{QsNum}
-\tcblower
-\lipsum[1]
-\end{Exercise}
-
-
-
-\section{钠化合物的性质}
-\begin{Point}
-\lipsum[2]
-\end{Point}
-
-\begin{Case}
-\item 碳酸氢铵受热分解实验
-\item 氮气的性质和用途
-\item 铁的锈蚀实验
-\end{Case}
-
-
-\subsection{锂单质的性质}
-\subsubsection{锂的物理性质锂的物理性质}
-\lipsum[1-2]
-
-\begin{Lemma*}[万有引力定律]
-\lipsum[2][1-3]
-\end{Lemma*}
-\subsubsection{锂的化学性质}
-\lipsum[1-2]
-\subsection{锂的化合物}
-\lipsum[3]
-\subsubsection{氢氧化锂}
-\lipsum[1-2]
-\subsubsection{氧化锂}
-\lipsum[1-2]
-\subsection{锂电池}
-\lipsum[1-2]
-\subsection{锂的其他应用}
-\lipsum[1-2]
-
-\begin{Exercise}
-\begin{QsNum}
-\item \lipsum[1][1-2]
-\item \lipsum[1][1-2]
-\item \lipsum[1][1-2]
-\item \lipsum[1][1-2]
-\item \lipsum[1][1-2]
-\item \lipsum[1][1-2]
-\item \lipsum[1][1-2]
-\item \lipsum[1][1-2]
-\end{QsNum}
-\tcblower
-\lipsum[1]
-\end{Exercise}
-
-
-\section{回顾与总结}
-
-\begin{Point*}
-\lipsum[2]
-\end{Point*}
-
-\begin{Case*}
-\item \lipsum[1][1]
-\item \lipsum[1][1]
-\item \lipsum[1][1]
-\end{Case*}
-
-
-\subsection{测试文字测试文字测试文字}
-
-
-\subsubsection*{测试文字测试文字}
-\lipsum[1-2]
-
-\Example{\lipsum[1][1-5]}
-\Answer{\lipsum[1][1-4]}
-\Answer*{\lipsum[1][1-4]}
-
-\Variety{\lipsum[1][1-5]}
-\Answer{\lipsum[1][1-4]}
-\Answer*{\lipsum[1][1-4]}
-
-\subsubsection*{测试文字测试文字}
-\lipsum[1-2]
-
-\Example{\lipsum[1][1-5]}
-\Answer{\lipsum[1][1-4]}
-\Answer*{\lipsum[1][1-4]}
-
-
-\Variety{\lipsum[1][1-5]}
-\Answer{\lipsum[1][1-4]}
-\Answer*{\lipsum[1][1-4]}
-
-
-\subsection{测试文字测试文字测试文字测试文字测试文字测试文字测试文字}
-\subsubsection*{测试文字测试文字}
-\lipsum[1-2]
-
-\Example{\lipsum[1][1-5]}
-\Answer{\lipsum[1][1-4]}
-\Answer*{\lipsum[1][1-4]}
-
-\Variety{\lipsum[1][1-5]}
-\Answer{\lipsum[1][1-4]}
-\Answer*{\lipsum[1][1-4]}
-
-\begin{Improve}
-\tcbsubtitle{A~组}
-\begin{QsNum}
-\item \lipsum[1][1-4]
-\item \lipsum[1][1-4]
-\item \lipsum[1][1-4]
-\item \lipsum[1][1-4]
-\item \lipsum[1][1-4]
-\item \lipsum[1][1-4]
-\item \lipsum[1][1-4]
-\item \lipsum[1][1-4]
-\item \lipsum[1][1-4]
-\end{QsNum}
-\tcbsubtitle{B~组}
-\begin{QsNum}
-\item \lipsum[1][1-4]
-\item \lipsum[1][1-4]
-\item \lipsum[1][1-4]
-\item \lipsum[1][1-4]
-\item \lipsum[1][1-4]
-\item \lipsum[1][1-4]
-\item \lipsum[1][1-4]
-\item \lipsum[1][1-4]
-\item \lipsum[1][1-4]
-\end{QsNum}
-\tcbsubtitle{C~组}
-\begin{QsNum}
-\item \lipsum[1][1-4]
-\item \lipsum[1][1-4]
-\item \lipsum[1][1-4]
-\item \lipsum[1][1-4]
-\item \lipsum[1][1-4]
-\item \lipsum[1][1-4]
-\item \lipsum[1][1-4]
-\item \lipsum[1][1-4]
-\item \lipsum[1][1-4]
-\end{QsNum}
-\tcblower
-\lipsum[1]
-\end{Improve}
-
-
-\lipsum
-
-
-
-
-
-\part{静力学}
-
-\include{Ch1}
-
-\begin{Quiz}
-\section{期中测试}
-\subsection{题目名称}
 \lipsum[1-5]
-\subsection{题目名称}
-\lipsum[1-5]
-\subsection{题目名称}
-\lipsum[1-5]
-\end{Quiz}
-
-
-\begin{Quiz}
-\section{期中测试}
-\subsection{题目名称}
-\lipsum[1-5]
-\subsection{题目名称}
-\lipsum[1-5]
-\subsection{题目名称}
-\lipsum[1-5]
-\end{Quiz}
-
-
-\chapter{常见的官能团}
-
-\section{烷烃及其性质}
-\begin{Point}
-\lipsum[1]
-\end{Point}
-
-\subsection{测试文字}
-
-\lipsum
-
-
-\begin{Project}
-\section{实验名}
-\begin{Point}
-\lipsum[2]
-\end{Point}
-
-\begin{Case}
-\item 碳酸氢铵受热分解实验
-\item 氮气的性质和用途
-\item 铁的锈蚀实验
-\end{Case}
-
-\subsection{测试文字}
-\lipsum
-\begin{Definition}[定理名称]
-\lipsum[2]
-\end{Definition}
-
-\begin{Application}
-\tcbsubtitle{案例名称}
-\lipsum[1-2]
-\tcbsubtitle{问题分析}
-\lipsum[3-4]
-\end{Application}
-\end{Project}
-
-
-\section{取代反应}
-\begin{Point}
-\lipsum[2]
-\end{Point}
-
-\begin{Case}
-\item 碳酸氢铵受热分解实验
-\item 氮气的性质和用途
-\item 铁的锈蚀实验
-\end{Case}
-
-\lipsum
-\begin{Definition*}[定理名称定理名称定理名称定理名称定理名称定理名称]
-\lipsum[2]
-\end{Definition*}
-
-\begin{Definition*}[定理名称]
-\lipsum[2]
-\end{Definition*}
-
-\begin{Lemma}[引理名称]
-\lipsum[2]
-\end{Lemma}
-
-
-
-\begin{Project}
-\section{实验名}
-\begin{Point}
-\lipsum[2]
-\end{Point}
-
-\begin{Case}
-\item 碳酸氢铵受热分解实验
-\item 氮气的性质和用途
-\item 铁的锈蚀实验
-\end{Case}
-
-\subsection{测试文字}
-\lipsum
-\begin{Definition}[定理名称]
-\lipsum[1]
-\end{Definition}
-
-\begin{Lemma}[引理名称]
-\lipsum[1]
-\end{Lemma}
-\end{Project}
-
-
-
-\section{回顾与总结}
-\begin{Point*}
-\lipsum[1]
-\end{Point*}
-
-\begin{Case*}
-\item \lipsum[1][1]
-\item \lipsum[1][1]
-\item \lipsum[1][1]
-\item \lipsum[1][1]
-\item \lipsum[1][1]
-\item \lipsum[1][1]
-\item \lipsum[1][1]
-\end{Case*}
-
-
-\lipsum[1-6]
-\begin{Improve}
-\tcbsubtitle{A~组}
-\begin{QsNum}
-\item \lipsum[1][1-4]
-\item \lipsum[1][1-4]
-\item \lipsum[1][1-4]
-\item \lipsum[1][1-4]
-\item \lipsum[1][1-4]
-\item \lipsum[1][1-4]
-\item \lipsum[1][1-4]
-\item \lipsum[1][1-4]
-\end{QsNum}
-\tcbsubtitle{B~组}
-\begin{QsNum}
-\item \lipsum[1][1-4]
-\item \lipsum[1][1-4]
-\item \lipsum[1][1-4]
-\item \lipsum[1][1-4]
-\item \lipsum[1][1-4]
-\item \lipsum[1][1-4]
-\item \lipsum[1][1-4]
-\item \lipsum[1][1-4]
-\end{QsNum}
-\tcblower
-\lipsum[1]
-\end{Improve}
 
 
 
 
+%\begin{CppBox}{有限元分析}
+%void FN( double A, double B, double *N, int *Ele );
+%void FNA( double A, double B, double *NA, int *Ele );
+%void FNB( double A, double B, double *NB, int *Ele );
+%double Inv_jaco( double A, double B, double *xo, double *yo, double *Nx, double *Ny, int *Ele );
+%void eld( double E, double u, double (*D)[3], int Iopt );
+%void CacuEKF( double E, double u, double Thick , double *xo, double *yo, double (*stress)[3], double *uo, double *vo, double *ef, double *ek, int *Ele, int nGauss , int Iopt );
+%void AssembleUF( double *ef, double (*UF)[2], int *Ele );
+%void skdd( int *jd, int (*Element)[8], int NN, int ND, int NE );
+%void SetStiff( int i, int j, double Value , double *Stiff , int *jd );
+%double GetStiff( int i, int j, double *Stiff , int *jd );
+%void AssembleK( double *ek, int *je, int EFN, double *Stiff, int *jd );
+%void Fix( int k, double a, double *Stiff , double *Load , int *jd, int NF );
+%void LLT( int *jd, double *zk, double *F, int NF );
+%void CacuSS( double E, double u, double *xo, double *yo, double *uo, double *vo, double (*SS)[4], int *Ele, int Iopt );
+%\end{CppBox}
+%
+%
+%\begin{PythonBox}{ABAQUS~自动批处理}
+%import numpy as np
+%import pandas as pd
+%inp_file = open('C:/Users/17939/Desktop/inp/Job.inp') # 
+%origin_data = inp_file.read() # 
+%inp_file.close() # 
+%# 生成新文件数
+%file_num = 15
+%# 
+%delta_x = 17.5
+%delta_y = 17.5
+%# 
+%parameter_name = ['cailiaomidu', 'tanxingmoliang', 'bosongbi', 
+%                  'chusudu', 'hengxiangpianyi', 'weizhibianliang', 
+%                  'zongxiangpianyi', 'gaodupianyi', 'zongshijian', 'shijiandanwei']
+%# 
+%parameter_value = [np.linspace(7850, 7850, file_num), # 
+%                   np.linspace(2.06e+11, 2.06e+11, file_num), # 
+%                   np.linspace(0.3, 0.3, file_num), # 
+%                   np.linspace(-500, -500, file_num), # 
+%                   np.linspace(-delta_x, delta_x, file_num), # 
+%                   np.linspace(-delta_x + 1, delta_x + 1, file_num), # 
+%                   np.linspace(-delta_y, delta_y, file_num), # 
+%                   np.linspace(0, 0, file_num), # 
+%                   np.linspace(5, 5, file_num), # 
+%                   np.linspace(1e-4, 1e-4, file_num)] # 
+%# 
+%for n in range(0, file_num): # 
+%    for m in range(0, file_num):
+%        temp_data = origin_data # 
+%        temp_data = temp_data.replace('hengxiangpianyi', str(parameter_value[4][n])) # 
+%        temp_data = temp_data.replace('weizhibianliang', str(parameter_value[5][n])) # 
+%        temp_data = temp_data.replace('zongxiangpianyi', str(parameter_value[6][m])) # 
+%        new_data = temp_data
+%        if 2.5 * n - delta_x < 0:
+%            x = '_' + str(abs(2.5 * n - delta_x))
+%        else:
+%            x = str(2.5 * n - delta_x)
+%        if 2.5 * m - delta_y < 0:
+%            y = '_' + str(abs(2.5 * m - delta_y))
+%        else:
+%            y = str(2.5 * m - delta_y)
+%        new_file = open('C:/Users/17939/Desktop/inp/TEST/'+ x + 'to' + y + '.inp', 'w') # 
+%        new_file.write(new_data) # 
+%        new_file.close() # 
+%\end{PythonBox}
+%
+%
+%\begin{Proposition*}[命题名称命题名称命题名称命题名称命题名称]
+%\zhlipsum[2]
+%\end{Proposition*}
+%
+%\clearpage
+%\ExerciseTitle{基础巩固}
+%\lipsum
+%
+%\ExerciseTitle{能力提升}
+%\lipsum
+%
+%
+%
+%\begin{Topic}
+%\section{专题名专题名专题名专题名专题名专题名专题名专题名专题名}
+%
+%\begin{Paracol}
+%\subsection{题型名称题型名称}
+%
+%\subsubsection{方法解析}
+%\lipsum[2]
+%
+%
+%\subsubsection{典型例题}
+%\lipsum[2]
+%
+%\Example{\lipsum[1][1-4]}
+%\Answer{\lipsum[1][1-4]}
+%\Answer*{\lipsum[1][1-4]}
+%
+%\Example{\lipsum[1][1-4]}
+%\Answer{\lipsum[1][1-4]}
+%\Answer*{\lipsum[1][1-4]}
+%
+%\subsection{题型名称}
+%
+%\subsubsection{方法解析}
+%\lipsum[1-2]
+%
+%\subsubsection{典型例题}
+%\lipsum[2]
+%
+%\Example{\lipsum[1][1-4]}
+%\Answer{\lipsum[1][1-4]}
+%\Answer*{\lipsum[1][1-4]}
+%
+%\Example{\lipsum[1][1-4]}
+%\Answer{\lipsum[1][1-4]}
+%\Answer*{\lipsum[1][1-4]}
+%
+%\end{Paracol}
+%
+%
+%\begin{Specific}
+%\begin{QsNum}
+%\item \lipsum[1][1]
+%\choice{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
+%\item \lipsum[1][1]
+%\choice{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
+%\item \lipsum[1][1]
+%\choice{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
+%\item \lipsum[1][1]
+%\choice{polar}{saturn}{mars}{venus}
+%\item \lipsum[1][1]
+%\choice{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
+%\item \lipsum[1][1]
+%\choice{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
+%\item \lipsum[1][1]
+%\choice{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
+%\item \lipsum[1][1]
+%\choice{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
+%\item \lipsum[1][1]
+%\choice{polar}{saturn}{mars}{venus}
+%\item \lipsum[1][1]
+%\choice{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
+%\end{QsNum}
+%\tcblower
+%\lipsum[1]
+%\end{Specific}
+%
+%
+%
+%\end{Topic}
+%
+%\begin{Topic}
+%\section{专题名}
+%\begin{Paracol}
+%\subsection{题型名称}
+%
+%\subsubsection{方法解析}
+%\lipsum[1]
+%
+%\subsubsection{典型例题}
+%
+%\Example{\lipsum[1][1-4]}
+%\Answer{\lipsum[1][1-4]}
+%\Answer*{\lipsum[1][1-4]}
+%
+%\Example{\lipsum[1][1-4]}
+%\Answer{\lipsum[1][1-4]}
+%\Answer*{\lipsum[1][1-4]}
+%
+%\end{Paracol}
+%
+%\begin{Specific}
+%\begin{QsNum}
+%\item \lipsum[1][1]
+%\choice{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
+%\item \lipsum[1][1]
+%\choice{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
+%\item \lipsum[1][1]
+%\choice{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
+%\item \lipsum[1][1]
+%\choice{polar}{saturn}{mars}{venus}
+%\item \lipsum[1][1]
+%\choice{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
+%\item \lipsum[1][1]
+%\choice{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
+%\item \lipsum[1][1]
+%\choice{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
+%\item \lipsum[1][1]
+%\choice{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
+%\item \lipsum[1][1]
+%\choice{polar}{saturn}{mars}{venus}
+%\item \lipsum[1][1]
+%\choice{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}{\lipsum[1][3]}
+%\end{QsNum}
+%\tcblower
+%\lipsum[1]
+%\end{Specific}
+%
+%\end{Topic}
+%
+%
+%\section{实验：实验名}
+%\begin{Point}
+%\lipsum[2]
+%\end{Point}
+%
+%\begin{Case}
+%\item 碳酸氢铵受热分解实验
+%\item 氮气的性质和用途
+%\item 铁的锈蚀实验
+%\end{Case}
+%
+%
+%\begin{Corollary*}[推论名称]
+%\lipsum[2][1-7]
+%\end{Corollary*}
+%
+%
+%
+%\chapter*{测试章节}
+%\lipsum\lipsum
+%\lipsum[1-5]
 
-\begin{Quiz}
-\section{主观题}
-\end{Quiz}
 
 
 
-\begin{Project}
-\section{实验名}
+%\section{锂及其化合物}
+%
+%\begin{Point}
+%\lipsum[2]
+%\end{Point}
+%
+%\begin{Case}
+%\item 碳酸氢铵受热分解实验
+%\item 氮气的性质和用途
+%\item 铁的锈蚀实验
+%\end{Case}
+%
+%\begin{Paracol}
+%\subsection{锂单质的性质}
+%\lipsum[2][1-8]
+%\subsubsection{锂的物理性质}
+%\lipsum[1-2]
+%\subsubsection{锂的化学性质}
+%\lipsum[1-2]
+%\subsection{锂的化合物}
+%\lipsum[2][1-8]
+%\subsubsection{氢氧化锂}
+%\lipsum[1-2]
+%\subsubsection{氧化锂}
+%\lipsum[1-3]
+%
+%\begin{Block}[文字标题]
+%\lipsum[2]
+%\end{Block}
+%
+%
+%\begin{Block}
+%\lipsum[2]
+%\end{Block}
+%
+%\subsection{锂电池}
+%\lipsum[1-2]
+%\subsection{锂的其他应用}
+%\lipsum[1-2]
+%\begin{Definition}[定义名称]
+%\lipsum[1][1-3]
+%\end{Definition}
+%
+%Just like \ref{Def.3.1.1} on page \pageref{Def.3.1.1}
+%
+%
+%\begin{Theorem*}[定理名称]
+%\lipsum[1][1-3]
+%\end{Theorem*}
+%
+%Just like \ref{Thm.3.1.1} on page \pageref{Thm.3.1.1}
+%
+%\end{Paracol}
+%
+%
+%\begin{Exercise}
+%\begin{QsNum}
+%\item \lipsum[1][1-2]
+%\item \lipsum[1][1-2]
+%\item \lipsum[1][1-2]
+%\item \lipsum[1][1-2]
+%\item \lipsum[1][1-2]
+%\item \lipsum[1][1-2]
+%\item \lipsum[1][1-2]
+%\item \lipsum[1][1-2]
+%\end{QsNum}
+%\tcblower
+%\lipsum[1]
+%\end{Exercise}
+%
+%
+%
+%\section{钠化合物的性质}
+%\begin{Point}
+%\lipsum[2]
+%\end{Point}
+%
+%\begin{Case}
+%\item 碳酸氢铵受热分解实验
+%\item 氮气的性质和用途
+%\item 铁的锈蚀实验
+%\end{Case}
+%
+%
+%\subsection{锂单质的性质}
+%\subsubsection{锂的物理性质锂的物理性质}
+%\lipsum[1-2]
+%
+%\begin{Lemma*}[万有引力定律]
+%\lipsum[2][1-3]
+%\end{Lemma*}
+%\subsubsection{锂的化学性质}
+%\lipsum[1-2]
+%\subsection{锂的化合物}
+%\lipsum[3]
+%\subsubsection{氢氧化锂}
+%\lipsum[1-2]
+%\subsubsection{氧化锂}
+%\lipsum[1-2]
+%\subsection{锂电池}
+%\lipsum[1-2]
+%\subsection{锂的其他应用}
+%\lipsum[1-2]
+%
+%\begin{Exercise}
+%\begin{QsNum}
+%\item \lipsum[1][1-2]
+%\item \lipsum[1][1-2]
+%\item \lipsum[1][1-2]
+%\item \lipsum[1][1-2]
+%\item \lipsum[1][1-2]
+%\item \lipsum[1][1-2]
+%\item \lipsum[1][1-2]
+%\item \lipsum[1][1-2]
+%\end{QsNum}
+%\tcblower
+%\lipsum[1]
+%\end{Exercise}
+%
+%
+%\section{回顾与总结}
+%
+%\begin{Point*}
+%\lipsum[2]
+%\end{Point*}
+%
+%\begin{Case*}
+%\item \lipsum[1][1]
+%\item \lipsum[1][1]
+%\item \lipsum[1][1]
+%\end{Case*}
+%
+%
+%\subsection{测试文字测试文字测试文字}
+%
+%
+%\subsubsection*{测试文字测试文字}
+%\lipsum[1-2]
+%
+%\Example{\lipsum[1][1-5]}
+%\Answer{\lipsum[1][1-4]}
+%\Answer*{\lipsum[1][1-4]}
+%
+%\Variety{\lipsum[1][1-5]}
+%\Answer{\lipsum[1][1-4]}
+%\Answer*{\lipsum[1][1-4]}
+%
+%\subsubsection*{测试文字测试文字}
+%\lipsum[1-2]
+%
+%\Example{\lipsum[1][1-5]}
+%\Answer{\lipsum[1][1-4]}
+%\Answer*{\lipsum[1][1-4]}
+%
+%
+%\Variety{\lipsum[1][1-5]}
+%\Answer{\lipsum[1][1-4]}
+%\Answer*{\lipsum[1][1-4]}
+%
+%
+%\subsection{测试文字测试文字测试文字测试文字测试文字测试文字测试文字}
+%\subsubsection*{测试文字测试文字}
+%\lipsum[1-2]
+%
+%\Example{\lipsum[1][1-5]}
+%\Answer{\lipsum[1][1-4]}
+%\Answer*{\lipsum[1][1-4]}
+%
+%\Variety{\lipsum[1][1-5]}
+%\Answer{\lipsum[1][1-4]}
+%\Answer*{\lipsum[1][1-4]}
+%
+%\begin{Improve}
+%\tcbsubtitle{A~组}
+%\begin{QsNum}
+%\item \lipsum[1][1-4]
+%\item \lipsum[1][1-4]
+%\item \lipsum[1][1-4]
+%\item \lipsum[1][1-4]
+%\item \lipsum[1][1-4]
+%\item \lipsum[1][1-4]
+%\item \lipsum[1][1-4]
+%\item \lipsum[1][1-4]
+%\item \lipsum[1][1-4]
+%\end{QsNum}
+%\tcbsubtitle{B~组}
+%\begin{QsNum}
+%\item \lipsum[1][1-4]
+%\item \lipsum[1][1-4]
+%\item \lipsum[1][1-4]
+%\item \lipsum[1][1-4]
+%\item \lipsum[1][1-4]
+%\item \lipsum[1][1-4]
+%\item \lipsum[1][1-4]
+%\item \lipsum[1][1-4]
+%\item \lipsum[1][1-4]
+%\end{QsNum}
+%\tcbsubtitle{C~组}
+%\begin{QsNum}
+%\item \lipsum[1][1-4]
+%\item \lipsum[1][1-4]
+%\item \lipsum[1][1-4]
+%\item \lipsum[1][1-4]
+%\item \lipsum[1][1-4]
+%\item \lipsum[1][1-4]
+%\item \lipsum[1][1-4]
+%\item \lipsum[1][1-4]
+%\item \lipsum[1][1-4]
+%\end{QsNum}
+%\tcblower
+%\lipsum[1]
+%\end{Improve}
+%
+%
+%\lipsum
+%
+%
+%
+%
+%
+%\part{静力学}
+%
+%\include{Ch1}
+%
+%\begin{Quiz}
+%\section{期中测试}
+%\subsection{题目名称}
+%\lipsum[1-5]
+%\subsection{题目名称}
+%\lipsum[1-5]
+%\subsection{题目名称}
+%\lipsum[1-5]
+%\end{Quiz}
+%
+%
+%\begin{Quiz}
+%\section{期中测试}
+%\subsection{题目名称}
+%\lipsum[1-5]
+%\subsection{题目名称}
+%\lipsum[1-5]
+%\subsection{题目名称}
+%\lipsum[1-5]
+%\end{Quiz}
+%
+%
+%\chapter{常见的官能团}
+%
+%\section{烷烃及其性质}
+%\begin{Point}
+%\lipsum[1]
+%\end{Point}
+%
+%\subsection{测试文字}
+%
+%\lipsum
+%
+%
+%\begin{Project}
+%\section{实验名}
+%\begin{Point}
+%\lipsum[2]
+%\end{Point}
+%
+%\begin{Case}
+%\item 碳酸氢铵受热分解实验
+%\item 氮气的性质和用途
+%\item 铁的锈蚀实验
+%\end{Case}
+%
+%\subsection{测试文字}
+%\lipsum
+%\begin{Definition}[定理名称]
+%\lipsum[2]
+%\end{Definition}
+%
+%\begin{Application}
+%\tcbsubtitle{案例名称}
+%\lipsum[1-2]
+%\tcbsubtitle{问题分析}
+%\lipsum[3-4]
+%\end{Application}
+%\end{Project}
+%
+%
+%\section{取代反应}
+%\begin{Point}
+%\lipsum[2]
+%\end{Point}
+%
+%\begin{Case}
+%\item 碳酸氢铵受热分解实验
+%\item 氮气的性质和用途
+%\item 铁的锈蚀实验
+%\end{Case}
+%
+%\lipsum
+%\begin{Definition*}[定理名称定理名称定理名称定理名称定理名称定理名称]
+%\lipsum[2]
+%\end{Definition*}
+%
+%\begin{Definition*}[定理名称]
+%\lipsum[2]
+%\end{Definition*}
+%
+%\begin{Lemma}[引理名称]
+%\lipsum[2]
+%\end{Lemma}
+%
+%
+%
+%\begin{Project}
+%\section{实验名}
+%\begin{Point}
+%\lipsum[2]
+%\end{Point}
+%
+%\begin{Case}
+%\item 碳酸氢铵受热分解实验
+%\item 氮气的性质和用途
+%\item 铁的锈蚀实验
+%\end{Case}
+%
+%\subsection{测试文字}
+%\lipsum
+%\begin{Definition}[定理名称]
+%\lipsum[1]
+%\end{Definition}
+%
+%\begin{Lemma}[引理名称]
+%\lipsum[1]
+%\end{Lemma}
+%\end{Project}
+%
+%
+%
+%\section{回顾与总结}
+%\begin{Point*}
+%\lipsum[1]
+%\end{Point*}
+%
+%\begin{Case*}
+%\item \lipsum[1][1]
+%\item \lipsum[1][1]
+%\item \lipsum[1][1]
+%\item \lipsum[1][1]
+%\item \lipsum[1][1]
+%\item \lipsum[1][1]
+%\item \lipsum[1][1]
+%\end{Case*}
+%
+%
+%\lipsum[1-6]
+%\begin{Improve}
+%\tcbsubtitle{A~组}
+%\begin{QsNum}
+%\item \lipsum[1][1-4]
+%\item \lipsum[1][1-4]
+%\item \lipsum[1][1-4]
+%\item \lipsum[1][1-4]
+%\item \lipsum[1][1-4]
+%\item \lipsum[1][1-4]
+%\item \lipsum[1][1-4]
+%\item \lipsum[1][1-4]
+%\end{QsNum}
+%\tcbsubtitle{B~组}
+%\begin{QsNum}
+%\item \lipsum[1][1-4]
+%\item \lipsum[1][1-4]
+%\item \lipsum[1][1-4]
+%\item \lipsum[1][1-4]
+%\item \lipsum[1][1-4]
+%\item \lipsum[1][1-4]
+%\item \lipsum[1][1-4]
+%\item \lipsum[1][1-4]
+%\end{QsNum}
+%\tcblower
+%\lipsum[1]
+%\end{Improve}
+%
+%
+%
+%
+%
+%\begin{Quiz}
+%\section{主观题}
+%\end{Quiz}
+%
+%
+%
+%\begin{Project}
+%\section{实验名}
+%
+%\begin{Theorem*}[定理名称]
+%\lipsum[1][1-3]
+%\end{Theorem*}
+%\end{Project}
 
-\begin{Theorem*}[定理名称]
-\lipsum[1][1-3]
-\end{Theorem*}
-\end{Project}
-
-
+\partintro{\zhlipsum[1]}
 \part*{自我检测}
 
 
@@ -1246,6 +1251,7 @@ Just like \ref{Thm.3.1.1} on page \pageref{Thm.3.1.1}
 \begin{Quiz}
 \chapter{第~3-4~章检测题}
 \section{主观题}
+\lipsum[1-5]
 \end{Quiz}
 
 
@@ -1259,7 +1265,7 @@ Just like \ref{Thm.3.1.1} on page \pageref{Thm.3.1.1}
 
 
 
-
+\partintro{\zhlipsum[1]}
 \part*{附录}
 
 \chapter{参考答案}
@@ -1323,60 +1329,60 @@ Just like \ref{Thm.3.1.1} on page \pageref{Thm.3.1.1}
 
 
 
-\newcounter{wxcounter}
-\newcommand{\wx}{\underline{~~\thewxcounter\refstepcounter{wxcounter}~~}}
-
-\begin{Reading}{5}{3}
-\lipsum[2]
-\end{Reading}
-
-
-\begin{Cloze}[文章标题]{5}{4.5}
-\setcounter{wxcounter}{1}
-	I made up my mind to drive to South Carolina to meet my friends in my used car. Though I had only been there once \wx and did not know the, \wx very well. I was on the \wx after I had made some inquiries.\par
-	At Ashvelle, there was a crossroad where I could go on along the main road or I could take a shortcut. The short cut was to \wx several hills and was dangerous, I hesitated for a little while and then chose the main road, for I wanted to be \wx.\par
-	Something strange happened after I drove a long, \wx and found it was not the correct road that Iwanted to \wx, but the hilly road I decided to avoid .I realized that it was at the. \wx that I had made the. \wx mistake. ``What shall I do ?" I asked myself. If I went back to take that road again, it would be very lateby the time I got to Columbia. Thin it \wx, I decided to go on. ``If \wx people can go along this road, why can't I ?" I \wx myself.\par
-	The short cut, to my surprise, was not that \wx. In fact, it was only a very peaceful country road, \wx upand down two low \wx.There was \wx traffic. On both sides of the road, you could see trees, wild flowers, and \wx{} with cows and horses, My fear was \wx with the wind. Listening to the beautiful country musicover my car stereo, I drove on and \wx the scenery which was so quiet and so natural. Even my used car forgot to give me. \wx. It was just in this light heartedness that I arrived at my destination. My friends, after they heard what had happened to me, all said it sounded like an adventure.
-\begin{QsNum}
-\item \choice{before}{ago}{already}{still}
-\item \choice{town}{country}{friends}{way}
-\item \choice{train}{car}{highway}{phone}
-\item \choice{have}{go}{ride}{cross}
-\item \choice{safe}{dangerous}{fast}{slow}
-\item \choice{moment}{way}{road}{day}
-\item \choice{come}{leave}{take}{drive}
-\item \choice{crossroad}{corner}{station}{beginning}
-\item \choice{direction}{road}{disappointed}{interesting}
-\item \choice{about}{over}{of}{up}
-\item \choice{another}{the other}{other}{others}
-\item \choice{asked}{forced}{encouraged}{told}
-\item \choice{far}{safe}{dangerous}{dirty}
-\item \choice{going}{coming}{driving}{walking}
-\item \choice{lands}{cars}{farms}{hills}
-\item \choice{heavy}{little}{few}{light}
-\item \choice{farms}{trucks}{houses}{villages}
-\item \choice{together}{gone}{covered}{coming}
-\item \choice{looked}{liked}{enjoyed}{found}
-\item \choice{happiness}{scenery}{joys}{problems}
-\end{QsNum}
-\end{Cloze}
-
-\begin{Article}[乱数假文]{5}{1}
-\zhlipsum
-\end{Article}
-
-\begin{box9}{语法填空}
-\lipsum[2]
-\end{box9}
-
-
-\begin{Vocabulary}{词汇}
-\lipsum[2][1-5]
-\tcbsubtitle{派生词}
-\lipsum[3][1-5]
-\tcbsubtitle{例句}
-\lipsum[3][1-5]
-\end{Vocabulary}
+%\newcounter{wxcounter}
+%\newcommand{\wx}{\underline{~~\thewxcounter\refstepcounter{wxcounter}~~}}
+%
+%\begin{Reading}{5}{3}
+%\lipsum[2]
+%\end{Reading}
+%
+%
+%\begin{Cloze}[文章标题]{5}{4.5}
+%\setcounter{wxcounter}{1}
+%	I made up my mind to drive to South Carolina to meet my friends in my used car. Though I had only been there once \wx and did not know the, \wx very well. I was on the \wx after I had made some inquiries.\par
+%	At Ashvelle, there was a crossroad where I could go on along the main road or I could take a shortcut. The short cut was to \wx several hills and was dangerous, I hesitated for a little while and then chose the main road, for I wanted to be \wx.\par
+%	Something strange happened after I drove a long, \wx and found it was not the correct road that Iwanted to \wx, but the hilly road I decided to avoid .I realized that it was at the. \wx that I had made the. \wx mistake. ``What shall I do ?" I asked myself. If I went back to take that road again, it would be very lateby the time I got to Columbia. Thin it \wx, I decided to go on. ``If \wx people can go along this road, why can't I ?" I \wx myself.\par
+%	The short cut, to my surprise, was not that \wx. In fact, it was only a very peaceful country road, \wx upand down two low \wx.There was \wx traffic. On both sides of the road, you could see trees, wild flowers, and \wx{} with cows and horses, My fear was \wx with the wind. Listening to the beautiful country musicover my car stereo, I drove on and \wx the scenery which was so quiet and so natural. Even my used car forgot to give me. \wx. It was just in this light heartedness that I arrived at my destination. My friends, after they heard what had happened to me, all said it sounded like an adventure.
+%\begin{QsNum}
+%\item \choice{before}{ago}{already}{still}
+%\item \choice{town}{country}{friends}{way}
+%\item \choice{train}{car}{highway}{phone}
+%\item \choice{have}{go}{ride}{cross}
+%\item \choice{safe}{dangerous}{fast}{slow}
+%\item \choice{moment}{way}{road}{day}
+%\item \choice{come}{leave}{take}{drive}
+%\item \choice{crossroad}{corner}{station}{beginning}
+%\item \choice{direction}{road}{disappointed}{interesting}
+%\item \choice{about}{over}{of}{up}
+%\item \choice{another}{the other}{other}{others}
+%\item \choice{asked}{forced}{encouraged}{told}
+%\item \choice{far}{safe}{dangerous}{dirty}
+%\item \choice{going}{coming}{driving}{walking}
+%\item \choice{lands}{cars}{farms}{hills}
+%\item \choice{heavy}{little}{few}{light}
+%\item \choice{farms}{trucks}{houses}{villages}
+%\item \choice{together}{gone}{covered}{coming}
+%\item \choice{looked}{liked}{enjoyed}{found}
+%\item \choice{happiness}{scenery}{joys}{problems}
+%\end{QsNum}
+%\end{Cloze}
+%
+%\begin{Article}[乱数假文]{5}{1}
+%\zhlipsum
+%\end{Article}
+%
+%\begin{box9}{语法填空}
+%\lipsum[2]
+%\end{box9}
+%
+%
+%\begin{Vocabulary}{词汇}
+%\lipsum[2][1-5]
+%\tcbsubtitle{派生词}
+%\lipsum[3][1-5]
+%\tcbsubtitle{例句}
+%\lipsum[3][1-5]
+%\end{Vocabulary}
 
 
 
