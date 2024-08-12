@@ -162,18 +162,18 @@
 \newcommand{\ChapterNameFont}{\titlefont\bfseries\FontSize[1.2]{25pt}}%章名称字体
 \newcommand{\SectionLabelFont}{\titlefont\bfseries\FontSize{18pt}}%节标签字体
 \newcommand{\SectionNameFont}{\titlefont\bfseries\FontSize{18pt}}%节名称字体
-\newcommand{\SubsectionLabelFont}{\titlefont\bfseries\FontSize{16pt}}%小节标签字体
-\newcommand{\SubsectionNameFont}{\titlefont\bfseries\FontSize{16pt}}%小节名称字体
-\newcommand{\SubsectionSubTFont}{\titlefont\bfseries\FontSize{14pt}}
+\newcommand{\SubsectionLabelFont}{\titlefont\bfseries\FontSize{15pt}}%小节标签字体15
+\newcommand{\SubsectionNameFont}{\titlefont\bfseries\FontSize{15pt}}%小节名称字体
+\newcommand{\SubsectionSubTFont}{\titlefont\bfseries\FontSize{14pt}}%小节副标题字体
 \newcommand{\SubsubsectionLabelFont}{\titlefont\bfseries\FontSize{25pt}}%小小节标签字体
 \newcommand{\SubsubsectionNameFont}{\titlefont\bfseries\FontSize{14.5pt}}%小小节名称字体
 \newcommand{\ParagraphNameFont}{\titlefont\bfseries\FontSize{14pt}}%段落名称字体
-\newcommand{\HeaderFont}{\titlefont\bfseries\FontSize{13pt}}%页眉字体
+\newcommand{\HeaderFont}{\titlefont\bfseries\FontSize[1.5]{13pt}}%页眉字体
 \newcommand{\FooterFont}{\titlefont\bfseries\FontSize{13pt}}%页脚字体
 \newcommand{\PageNumberFont}{\numberfont\bfseries\FontSize{16pt}}%页码字体
-\newcommand{\PageSideFont}{\titlefont\bfseries\FontSize{15pt}}%侧标字体
+\newcommand{\PageSideFont}{\titlefont\bfseries\FontSize[1.5]{14pt}}%侧标字体
 \newcommand{\CaptionFont}{\contentfont\bfseries\FontSize[1.5]{12pt}}%图表标签字体
-\newcommand{\TocPartFont}{\titlefont\bfseries\FontSize{15pt}}%目录部分字体
+\newcommand{\TocPartFont}{\titlefont\bfseries\FontSize{14.5pt}}%目录部分字体
 \newcommand{\TocChapterFont}{\titlefont\bfseries\FontSize{14pt}}%目录章字体
 \newcommand{\TocSectionFont}{\contentfont\FontSize{14pt}}%目录节字体
 \newcommand{\LofFont}{\contentfont\FontSize{14pt}}%图列表字体
@@ -646,13 +646,17 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 %%测量节点尺寸%%
 %%
 \def\pgfgetnodeheight(#1)#2{
+\begin{pgfinterruptboundingbox}
 \path($(#1.south)-(#1.north)$);
-\pgfmathsetmacro#2{veclen(\pgf@x, \pgf@y)}
+\end{pgfinterruptboundingbox}
+\pgfmathsetmacro#2{veclen(\pgf@x,\pgf@y)}
 \edef#2{#2pt}}
 %%
 \def\pgfgetnodewidth(#1)#2{
+\begin{pgfinterruptboundingbox}
 \path($(#1.east)-(#1.west)$);
-\pgfmathsetmacro#2{veclen(\pgf@x, \pgf@y)}
+\end{pgfinterruptboundingbox}
+\pgfmathsetmacro#2{veclen(\pgf@x,\pgf@y)}
 \edef#2{#2pt}}
 \makeatother
 
@@ -768,11 +772,20 @@ font=\ListNumFont,text=white]{\maxsizebox{4.5mm}{!}{#1}};}}
 \DefaultMark
 \makeatother}}
 %%绘制页面框架%%
+\newlength{\PageSideHeight}
+\newlength{\PageSideRealXSep}
+\newlength{\PageSideXSep}
+\setlength{\PageSideXSep}{3.5mm}
+\newlength{\PageSideCriticalLen}
+\setlength{\PageSideCriticalLen}{5.0mm}
+%%
 \makeatletter
+\newlength{\PageSideCrLen}
+\setlength{\PageSideCrLen}{1.2cm}
 \newlength{\FrameWidth}
 \setlength{\FrameWidth}{1.0cm}
 \newlength{\PageNumLen}
-\setlength{\PageNumLen}{\@toplen-\@handseplen+0.1cm}
+\setlength{\PageNumLen}{\@toplen-\@handseplen+1.0mm}
 \renewcommand{\headrulewidth}{0pt}
 \renewcommand{\chaptermark}[1]{
 \if@mainmatter
@@ -781,12 +794,19 @@ font=\ListNumFont,text=white]{\maxsizebox{4.5mm}{!}{#1}};}}
 \markboth{#1}{#1}
 \fi}
 \renewcommand{\sectionmark}[1]{\markright{第~\thesection~节\quad#1}}
-
+%%%%
 %%绘制主页面样式%%
 \newcommand{\@mainpageframe}{
 \begin{tikzpicture}[remember picture,overlay]
 %%根据页数的奇偶生成%%
 \ifodd\value{page}
+\settototalheight{\PageSideHeight}{\pgfinterruptpicture\PageSideFont\lastxmark\endpgfinterruptpicture}
+\ifdim\PageSideHeight>\PageSideCriticalLen
+\setlength{\PageSideRealXSep}{\PageSideXSep}
+\else
+\setlength{\PageSideRealXSep}{\PageSideCriticalLen/2-\PageSideHeight/2+\PageSideXSep}
+\fi
+%%
 \coordinate(A)at(current page.north west);
 \coordinate(B)at(current page.north east);
 \coordinate(C)at(current page.south east);
@@ -806,8 +826,16 @@ font=\ListNumFont,text=white]{\maxsizebox{4.5mm}{!}{#1}};}}
 ([xshift=-\FrameWidth+0.15cm]B)--cycle;
 \node[font=\PageNumberFont,text=white,anchor=south,align=center,inner ysep=2.0mm](P)at([xshift=-\@outerlen/2-0.3cm,yshift=-\PageNumLen]B){\maxsizebox{0.8cm}{!}{\thepage}};
 %%绘制侧标%%
-\draw[draw=ColorA,fill=ColorA,sharp corners,line width=1.0pt]node[append after command={(T.north west)--(T.north east)--(T.south east)[rounded corners=1.75mm]--(T.south west)[rounded corners=1.75mm]--cycle},font=\PageSideFont,text=white,text width=\FrameWidth-2.0mm,align=center,inner xsep=1.5mm,inner ysep=3.5mm,anchor=east](T)at([yshift=\MarkY]B){\rotatebox[origin=c]{90}{\maxsizebox{\DeltaH}{!}{\lastxmark}}};
+\draw[draw=ColorA,fill=ColorA,sharp corners,line width=1.0pt]node[append after command={(T.north west)--(T.north east)--(T.south east)[rounded corners=1.75mm]--(T.south west)[rounded corners=1.75mm]--cycle},font=\PageSideFont,text=white,align=center,outer sep=0mm,inner xsep=\PageSideRealXSep,inner ysep=3.5mm,minimum width=\PageSideCrLen,anchor=east](T)at([yshift=\MarkY]B){\rotatebox[origin=c]{90}{\begin{varwidth}{\DeltaH}\lastxmark\end{varwidth}}};
+%%%%
 \else
+\settototalheight{\PageSideHeight}{\pgfinterruptpicture\PageSideFont\firstxmark\endpgfinterruptpicture}
+\ifdim\PageSideHeight>\PageSideCriticalLen
+\setlength{\PageSideRealXSep}{\PageSideXSep}
+\else
+\setlength{\PageSideRealXSep}{\PageSideCriticalLen/2-\PageSideHeight/2+\PageSideXSep}
+\fi
+%%
 \coordinate(A)at(current page.north east);
 \coordinate(B)at(current page.north west);
 \coordinate(C)at(current page.south west);
@@ -827,64 +855,17 @@ font=\ListNumFont,text=white]{\maxsizebox{4.5mm}{!}{#1}};}}
 ([xshift=\FrameWidth-0.15cm]B)--cycle;
 \node[font=\PageNumberFont,text=white,anchor=south,align=center,inner ysep=2.0mm](P)at([xshift=\@outerlen/2+0.3cm,yshift=-\PageNumLen]B){\maxsizebox{0.8cm}{!}{\thepage}};
 %%绘制侧标%%
-\draw[draw=ColorA,fill=ColorA,sharp corners,line width=1.0pt]node[append after command={(T.north west)[rounded corners=1.75mm]--(T.north east)[rounded corners=1.75mm]--(T.south east)[sharp corners]--(T.south west)--cycle},font=\PageSideFont,text=white,text width=\FrameWidth-2.0mm,align=center,inner xsep=1.5mm,inner ysep=3.5mm,anchor=west](T)at([yshift=\MarkY]B){\rotatebox[origin=c]{270}{\maxsizebox{\DeltaH}{!}{\firstxmark}}};
+\draw[draw=ColorA,fill=ColorA,sharp corners,line width=1.0pt]node[append after command={(T.north west)[rounded corners=1.75mm]--(T.north east)[rounded corners=1.75mm]--(T.south east)[sharp corners]--(T.south west)--cycle},font=\PageSideFont,text=white,align=center,outer sep=0mm,inner xsep=\PageSideRealXSep,inner ysep=3.5mm,minimum width=\PageSideCrLen,anchor=west](T)at([yshift=\MarkY]B){\rotatebox[origin=c]{270}{\begin{varwidth}{\DeltaH}\firstxmark\end{varwidth}}};
 \fi
 \end{tikzpicture}}
-
+%%
 %%定义主页面样式%%
 \fancypagestyle{MainPage}{
 \fancyhead{}
 \fancyfoot{}
 \fancyfoot[C]{\@mainpageframe}
 \fancyhead[RO]{\HeaderFont\color{ColorA}\rightmark}
-\fancyhead[LE]{\HeaderFont\color{ColorA}\leftmark}
-}
-%%绘制其他页面样式%%
-\newcommand{\@subpageframe}{
-\begin{tikzpicture}[remember picture,overlay]
-%%绘制页面框架%%
-\draw[fill=ColorB!7.5,ColorB!7.5,sharp corners]
-(current page.north west)rectangle([yshift=-1.0cm]current page.north east);
-\draw[fill=ColorB!7.5,ColorB!7.5,sharp corners]
-(current page.south west)rectangle([yshift=1.0cm]current page.south east);
-%%根据页数的奇偶生成%%
-\ifodd\value{page}
-\coordinate(B)at(current page.north east);
-\coordinate(C)at(current page.south east);
-%%绘制页眉%%
-\node[draw=ColorA,fill=ColorA,font=\HeaderFont,text=white,
-inner xsep=3.75mm,minimum height=7.5mm,rounded corners=3.75mm,
-anchor=east,align=right](H)at([xshift=-\@outerlen+1.0mm,yshift=-1.0cm]B){\maxsizebox{\textwidth-7.5mm}{!}{\rightmark}};
-%%绘制页码%%
-\node[draw=ColorA,fill=ColorA,font=\PageNumberFont,text=white,
-inner xsep=3.75mm,minimum height=7.5mm,rounded corners=3.75mm,
-anchor=east,align=right](P)at([xshift=-\@outerlen+1.0mm,yshift=1.0cm]C){\maxsizebox{0.8cm}{!}{\thepage}};
-\if@mainmatter
-%%绘制侧标%%
-\draw[draw=ColorA,fill=ColorA,sharp corners,line width=1.0pt]node[append after command={(T.east)--([yshift=1.2cm]T.east) arc (90:270:1.2cm)--cycle},font=\PageSideFont,text=white,align=center,text width=6.0mm,
-inner xsep=1.5mm,inner ysep=3.5mm,anchor=east](T)at([yshift=\MarkY]B){\rotatebox[origin=c]{90}{\maxsizebox{1.7cm}{!}{\lastxmark}}};
-\fi\else
-\coordinate(B)at(current page.north west);
-\coordinate(C)at(current page.south west);
-%%绘制页眉%%
-\node[draw=ColorA,fill=ColorA,font=\HeaderFont,text=white,
-inner xsep=3.75mm,minimum height=7.5mm,rounded corners=3.75mm,
-anchor=west,align=left](H)at([xshift=\@outerlen-1.0mm,yshift=-1.0cm]B){\maxsizebox{\textwidth-7.5mm}{!}{\leftmark}};
-%%绘制页码%%
-\node[draw=ColorA,fill=ColorA,font=\PageNumberFont,text=white,
-inner xsep=3.75mm,minimum height=7.5mm,rounded corners=3.75mm,
-anchor=west,align=left](P)at([xshift=\@outerlen-1.0mm,yshift=1.0cm]C){\maxsizebox{0.8cm}{!}{\thepage}};
-\if@mainmatter
-%%绘制侧标%%
-\draw[draw=ColorA,fill=ColorA,sharp corners,line width=1.0pt]node[append after command={(T.west)--([yshift=1.2cm]T.west) arc (90:-90:1.2cm)--cycle},font=\PageSideFont,text=white,align=center,text width=6.0mm,
-inner xsep=1.5mm,inner ysep=3.5mm,anchor=west](T)at([yshift=\MarkY]B){\rotatebox[origin=c]{270}{\maxsizebox{1.7cm}{!}{\firstxmark}}};
-\fi\fi
-\end{tikzpicture}}
-%%定义其他页面样式%%
-\fancypagestyle{SubPage}{
-\fancyhead{}
-\fancyfoot{}
-\fancyfoot[C]{\@subpageframe}}
+\fancyhead[LE]{\HeaderFont\color{ColorA}\leftmark}}
 \makeatother
 
 %%%%%%%%%%%%%%%%%%%% 书籍层次样式 %%%%%%%%%%%%%%%%%%%%%%
@@ -1215,10 +1196,12 @@ inner xsep=1.5mm,inner ysep=3.5mm,anchor=west](T)at([yshift=\MarkY]B){\rotatebox
 %%不编号部分页样式%%
 \newlength{\PartLabelHeight}
 \newlength{\PartNameHeight}
+\newlength{\PartCrLen}
+\setlength{\PartCrLen}{1.25cm}
 \newcommand{\@partstarstyle}[1]{
 \settototalheight{\PartLabelHeight}{\PartNameFont#1}
-\ifdim\PartLabelHeight<1.25cm
-\setlength{\PartLabelHeight}{1.25cm}
+\ifdim\PartLabelHeight<\PartCrLen
+\setlength{\PartLabelHeight}{\PartCrLen}
 \fi
 \settototalheight{\PartNameHeight}{\PartNameFont#1}
 \begin{tikzpicture}[remember picture,overlay]
@@ -1265,15 +1248,13 @@ inner xsep=1.5mm,inner ysep=3.5mm,anchor=west](T)at([yshift=\MarkY]B){\rotatebox
 \NewCommandCopy{\origpart}{\part}
 \RenewDocumentCommand{\part}{s O{#3} m}{
 \IfBooleanTF{#1}
-{\origpart*{#3}
-\markboth{#2}{#2}
+{\origpart*{#3\@mkboth{#2}{#2}}
 \extramarks{#2}{#2}}
-{\origpart[#2]{#3}
-\if@mainmatter
-\markboth{第~{\numberfont\thepart}~部分\quad#2}{第~{\numberfont\thepart}~部分\quad#2}
+{\if@mainmatter
+\origpart[#2]{#3\@mkboth{第~{\numberfont\thepart}~部分\quad#2}{第~{\numberfont\thepart}~部分\quad#2}}
 \extramarks{第~{\numberfont\thepart}~部分\quad#2}{第~{\numberfont\thepart}~部分\quad#2}
 \else
-\markboth{#2}{#2}
+\origpart[#2]{#3\@mkboth{#2}{#2}}
 \extramarks{#2}{#2}
 \fi}}
 %%部分结束命令%%
@@ -1404,11 +1385,13 @@ inner xsep=1.5mm,inner ysep=3.5mm,anchor=west](T)at([yshift=\MarkY]B){\rotatebox
 %%不编号章节样式%%
 \newlength{\ChapterLabelHeight}
 \newlength{\ChapterNameHeight}
+\newlength{\ChapterCrLen}
+\setlength{\ChapterCrLen}{9.0mm}
 \newcommand{\@chapterstarstyle}[2]{
 \settototalheight{\ChapterLabelHeight}{\ChapterNameFont#1}
 %%设置标签最小尺寸
-\ifdim\ChapterLabelHeight<0.9cm
-\setlength{\ChapterLabelHeight}{0.9cm}
+\ifdim\ChapterLabelHeight<\ChapterCrLen
+\setlength{\ChapterLabelHeight}{\ChapterCrLen}
 \fi
 \settototalheight{\ChapterNameHeight}{\ChapterNameFont#1}
 \begingroup
@@ -1544,7 +1527,7 @@ inner xsep=1.5mm,inner ysep=3.5mm,anchor=west](T)at([yshift=\MarkY]B){\rotatebox
 \NewCommandCopy{\origchapter}{\chapter}
 \RenewDocumentCommand{\chapter}{s O{#3} m}{
 \IfBooleanTF{#1}
-{\origchapter*{#3}\markboth{#2}{#2}}
+{\origchapter*{#3\@mkboth{#2}{#2}}}
 {\origchapter[#2]{#3}}
 \vspace*{\ChapterVSpace}}
 
@@ -1597,92 +1580,186 @@ inner xsep=1.5mm,inner ysep=3.5mm,anchor=west](T)at([yshift=\MarkY]B){\rotatebox
 %%小节标题样式%%
 %%编号小节标题样式%%
 %%设置\subsection的标题%%
+\newlength{\SubsecR}
+\newlength{\SubsecSep}
+\setlength{\SubsecSep}{1.5mm}
+\newlength{\SubsecHeight}
 \newlength{\SubsecLabelHeight}
 \newlength{\SubsecNameHeight}
 \newlength{\SubsecLabelWidth}
+\setlength{\SubsecLabelWidth}{3.0cm}
 \newlength{\SubsecNameWidth}
 \newlength{\SubsecLabelSep}
-\setlength{\SubsecLabelSep}{1.5mm}
 \newlength{\SubsecNameSep}
 \newlength{\SubsecHskip}
-\setlength{\SubsecHskip}{0.6cm}
-\newlength{\SubsecLabelR}
-\newlength{\SubsecNameR}
-\newlength{\SubsecBlockLen}
-\newcommand{\@subsectiontitle}[3]{\tikz{
-%为了使长度定义命令在tikz中生效而插入\pgfinterruptpicture\endpgfinterruptpicture%%
+\setlength{\SubsecHskip}{5.0mm}
+\newlength{\SubsecCrLen}
+\setlength{\SubsecCrLen}{5.3mm}
+%%%%
+\newcommand{\@subsectionstyle}[3]{
+\begingroup
+\pgfdeclarelayer{subsectop}
+\pgfdeclarelayer{subsecbottom}
+\pgfsetlayers{subsecbottom,main,subsectop}
+\begin{flushleft}
+\begin{tikzpicture}
+%%测量标签和标题内容的总高度
 \settototalheight{\SubsecLabelHeight}{\pgfinterruptpicture\SubsectionLabelFont#1\endpgfinterruptpicture}
 \settototalheight{\SubsecNameHeight}{\pgfinterruptpicture\SubsectionLabelFont#3\endpgfinterruptpicture}
-%%设置标签最小高度
-\ifdim\SubsecLabelHeight<5.3mm
-\setlength{\SubsecLabelHeight}{5.3mm}
-\fi
-%%根据标题文字高度设置上下间距Sep
+%%如果标签总高度大于标题总高度
 \ifdim\SubsecLabelHeight>\SubsecNameHeight
-\setlength{\SubsecNameSep}{\SubsecLabelSep+\SubsecLabelHeight/2-\SubsecNameHeight/2}
+\setlength{\SubsecLabelSep}{\SubsecSep}%标签上下间隙
+\setlength{\SubsecNameSep}{\SubsecSep+\SubsecLabelHeight/2-\SubsecNameHeight/2}%标题上下间隙
+\setlength{\SubsecR}{\SubsecLabelHeight/2+\SubsecLabelSep}%圆角半径
 \else
-\setlength{\SubsecNameSep}{\SubsecLabelSep}
+\setlength{\SubsecLabelSep}{\SubsecSep+\SubsecNameHeight/2-\SubsecLabelHeight/2}%标签上下间隙
+\setlength{\SubsecNameSep}{\SubsecSep}%标题上下间隙
+\setlength{\SubsecR}{\SubsecNameHeight/2+\SubsecNameSep}%圆角半径
 \fi
-%%
-\settowidth{\SubsecLabelWidth}{\pgfinterruptpicture\SubsectionLabelFont#1\endpgfinterruptpicture}
-\settowidth{\SubsecNameWidth}{\pgfinterruptpicture\SubsectionLabelFont#3\endpgfinterruptpicture}
-\setlength{\SubsecLabelR}{\SubsecLabelHeight/2+\SubsecLabelSep}
-\setlength{\SubsecNameR}{\SubsecNameHeight/2+\SubsecNameSep}
-\setlength{\SubsecBlockLen}{\linewidth-\SubsecNameR-\SubsecLabelWidth-\SubsecHskip}
-\draw[ColorA,fill=ColorA,ultra thick](0,0)arc(90:270:\SubsecLabelR)--(\SubsecLabelWidth+\SubsecHskip,-2\SubsecLabelR) arc (-90:90:\SubsecLabelR)--cycle;
-\node[font=\SubsectionLabelFont,text=white,anchor=west,inner sep=0mm](L)at(0,-\SubsecLabelR){#1};
-\coordinate(A)at([xshift=\SubsecHskip+\SubsecLabelR]L.east);
-\draw[white,fill=white,line width=10.0pt](A)circle(\SubsecLabelR);
-\ifdim\SubsecNameWidth<\SubsecBlockLen
-\draw[draw=ColorB!7.5,fill=ColorB!7.5,sharp corners,ultra thick]node[append after command={(T.north west)[rounded corners=\SubsecNameR]--(T.north east)[rounded corners=\SubsecNameR]--(T.south east)[sharp corners]--(T.south west)[sharp corners]--cycle},font=\SubsectionNameFont,text=ColorA,anchor=north west,outer sep=0mm,inner ysep=\SubsecNameSep,inner xsep=\SubsecNameR](T)at([yshift=\SubsecNameHeight/2+\SubsecNameSep]A){\parbox{\SubsecBlockLen-3\SubsecNameR}{\hspace*{\SubsecNameR}#3}};
-\else
-\draw[draw=ColorB!7.5,fill=ColorB!7.5,sharp corners,ultra thick]node[append after command={(T.north west)[rounded corners=\SubsecNameR]--(T.north east)[rounded corners=\SubsecNameR]--(T.south east)[rounded corners=\SubsecNameR]--(T.south west)[sharp corners]--cycle},font=\SubsectionNameFont,text=ColorA,anchor=north west,outer sep=0mm,inner ysep=\SubsecNameSep,inner xsep=\SubsecNameR](T)at([yshift=\SubsecNameHeight/2+\SubsecNameSep]A){\parbox{\SubsecBlockLen-3\SubsecNameR}{\hspace*{\SubsecNameR}#3}};
-\fi
-\draw[ColorA,fill=white,line width=3.0pt](A)circle(\SubsecLabelR);
-\node[font=\SubsectionLabelFont,text=ColorA,anchor=center,inner sep=0mm](N)at(A){#2};}}
-%%
-\newcommand{\@subsectionstyle}[3]{
-\begin{flushleft}
-\tikz{\node[inner ysep=0mm,inner xsep=0mm](G){\@subsectiontitle{#1}{#2}{#3}};}
-\end{flushleft}}
-%%
-%%不编号小节标题样式%%
-\newcommand*\subsectionsubtitle[1]{\def\@subsectionsubtitle{#1}}
-%%设置\subsection*的标题%%
-\newcommand{\@subsectionstartitle}[1]{\begingroup\pgfdeclarelayer{subsectop}\pgfdeclarelayer{subsecbottom}\pgfsetlayers{subsecbottom,main,subsectop}\tikz{%为了使长度定义命令在tikz中生效而插入\pgfinterruptpicture\endpgfinterruptpicture%%
-\settototalheight{\SubsecNameHeight}{\pgfinterruptpicture\SubsectionLabelFont#1\endpgfinterruptpicture}
-\setlength{\SubsecLabelHeight}{5.3mm}
-%%根据标题文字高度设置上下间距Sep
-\ifdim\SubsecNameHeight<\SubsecLabelHeight
-\setlength{\SubsecNameSep}{\SubsecLabelSep+\SubsecLabelHeight/2-\SubsecNameHeight/2}
-\else
-\setlength{\SubsecNameSep}{\SubsecLabelSep}
-\fi
-\setlength{\SubsecNameR}{\SubsecNameHeight/2+\SubsecNameSep}
-\node[draw=ColorA,fill=ColorA,ultra thick,rounded corners=\SubsecNameR,font=\SubsectionNameFont,text=white,anchor=north west,outer sep=0mm,inner xsep=\SubsecNameR,inner ysep=\SubsecNameSep](T)at(-\SubsecNameR,0){
-\begin{varwidth}{\linewidth/2}
-\hspace*{3\SubsecNameR/2}#1
-\end{varwidth}};
-\pgfgetnodeheight(T)\THeight
+%%%%
+%%如果标题和标签的高度均过小
+\ifdim\SubsecLabelHeight<\SubsecCrLen
+\ifdim\SubsecNameHeight<\SubsecCrLen
+\setlength{\SubsecLabelSep}{\SubsecSep+\SubsecCrLen/2-\SubsecLabelHeight/2}%标签上下间隙
+\setlength{\SubsecNameSep}{\SubsecSep+\SubsecCrLen/2-\SubsecNameHeight/2}%标题上下间隙
+\setlength{\SubsecR}{\SubsecCrLen/2+\SubsecSep}%圆角半径
+\fi\fi
+%%%%
+%%标签绘制
+\node[inner xsep=\SubsecR,inner ysep=\SubsecLabelSep,outer sep=0mm,font=\SubsectionLabelFont,text=white,align=center](L){
+\begin{varwidth}{\SubsecLabelWidth}
+#1
+\end{varwidth}
+\hspace*{\SubsecHskip}};
+%%测量标签总宽度和总高度
+\pgfgetnodewidth(L)\LWidth
+\pgfgetnodeheight(L)\LHeight
+%%计算标题栏宽度
+\setlength{\SubsecNameWidth}{\linewidth-\LWidth-2\SubsecR}
+%%标题绘制
+\ifthenelse{\isempty{#3}}{
+\node[inner xsep=\SubsecR,inner ysep=\SubsecNameSep,outer sep=0mm,anchor=north west,align=center,minimum height=\LHeight,text width=\SubsecNameWidth](N)at(L.north east){};
+}{\node[inner xsep=\SubsecR,inner ysep=\SubsecNameSep,outer sep=0mm,font=\SubsectionLabelFont,text=ColorA,anchor=north west,align=center](N)at(L.north east){\parbox{\SubsecNameWidth}{\hspace*{\SubsecHskip}#3}};}
+%%%%
+%%标签底色
 \begin{pgfonlayer}{subsecbottom}
-\draw[ColorB!7.5,fill=ColorB!7.5,rounded corners=\SubsecNameR,ultra thick](\linewidth-2\SubsecNameR,0)rectangle(T.south west);
+\draw[ColorA,fill=ColorA,line width=0.05pt,rounded corners=\SubsecR](L.north west)rectangle(L.south east);
+%%%%
+%%测量标题总高度
+\pgfgetnodeheight(N)\NHeight
+%%
+\ifdim\LHeight>2\SubsecR
+\ifdim\NHeight>2\SubsecR
+%%标签和标题都过高的情况
+%%标题底色
+\draw[ColorB!7.5,fill=ColorB!7.5,rounded corners=\SubsecR,line width=0.05pt](N.north west)rectangle(N.south east);
+%%序号圆1
+\draw[white,fill=white,line width=10.0pt]([yshift=-\SubsecR]L.north east)circle(\SubsecR);
+\else
+%%标签过高而标题正常的情况
+%%序号圆1
+\draw[white,fill=white,line width=10.0pt]([yshift=-\SubsecR]L.north east)circle(\SubsecR);
+%%标题底色
+\draw[ColorB!7.5,fill=ColorB!7.5,line width=0.05pt](N.north west)[rounded corners=\SubsecR]--(N.north east)[rounded corners=\SubsecR]--(N.south east)[sharp corners]--(N.south west)[sharp corners]--cycle;
+\fi
+\else
+%%序号圆1
+\draw[white,fill=white,line width=10.0pt]([yshift=-\SubsecR]L.north east)circle(\SubsecR);
+\ifdim\NHeight>2\SubsecR
+%%标签正常而标题过高的情况
+\draw[ColorB!7.5,fill=ColorB!7.5,line width=0.05pt](N.north west)[rounded corners=\SubsecR]--(N.north east)[rounded corners=\SubsecR]--(N.south east)[rounded corners=\SubsecR]--(N.south west)[sharp corners]--cycle;
+\else
+%%标签和标题都正常的情况
+\draw[ColorB!7.5,fill=ColorB!7.5,line width=0.05pt](N.north west)[rounded corners=\SubsecR]--(N.north east)[rounded corners=\SubsecR]--(N.south east)[sharp corners]--(N.south west)[sharp corners]--cycle;
+\fi\fi
+%%
+%%序号圆2
+\draw[ColorA,fill=white,line width=3.5pt]([yshift=-\SubsecR]L.north east)circle(\SubsecR);
 \end{pgfonlayer}
-\draw[white,fill=white,line width=10.0pt](-\SubsecNameR,-\SubsecNameR)circle(\SubsecNameR);
-\draw[ColorA,fill=white,line width=3.0pt](-\SubsecNameR,-\SubsecNameR)circle(\SubsecNameR);
-\draw[ColorA,fill=ColorA](-\SubsecNameR,-\SubsecNameR)circle(\SubsecNameR/2);
-\begin{pgfonlayer}{subsectop}
-\node[font=\SubsectionSubTFont,text=ColorA,anchor=east,inner sep=0mm,inner ysep=\SubsecNameSep](S)at(\linewidth-3\SubsecNameR,-\THeight/2){
-\maxsizebox{\linewidth/2-3\SubsecNameR}{!}{
-\ifdefvoid{\@subsectionsubtitle}{}{\@subsectionsubtitle}
-}};
-\end{pgfonlayer}}
+%%序号
+\node[font=\SubsectionLabelFont,text=ColorA,anchor=center,inner sep=0mm](Num)at([yshift=-\SubsecR]L.north east){\maxsizebox{2\SubsecR}{!}{#2}};
+\end{tikzpicture}
+\end{flushleft}
 \endgroup}
 %%
+%%不编号小节标题样式%%
+%%不编号小节副标题%%
+\newcommand*{\subsectionsubtitle}[1]{\def\@subsectionsubtitle{#1}}
 \newcommand{\@subsectionstarstyle}[1]{
+\begingroup
+\pgfdeclarelayer{subsectop}
+\pgfdeclarelayer{subsecbottom}
+\pgfsetlayers{subsecbottom,main,subsectop}
 \begin{flushleft}
-\tikz{\node[inner ysep=0mm,inner xsep=-3.5pt](G){\@subsectionstartitle{#1}};}
-\end{flushleft}}
-
+\begin{tikzpicture}
+%%inner xsep的值为序号圆1和序号圆2边宽度差值的一半
+\node[inner xsep=-3.5pt,inner ysep=0mm,outer sep=0mm]{
+\tikz{
+%%测量标签和标题内容的总高度
+\settototalheight{\SubsecLabelHeight}{\pgfinterruptpicture\SubsectionLabelFont#1\endpgfinterruptpicture}
+\settototalheight{\SubsecNameHeight}{\pgfinterruptpicture\SubsectionSubTFont\@subsectionsubtitle\endpgfinterruptpicture}
+%%如果标签总高度大于标题总高度
+\ifdim\SubsecLabelHeight>\SubsecNameHeight
+\setlength{\SubsecLabelSep}{\SubsecSep}%标签上下间隙
+\setlength{\SubsecNameSep}{\SubsecSep+\SubsecLabelHeight/2-\SubsecNameHeight/2}%标题上下间隙
+\setlength{\SubsecR}{\SubsecLabelHeight/2+\SubsecLabelSep}%圆角半径
+\else
+\setlength{\SubsecLabelSep}{\SubsecSep+\SubsecNameHeight/2-\SubsecLabelHeight/2}%标签上下间隙
+\setlength{\SubsecNameSep}{\SubsecSep}%标题上下间隙
+\setlength{\SubsecR}{\SubsecNameHeight/2+\SubsecNameSep}%圆角半径
+\fi
+%%%%
+%%如果标题和标签的高度均过小
+\ifdim\SubsecLabelHeight<\SubsecCrLen
+\ifdim\SubsecNameHeight<\SubsecCrLen
+\setlength{\SubsecLabelSep}{\SubsecSep+\SubsecCrLen/2-\SubsecLabelHeight/2}%标签上下间隙
+\setlength{\SubsecNameSep}{\SubsecSep+\SubsecCrLen/2-\SubsecNameHeight/2}%标题上下间隙
+\setlength{\SubsecR}{\SubsecCrLen/2+\SubsecSep}%圆角半径
+\fi\fi
+%%%%
+%%标签绘制
+\ifthenelse{\isempty{#1}}{
+\node[inner xsep=\SubsecR,inner ysep=\SubsecLabelSep,outer sep=0mm,minimum height=2\SubsecR,minimum width=4\SubsecR](L){};
+}{\node[inner xsep=\SubsecR,inner ysep=\SubsecLabelSep,outer sep=0mm,font=\SubsectionLabelFont,text=white](L){
+\begin{varwidth}{\linewidth/2}
+\hspace*{2\SubsecHskip}#1
+\end{varwidth}};}
+%%%%
+%%测量标签总宽度
+\pgfgetnodewidth(L)\LWidth
+%%计算标题栏宽度
+\setlength{\SubsecNameWidth}{\linewidth-\LWidth-2\SubsecR}
+%%标题绘制
+\node[inner xsep=\SubsecR,inner ysep=\SubsecNameSep,outer sep=0mm,font=\SubsectionSubTFont,text=ColorA,anchor=north west,text width=\SubsecNameWidth](N)at(L.north east){\ifdefvoid{\@subsectionsubtitle}{}{\@subsectionsubtitle}};
+%%%%
+%%测量标签和标题总高度
+\pgfgetnodeheight(N)\NHeight
+\pgfgetnodeheight(L)\LHeight
+%%%%
+\begin{pgfonlayer}{subsecbottom}
+\ifdim\LHeight>\NHeight
+%%标签底色
+\draw[ColorB!7.5,fill=ColorB!7.5,line width=0.05pt,rounded corners=\SubsecR](L.south west)rectangle(N.north east);
+%%标题底色
+\draw[ColorA,fill=ColorA,line width=0.05pt,rounded corners=\SubsecR](L.south west)rectangle(L.north east);
+\else
+%%标签底色
+\draw[ColorB!7.5,fill=ColorB!7.5,line width=0.05pt,rounded corners=\SubsecR](L.north west)rectangle(N.south east);
+%%标题底色
+\draw[ColorA,fill=ColorA,line width=0.05pt,rounded corners=\SubsecR](L.north west)rectangle(N.south west);
+\fi
+\end{pgfonlayer}
+%%序号圆1
+\draw[white,fill=white,line width=10.0pt]([xshift=\SubsecR,yshift=-\SubsecR]L.north west)circle(\SubsecR);
+%%序号圆2
+\draw[ColorA,fill=white,line width=3.0pt]([xshift=\SubsecR,yshift=-\SubsecR]L.north west)circle(\SubsecR);
+%%序号圆3
+\draw[ColorA,fill=ColorA]([xshift=\SubsecR,yshift=-\SubsecR]L.north west)circle(\SubsecR/2);}
+};
+\end{tikzpicture}
+\end{flushleft}
+\endgroup}
+%%%%
 %%编号小节样式%%
 \titleformat{\subsection}
 {}{}{0em}
@@ -1716,23 +1793,34 @@ inner xsep=1.5mm,inner ysep=3.5mm,anchor=west](T)at([yshift=\MarkY]B){\rotatebox
 
 %%练习题面板标题%%
 \newlength{\ExerciseTitleHeight}
+\newlength{\ETRealYSep}
+\newlength{\ETYSep}
+\setlength{\ETYSep}{1.5mm}
+\newlength{\ETCriticalLen}
+\setlength{\ETCriticalLen}{5.2mm}
+\newlength{\ETRad}
+%%
 \newcommand{\ExerciseTitle}[1]{
 \settototalheight{\ExerciseTitleHeight}{\ExerciseTitleFont#1}
+\ifdim\ExerciseTitleHeight>\ETCriticalLen
+\setlength{\ETRealYSep}{\ETYSep}
+\else
+\setlength{\ETRealYSep}{\ETCriticalLen/2-\ExerciseTitleHeight/2+\ETYSep}
+\fi
+\setlength{\ETRad}{\ExerciseTitleHeight/2+\ETRealYSep}
+%%
 \begingroup
 \pgfdeclarelayer{top}
-\pgfdeclarelayer{middle}
 \pgfdeclarelayer{bottom}
-\pgfsetlayers{bottom,middle,top}
+\pgfsetlayers{bottom,main,top}
 \begin{center}
 \begin{tikzpicture}
-\begin{pgfonlayer}{top}
-\node[font=\ExerciseTitleFont,text=white,inner sep=0mm](E){\maxsizebox{\linewidth-3.0cm}{!}{#1}};
-\end{pgfonlayer}
-\begin{pgfonlayer}{middle}
-\draw[ColorB,fill=ColorB,ultra thick,rounded corners=1.0mm]([xshift=-4.0mm,yshift=1.0mm]E.north west)rectangle([xshift=4.0mm,yshift=-1.0mm]E.south east);
-\end{pgfonlayer}
+\node[draw=ColorB,fill=ColorB,ultra thick,rounded corners=1.0mm,font=\ExerciseTitleFont,text=white,outer sep=0mm,inner xsep=4.0mm,inner ysep=\ETRealYSep,align=center](E){
+\begin{varwidth}{\linewidth/2}
+#1
+\end{varwidth}};
 \begin{pgfonlayer}{bottom}
-\draw[draw=ColorB!50,fill=ColorB!50,ultra thick,rounded corners={\ExerciseTitleHeight/2+2.25mm}]([xshift=-9.0mm,yshift=2.0mm]E.north west)rectangle([xshift=9.0mm,yshift=-2.0mm]E.south east);
+\draw[draw=ColorB!50,fill=ColorB!50,ultra thick,rounded corners={\ETRad+\ETYSep}]([xshift=-6.0mm,yshift=\ETYSep]E.north west)rectangle([xshift=6.0mm,yshift=-\ETYSep]E.south east);
 \end{pgfonlayer}
 \end{tikzpicture}
 \end{center}
@@ -1743,32 +1831,77 @@ inner xsep=1.5mm,inner ysep=3.5mm,anchor=west](T)at([yshift=\MarkY]B){\rotatebox
 \contentsmargin{4.0mm}
 \makeatletter
 %%标签绘制%%
-\newlength{\TocPartH}
-\newlength{\TocPartW}
-\newlength{\TocPartR}
-\newlength{\TocPartTempW}
-\newlength{\TocPartCriticL}
-\newlength{\TocPartSep}
-\setlength{\TocPartSep}{1.5mm}
+\newlength{\PTCR}
+\newlength{\PTCSep}
+\setlength{\PTCSep}{1.5mm}
+\newlength{\PTCHeight}
+\newlength{\PTCLabelHeight}
+\newlength{\PTCNameHeight}
+\newlength{\PTCLabelWidth}
+\setlength{\PTCLabelWidth}{3.0cm}
+\newlength{\PTCNameWidth}
+\newlength{\PTCLabelSep}
+\newlength{\PTCNameSep}
+\newlength{\PTCHskip}
+\setlength{\PTCHskip}{5.0mm}
+\newlength{\PTCCrLen}
+\setlength{\PTCCrLen}{5.3mm}
 %%
-\newcommand{\@PartContents}[3]{\tikz{%为了使长度定义命令在tikz中生效而插入\pgfinterruptpicture\endpgfinterruptpicture%%
-\settototalheight{\TocPartH}{\pgfinterruptpicture\TocPartFont#1\endpgfinterruptpicture}
-\ifdim\TocPartH<5.1mm
-\setlength{\TocPartH}{5.1mm}
-\fi
-\settowidth{\TocPartTempW}{\pgfinterruptpicture\TocPartFont#1\endpgfinterruptpicture}
-\setlength{\TocPartR}{\TocPartH/2+\TocPartSep}
-\setlength{\TocPartCriticL}{3\linewidth/4-4\TocPartR}
-\ifdim\TocPartTempW>\TocPartCriticL
-\setlength{\TocPartW}{\TocPartCriticL}
+\newcommand{\@PartContents}[3]{\begingroup\pgfdeclarelayer{ptctop}\pgfdeclarelayer{ptcbottom}\pgfsetlayers{ptcbottom,main,ptctop}\tikz{%%测量标签和标题内容的总高度
+%%测量标签和标题内容的总高度
+\settototalheight{\PTCLabelHeight}{\pgfinterruptpicture\TocPartFont#1\endpgfinterruptpicture}
+\settototalheight{\PTCNameHeight}{\pgfinterruptpicture\TocPartFont#2\endpgfinterruptpicture}
+%%如果标签总高度大于标题总高度
+\ifdim\PTCLabelHeight>\PTCNameHeight
+\setlength{\PTCLabelSep}{\PTCSep}%标签上下间隙
+\setlength{\PTCNameSep}{\PTCSep+\PTCLabelHeight/2-\PTCNameHeight/2}%标题上下间隙
+\setlength{\PTCR}{\PTCLabelHeight/2+\PTCLabelSep}%圆角半径
 \else
-\settowidth{\TocPartW}{\pgfinterruptpicture\TocPartFont#1\endpgfinterruptpicture}
+\setlength{\PTCLabelSep}{\PTCSep+\PTCNameHeight/2-\PTCLabelHeight/2}%标签上下间隙
+\setlength{\PTCNameSep}{\PTCSep}%标题上下间隙
+\setlength{\PTCR}{\PTCNameHeight/2+\PTCNameSep}%圆角半径
 \fi
-\draw[ColorB!7.5,fill=ColorB!7.5,rounded corners=\TocPartR](0,0)rectangle(\linewidth-\TocPartR,-2\TocPartR);
-\draw[ColorA,fill=ColorA](0,0)arc(90:270:\TocPartR)--(\TocPartW+\TocPartR,-2\TocPartR)--(\TocPartW+\TocPartR,0)--cycle;
-\node[font=\TocPartFont,text=white,anchor=west,inner sep=0mm](PL)at(0,-\TocPartR){\maxsizebox{\TocPartCriticL}{!}{#1}};
-\node[font=\TocPartFont,text=ColorA,anchor=west,inner sep=0mm](PT)at([xshift=\TocPartR+5.0mm]PL.east){\maxsizebox{\TocPartCriticL}{!}{#2}};
-\node[font=\ContentPageNumFont,text=ColorA,anchor=east,inner xsep=0mm](PP)at(\linewidth-2\TocPartR,-\TocPartR){#3};}}
+%%%%
+%%如果标题和标签的高度均过小
+\ifdim\PTCLabelHeight<\PTCCrLen
+\ifdim\PTCNameHeight<\PTCCrLen
+\setlength{\PTCLabelSep}{\PTCSep+\PTCCrLen/2-\PTCLabelHeight/2}%标签上下间隙
+\setlength{\PTCNameSep}{\PTCSep+\PTCCrLen/2-\PTCNameHeight/2}%标题上下间隙
+\setlength{\PTCR}{\PTCCrLen/2+\PTCSep}%圆角半径
+\fi\fi
+%%%%
+%%标签绘制
+\node[inner xsep=\PTCR,inner ysep=\PTCLabelSep,outer sep=0mm,font=\TocPartFont,text=white](L){
+\begin{varwidth}{\linewidth/4}
+#1
+\end{varwidth}};
+%%测量标签总宽度和总高度
+\pgfgetnodewidth(L)\LWidth
+\pgfgetnodeheight(L)\LHeight
+%%计算标题栏宽度
+\setlength{\PTCNameWidth}{\linewidth-\LWidth-2\PTCR}
+%%标题绘制
+\ifthenelse{\isempty{#2}}{
+\node[inner xsep=\PTCR,outer sep=0mm,font=\TocPartFont,text=ColorA,anchor=north west,minimum height=\LHeight,text width=\PTCNameWidth](N)at(L.north east){\hfill#3};
+}{\node[inner xsep=\PTCR,inner ysep=\PTCNameSep,outer sep=0mm,font=\TocPartFont,text=ColorA,anchor=north west,text width=\PTCNameWidth](N)at(L.north east){#2\hfill#3};}
+%%%%
+%%测量标题总高度
+\pgfgetnodeheight(N)\NHeight
+%%%%
+\begin{pgfonlayer}{ptcbottom}
+\ifdim\LHeight>\NHeight
+%%标签底色
+\draw[ColorA,fill=ColorA,line width=0.05pt](L.north east)--(L.south east)[rounded corners=\PTCR]--(L.south west)[rounded corners=\PTCR]--(L.north west)[sharp corners]--cycle;
+%%标题底色
+\draw[ColorB!7.5,fill=ColorB!7.5,line width=0.05pt](L.south east)--(L.north east)[rounded corners=\PTCR]--(N.north east)[rounded corners=\PTCR]--([xshift=\linewidth-\LWidth]L.south east)[sharp corners]--cycle;
+\else
+%%标签底色
+\draw[ColorA,fill=ColorA,line width=0.05pt](N.north west)[sharp corners]--(N.south west)[rounded corners=\PTCR]--([xshift=-\LWidth]N.south west)[rounded corners=\PTCR]--(L.north west)[sharp corners]--cycle;
+%%标题底色
+\draw[ColorB!7.5,fill=ColorB!7.5,line width=0.05pt](N.north west)[sharp corners]--(N.south west)[rounded corners=\PTCR]--(N.south east)[rounded corners=\PTCR]--(N.north east)[sharp corners]--cycle;
+\fi
+\end{pgfonlayer}}
+\endgroup}
 %%
 %%编号部分目录样式%%
 \newcommand{\@tocentrypartnumbered}[1]{\contentslabel[\if@mainmatter\@PartContents{第~{\numberfont\thecontentslabel}~部分}{#1}{\thecontentspage}\else\@PartContents{#1}{}{\thecontentspage}
@@ -1839,68 +1972,109 @@ inner xsep=1.5mm,inner ysep=3.5mm,anchor=west](T)at([yshift=\MarkY]B){\rotatebox
 
 %%%%%%%%%%%%%%%%%% 环境定义和命令定义 %%%%%%%%%%%%%%%%%%%%%%%%
 \makeatletter
-\newlength{\EgTHeight}
-\newlength{\EgDepth}
-\newlength{\EgWidth}
-\newlength{\EgSep}
-\setlength{\EgSep}{1.5mm}
+\newlength{\EgRad}
+\newlength{\EgYSep}
+\setlength{\EgYSep}{1.5mm}
+\newlength{\EgHeight}
+\newlength{\EgLabelHeight}
+\newlength{\EgNameHeight}
+\newlength{\EgLabelWidth}
+\setlength{\EgLabelWidth}{3.0cm}
+\newlength{\EgNameWidth}
+\newlength{\EgLabelSep}
+\newlength{\EgNameSep}
 \newlength{\EgHskip}
-\setlength{\EgHskip}{0.6cm}
-\newlength{\NumWidth}
+\setlength{\EgHskip}{6.0mm}
+\newlength{\EgCrLen}
+\setlength{\EgCrLen}{5.0mm}
 \newcommand{\@basenode}[1]{
-\tikz[baseline]{\node[inner xsep=0mm,inner ysep=-\EgSep-1.0mm,anchor=south](E){#1};}}
+\tikz[baseline]{\node[inner xsep=0mm,inner ysep=-\EgYSep-1.0mm,outer sep=0mm,anchor=south](E){#1};}}
 %%设置例题命令%%
-\newcommand{\@egextitle}[3]{
-\begin{tikzpicture}
-%%为了使长度定义命令在tikz中生效而插入%%
-\settototalheight{\EgTHeight}{\pgfinterruptpicture\EgLabelFont#1\endpgfinterruptpicture}
-\settodepth{\EgDepth}{\pgfinterruptpicture\EgLabelFont#1\endpgfinterruptpicture}
-\settowidth{\EgWidth}{\pgfinterruptpicture\EgLabelFont#1\endpgfinterruptpicture}
-\settowidth{\NumWidth}{\pgfinterruptpicture\EgLabelFont#3\endpgfinterruptpicture}
-\draw[#2,fill=#2,ultra thick]
-(0,0) arc(90:270:{\EgTHeight/2+\EgSep})--(\EgWidth+\EgHskip,-\EgTHeight-2\EgSep) arc(-90:90:{\EgTHeight/2+\EgSep})--cycle;
-\node[font=\EgLabelFont,text=white,anchor=west,inner sep=0mm](L)at(0,-\EgTHeight/2-\EgSep){#1};
-\draw[#2,fill=white,ultra thick]
-(\EgWidth+\EgTHeight+\EgSep,0) arc(90:270:{\EgTHeight/2+\EgSep})--(\EgWidth+\NumWidth+\EgTHeight+\EgSep,-\EgTHeight-2\EgSep) arc(-90:90:{\EgTHeight/2+\EgSep})--cycle;
-\node[font=\EgLabelFont,text=#2,anchor=west,inner sep=0mm](N)at([xshift=\EgTHeight+\EgSep]L.east){#3};
-\end{tikzpicture}}
+\newcommand{\@egextitle}[3]{\begingroup\pgfdeclarelayer{exampletop}\pgfdeclarelayer{examplebottom}\pgfsetlayers{examplebottom,main,exampletop}\tikz{\settototalheight{\EgLabelHeight}{\pgfinterruptpicture\EgLabelFont#1\endpgfinterruptpicture}\settototalheight{\EgNameHeight}{\pgfinterruptpicture\EgLabelFont#2\endpgfinterruptpicture}
+%%如果标签总高度大于标题总高度
+\ifdim\EgLabelHeight>\EgNameHeight
+\setlength{\EgLabelSep}{\EgYSep}%标签上下间隙
+\setlength{\EgNameSep}{\EgYSep+\EgLabelHeight/2-\EgNameHeight/2}%标题上下间隙
+\setlength{\EgRad}{\EgLabelHeight/2+\EgLabelSep}%圆角半径
+\else
+\setlength{\EgLabelSep}{\EgYSep+\EgNameHeight/2-\EgLabelHeight/2}%标签上下间隙
+\setlength{\EgNameSep}{\EgYSep}%标题上下间隙
+\setlength{\EgRad}{\EgNameHeight/2+\EgNameSep}%圆角半径
+\fi
+%%%%
+%%如果标题和标签的高度均过小
+\ifdim\EgLabelHeight<\EgCrLen
+\ifdim\EgNameHeight<\EgCrLen
+\setlength{\EgLabelSep}{\EgYSep+\EgCrLen/2-\EgLabelHeight/2}%标签上下间隙
+\setlength{\EgNameSep}{\EgYSep+\EgCrLen/2-\EgNameHeight/2}%标题上下间隙
+\setlength{\EgRad}{\EgCrLen/2+\EgYSep}%圆角半径
+\fi\fi
+%%%%
+%%标签绘制
+\node[inner xsep=\EgRad,inner ysep=\EgLabelSep,outer sep=0mm,font=\EgLabelFont,text=white](L){\begin{varwidth}{\linewidth/4}#1\end{varwidth}\hspace*{\EgHskip}};
+%%测量标签总宽度和总高度
+\pgfgetnodewidth(L)\LWidth
+\pgfgetnodeheight(L)\LHeight
+%%计算标题栏宽度
+\setlength{\EgNameWidth}{\linewidth/2-\LWidth-2\EgRad}
+\ifthenelse{\isempty{#2}}{
+\node[inner xsep=\EgRad,outer sep=0mm,anchor=north west,minimum height=\LHeight](N)at([xshift=-2\EgRad]L.north east){};
+}{\node[inner xsep=\EgRad,inner ysep=\EgNameSep,outer sep=0mm,font=\EgLabelFont,text=#2,anchor=north west](N)at([xshift=-2\EgRad]L.north east){
+\begin{varwidth}{\EgNameWidth}
+#3
+\end{varwidth}};}
+%%测量标题总高度
+\pgfgetnodeheight(N)\NHeight
+\begin{pgfonlayer}{examplebottom}
+\ifdim\LHeight>\NHeight
+\draw[#2,fill=#2,ultra thick,rounded corners=\EgRad](L.north east)rectangle(L.south west);
+\draw[#2,fill=white,ultra thick,rounded corners=\EgRad](N.north east)rectangle([xshift=-2\EgRad]L.south east);
+\else
+\draw[#2,fill=#2,ultra thick,rounded corners=\EgRad](L.north west)rectangle([xshift=2\EgRad]N.south west);
+\draw[#2,fill=white,ultra thick,rounded corners=\EgRad](N.north west)rectangle(N.south east);
+\fi
+\end{pgfonlayer}}
+\endgroup}
+%%%%
 %%设置解答命令%%
-\newlength{\SvHeight}
-\newlength{\SvWidth}
-\newlength{\SvSep}
-\setlength{\SvSep}{1.5mm}
-\newcommand{\@ansanatitle}[2]{
-\begin{tikzpicture}
-%%为了使长度定义命令在tikz中生效而插入\pgfinterruptpicture\endpgfinterruptpicture%%
-\settototalheight{\SvHeight}{\pgfinterruptpicture\EgLabelFont#1\endpgfinterruptpicture}
-\settowidth{\SvWidth}{\pgfinterruptpicture\EgLabelFont#1\endpgfinterruptpicture}
-\draw[#2,fill=#2,ultra thick]
-(0,0) arc(90:270:{\SvHeight/2+\SvSep})--(\SvWidth,-\SvHeight-2\SvSep) arc(-90:90:{\SvHeight/2+\SvSep})--cycle;
-\node[font=\EgLabelFont,text=white,anchor=west,inner sep=0mm](L)at(0,-\SvHeight/2-\SvSep){#1};
-\end{tikzpicture}}
+\newcommand{\@ansanatitle}[2]{\begingroup\pgfdeclarelayer{exampletop}\pgfdeclarelayer{examplebottom}\pgfsetlayers{examplebottom,main,exampletop}\tikz{\settototalheight{\EgLabelHeight}{\pgfinterruptpicture\EgLabelFont#1\endpgfinterruptpicture}
+\ifdim\EgLabelHeight<\EgCrLen
+\setlength{\EgLabelSep}{\EgYSep+\EgCrLen/2-\EgLabelHeight/2}%标签上下间隙
+\else
+\setlength{\EgLabelSep}{\EgYSep}%标签上下间隙
+\fi
+\setlength{\EgRad}{\EgLabelHeight/2+\EgLabelSep}%圆角半径
+%%%%
+%%标签绘制
+\node[inner xsep=\EgRad,inner ysep=\EgLabelSep,outer sep=0mm,font=\EgLabelFont,text=white](L){
+\begin{varwidth}{\linewidth/4}
+#1
+\end{varwidth}};
+%%%%
+\begin{pgfonlayer}{examplebottom}
+%%标签底色
+\draw[#2,fill=#2,ultra thick,rounded corners=\EgRad](L.north east)rectangle(L.south west);
+\end{pgfonlayer}}
+\endgroup}
+%%%%
 %%解答%%
 \NewExpandableDocumentCommand{\Answer}{sm}{
 \begin{FlushLeft}
 \justifying
 \IfBooleanTF{#1}
-{\@basenode{\@ansanatitle{延展}{ColorF}}\hspace{1.0em}\vspace{0.25em}#2}%带星号*
-{\@basenode{\@ansanatitle{解答}{ColorG}}\hspace{1.0em}\vspace{0.25em}#2}
+{\@basenode{\@ansanatitle{解析}{ColorF}}\vspace*{0.5em}\hspace*{1.0em}#2}%带星号*
+{\@basenode{\@ansanatitle{解答}{ColorG}}\vspace*{0.5em}\hspace*{1.0em}#2}
 \end{FlushLeft}}
+%%%%
 %%例题%%
-\newcommand{\Example}[1]{
-\stepcounter{@egnum}
+\NewDocumentCommand{\Example}{sm}{
 \begin{FlushLeft}
 \justifying
-\@basenode{\@egextitle{例题}{ColorA}{\thechapter.\the@egnum}}\hspace{1.0em}\vspace{0.25em}#1
+\IfBooleanTF{#1}
+{\stepcounter{@varnum}\@basenode{\@egextitle{变式}{ColorB}{\thechapter.\the@varnum}}\vspace*{0.5em}\hspace*{1.0em}#2}%带星号*
+{\stepcounter{@egnum}\@basenode{\@egextitle{例题}{ColorA}{\thechapter.\the@egnum}}\vspace*{0.5em}\hspace*{1.0em}#2}
 \end{FlushLeft}}
-%%变式%%
-\newcommand{\Variety}[1]{
-\stepcounter{@varnum}
-\begin{FlushLeft}
-\justifying
-\@basenode{\@egextitle{变式}{ColorB}{\thechapter.\the@varnum}}\hspace{1.0em}\vspace{0.25em}#1
-\end{FlushLeft}}
-
+%%%%
 %%以下为本文档类内置栏目，请谨慎修改%%
 %设置环境布尔变量
 \newif\if@appendix
@@ -2002,7 +2176,7 @@ inner xsep=1.5mm,inner ysep=3.5mm,anchor=west](T)at([yshift=\MarkY]B){\rotatebox
 %修改有编号章样式
 \RenewDocumentCommand{\chapter}{s O{##3} m}{
 \IfBooleanTF{##1}
-{\origchapter*{##3}\markboth{##2}{##2}}
+{\origchapter*{##3\@mkboth{##2}{##2}}}
 {\setcounter{@innerquizcounter}{\value{section}}%将当前环境中的节计数器值赋给innerquizcounter
 \origchapter[##2]{##3}
 \setcounter{section}{\value{@innerquizcounter}}
@@ -2048,7 +2222,7 @@ inner xsep=1.5mm,inner ysep=3.5mm,anchor=west](T)at([yshift=\MarkY]B){\rotatebox
 %修改有编号章样式
 \RenewDocumentCommand{\chapter}{s O{##3} m}{
 \IfBooleanTF{##1}
-{\origchapter*{##3}\markboth{##2}{##2}}
+{\origchapter*{##3\@mkboth{##2}{##2}}}
 {\setcounter{@innertopiccounter}{\value{section}}%将当前环境中的节计数器值赋给innertopiccounter
 \origchapter[##2]{##3}
 \setcounter{section}{\value{@innertopiccounter}}
@@ -2068,14 +2242,16 @@ inner xsep=1.5mm,inner ysep=3.5mm,anchor=west](T)at([yshift=\MarkY]B){\rotatebox
 \RenewDocumentEnvironment{Lemma}{ O{} }{\begin{box4}{引理}[##1][ColorE][\faGlobe]}{\end{box4}}
 \RenewDocumentEnvironment{Corollary}{ O{} }{\begin{box4}{推论}[##1][ColorG][\faCompactDisc]}{\end{box4}}
 \RenewDocumentEnvironment{Proposition}{ O{} }{\begin{box4}{命题}[##1][ColorH][\faGlobe]}{\end{box4}}
+%%%%
 %修改例题样式
-\renewcommand{\Example}[1]{
-\stepcounter{@classic}
-\begin{flushleft}
-\begin{varwidth}{\linewidth}
-\@basenode{\@egextitle{典例}{ColorA}{\thesection.\the@classic}}\hspace{1.0em}\vspace{0.25em}##1
-\end{varwidth}
-\end{flushleft}}
+\RenewDocumentCommand{\Example}{sm}{
+\begin{FlushLeft}
+\justifying
+\IfBooleanTF{##1}
+{\stepcounter{@varnum}\@basenode{\@egextitle{变式}{ColorB}{\thechapter.\the@varnum}}\vspace*{0.5em}\hspace*{1.0em}##2}%带星号*
+{\stepcounter{@classic}\@basenode{\@egextitle{典例}{ColorA}{\thechapter.\the@classic}}\vspace*{0.5em}\hspace*{1.0em}##2}
+\end{FlushLeft}}
+%%%%
 %将环境前的节计数器值储存在beforecounter中
 \setcounter{@beforetopiccounter}{\value{section}}
 %将节计数器置为环境中节计数器值
@@ -2102,7 +2278,7 @@ inner xsep=1.5mm,inner ysep=3.5mm,anchor=west](T)at([yshift=\MarkY]B){\rotatebox
 %修改有编号章样式
 \RenewDocumentCommand{\chapter}{s O{##3} m}{
 \IfBooleanTF{##1}
-{\origchapter*{##3}\markboth{##2}{##2}}
+{\origchapter*{##3\@mkboth{##2}{##2}}}
 {\setcounter{@innerprojectcounter}{\value{section}}%将当前环境中的节计数器值赋给innerprojectcounter
 \origchapter[##2]{##3}
 \setcounter{section}{\value{@innerprojectcounter}}
