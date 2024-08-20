@@ -1,4 +1,4 @@
-\documentclass[color=yellow,openany]{textbook-cn}%,splitbib
+\documentclass[color=green]{textbook-cn}%,splitbib,openany
 \input{./styles/Cover.tex}
 \input{./styles/Logo.tex}
 \usepackage{zhlipsum,lipsum}%乱数假文（测试文字）
@@ -48,7 +48,42 @@
 \newcommand{\inputread}{\raisebox{-0.5em}{\Logo[0.07]{physics}{READ}{\faStickyNote}}~~~}
 
 
-
+%%选择题的4个选项，根据选项内容长度自动排版%%
+\colorlet{ListColor}{ColorA}
+\newlength{\la}\newlength{\lb}\newlength{\lc}\newlength{\ld}
+\newlength{\lhalf}\newlength{\lquarter}\newlength{\lmax}
+\newcommand{\choice}[4]{
+\settowidth{\la}{A.~#1~~~}\settowidth{\lb}{B.~#2~~~}
+\settowidth{\lc}{C.~#3~~~}\settowidth{\ld}{D.~#4~~~}
+\ifthenelse{\lengthtest{\la>\lb}}
+{\setlength{\lmax}{\la}}{\setlength{\lmax}{\lb}}
+\ifthenelse{\lengthtest{\lmax<\lc}}
+{\setlength{\lmax}{\lc}}{\relax}
+\ifthenelse{\lengthtest{\lmax<\ld}}
+{\setlength{\lmax}{\ld}}{\relax}
+\setlength{\lhalf}{0.5\linewidth}
+\setlength{\lquarter}{0.25\linewidth}
+\ifthenelse{\lengthtest{\lmax>\lhalf}}
+{\begin{hlist}[pre skip=0pt,item skip=0pt,item offset={1.5em},label={\textbf{\color{ListColor}{\Alpha{hlisti}.}}},pre label={}]1
+\hitem #1
+\hitem #2
+\hitem #3
+\hitem #4
+\end{hlist}}
+{\ifthenelse{\lengthtest{\lmax>\lquarter}}
+{\begin{hlist}[pre skip=0pt,item skip=0pt,item offset={1.5em},label={\textbf{\color{ListColor}{\Alpha{hlisti}.}}},pre label={}]2
+\hitem #1
+\hitem #2
+\hitem #3
+\hitem #4
+\end{hlist}}
+{\begin{hlist}[\parskip=0pt,pre skip=0pt,item skip=0pt,item offset={1.5em}, label={\textbf{\color{ListColor}{\Alpha{hlisti}.}}},pre label={}]4
+\hitem #1
+\hitem #2
+\hitem #3
+\hitem #4
+\end{hlist}}
+}}
 
 
 
@@ -73,6 +108,12 @@ before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
+%\pagestyle{MainPage}
+
+\makeatletter
+\@mainmattertrue
+\makeatother
+
 %\large
 \FontSize{14pt}%\MainEnglish
 
@@ -81,6 +122,10 @@ before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
 
 
 \maketitle
+
+\part{测试测试测试}
+
+%\lipsum
 
 
 \frontmatter
@@ -107,12 +152,12 @@ before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
 \end{Definition}
 
 
+\addcontentsline{toc}{part}{不编号部分目录测试}
 
 
+\Example*{\lipsum[2]}
 
-
-
-
+\Example{\lipsum[2]}
 
 
 
@@ -149,11 +194,37 @@ before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
 \lipsum[1]
 \Example{\lipsum[1]}
 
+\Answer{\lipsum[2]}
+
 
 \begin{Definition}[定义名称]
 \lipsum[1]
 \end{Definition}
 
+\begin{Lemma}[定义名称]
+	\lipsum[2]
+\end{Lemma}
+
+\begin{Lemma}[定义名称]
+	\lipsum[2]
+\end{Lemma}
+
+\ref{Lem.3.11.1}
+\pageref{Lem.3.11.2}
+
+\begin{Proposition}[定义名称]
+	\lipsum[2]
+\end{Proposition}
+
+
+\begin{Corollary}[定义名称]
+	\lipsum[2]
+\end{Corollary}
+
+
+\begin{Definition}[定义名称]
+	\lipsum[2]
+\end{Definition}
 
 
 \chapter{测试章}
@@ -173,6 +244,12 @@ before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
 \end{Definition}
 
 
+
+\begin{Thinking*}
+	\lipsum[2]
+\end{Thinking*}
+
+
 \section{测试课题题目2}
 
 \begin{Definition}[定义名称]
@@ -180,6 +257,8 @@ before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
 \end{Definition}
 
 \chapter{节环境中测试章2}
+
+\Example{\lipsum[2]}
 
 \chapter*{节环境中测试章2}
 
@@ -211,9 +290,28 @@ before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
 
 \section{测试课题题目4}
 
+
+\begin{Case}
+	\item\lipsum[1][1]
+	\item\lipsum[1][1]
+	\item\lipsum[1][1]
+	\item\lipsum[1][1]
+\end{Case}
+
+
 \begin{Definition}[定义名称]
-\lipsum[1]
+	
+	\lipsum[1]
 \end{Definition}
+
+
+
+
+
+
+
+
+
 
 
 \section{测试课题题目5}
@@ -228,9 +326,219 @@ before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
 
 \section{测试课题题目6}
 
+
+\lipsum[2]
+
 \begin{Definition}[定义名称]
 \lipsum[1]
 \end{Definition}
+
+\subsection*{对比测试文字}
+
+\begin{box1}{易错点警示测试文字测试文字测试文字易错点警示测试文字测试文字测试文字易错点警示测试文字测试文字测试文字}[测试标题测试标题测试标题]
+\lipsum[2]
+\end{box1}
+
+
+\begin{box1}{易错点警示}
+\lipsum[2]
+\end{box1}
+
+\begin{Warning}
+	\lipsum[2]
+\end{Warning}
+
+
+\begin{box1}{WARNING}[注意注意注意]
+	\lipsum[2]
+\end{box1}
+
+
+\begin{box1}{}[标题]
+	\lipsum[2][1-3]
+\end{box1}
+
+\begin{box1}{ }[标题]
+	\lipsum[2][1-3]
+\end{box1}
+
+\begin{box1}{标签}[]
+	\lipsum[2][1-3]
+\end{box1}
+
+\begin{box1}{标签}[ ]
+	\lipsum[2][1-3]
+\end{box1}
+
+\begin{box1}{ }[ ]
+	\lipsum[2][1-3]
+\end{box1}
+
+\begin{box1}{}[]
+	\lipsum[2][1-3]
+\end{box1}
+
+\begin{box1}{标签}[标题]
+	\lipsum[2][1-3]
+\end{box1}
+
+
+
+
+\begin{box2}{演示与实验}[标题标题]
+	\lipsum[2]
+\end{box2}
+
+
+\begin{box2}{演示与实验演示与实验演示与实验演示与实验演示与实验演示与实验演示与实验演示与实验演示与实验演示与实验演示与实验}[标题标题]
+	\lipsum[2]
+\end{box2}
+
+\begin{box2}{演示与实验演示与实验演示与实验演示与实验演示与实验演示与实验}[标题标题]
+	\lipsum[2]
+\end{box2}
+
+
+\begin{box2}{ }[ ]
+	\lipsum[2]
+\end{box2}
+
+
+\newpage
+\begin{box3}{演示与实验演示与实验演示与实验演示与实验演示与实验演示与实验演示与实验演示与实验演示与实验演示与实验演示与实验}
+	\lipsum[2]
+\end{box3}
+
+
+\begin{box3}{ }[]
+	\lipsum[2][1-3]
+\end{box3}
+
+
+
+
+
+\begin{box4}{引理}
+\lipsum[2]
+\end{box4}
+
+\begin{box4}{引理引理引理引理引理引理引理引理引理引理引理引理引理引理引理引理}
+\lipsum[2]
+\end{box4}
+
+
+
+\begin{box5}{拓展链接}
+\lipsum[2]
+\end{box5}
+
+\begin{box5}{拓展链接拓展链接拓展链接拓展链接拓展链接拓展链接拓展链接拓展链接拓展链接}
+	\lipsum[2]
+	\tcbsubtitle{测试标题}
+	\lipsum[2]
+\end{box5}
+
+
+
+\begin{box6}{资料卡片}
+	\lipsum[2]
+\end{box6}
+
+
+
+\begin{box6}{ }[]
+	\lipsum[2][1-3]
+\end{box6}
+
+
+\begin{box6}{资料卡片资料卡片资料卡片资料卡片资料卡片资料卡片资料卡片资料卡片资料卡片资料卡片资料卡片}
+	\lipsum[2]
+\end{box6}
+
+
+\begin{Information}
+	\lipsum[2]
+	\tcbsubtitle{测试标题}
+	\lipsum[2]
+\end{Information}
+
+
+
+
+\begin{box7}{相关信息}{ColorH}{\faCommentDots}
+	\lipsum[3]
+\end{box7}
+
+\begin{Paracol}
+\begin{box7}{相关信息}{ColorH}{\faCommentDots}
+	\lipsum[3]
+\end{box7}
+\switchcolumn
+\begin{box7}{相关信息}{ColorH}{\faCommentDots}
+	\lipsum[3][1-2]
+\end{box7}
+
+\end{Paracol}
+
+
+
+\begin{box9}{阅读理解}[Reading Comprehension][ColorB]
+\lipsum
+\end{box9}
+
+
+\begin{box9}{阅读理解阅读理解阅读理解阅读理解阅读理解阅读理解阅读理解阅读理解阅读理解}[][ColorB]
+	\lipsum
+\end{box9}
+
+
+
+
+\begin{Vocabulary}
+	\lipsum[2]
+	\tcbsubtitle{派生词}
+	\lipsum[2]
+\end{Vocabulary}
+
+
+
+
+\begin{PythonBox}{代码}
+	
+\end{PythonBox}
+
+
+
+\begin{box0}[left=0mm]{本章要点}[][ColorA]
+\lipsum[3]
+\end{box0}
+
+\begin{box0}[left=0mm]{ }[][ColorA]
+	\lipsum[3]
+\end{box0}
+
+\begin{box0}[left=0mm]{测试文字测试文字测试文字测试文字测试文字测试文字测试文字测试文字测试文字}[][ColorA]
+	\lipsum[3]
+\end{box0}
+
+
+
+\begin{Exercise}
+\lipsum[2]
+\end{Exercise}
+
+
+\Example{\lipsum[2]}
+
+
+
+\begin{Proof}
+	\lipsum[2]
+\end{Proof}
+
+
+
+
 
 \makeatother
 
@@ -242,6 +550,26 @@ before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
 
 \chapter{环境外测试章节}
 
+\begin{Exercise}
+	\lipsum[2]
+\end{Exercise}
+
+\begin{Thinking}
+	\lipsum[2]
+\end{Thinking}
+
+
+\begin{Improve}
+	\lipsum[2]
+\end{Improve}
+
+
+
+\begin{Definition}[定义名称]
+	\lipsum[2]
+\end{Definition}
+
+
 
 
 
@@ -252,6 +580,38 @@ before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
 
 \Example{\zhlipsum[1]}
 
+\subsection{}
+\subsection{  }
+
+
+
+\begin{Exercise}
+	\lipsum[2]
+\end{Exercise}
+
+\begin{Thinking}
+	\lipsum[2]
+\end{Thinking}
+
+
+\begin{Improve}
+	\lipsum[2]
+\end{Improve}
+
+
+
+
+\makeatletter
+%\noindent\@egextitle{  }{ColorA}{  }
+%\@egextitle{}{ColorA}{}\\
+%\@egextitle{Label}{ColorA}{  }
+%\@egextitle{Label}{ColorA}{}\\
+%\@egextitle{  }{ColorA}{Name}
+%\@egextitle{}{ColorA}{Name}\\
+%\@egextitle{Label}{ColorA}{Name}
+%\@egextitle{标签}{ColorA}{题目}
+
+\makeatother
 
 
 \chapter{专题测试章节专题测试章节专题测试章节专题测试章节专题测试章节专题测试章节专题测试章节专题测试章节专题测试章节专题测试章节专题测试章节专题测试章节专题测试章节专题测试章节专题测试章节专题测试章节}
@@ -260,23 +620,39 @@ before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
 
 
 \section{小专题2}
+
+
+\Example{\zhlipsum[1]}
+
+
+\Example{\zhlipsum[2]}
+
 	
 \end{Topic}
 
 
-\begin{Appendix}
+\begin{Test}
+\chapter{测试题}
 
 
-%\input{app1.tex}
-%\input{app2.tex}
-%\input{app3.tex}
+\begin{Definition}[定义名称]
+	\lipsum[2]
+\end{Definition}
 
-\end{Appendix}
+\section{主观题}
+
+\subsection{单项选择题}
+
+\lipsum
+
+\end{Test}
 
 
 
 \begin{Appendix}
 \chapter[WWWW]{中文}
+
+\section[子附录测试]{小标题小标题}
 \zhlipsum
 	
 \chapter{英文}
@@ -289,7 +665,15 @@ before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
 
 \lipsum\lipsum
 
+
+\part{测试测试测试}
+
+%\lipsum
+
+
 \backmatter
+
+\lipsum
 
 %\stopcontents[part]
 
@@ -299,11 +683,60 @@ before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
 
 
 \lipsum
+\makeatletter
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\lipsum[2]
+
+
+\makeatother
+
+
+
+
+
+
+
+
 
 \begin{Appendix}
 
 \chapter[PPPPPLLL]{中文}
 \thepart\zhlipsum
+
+\section{backmatter测试节标题}
+\section{测试节标题}
+
+\subsection{backmatter测试小节标题}
+
+
+\begin{Definition}[定义名称]
+	\lipsum[2]
+\end{Definition}
+
+
+
 
 \chapter{英文}
 \zhlipsum
@@ -315,6 +748,15 @@ before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
 \chapter{后记}
 \thechapter
 \zhlipsum\zhlipsum
+
+
+\begin{Definition}[定义名称]
+	\lipsum[1]
+\end{Definition}
+
+
+
+
 \chapter[我爱你]{后记}
 \thechapter
 \zhlipsum\zhlipsum
@@ -342,7 +784,9 @@ before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
 \lipsum[2]
 \end{Definition}
 
-
+\begin{Lemma}[定义名称]
+	\lipsum[2]
+\end{Lemma}
 
 
 
@@ -350,7 +794,7 @@ before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
 
 \section{小专题3}
 \chapter{专题测试章节}
-\section{小专题4}
+\section{LipsumLipsumLipsum}
 
 \end{Topic}
 
@@ -359,8 +803,6 @@ before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
 
 \chaptersubtitle{Reference}
 \printbib{Reference}
-
-
 
 
 
