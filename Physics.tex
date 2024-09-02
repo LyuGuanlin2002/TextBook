@@ -1,5 +1,5 @@
 \documentclass[color=green]{textbook-cn}%,splitbib,openany
-\input{./styles/Cover.tex}
+\input{./styles/CoverA.tex}
 \input{./styles/Logo.tex}
 \usepackage{zhlipsum,lipsum}%乱数假文（测试文字）
 \graphicspath{{./figure/}{./figures/}{./image/}{./images/}{./graphics/}{./graphic/}{./pictures/}{./picture/}}%提供多种图片路径
@@ -32,8 +32,8 @@
 \author{RQCEN}
 \pressname{BILIBILI教育出版社}
 \presslogo{gj.pdf}
-\coverimage{coverimage.pdf}
-\backimage{coverimage.pdf}
+\coverimage{laughsmall.jpg}%coverimage.pdf
+\backimage{laughsmall.jpg}%coverimage.pdf
 
 \newcommand{\indexnoun}[1]{\index[noun]{#1}}
 \newcommand{\indexvideo}[1]{\index[video]{#1}}
@@ -115,7 +115,7 @@ before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
 \makeatother
 
 %\large
-\FontSize{14pt}%\MainEnglish
+\MainFont%\MainEnglish
 
 
 \makecover
@@ -123,6 +123,7 @@ before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
 
 \maketitle
 
+\partimage{Sunset.jpg}
 \part{测试测试测试}
 
 %\lipsum
@@ -137,11 +138,11 @@ before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
 
 
 \chaptersubtitle{Brief Contents}
-\shorttableofcontents
+\shorttableofcontents{0}
 
 
 \chaptersubtitle{Contents}
-\tableofcontents
+\tableofcontents{1}
 
 \mainmatter
 
@@ -234,7 +235,7 @@ before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
 
 \makeatletter
 
-\chapter{节环境中测试章1}
+%\chapter{节环境中测试章1}
 
 	
 \section{测试课题题目1}
@@ -256,17 +257,20 @@ before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
 \lipsum[1]
 \end{Definition}
 
-\chapter{节环境中测试章2}
+%\chapter{节环境中测试章2}
 
 \Example{\lipsum[2]}
 
-\chapter*{节环境中测试章2}
+%\chapter*{节环境中测试章2}
 
 \section{测试课题题目3}
 
 \begin{Definition}[定义名称]
 \lipsum[1]
 \end{Definition}
+
+
+
 
 \makeatother
 
@@ -285,7 +289,7 @@ before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
 \section{测试课题题目q}
 
 
-\chapter{节环境中测试章3}
+%\chapter{节环境中测试章3}
 
 
 \section{测试课题题目4}
@@ -321,7 +325,7 @@ before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
 \end{Definition}
 
 
-\chapter{节环境中测试章4}
+%\chapter{节环境中测试章4}
 
 
 \section{测试课题题目6}
@@ -335,7 +339,7 @@ before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
 
 \subsection*{对比测试文字}
 
-\begin{box1}{易错点警示测试文字测试文字测试文字易错点警示测试文字测试文字测试文字易错点警示测试文字测试文字测试文字}[测试标题测试标题测试标题]
+\begin{box1}{易错点警示测试文字测试文字测试文字易错点警示测试文字测试文字测试文字易错点警示测试文字}[测试标题测试标题测试标题]
 \lipsum[2]
 \end{box1}
 
@@ -466,7 +470,7 @@ before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
 
 
 \begin{box7}{相关信息}{ColorH}{\faCommentDots}
-	\lipsum[3]
+	\zhlipsum[3]
 \end{box7}
 
 \begin{Paracol}
@@ -614,7 +618,7 @@ before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
 \makeatother
 
 
-\chapter{专题测试章节专题测试章节专题测试章节专题测试章节专题测试章节专题测试章节专题测试章节专题测试章节专题测试章节专题测试章节专题测试章节专题测试章节专题测试章节专题测试章节专题测试章节专题测试章节}
+%\chapter{专题测试章节专题测试章节专题测试章节专题测试章节专题测试章节专题测试章节专题测试章节专题测试章节专题测试章节专题测试章节专题测试章节专题测试章节专题测试章节专题测试章节专题测试章节专题测试章节}
 
 \zhlipsum
 
@@ -639,7 +643,11 @@ before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
 	\lipsum[2]
 \end{Definition}
 
-\section{主观题}
+\section{主观题主观题主观题主观题主观题主观题主观题主观题主观题主观题主观题主观题主观题主观题主观题主观题}
+
+
+\section*{主观题主观题主观题主观题主观题主观题主观题主观题主观题主观题主观题主观题主观题主观题主观题主观题}
+
 
 \subsection{单项选择题}
 
@@ -653,13 +661,20 @@ before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
 \chapter[WWWW]{中文}
 
 \section[子附录测试]{小标题小标题}
+\section[子附录测试]{小标题小标题qp}
+
+\section[子附录测试]{abaqus}
+
+\section[子附录测试]{ABAQUS}
+
+
 \zhlipsum
 	
 \chapter{英文}
 \zhlipsum
 \end{Appendix}
 
-
+\partimage{Mountain.jpg}
 \part{测试章节测试章节测试章节测试章节测试章节测试章节测试章节}
 \part[测试章节]{测试章节测试章节测试章节测试章节测试章节}
 
@@ -676,10 +691,12 @@ before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
 \lipsum
 
 %\stopcontents[part]
-
-\part*{AAAAAAABBBBBBB测试文字}
+\partimage{Sunset.jpg}
+\part*{AAAAAAA-测试文字}
+\partimage{Mount.jpg}
+\partintro{\zhlipsum[2]}
 \part{测试章节}
-\part[宝贝儿]{测试部分}
+\part[BabyBabyBaby]{AAAAABBBBB-CCCCCC-DDDD}
 
 
 \lipsum
@@ -793,7 +810,7 @@ before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
 \begin{Topic}
 
 \section{小专题3}
-\chapter{专题测试章节}
+%\chapter{专题测试章节}
 \section{LipsumLipsumLipsum}
 
 \end{Topic}
