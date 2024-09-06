@@ -106,16 +106,26 @@ before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
 \newcommand{\Var}{{\rm Var}}
 \newcommand{\Cov}{{\rm Cov}}
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
-%\pagestyle{MainPage}
+\MainFont
+
+
+
+
 
 \makeatletter
-\@mainmattertrue
+%\@mainmattertrue
 \makeatother
 
-%\large
-\MainFont%\MainEnglish
+%\part{独立测试}
+
+\chapter{独立测试}
+
+\section{独立测试}
+\lipsum
+
 
 
 \makecover
@@ -126,7 +136,7 @@ before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
 \partimage{Sunset.jpg}
 \part{测试测试测试}
 
-%\lipsum
+\lipsum
 
 
 \frontmatter
@@ -815,11 +825,11 @@ before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
 
 \end{Topic}
 
-
+\cite{1}\cite{2}
 
 
 \chaptersubtitle{Reference}
-\printbib{Reference}
+\printbib{./index/reference}
 
 
 

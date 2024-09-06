@@ -134,7 +134,8 @@
 %%%%%%%%%%%%%%%%%%%% 字体设置 %%%%%%%%%%%%%%%%%%%%
 \RequirePackage[fontset=none]{ctex}%中文文本
 \RequirePackage[T1]{fontenc}%字体设置宏包
-%\RequirePackage{fontspec}%字体设置宏包
+\RequirePackage{fontspec}%字体设置宏包
+\RequirePackage{mathpazo}
 %%中文默认字体：方正书宋_GBK，粗体为思源宋体半粗体，斜体为方正楷体_GBK%%
 \setCJKmainfont{FZShuSong-Z01}[BoldFont={Source Han Sans SC Heavy},ItalicFont=FZKai-Z03]
 %%中文无衬线字体：方正黑体_GBK，粗体为思源黑体中粗体%%
@@ -198,14 +199,27 @@
 \newcommand{\FootNoteFont}{\itshape\kaishu\FontSize{13pt}}%脚注字体
 \newcommand{\MainFont}{\FontSize{14.5pt}}%正文字体
 
-
 %%设置字体%%
-\AtBeginDocument{\setmainfont{Times New Roman}}
+%\AtBeginDocument{\setmainfont{Times New Roman}}
 
 %%%%%%%%%%%%%%%%%%%% 页面布局设定宏包 %%%%%%%%%%%%%%%%%%%%
-\RequirePackage{ragged2e}%对齐设置
-%%页面布局设置%%0.75em
 \makeatletter
+\RequirePackage{calc}%优化长度计算和设置
+\RequirePackage{fp}%浮点数计算
+\RequirePackage{ragged2e}%对齐设置
+\gdef\@MarginColumn@Ratio{0.25}
+\FPeval\@MainColumn@Ratio{round(1-\@MarginColumn@Ratio:2)}
+\RequirePackage{multicol,paracol}%双栏%分栏、边注、中英对照
+\columnratio{\@MainColumn@Ratio}
+\footnotelayout{c}
+\twosided[pcm]
+%%设置栏间距和分割线颜色%%
+\setlength{\columnsep}{2.0em}
+\setlength{\columnseprule}{0em}
+\renewcommand{\columnseprulecolor}{\color{ColorA}}
+%%设置默认正文分栏环境%%
+\newenvironment{Paracol}[1][2]{\begin{paracol}{#1}}{\end{paracol}}
+%%页面布局设置%%
 \newlength{\@innerlen}
 \newlength{\@outerlen}
 \newlength{\@toplen}
@@ -218,7 +232,7 @@
 \setlength{\@outerlen}{2.25cm}
 \setlength{\@toplen}{2.5cm}
 \setlength{\@botlen}{2.5cm}
-\setlength{\@marginparwidthlen}{0.25\textwidth+2.0em}
+\setlength{\@marginparwidthlen}{\dimeval{\@MarginColumn@Ratio\textwidth+2.0em}}
 \setlength{\@marginparseplen}{-\@marginparwidthlen+0.75em}
 \setlength{\@handseplen}{0.875cm}
 \setlength{\@footskiplen}{0.95cm}
@@ -231,21 +245,10 @@ marginparsep=\@marginparseplen,marginparwidth=\@marginparwidthlen,reversemarginp
 \RequirePackage{extramarks}%创建额外的标记，使用方法类似于\markboth和\markright
 \RequirePackage[strict]{changepage}%换页
 \RequirePackage[noadjust]{marginnote}%边注
-\RequirePackage{multicol,paracol}%双栏%分栏、边注、中英对照
-\columnratio{0.75}
-\footnotelayout{c}
-\twosided[pcm]
-%%设置栏间距和分割线颜色%%
-\setlength{\columnsep}{2.0em}
-\setlength{\columnseprule}{0em}
-\renewcommand{\columnseprulecolor}{\color{ColorA}}
-%%设置默认正文分栏环境%%
-\newenvironment{Paracol}[1][2]{
-\begin{paracol}{#1}
-}{\end{paracol}}
+\RequirePackage{sidenotes}%边注
 %%脚注格式%%
 \gdef\footnoterule{}
-\gdef\footnotesize{\FootNoteFont}
+\gdef\footnotesize{\color{ColorA}\FootNoteFont}
 
 %%%%%%%%%%%%%%%%%%%% 图表插入宏包 %%%%%%%%%%%%%%%%%%%%
 \RequirePackage{graphicx}%插入图片路径
@@ -339,7 +342,7 @@ marginparsep=\@marginparseplen,marginparwidth=\@marginparwidthlen,reversemarginp
 %%%%%%%%%%%%%%%%%%%% 参考文献宏包 %%%%%%%%%%%%%%%%%%%%
 %%参考文献编译方式：先用XeLaTeX编译主文件.tex一次；再用BibTeX编译主文件（或各子文件）.tex一次；然后用XeLaTeX编译主文件.tex两次%%
 \RequirePackage[numbers,sectionbib]{natbib}%参考文献格式
-\renewcommand{\bibnumfmt}[1]{\hskip1.0mm\protect\cir{#1}}%修改参考文献序号样式
+\renewcommand{\bibnumfmt}[1]{\protect\cir{#1}}%修改参考文献序号样式
 \renewcommand{\citenumfont}[1]{\color{ColorA}\CiteNumFont#1}%修改引用样式
 \bibpunct{\color{ColorA}{[}}{\color{ColorA}{]}}{,}{n}{}{;}%修改方括号颜色
 \renewcommand{\bibname}{参考文献}%修改参考文献标题
@@ -644,7 +647,6 @@ columns=2,columnsep=2.0em,notintoc,notocbasic,nocolumnseprule}
 \RequirePackage{pgfplots,tikzpagenodes,tikz,eso-pic}%绘图
 \usetikzlibrary{fit,calc,math,scopes,backgrounds,positioning,intersections,decorations,shadows,
 shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,decorations.footprints}
-\RequirePackage{calc}%优化长度计算和设置
 \makeatletter
 %%修改addtolength的作用域%%
 \newcommand{\gaddtolength}[1]{\calc@assign@skip{\global\advance#1}}
@@ -690,7 +692,8 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 \makeatletter
 \newcounter{@Thumb@Number}%记录侧标数
 \regtotcounter{@Thumb@Number}%获取侧标数最大值，需要编译两次才能正确获取
-\newcounter{@Current@TotalPartNumber}%记录所有部分的总数
+\newcounter{@Total@PartNumber}%记录所有部分的总数
+\regtotcounter{@Total@PartNumber}
 \newcounter{@egnum}[section]
 \newcounter{@varnum}[section]
 \newcounter{@def}[section]
@@ -709,10 +712,8 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 %%%%%%%%%%%%%%%%%%%% 列表环境 %%%%%%%%%%%%%%%%%%%%%%
 %%设置题号%%
 \newcommand*\cir[1]{\tikz[baseline]{\node[circle,fill=ListColor,draw=ListColor,anchor=base,minimum size=5.0mm,align=center,inner sep=0mm,outer sep=0mm,font=\ListNumFont,text=white]{\maxsizebox{4.5mm}{!}{#1}};}}
-%%设置概念序号%%
-\newcommand*\preconcept{\tikz[baseline]{\node[circle,draw=ListColor,fill=white,line width=2.5pt,anchor=south,minimum size=3.0mm,inner sep=0pt,outer sep=0mm]{};}}
 %%概念列表环境%%
-\newenvironment{Concept}{\begin{multicols}{2}\itshape\begin{itemize}[label=\protect\preconcept]}{\end{itemize}\end{multicols}\global\colorlet{ListColor}{ColorA}}
+\newenvironment{Concept}{\begin{multicols}{2}\itshape\begin{itemize}[label=\color{ListColor}\bfseries\faGenderless]}{\end{itemize}\end{multicols}\global\colorlet{ListColor}{ColorA}}
 %%题目列表环境%%
 \newenvironment{QsNum}{\begin{enumerate}[label=\protect\cir{\arabic*}]}
 {\end{enumerate}\global\colorlet{ListColor}{ColorA}}
@@ -745,10 +746,10 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 {\setlength{\SepH}{0cm}
 \setlength{\MarkY}{-\paperheight/2}}
 {\setlength{\SepH}{\dimexpr(\paperheight-2\DeltaH)/\totvalue{@Thumb@Number}}%设置侧标每次移动的距离
-\setlength{\MarkY}{-\DeltaH}%设置侧标上下两侧锚点坐标的初值
+\setlength{\MarkY}{-\DeltaH}}%设置侧标上下两侧锚点坐标的初值
 \pagestyle{MainPage}
 \DefaultMark
-\makeatother}}
+\makeatother}
 
 %%%%
 \makeatletter
@@ -1236,7 +1237,7 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 %%编号部分页%%
 \titleformat{\part}
 {}{}{0em}
-{\stepcounter{@Current@TotalPartNumber}%部分数计数
+{\stepcounter{@Total@PartNumber}%部分数计数
 \stepcounter{@Thumb@Number}%侧标数计数
 \gaddtolength{\MarkY}{-\SepH}%更新侧标位置
 \startcontents[part]%开启小目录
@@ -1247,7 +1248,7 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 %%不编号部分页%%
 \titleformat{name=\part,numberless}
 {}{}{0em}
-{\stepcounter{@Current@TotalPartNumber}%部分数计数
+{\stepcounter{@Total@PartNumber}%部分数计数
 \stepcounter{@Thumb@Number}%侧标数计数
 \gaddtolength{\MarkY}{-\SepH}%更新侧标位置
 \startcontents[part]%开启小目录
@@ -1533,7 +1534,7 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 \endgroup}
 %%制定章节页的侧标更新规则%%
 \newcommand{\@Thumb@Step@Rule}{
-\ifnum\value{@Current@TotalPartNumber}=0%若文档中到当前章时还没有部分层次
+\ifnum\totvalue{@Total@PartNumber}=0%若文档中到当前章时还没有部分层次
 \if@mainmatter%如果在mainmatter中
 \stepcounter{@Thumb@Number}%侧标数计数
 \gaddtolength{\MarkY}{-\SepH}%更新侧标位置
@@ -1561,8 +1562,16 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 \NewCommandCopy{\OriginChapter}{\chapter}
 \RenewDocumentCommand{\chapter}{s O{#3} m}{
 \IfBooleanTF{#1}
-{\OriginChapter*{#3\@mkboth{#2}{#2}}}
-{\OriginChapter[#2]{#3}}
+{\OriginChapter*{#3\@mkboth{#2}{#2}}
+\ifnum\totvalue{@Total@PartNumber}=0%若文档中到当前章时还没有部分层次
+\if@mainmatter%如果在mainmatter中
+\extramarks{#2}{#2}
+\fi\fi}
+{\OriginChapter[#2]{#3}
+\ifnum\totvalue{@Total@PartNumber}=0%若文档中到当前章时还没有部分层次
+\if@mainmatter%如果在mainmatter中
+\extramarks{第~\thechapter~章\quad#2}{第~\thechapter~章\quad#2}
+\fi\fi}
 \vspace*{\@Chapter@VSpace}}
 
 %%节样式%%
@@ -1773,20 +1782,20 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 \ifdim\@Subsec@LHeight>2\@Subsec@Radius
 \ifdim\@Subsec@NHeight>2\@Subsec@Radius
 %%标签和标题都过高的情况
-%%标题底色
-\draw[ColorB!7.5,fill=ColorB!7.5,rounded corners=\@Subsec@Radius](N.north west)rectangle(N.south east);
+%%标题底色，xshift=0.4pt为默认边框线宽
+\draw[ColorB!7.5,fill=ColorB!7.5,rounded corners=\@Subsec@Radius]([xshift=0.4pt]N.north west)rectangle(N.south east);
 %%序号圆1
-\draw[white,fill=white,line width=10.0pt]([yshift=-\@Subsec@Radius]L.north east)circle(\@Subsec@Radius);
+\draw[white,fill=white,line width=12.5pt]([yshift=-\@Subsec@Radius]L.north east)circle(\@Subsec@Radius);
 \else
 %%标签过高而标题正常的情况
 %%序号圆1
-\draw[white,fill=white,line width=10.0pt]([yshift=-\@Subsec@Radius]L.north east)circle(\@Subsec@Radius);
+\draw[white,fill=white,line width=12.5pt]([yshift=-\@Subsec@Radius]L.north east)circle(\@Subsec@Radius);
 %%标题底色
 \draw[ColorB!7.5,fill=ColorB!7.5](N.north west)[rounded corners=\@Subsec@Radius]--(N.north east)[rounded corners=\@Subsec@Radius]--(N.south east)[sharp corners]--(N.south west)[sharp corners]--cycle;
 \fi
 \else
 %%序号圆1
-\draw[white,fill=white,line width=10.0pt]([yshift=-\@Subsec@Radius]L.north east)circle(\@Subsec@Radius);
+\draw[white,fill=white,line width=12.5pt]([yshift=-\@Subsec@Radius]L.north east)circle(\@Subsec@Radius);
 %%%%
 \ifdim\@Subsec@NHeight>2\@Subsec@Radius
 %%标签正常而标题过高的情况
@@ -1797,7 +1806,7 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 \fi\fi
 %%
 %%序号圆2
-\draw[ColorA,fill=white,line width=2.75pt]([yshift=-\@Subsec@Radius]L.north east)circle(\@Subsec@Radius);
+\draw[ColorA,fill=white,line width=3.25pt]([yshift=-\@Subsec@Radius]L.north east)circle(\@Subsec@Radius);
 \end{pgfonlayer}
 %%%%
 \begin{pgfonlayer}{@Subsec@Top}
@@ -1871,7 +1880,7 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 \setlength{\@Subsec@Star@Radius}{\@Subsec@Star@CriticHeight/2+\@Subsec@Star@BaseYSep}%圆角半径
 \fi\fi
 %%inner xsep的值为序号圆1和序号圆2边宽度差值的一半
-\node[inner xsep=-3.625pt,inner ysep=0mm,outer sep=0mm]{\tikz{
+\node[inner xsep=-4.625pt,inner ysep=0mm,outer sep=0mm]{\tikz{
 %%标签绘制
 \ifblank{#1}{
 %%若参数#1为空%%
@@ -1910,9 +1919,9 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 %%%%
 \begin{pgfonlayer}{@Subsec@Star@Top}
 %%序号圆1
-\draw[white,fill=white,line width=10.0pt]([xshift=\@Subsec@Star@Radius,yshift=-\@Subsec@Star@Radius]L.north west)circle(\@Subsec@Star@Radius);
+\draw[white,fill=white,line width=12.5pt]([xshift=\@Subsec@Star@Radius,yshift=-\@Subsec@Star@Radius]L.north west)circle(\@Subsec@Star@Radius);
 %%序号圆2
-\draw[ColorA,fill=white,line width=2.75pt]([xshift=\@Subsec@Star@Radius,yshift=-\@Subsec@Star@Radius]L.north west)circle(\@Subsec@Star@Radius);
+\draw[ColorA,fill=white,line width=3.25pt]([xshift=\@Subsec@Star@Radius,yshift=-\@Subsec@Star@Radius]L.north west)circle(\@Subsec@Star@Radius);
 %%序号圆3
 \draw[ColorA,fill=ColorA]([xshift=\@Subsec@Star@Radius,yshift=-\@Subsec@Star@Radius]L.north west)circle(\@Subsec@Star@Radius/2);
 \end{pgfonlayer}}};
@@ -2000,7 +2009,7 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 
 %%%%%%%%%%%%%%%%%% 目录样式 %%%%%%%%%%%%%%%%%%%%%%%%
 %%目录页码右侧空格%%
-\contentsmargin{4.0mm}
+\contentsmargin{3.5mm}
 \makeatletter
 %%标签绘制%%
 \newlength{\@Ptc@Radius}
@@ -2092,9 +2101,9 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 {\addvspace{20pt}\hypersetup{linkcolor=white}}
 {\@Toc@Part@Numbered}
 {\@Toc@Part@Unnumbered}{}
+%%%%
 %%章目录样式%%
-\gdef\@Chapter@Toc@Label{
-\if@appendix%如果章在相应环境里，则修改目录前缀
+\gdef\@Chapter@Toc@Label{\if@appendix%如果章在相应环境里，则修改目录前缀
 附录~\thecontentslabel~
 \else
 \if@test
@@ -2114,8 +2123,7 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 {\color{ColorA}\hspace*{-\@Toc@ChapterLabelName@XSep}}%不编号章节
 {\titlerule*[6pt]{ }\color{ColorA}\ContentPageNumFont\thecontentspage}
 %%%%
-\gdef\@Section@Toc@Label{
-\if@appendix
+\gdef\@Section@Toc@Label{\if@appendix
 列表~\thecontentslabel~
 \else
 \if@test
@@ -2145,8 +2153,7 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 {\hspace*{-\@Toc@SectionLabelName@XSep}}%不编号章节
 {\titlerule*[6pt]{ }\ContentPageNumFont\thecontentspage}
 %%%%
-\gdef\@Subsection@Toc@Label{
-\if@appendix
+\gdef\@Subsection@Toc@Label{\if@appendix
 条目~\thecontentslabel~
 \else
 \if@test
@@ -2175,35 +2182,36 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 {\contentslabel[\@Subsection@Toc@Label]{\@Toc@SubsecLabelName@XSep}}
 {\hspace*{-\@Toc@SubsecLabelName@XSep}}%不编号章节
 {\titlerule*[6pt]{ }\ContentPageNumFont\color{ColorC}\thecontentspage}
+%%%%
 %%图片目录样式%%
-\titlecontents{figure}[2.5cm]
+\titlecontents{figure}[\@Toc@SectionContents@XSep]
 {\addvspace{-5.0pt}\LofFont}
-{\contentslabel[图~\thecontentslabel~]{1.9cm}}
-{\hspace*{-1.9cm}}%不编号图表
+{\contentslabel[图~\thecontentslabel~]{\@Toc@SectionLabelName@XSep}}
+{\hspace*{-\@Toc@SectionLabelName@XSep}}%不编号图表
 {\titlerule*[6pt]{ }\ContentPageNumFont\thecontentspage}
 %%表格目录样式%%
-\titlecontents{table}[2.5cm]
+\titlecontents{table}[\@Toc@SectionContents@XSep]
 {\addvspace{-5.0pt}\LotFont}
-{\contentslabel[表~\thecontentslabel~]{1.9cm}}
-{\hspace*{-1.9cm}}%不编号图表
+{\contentslabel[表~\thecontentslabel~]{\@Toc@SectionLabelName@XSep}}
+{\hspace*{-\@Toc@SectionLabelName@XSep}}%不编号图表
 {\titlerule*[6pt]{ }\ContentPageNumFont\thecontentspage}
 %%部分页上的小目录章样式%%
 \titlecontents{lchapter}[0.75cm]
 {\addvspace{-5.0pt}\TocLChapterFont\hypersetup{linkcolor=ColorB}}
-{\color{ColorB}\contentslabel[\bfseries\faGenderless]{0.6cm}}
-{\color{ColorB}\contentslabel[\bfseries\faGenderless]{0.6cm}}%不编号章节
+{\color{ColorB}\contentslabel[\TocLChapterFont\faGenderless]{0.6cm}}
+{\color{ColorB}\contentslabel[\TocLChapterFont\faGenderless]{0.6cm}}%不编号章节
 {}
 %%部分页上的小目录节样式%%
 \titlecontents{lsection}[0.9cm]
 {\addvspace{-5.0pt}\TocLSectionFont}
-{\contentslabel[\faGenderless]{0.5cm}}
-{\contentslabel[\faGenderless]{0.5cm}}%不编号章节
+{\contentslabel[\TocLSectionFont\faGenderless]{0.5cm}}
+{\contentslabel[\TocLSectionFont\faGenderless]{0.5cm}}%不编号章节
 {}
 %%部分页上的小目录小节样式%%
 \titlecontents{lsubsection}[0.9cm]
 {\addvspace{-5.0pt}\TocLSubsectionFont}
-{\contentslabel[\faGenderless]{0.5cm}}
-{\contentslabel[\faGenderless]{0.5cm}}%不编号章节
+{\contentslabel[\TocLSubsectionFont\faGenderless]{0.5cm}}
+{\contentslabel[\TocLSubsectionFont\faGenderless]{0.5cm}}%不编号章节
 {}
 \makeatother
 
@@ -2411,6 +2419,20 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 [\global\chaptersubtitle{}%清空\chaptersubtitle
 \global\chapterimage{}]%清空\chapterimage
 %%%%
+\RenewDocumentCommand{\chapter}{s O{##3} m}{
+\IfBooleanTF{##1}
+{\OriginChapter*{##3\@mkboth{##2}{##2}}
+\ifnum\totvalue{@Total@PartNumber}=0%若文档中到当前章时还没有部分层次
+\if@mainmatter%如果在mainmatter中
+\extramarks{##2}{##2}
+\fi\fi}
+{\OriginChapter[##2]{##3}
+\ifnum\totvalue{@Total@PartNumber}=0%若文档中到当前章时还没有部分层次
+\if@mainmatter%如果在mainmatter中
+\extramarks{附录~\thechapter~\quad##2}{附录~\thechapter~\quad##2}
+\fi\fi}
+\vspace*{\@Chapter@VSpace}}
+%%%%
 %修改有编号节样式
 \titleformat{\section}
 {}{}{0em}{\@SectionStarStyle{列表~\thesection~}{##1}}
@@ -2495,6 +2517,20 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 \thispagestyle{empty}}
 [\global\chaptersubtitle{}%清空\chaptersubtitle
 \global\chapterimage{}]%清空\chapterimage
+%%%%
+\RenewDocumentCommand{\chapter}{s O{##3} m}{
+\IfBooleanTF{##1}
+{\OriginChapter*{##3\@mkboth{##2}{##2}}
+\ifnum\totvalue{@Total@PartNumber}=0%若文档中到当前章时还没有部分层次
+\if@mainmatter%如果在mainmatter中
+\extramarks{##2}{##2}
+\fi\fi}
+{\OriginChapter[##2]{##3}
+\ifnum\totvalue{@Total@PartNumber}=0%若文档中到当前章时还没有部分层次
+\if@mainmatter%如果在mainmatter中
+\extramarks{试题~\thechapter~\quad##2}{试题~\thechapter~\quad##2}
+\fi\fi}
+\vspace*{\@Chapter@VSpace}}
 %%%%
 %修改有编号节样式
 \titleformat{\section}
@@ -3249,7 +3285,7 @@ underlay boxed title={
 \draw[white,fill=white,line width=10.0pt,rounded corners=\@Box@TitleRadius](title.north east)rectangle(title.south west);
 \draw[#4!90,fill=#4!90,line width=2.0pt,rounded corners=\@Box@TitleRadius](title.north east)rectangle(title.south west);
 %%%%
-\fill[white,draw=white,line width=2.0pt]([xshift=\@Box@TitleRadius,yshift=-\@Box@TitleRadius]title.north west)circle({5*\@Box@TitleRadius/3});
+\fill[white,draw=white]([xshift=\@Box@TitleRadius,yshift=-\@Box@TitleRadius]title.north west)circle({5*\@Box@TitleRadius/3});
 \draw[#4,fill=white,line width=2.75pt]([xshift=\@Box@TitleRadius,yshift=-\@Box@TitleRadius]title.north west)circle({8*\@Box@TitleRadius/7});
 %%%%
 \pgfgetnodeheight(title)\TitleHeight
@@ -3267,8 +3303,7 @@ underlay boxed title={
 (title.south east)[rounded corners=\@Box@TitleRadius]--cycle;
 \fi
 %%%%
-\node[circle,align=center,inner sep=0mm,font=\BoxLogoFont,text=#4](T)at([xshift=\@Box@TitleRadius,yshift=-\@Box@TitleRadius]title.north west){#5};
-},
+\node[circle,align=center,inner sep=0mm,font=\BoxLogoFont,text=ColorA](T)at([xshift=\@Box@TitleRadius,yshift=-\@Box@TitleRadius]title.north west){#5};},
 subtitle style={empty,fontupper=\BoxSubtitleFont,colupper=#4},
 #1}
 
@@ -3276,50 +3311,30 @@ subtitle style={empty,fontupper=\BoxSubtitleFont,colupper=#4},
 \DeclareDocumentEnvironment{Application}{ O{} }{\begin{box6}{案例分析}[#1][ColorA][\faTools]}{\end{box6}}
 \DeclareDocumentEnvironment{Review}{ O{} }{\begin{box6}{知识回顾}[#1][ColorC][\faFan]}{\end{box6}}
 
-%%%%
-%%设置边注盒子%%
-\DeclareTColorBox{box7}{mmm}{
-enhanced standard,breakable,size=minimal,empty,
-varwidth boxed title=\@Box@CriticTitleWidth,
-parbox=false,before upper=\par,before lower=\par,before=\par\noindent\medskip,after=\par\medskip,
-top=4.0mm,
-fonttitle=\BoxSubtitleFont,
-coltitle=#2,fontupper=\MarginFont,
-colupper=ColorA,
-attach boxed title to top left={xshift=5.0mm},
-boxed title style={empty,size=minimal,left=2.5mm},
-underlay boxed title={
-\node[anchor=east,align=center,font=\BoxSublogoFont,text=#2,inner sep=0mm,outer sep=0mm](T)at(title.west){#3};},
-title={#1}
-}
+%%设置边注命令%%
+\newcommand{\@Margin@Note}[4]{\bigskip\noindent
+\begin{varwidth}{3\linewidth/4}
+\BoxSubtitleFont\color{#1}#2\hspace{0.5em}#3
+\end{varwidth}\par\vspace{0.5em}
+{\noindent\MarginFont\color{#1}#4}\bigskip}
 
 \DeclareDocumentCommand{\RelaInfo}{sm}
 {\IfBooleanTF{#1}
-{\marginpar{\begin{box7}{相关信息}{ColorH}{\faCommentDots}
-#2
-\end{box7}}}
-{\begin{box7}{相关信息}{ColorH}{\faCommentDots}
-#2
-\end{box7}}}
+{\marginpar{\@Margin@Note{ColorH}{\faCommentDots}{相关信息}{#2}}}
+{\@Margin@Note{ColorH}{\faCommentDots}{相关信息}{#2}}}
+%%
 \DeclareDocumentCommand{\DeepThink}{sm}
 {\IfBooleanTF{#1}
-{\marginpar{\begin{box7}{深入思考}{ColorB!90!black}{\faTh}
-#2
-\end{box7}}}
-{\begin{box7}{深入思考}{ColorB!90!black}{\faTh}
-#2
-\end{box7}}}
+{\marginpar{\@Margin@Note{ColorB!90!black}{\faTh}{深入思考}{#2}}}
+{\@Margin@Note{ColorB!90!black}{\faTh}{深入思考}{#2}}}
+%%
 \DeclareDocumentCommand{\Remark}{sm}
 {\IfBooleanTF{#1}
-{\marginpar{\begin{box7}{重点注释}{ColorF}{\faChrome}
-#2
-\end{box7}}}
-{\begin{box7}{重点注释}{ColorF}{\faChrome}
-#2
-\end{box7}}}
+{\marginpar{\@Margin@Note{ColorF}{\faChrome}{重点注释}{#2}}}
+{\@Margin@Note{ColorF}{\faChrome}{重点注释}{#2}}}
 
 %%%%
-\DeclareTColorBox{box8}{O{}O{}}{
+\DeclareTColorBox{box7}{O{}O{}}{
 enhanced standard,breakable,
 pad before break=3.0mm,pad after break=5.0mm,
 top=3.5mm,bottom=3.0mm,toptitle=4.0mm,bottomtitle=-2.5mm,
@@ -3331,23 +3346,23 @@ subtitle style={empty,fontupper=\BoxSubtitleFont,colupper=ColorA},
 title={#1},#2}
 
 
-\newenvironment{Proof}{\begin{box8}[\faBars~~证明]
-[colframe=ColorB!7.5,colback=ColorB!7.5,colbacktitle=ColorB!7.5]}{\end{box8}}
+\newenvironment{Proof}{\begin{box7}[\faBars~~证明]
+[colframe=ColorB!7.5,colback=ColorB!7.5,colbacktitle=ColorB!7.5]}{\end{box7}}
 %%
-\newenvironment{Solution}{\begin{box8}[\faBars~~参考答案]
-[colframe=ColorB!7.5,colback=ColorB!7.5,colbacktitle=ColorB!7.5]}{\end{box8}}
+\newenvironment{Solution}{\begin{box7}[\faBars~~参考答案]
+[colframe=ColorB!7.5,colback=ColorB!7.5,colbacktitle=ColorB!7.5]}{\end{box7}}
 %%
-\DeclareDocumentEnvironment{Block}{O{}}{\begin{box8}[#1][colframe=ColorB!7.5,colback=ColorB!7.5,colbacktitle=ColorB!7.5]}{\end{box8}}
-\DeclareDocumentEnvironment{Block*}{O{}}{\begin{box8}[#1]
+\DeclareDocumentEnvironment{Block}{O{}}{\begin{box7}[#1][colframe=ColorB!7.5,colback=ColorB!7.5,colbacktitle=ColorB!7.5]}{\end{box7}}
+\DeclareDocumentEnvironment{Block*}{O{}}{\begin{box7}[#1]
 [empty,overlay={
 \ifodd\value{page}
 \draw[ColorB!7.5,fill=ColorB!7.5](frame.north east)[rounded corners=7.5pt]--(frame.south east)[sharp corners]--([xshift=-\@innerlen]frame.south west)[sharp corners]--([xshift=-\@innerlen]frame.north west)[rounded corners=7.5pt]--cycle;
 \else
 \draw[ColorB!7.5,fill=ColorB!7.5](frame.north west)[rounded corners=7.5pt]--(frame.south west)[sharp corners]--([xshift=\@innerlen]frame.south east)[sharp corners]--([xshift=\@innerlen]frame.north east)[rounded corners=7.5pt]--cycle;
-\fi}]}{\end{box8}}
+\fi}]}{\end{box7}}
 
 
-\DeclareTColorBox{box9}{O{} m O{} O{ColorA} O{}}{
+\DeclareTColorBox{box8}{O{} m O{} O{ColorA} O{}}{
 Box,
 varwidth boxed title=\@Box@CriticTitleWidth,
 frame style={left color=#4!50,right color=#4!50,middle color=#4},
@@ -3389,10 +3404,10 @@ overlay middle and last={
 subtitle style={empty,fontupper=\BoxSubtitleFont,colupper=#4},
 title={#2},#1}
 
-\NewDocumentEnvironment{Reading}{O{}mm}{\begin{box9}{阅读理解}[#1][ColorB][\score{#2}{#3}[ColorB]]}{\end{box9}}
-\NewDocumentEnvironment{Cloze}{O{}mm}{\begin{box9}{完形填空}[#1][ColorA][\score{#2}{#3}[ColorA]]}{\end{box9}}
-\NewDocumentEnvironment{Article}{O{}mm}{\begin{box9}{文本解读}[#1][ColorC][\score{#2}{#3}[ColorC]]}{\end{box9}}
-\NewDocumentEnvironment{Vocabulary}{O{}}{\begin{box9}{词汇解析}[#1][ColorE]}{\end{box9}}
+\NewDocumentEnvironment{Reading}{O{}mm}{\begin{box8}{阅读理解}[#1][ColorB][\score{#2}{#3}[ColorB]]}{\end{box8}}
+\NewDocumentEnvironment{Cloze}{O{}mm}{\begin{box8}{完形填空}[#1][ColorA][\score{#2}{#3}[ColorA]]}{\end{box8}}
+\NewDocumentEnvironment{Article}{O{}mm}{\begin{box8}{文本解读}[#1][ColorC][\score{#2}{#3}[ColorC]]}{\end{box8}}
+\NewDocumentEnvironment{Vocabulary}{O{}}{\begin{box8}{词汇解析}[#1][ColorE]}{\end{box8}}
 
 \def\@Exercise@Label@Numbered{课后习题~\the@prenumber}
 \def\@Exercise@Label@Unnumbered{课后习题}
@@ -3402,34 +3417,34 @@ title={#2},#1}
 \def\@Improve@Label@Unnumbered{复习与提高}
 %%简化序号命令%%
 \newcommand{\the@prenumber}{\thechapter.\thesection}
-\DeclareTColorBox{box11}{ O{} O{} }{Question,code={#2},#1}
+\DeclareTColorBox{box9}{ O{} O{} }{Question,code={#2},#1}
 %%%%
-\newenvironment{Exercise}{\begin{box11}[][
+\newenvironment{Exercise}{\begin{box9}[][
 \if@mainmatter
 \subsection*{\@Exercise@Label@Numbered}
 \else
 \subsection*{\@Exercise@Label@Unnumbered}
-\fi]}{\end{box11}}
+\fi]}{\end{box9}}
 %%
-\newenvironment{Exercise*}{\begin{box11}[][\subsection*{\@Exercise@Label@Unnumbered}]}{\end{box11}}
+\newenvironment{Exercise*}{\begin{box9}[][\subsection*{\@Exercise@Label@Unnumbered}]}{\end{box9}}
 %%%%
-\newenvironment{Thinking}{\begin{box11}[][
+\newenvironment{Thinking}{\begin{box9}[][
 \if@mainmatter
 \subsection*{\@Thinking@Label@Numbered}
 \else
 \subsection*{\@Thinking@Label@Unnumbered}
-\fi]}{\end{box11}}
+\fi]}{\end{box9}}
 %%
-\newenvironment{Thinking*}{\begin{box11}[][\subsection*{\@Thinking@Label@Unnumbered}]}{\end{box11}}
+\newenvironment{Thinking*}{\begin{box9}[][\subsection*{\@Thinking@Label@Unnumbered}]}{\end{box9}}
 %%%%
-\newenvironment{Improve}{\begin{box11}[][
+\newenvironment{Improve}{\begin{box9}[][
 \if@mainmatter
 \subsection*{\@Improve@Label@Numbered}
 \else
 \subsection*{\@Improve@Label@Unnumbered}
-\fi]}{\end{box11}}
+\fi]}{\end{box9}}
 %%
-\newenvironment{Improve*}{\begin{box11}[][\subsection*{\@Improve@Label@Unnumbered}]}{\end{box11}}
+\newenvironment{Improve*}{\begin{box9}[][\subsection*{\@Improve@Label@Unnumbered}]}{\end{box9}}
 
 %%修改代码盒子左侧行数样式%%
 \renewcommand{\theFancyVerbLine}{\LineNumFont\color{ColorA}{\arabic{FancyVerbLine}}}
