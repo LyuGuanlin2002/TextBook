@@ -767,14 +767,22 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 \newlength{\@PageNumWidth}
 \setlength{\@PageNumWidth}{\@toplen-\@handseplen+1.0mm}
 %%%%
+\newcommand{\partlabelfront}{第}
+\newcommand{\partlabelback}{部分}
+\newcommand{\chapterlabelfront}{第}
+\newcommand{\chapterlabelback}{章}
+\newcommand{\sectionlabelfront}{第}
+\newcommand{\sectionlabelback}{节}
+\newcommand{\subsectionlabelfront}{课时}
+\newcommand{\subsectionlabelback}{}
 \renewcommand{\headrulewidth}{0pt}
 \renewcommand{\chaptermark}[1]{
 \if@mainmatter
-\markboth{第~\thechapter~章\quad#1}{第~\thechapter~章\quad#1}
+\markboth{\chapterlabelfront~\thechapter~\chapterlabelback\quad#1}{\chapterlabelfront~\thechapter~\chapterlabelback\quad#1}
 \else
 \markboth{#1}{#1}
 \fi}
-\renewcommand{\sectionmark}[1]{\markright{第~\thesection~节\quad#1}}
+\renewcommand{\sectionmark}[1]{\markright{\sectionlabelfront~\thesection~\sectionlabelback\quad#1}}
 %%%%
 %%绘制主页面样式%%
 \newcommand{\@Main@PageStyle}{
@@ -940,7 +948,7 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 \@partintro
 \end{varwidth}};
 %%部分目录%%
-\node[anchor=south west](SC)at([xshift=\@innerlen+0.25in,yshift=\@botlen]current page.south west){
+\node[inner sep=0mm,outer sep=0mm,anchor=south west](SC)at([xshift=\@innerlen+5.0mm,yshift=\@botlen]current page.south west){
 \begin{varwidth}{\textwidth/2}
 \printcontents[part]{l}{0}{\setcounter{tocdepth}{0}}
 \end{varwidth}};
@@ -1020,7 +1028,7 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 \@partintro
 \end{varwidth}};
 %%部分目录%%
-\node[minimum width=4.0cm,anchor=south east](SC)at([xshift=-\@innerlen-0.25in,yshift=\@botlen]current page.south east){
+\node[inner sep=0mm,outer sep=0mm,minimum width=4.0cm,anchor=south east](SC)at([xshift=-\@innerlen-5.0mm,yshift=\@botlen]current page.south east){
 \begin{varwidth}{\textwidth/2}
 \printcontents[part]{l}{0}{\setcounter{tocdepth}{0}}
 \end{varwidth}};
@@ -1120,7 +1128,7 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 \@partintro
 \end{varwidth}};
 %%部分目录%%
-\node[anchor=south west](SC)at([xshift=\@innerlen+0.25in,yshift=\@botlen]current page.south west){
+\node[inner sep=0mm,outer sep=0mm,anchor=south west](SC)at([xshift=\@innerlen+5.0mm,yshift=\@botlen]current page.south west){
 \begin{varwidth}{\textwidth/2}
 \printcontents[part]{l}{0}{\setcounter{tocdepth}{0}}
 \end{varwidth}};
@@ -1202,7 +1210,7 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 \@partintro
 \end{varwidth}};
 %%部分目录%%
-\node[minimum width=4.0cm,anchor=south east](SC)at([xshift=-\@innerlen-0.25in,yshift=\@botlen]current page.south east){
+\node[inner sep=0mm,outer sep=0mm,minimum width=4.0cm,anchor=south east](SC)at([xshift=-\@innerlen-5.0mm,yshift=\@botlen]current page.south east){
 \begin{varwidth}{\textwidth/2}
 \printcontents[part]{l}{0}{\setcounter{tocdepth}{0}}
 \end{varwidth}};
@@ -1222,7 +1230,7 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 \ifdim\@Part@Star@LabelHeight<\@Part@Star@CriticLabelHeight
 \setlength{\@Part@Star@LabelHeight}{\@Part@Star@CriticLabelHeight}
 \fi
-\settototalheight{\@Part@Star@NameHeight}{\PartNameFont#1}
+\settoheight{\@Part@Star@NameHeight}{\PartNameFont#1}
 \begin{tikzpicture}[remember picture,overlay]
 %%白色背景%%
 \draw[white,fill=white](current page.south west)rectangle(current page.north east);
@@ -1241,7 +1249,7 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 \stepcounter{@Thumb@Number}%侧标数计数
 \gaddtolength{\MarkY}{-\SepH}%更新侧标位置
 \startcontents[part]%开启小目录
-\@PartStyle{第~\thepart~部分}{#1}%部分样式
+\@PartStyle{\partlabelfront~\thepart~\partlabelback}{#1}%部分样式
 \thispagestyle{empty}}
 [\global\partintro{}%清空\partintro
 \global\partimage{}]%清空\partimage
@@ -1266,8 +1274,8 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 {\OriginPart*{#3\@mkboth{#2}{#2}}
 \extramarks{#2}{#2}}
 {\if@mainmatter
-\OriginPart[#2]{#3\@mkboth{第~\thepart~部分\quad#2}{第~\thepart~部分\quad#2}}
-\extramarks{第~\thepart~部分\quad#2}{第~\thepart~部分\quad#2}
+\OriginPart[#2]{#3\@mkboth{\partlabelfront~\thepart~\partlabelback\quad#2}{\partlabelfront~\thepart~\partlabelback\quad#2}}
+\extramarks{\partlabelfront~\thepart~\partlabelback\quad#2}{\partlabelfront~\thepart~\partlabelback\quad#2}
 \else
 \OriginPart*{#3\@mkboth{#2}{#2}\addcontentsline{toc}{part}{#2}}
 \extramarks{#2}{#2}
@@ -1416,11 +1424,11 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 \setlength{\@Chapter@Star@LabelYShift@Up}{5.0mm}
 \newcommand{\@ChapterStarStyle}[2]{
 \settototalheight{\@Chapter@Star@LabelHeight}{\ChapterNameFont#1}
-%%设置标签最小尺寸
+%%设置标签最小尺寸total
 \ifdim\@Chapter@Star@LabelHeight<\@Chapter@Star@CriticLabelHeight
 \setlength{\@Chapter@Star@LabelHeight}{\@Chapter@Star@CriticLabelHeight}
 \fi
-\settototalheight{\@Chapter@Star@NameHeight}{\ChapterNameFont#1}
+\settoheight{\@Chapter@Star@NameHeight}{\ChapterNameFont#1}
 \begingroup
 \pgfdeclarelayer{@Chapter@Star@Top}
 \pgfdeclarelayer{@Chapter@Star@Bottom}
@@ -1495,7 +1503,7 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 \node[inner sep=0mm,outer sep=0mm,anchor=north east,text width=\textwidth,align=flush right](TT)at(N){\tikz{
 \node[inner sep=0mm,outer sep=0mm,anchor=north west](P1){\@HalfCircle@Label{ColorA}{\@Chapter@Star@LabelHeight/2}};
 \node[inner sep=0mm,outer sep=0mm,anchor=west](P2)at(P1.east){\@HalfCircle@Label{ColorA!80}{\@Chapter@Star@LabelHeight/2}};
-\node[inner sep=0mm,outer sep=0mm,anchor=north west,font=\ChapterNameFont,text=ColorA](P3)at([xshift=\@Chapter@Star@LabelNameXSep,yshift=\@Chapter@Star@NameHeight/2-\@Chapter@Star@LabelHeight/2]P2.north east){
+\node[inner sep=0mm,outer sep=0mm,anchor=north west,font=\ChapterNameFont,text=ColorA](P3)at([xshift=\@Chapter@Star@LabelNameXSep,yshift=\@Chapter@Star@NameHeight/2-\@Chapter@Star@NameDepth/2-\@Chapter@Star@LabelHeight/2]P2.north east){
 \begin{varwidth}{\textwidth-\@Chapter@Star@LabelHeight-\@Chapter@Star@LabelNameXSep}
 #1
 \end{varwidth}};
@@ -1543,7 +1551,7 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 \titleformat{\chapter}
 {}{}{0em}
 {\@Thumb@Step@Rule
-\@ChapterStyle{第~\thechapter~章}{#1}%章样式
+\@ChapterStyle{\chapterlabelfront~\thechapter~\chapterlabelback}{#1}%章样式
 \enlargethispage{-0.75cm}%修改页面大小
 \thispagestyle{empty}}
 [\global\chapterimage{}%清空\chapterimage
@@ -1570,7 +1578,7 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 {\OriginChapter[#2]{#3}
 \ifnum\totvalue{@Total@PartNumber}=0%若文档中到当前章时还没有部分层次
 \if@mainmatter%如果在mainmatter中
-\extramarks{第~\thechapter~章\quad#2}{第~\thechapter~章\quad#2}
+\extramarks{\chapterlabelfront~\thechapter~\chapterlabelback\quad#2}{\chapterlabelfront~\thechapter~\chapterlabelback\quad#2}
 \fi\fi}
 \vspace*{\@Chapter@VSpace}}
 
@@ -1579,6 +1587,8 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 \newlength{\@Section@CircleRadius}
 \newlength{\@Section@LabelHeight}
 \newlength{\@Section@LabelDepth}
+\newlength{\@Section@LabelDepth@Front}
+\newlength{\@Section@LabelDepth@Back}
 \newlength{\@Section@NameHeight}
 \newlength{\@Section@NameDepth}
 \newlength{\@Section@LabelNameXSep}
@@ -1586,14 +1596,15 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 \newlength{\@Section@Yshift}
 \newlength{\@Section@LabelHeight@Front}
 \newlength{\@Section@LabelHeight@Back}
+\newlength{\@Section@LabelWidth@Front}
+\newlength{\@Section@LabelWidth@Back}
 \newlength{\@Section@NameWidth}
 \newlength{\@Section@CriticLabelWidth}
 \newlength{\@Section@LabelXSep}
-\setlength{\@Section@LabelXSep}{2.5mm}
+\setlength{\@Section@LabelXSep}{2.0mm}
 \setlength{\@Section@CriticLabelWidth}{3.0cm}
 \setlength{\@Section@LabelNameXSep}{7.5mm}
 \setlength{\@Section@CriticLabelHeight}{6.8mm}
-%%%%
 \newcommand{\@SectionStyle}[4]{
 \settototalheight{\@Section@LabelHeight@Front}{\SectionLabelFont#1}
 \settototalheight{\@Section@LabelHeight@Back}{\SectionLabelFont#2}
@@ -1604,81 +1615,114 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 \setlength{\@Section@LabelHeight}{\@Section@CriticLabelHeight}
 \fi
 %%%%
+\settodepth{\@Section@LabelDepth@Front}{\SectionLabelFont#1}
+\settodepth{\@Section@LabelDepth@Back}{\SectionLabelFont#2}
+\setlength{\@Section@LabelDepth}{\@Section@LabelDepth@Front/2+\@Section@LabelDepth@Back/2}
+%%%%
 \setlength{\@Section@CircleRadius}{2\@Section@LabelHeight/3}
-\setlength{\@Section@NameWidth}{\linewidth-2\@Section@CircleRadius}
+%%%
+\settowidth{\@Section@LabelWidth@Front}{\SectionLabelFont#1}
+\ifdim\@Section@LabelWidth@Front>\@Section@CriticLabelWidth
+\setlength{\@Section@LabelWidth@Front}{\@Section@CriticLabelWidth}
+\fi
+\settowidth{\@Section@LabelWidth@Back}{\SectionLabelFont#2}
+\ifdim\@Section@LabelWidth@Back>\@Section@CriticLabelWidth
+\setlength{\@Section@LabelWidth@Back}{\@Section@CriticLabelWidth}
+\fi
+%%%
+\setlength{\@Section@NameWidth}{\linewidth-\@Section@LabelWidth@Front-\@Section@LabelWidth@Back-2\@Section@CircleRadius-\@Section@LabelNameXSep}
 \begin{flushleft}
 \begin{tikzpicture}
-\ifblank{#1}{
-\coordinate(C)at(\@Section@CircleRadius,0);
-\addtolength{\@Section@NameWidth}{-\@Section@LabelXSep}
-}{\node[outer sep=0mm,inner sep=0mm,font=\SectionLabelFont](L1){\begin{varwidth}{\@Section@CriticLabelWidth}#1\end{varwidth}};
-\pgfgetnodewidth(L1)\LFrontWidth
-\coordinate(C)at([xshift=\@Section@LabelXSep+\@Section@CircleRadius,yshift=-\@Section@LabelHeight@Front/2]L1.north east);
-\addtolength{\@Section@NameWidth}{-\LFrontWidth-\@Section@LabelXSep}}
-%%%%
-\draw[ColorA,fill=ColorA](C)circle(\@Section@CircleRadius);
-\node[circle,outer sep=0mm,inner sep=0mm,font=\SectionLabelFont,text=white](Num)at(C){\maxsizebox{2\@Section@CircleRadius-1.0mm}{2\@Section@CircleRadius-1.0mm}{#4}};
-\coordinate(L2Start)at([xshift=\@Section@LabelXSep+\@Section@CircleRadius,yshift=\@Section@LabelHeight@Back/2]C);
-%%%%
-\ifblank{#2}{
-\ifblank{#1}{
-\addtolength{\@Section@NameWidth}{-\@Section@LabelXSep}
-\coordinate(NameStart)at([xshift=\@Section@LabelXSep+\@Section@CircleRadius,yshift=\@Section@NameHeight/2]C);
-}{
-\coordinate(NameStart)at([xshift=\@Section@LabelNameXSep+\@Section@CircleRadius,yshift=\@Section@NameHeight/2]C);
-\addtolength{\@Section@NameWidth}{-\@Section@LabelNameXSep}
-}
-}{\node[outer sep=0mm,inner sep=0mm,font=\SectionLabelFont,anchor=north west](L2)at(L2Start){\begin{varwidth}{\@Section@CriticLabelWidth}#2\end{varwidth}};
-\pgfgetnodewidth(L2)\LBackWidth
-\coordinate(NameStart)at([xshift=\@Section@LabelNameXSep,yshift=-\@Section@LabelHeight@Back/2+\@Section@NameHeight/2]L2.north east);
-\addtolength{\@Section@NameWidth}{-\LBackWidth-\@Section@LabelXSep-\@Section@LabelNameXSep}}
-%%%%
-\node[outer sep=0mm,inner sep=0mm,font=\SectionNameFont,anchor=north west](N)at(NameStart){\begin{varwidth}{\@Section@NameWidth}#3\end{varwidth}};
+\node[outer sep=0mm,inner sep=0mm](T){
+\ifblank{#1}{}{% 注释掉换行符，不要删除！
+\begin{minipage}[t]{\@Section@LabelWidth@Front}
+\SectionLabelFont#1
+\end{minipage}% 注释掉换行符，不要删除！
+\hspace{\@Section@LabelXSep}% 注释掉换行符，不要删除！
+\addtolength{\@Section@NameWidth}{-\@Section@LabelXSep}}% 注释掉换行符，不要删除！
+\tikz[baseline=-\@Section@LabelHeight/2+\@Section@LabelDepth]{% 注释掉换行符，不要删除！
+\draw[ColorA,fill=ColorA](0,0)circle(\@Section@CircleRadius);
+\node[circle,outer sep=0mm,inner sep=0mm,font=\SectionLabelFont,text=white](N)at(0,0){\maxsizebox{2\@Section@CircleRadius-1.0mm}{2\@Section@CircleRadius-1.0mm}{#4}};}% 注释掉换行符，不要删除！
+\ifblank{#2}{}{% 注释掉换行符，不要删除！
+\hspace{\@Section@LabelXSep}% 注释掉换行符，不要删除！
+\addtolength{\@Section@NameWidth}{-\@Section@LabelXSep}% 注释掉换行符，不要删除！
+\begin{minipage}[t]{\@Section@LabelWidth@Back}
+\SectionLabelFont#2
+\end{minipage}}% 注释掉换行符，不要删除！
+\ifblank{#3}{}{% 注释掉换行符，不要删除！
+\hspace{\@Section@LabelNameXSep}%
+\begin{minipage}[t]{\@Section@NameWidth}
+\SectionNameFont#3
+\end{minipage}}
+};
 \end{tikzpicture}
 \end{flushleft}}
+
 %%%%
+
 \newlength{\@Section@Star@CircleRadius}
 \newlength{\@Section@Star@LabelHeight}
 \newlength{\@Section@Star@LabelDepth}
 \newlength{\@Section@Star@NameHeight}
 \newlength{\@Section@Star@NameDepth}
-\newlength{\@Section@Star@Yshift}
 \newlength{\@Section@Star@LabelXSep}
 \newlength{\@Section@Star@LabelNameXSep}
 \newlength{\@Section@Star@CriticLabelHeight}
+\newlength{\@Section@Star@LabelWidth}
+\newlength{\@Section@Star@CriticLabelWidth}
 \newlength{\@Section@Star@NameWidth}
 \setlength{\@Section@Star@LabelXSep}{2.5mm}
+\setlength{\@Section@Star@CriticLabelWidth}{3.0cm}
 \setlength{\@Section@Star@LabelNameXSep}{7.5mm}
 \setlength{\@Section@Star@CriticLabelHeight}{6.8mm}
 %%不编号节样式%%
 \newcommand{\@SectionStarStyle}[2]{
 \settototalheight{\@Section@Star@LabelHeight}{\SectionLabelFont#1}
 \settototalheight{\@Section@Star@NameHeight}{\SectionNameFont#2}
+\settodepth{\@Section@Star@LabelDepth}{\SectionLabelFont#1}
+\settodepth{\@Section@Star@NameDepth}{\SectionNameFont#2}
+%%%
 \ifdim\@Section@Star@LabelHeight<\@Section@Star@CriticLabelHeight
 \setlength{\@Section@Star@CircleRadius}{3\@Section@Star@CriticLabelHeight/4}
 \else
 \setlength{\@Section@Star@CircleRadius}{3\@Section@Star@LabelHeight/4}
 \fi
 \setlength{\@Section@Star@NameWidth}{\linewidth-2\@Section@Star@CircleRadius}
+%%%
+\settowidth{\@Section@Star@LabelWidth}{\SectionLabelFont#1}
+\ifdim\@Section@Star@LabelWidth>\@Section@Star@CriticLabelWidth
+\setlength{\@Section@Star@LabelWidth}{\@Section@Star@CriticLabelWidth}
+\fi
+%%%
 \begin{flushleft}
 \begin{tikzpicture}
 \draw[ColorA!50,fill=ColorA!50](0,0)circle(\@Section@Star@CircleRadius);
 \draw[white,fill=ColorA,line width=2.75pt](0,0)circle(7\@Section@Star@CircleRadius/12);
-\ifblank{#1}{
-\coordinate(NameStart)at(\@Section@Star@LabelXSep+\@Section@Star@CircleRadius,\@Section@Star@NameHeight/2);
-\addtolength{\@Section@Star@NameWidth}{-\@Section@Star@LabelXSep}
-}{
-\node[outer sep=0mm,inner sep=0mm,font=\SectionLabelFont,text=ColorA,anchor=north west](L)at(\@Section@Star@LabelXSep+\@Section@Star@CircleRadius,\@Section@Star@LabelHeight/2){\begin{varwidth}{\linewidth/3}#1\end{varwidth}};
-\pgfgetnodewidth(L)\LWidth
-\coordinate(NameStart)at([xshift=\@Section@Star@LabelNameXSep,yshift=-\@Section@Star@LabelHeight/2+\@Section@Star@NameHeight/2]L.north east);
-\addtolength{\@Section@Star@NameWidth}{-\LWidth-\@Section@Star@LabelXSep-\@Section@Star@LabelNameXSep}}
-\node[outer sep=0mm,inner sep=0mm,font=\SectionNameFont,text=ColorA,anchor=north west](N)at(NameStart){\begin{varwidth}{\@Section@Star@NameWidth}#2\end{varwidth}};
+\ifblank{#1}{% 注释掉换行符，不要删除！
+\ifblank{#2}{}{% 注释掉换行符，不要删除！
+\node[outer sep=0mm,inner sep=0mm,font=\SectionLabelFont,text=ColorA,anchor=north west](T)at(\@Section@Star@CircleRadius+\@Section@Star@LabelXSep,\@Section@Star@NameHeight/2-\@Section@Star@NameDepth/2){\begin{varwidth}{\linewidth-2\@Section@Star@CircleRadius-\@Section@Star@LabelXSep}
+#2
+\end{varwidth}};}% 注释掉换行符，不要删除！
+}{% 注释掉换行符，不要删除！
+\ifblank{#2}{% 注释掉换行符，不要删除！
+\node[outer sep=0mm,inner sep=0mm,font=\SectionLabelFont,text=ColorA,anchor=north west](T)at(\@Section@Star@CircleRadius+\@Section@Star@LabelXSep,\@Section@Star@LabelHeight/2-\@Section@Star@LabelDepth/2){\begin{varwidth}{\linewidth-2\@Section@Star@CircleRadius-\@Section@Star@LabelXSep}
+#1
+\end{varwidth}};
+}{% 注释掉换行符，不要删除！
+\node[outer sep=0mm,inner sep=0mm,font=\SectionLabelFont,text=ColorA,anchor=north west](T)at(\@Section@Star@CircleRadius+\@Section@Star@LabelXSep,\@Section@Star@LabelHeight/2-\@Section@Star@LabelDepth/2){\begin{minipage}[t]{\@Section@Star@LabelWidth}
+#1
+\end{minipage}% 注释掉换行符，不要删除！
+\hspace{\@Section@Star@LabelNameXSep}% 注释掉换行符，不要删除！
+\begin{minipage}[t]{\linewidth-2\@Section@Star@CircleRadius-\@Section@Star@LabelXSep-\@Section@Star@LabelWidth-\@Section@Star@LabelNameXSep}
+#2
+\end{minipage}};}
+}
 \end{tikzpicture}
 \end{flushleft}}
 %%
 %%编号节样式%%
 \titleformat{\section}
-{}{}{0em}{\@SectionStyle{第}{节}{#1}{\thesection}}
+{}{}{0em}{\@SectionStyle{\sectionlabelfront}{\sectionlabelback}{#1}{\thesection}}
 %%不编号节样式%%
 \titleformat{name=\section,numberless}
 {}{}{0em}{\@SectionStarStyle{}{#1}}
@@ -1932,7 +1976,7 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 %%编号小节样式%%
 \titleformat{\subsection}
 {}{}{0em}
-{\@SubsectionStyle{课时}{#1}{\thesubsection}}
+{\@SubsectionStyle{\subsectionlabelfront}{#1}{\thesubsection}}
 %%不编号小节样式%%
 \titleformat{name=\subsection,numberless}
 {}{}{0em}
@@ -2091,7 +2135,7 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 \endgroup}
 %%
 %%编号部分目录样式%%
-\newcommand{\@Toc@Part@Numbered}[1]{\contentslabel[\@Ptc@DoubleTextBox{第~\thecontentslabel~部分}{#1\hfill\thecontentspage}]{1.25cm}}
+\newcommand{\@Toc@Part@Numbered}[1]{\contentslabel[\@Ptc@DoubleTextBox{\partlabelfront~\thecontentslabel~\partlabelback}{#1\hfill\thecontentspage}]{1.25cm}}
 %%
 %%不编号部分目录样式%%
 \newcommand{\@Toc@Part@Unnumbered}[1]{\contentslabel[\@Ptc@DoubleTextBox{#1}{\hfill\thecontentspage}]{1.25cm}}
@@ -2396,51 +2440,32 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 %修改节计数器样式为小写字母
 \renewcommand{\thesection}{\alph{section}}
 %修改页眉页脚章标签
-\renewcommand{\chaptermark}[1]{
-\if@mainmatter
-\markboth{附录~\thechapter~\quad##1}{附录~\thechapter~\quad##1}
-\else
-\markboth{##1}{##1}
-\fi}
+\renewcommand{\chapterlabelfront}{附录}
+\renewcommand{\chapterlabelback}{}
 %修改页眉页脚节标签
-\renewcommand{\sectionmark}[1]{
-\if@mainmatter
-\markright{列表~\thesection~\quad##1}
-\else
-\markright{##1}
-\fi}
+\renewcommand{\sectionlabelfront}{列表}
+\renewcommand{\sectionlabelback}{}
+%修改小节标签
+\renewcommand{\subsectionlabelfront}{条目}
+\renewcommand{\subsectionlabelback}{}
 %修改有编号章样式
 \titleformat{\chapter}
 {}{}{0em}
 {\@Thumb@Step@Rule
-\@ChapterStarStyle{附录~\thechapter~}{##1}%章样式
+\@ChapterStarStyle{\chapterlabelfront~\thechapter~\chapterlabelback}{##1}%章样式
 \enlargethispage{-0.25cm}%修改页面大小
 \thispagestyle{empty}}
 [\global\chaptersubtitle{}%清空\chaptersubtitle
 \global\chapterimage{}]%清空\chapterimage
 %%%%
-\RenewDocumentCommand{\chapter}{s O{##3} m}{
-\IfBooleanTF{##1}
-{\OriginChapter*{##3\@mkboth{##2}{##2}}
-\ifnum\totvalue{@Total@PartNumber}=0%若文档中到当前章时还没有部分层次
-\if@mainmatter%如果在mainmatter中
-\extramarks{##2}{##2}
-\fi\fi}
-{\OriginChapter[##2]{##3}
-\ifnum\totvalue{@Total@PartNumber}=0%若文档中到当前章时还没有部分层次
-\if@mainmatter%如果在mainmatter中
-\extramarks{附录~\thechapter~\quad##2}{附录~\thechapter~\quad##2}
-\fi\fi}
-\vspace*{\@Chapter@VSpace}}
-%%%%
 %修改有编号节样式
 \titleformat{\section}
-{}{}{0em}{\@SectionStarStyle{列表~\thesection~}{##1}}
+{}{}{0em}{\@SectionStarStyle{\sectionlabelfront~\thesection~\sectionlabelback}{##1}}
 %%%%
 %修改有编号小节样式
 \titleformat{\subsection}
 {}{}{0em}
-{\@SubsectionStarStyle{条目~\thesubsection}{##1}}
+{\@SubsectionStarStyle{\subsectionlabelfront~\thesubsection~\subsectionlabelback}{##1}}
 %%%%
 \def\@Eg@Name{例题（附录）}
 \def\@Eg@Label{\thechapter.\thesection.\the@egnum}
@@ -2495,51 +2520,32 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 %修改节计数器样式为大写罗马数字
 \renewcommand{\thesection}{\Roman{section}}
 %修改页眉页脚章标签
-\renewcommand{\chaptermark}[1]{
-\if@mainmatter
-\markboth{试题~\thechapter~\quad##1}{试题~\thechapter~\quad##1}
-\else
-\markboth{##1}{##1}
-\fi}
+\renewcommand{\chapterlabelfront}{试题}
+\renewcommand{\chapterlabelback}{}
 %修改页眉页脚节标签
-\renewcommand{\sectionmark}[1]{
-\if@mainmatter
-\markright{题类~\thesection~\quad##1}
-\else
-\markright{##1}
-\fi}
+\renewcommand{\sectionlabelfront}{题类}
+\renewcommand{\sectionlabelback}{}
+%修改小节标签
+\renewcommand{\subsectionlabelfront}{题目}
+\renewcommand{\subsectionlabelback}{}
 %修改有编号章样式
 \titleformat{\chapter}
 {}{}{0em}
 {\@Thumb@Step@Rule
-\@ChapterStarStyle{试题~\thechapter~}{##1}%章样式
+\@ChapterStarStyle{\chapterlabelfront~\thechapter~\chapterlabelback}{##1}%章样式
 \enlargethispage{-0.25cm}%修改页面大小
 \thispagestyle{empty}}
 [\global\chaptersubtitle{}%清空\chaptersubtitle
 \global\chapterimage{}]%清空\chapterimage
 %%%%
-\RenewDocumentCommand{\chapter}{s O{##3} m}{
-\IfBooleanTF{##1}
-{\OriginChapter*{##3\@mkboth{##2}{##2}}
-\ifnum\totvalue{@Total@PartNumber}=0%若文档中到当前章时还没有部分层次
-\if@mainmatter%如果在mainmatter中
-\extramarks{##2}{##2}
-\fi\fi}
-{\OriginChapter[##2]{##3}
-\ifnum\totvalue{@Total@PartNumber}=0%若文档中到当前章时还没有部分层次
-\if@mainmatter%如果在mainmatter中
-\extramarks{试题~\thechapter~\quad##2}{试题~\thechapter~\quad##2}
-\fi\fi}
-\vspace*{\@Chapter@VSpace}}
-%%%%
 %修改有编号节样式
 \titleformat{\section}
-{}{}{0em}{\@SectionStarStyle{题类~\thesection~}{##1}}
+{}{}{0em}{\@SectionStarStyle{\sectionlabelfront~\thesection~\sectionlabelback}{##1}}
 %%%%
 %修改有编号小节样式
 \titleformat{\subsection}
 {}{}{0em}
-{\@SubsectionStarStyle{题目~\thesubsection}{##1}}
+{\@SubsectionStarStyle{\subsectionlabelfront~\thesubsection~\subsectionlabelback}{##1}}
 %%%%
 \def\@Eg@Name{例题（试题）}
 \def\@Eg@Label{\thechapter.\thesection.\the@egnum}
@@ -2597,7 +2603,11 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 %在toc文件中写入\@quiztrue，确保目录正确生成
 \addtocontents{toc}{\protect\@quiztrue}
 %修改页眉页脚标签
-\renewcommand{\sectionmark}[1]{\markright{测试~\thesection~\quad##1}}
+\renewcommand{\sectionlabelfront}{测试}
+\renewcommand{\sectionlabelback}{}
+%修改小节标签
+\renewcommand{\subsectionlabelfront}{题组}
+\renewcommand{\subsectionlabelback}{}
 %环境中禁用part
 \renewcommand{\part}{
 \ClassError{textbook-cn}{Forbidden Part in Quiz Environment!}}
@@ -2612,13 +2622,6 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 %\OriginChapter[##2]{##3}
 %\setcounter{section}{\value{@Inner@Quiz@Counter}}}
 %\vspace*{\@Chapter@VSpace}}
-%修改有编号节样式
-\titleformat{\section}
-{}{}{0em}{\@SectionStyle{测试}{}{##1}{\thesection}}
-%修改有编号小节样式
-\titleformat{\subsection}
-{}{}{0em}
-{\@SubsectionStyle{题组}{##1}{\thesubsection}}
 %%%%
 \def\@Definiton@Title{定义（测试）\thesection.\the@def}
 \def\@Definiton@Label{Def(Quiz).\thesection.\the@def}
@@ -2698,7 +2701,11 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 %在toc文件中写入\@topictrue，确保目录正确生成
 \addtocontents{toc}{\protect\@topictrue}
 %修改页眉页脚标签
-\renewcommand{\sectionmark}[1]{\markright{专题~\thesection~\quad##1}}
+\renewcommand{\sectionlabelfront}{专题}
+\renewcommand{\sectionlabelback}{}
+%修改小节标签
+\renewcommand{\subsectionlabelfront}{考点}
+\renewcommand{\subsectionlabelback}{}
 %环境中禁用part
 \renewcommand{\part}{
 \ClassError{textbook-cn}{Forbidden Part in Topic Environment!}}
@@ -2713,13 +2720,6 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 %\OriginChapter[##2]{##3}
 %\setcounter{section}{\value{@Inner@Topic@counter}}}
 %\vspace*{\@Chapter@VSpace}}
-%修改有编号节样式
-\titleformat{\section}
-{}{}{0em}{\@SectionStyle{专题}{}{##1}{\thesection}}
-%修改有编号小节样式
-\titleformat{\subsection}
-{}{}{0em}
-{\@SubsectionStyle{考点}{##1}{\thesubsection}}
 %%%%
 \def\@Definiton@Title{定义（专题）\thesection.\the@def}
 \def\@Definiton@Label{Def(Topic).\thesection.\the@def}
@@ -2798,7 +2798,11 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 %在toc文件中写入\@experimenttrue，确保目录正确生成
 \addtocontents{toc}{\protect\@projecttrue}
 %修改页眉页脚标签
-\renewcommand{\sectionmark}[1]{\markright{课题~\thesection~\quad##1}}
+\renewcommand{\sectionlabelfront}{课题}
+\renewcommand{\sectionlabelback}{}
+%修改小节标签
+\renewcommand{\subsectionlabelfront}{项目}
+\renewcommand{\subsectionlabelback}{}
 %环境中禁用part
 \renewcommand{\part}{
 \ClassError{textbook-cn}{Forbidden Part in Project Environment!}}
@@ -2813,13 +2817,6 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 %\OriginChapter[##2]{##3}
 %\setcounter{section}{\value{@Inner@Project@Counter}}}
 %\vspace*{\@Chapter@VSpace}}
-%修改有编号节样式
-\titleformat{\section}
-{}{}{0em}{\@SectionStyle{课题}{}{##1}{\thesection}}
-%修改有编号小节样式
-\titleformat{\subsection}
-{}{}{0em}
-{\@SubsectionStyle{项目}{##1}{\thesubsection}}
 %%%%
 \def\@Definiton@Title{定义（课题）\thesection.\the@def}
 \def\@Definiton@Label{Def(Project).\thesection.\the@def}
@@ -3303,7 +3300,7 @@ underlay boxed title={
 (title.south east)[rounded corners=\@Box@TitleRadius]--cycle;
 \fi
 %%%%
-\node[circle,align=center,inner sep=0mm,font=\BoxLogoFont,text=ColorA](T)at([xshift=\@Box@TitleRadius,yshift=-\@Box@TitleRadius]title.north west){#5};},
+\node[circle,align=center,inner sep=0mm,font=\BoxLogoFont,text=#4](T)at([xshift=\@Box@TitleRadius,yshift=-\@Box@TitleRadius]title.north west){#5};},
 subtitle style={empty,fontupper=\BoxSubtitleFont,colupper=#4},
 #1}
 
@@ -3338,7 +3335,7 @@ subtitle style={empty,fontupper=\BoxSubtitleFont,colupper=#4},
 enhanced standard,breakable,
 pad before break=3.0mm,pad after break=5.0mm,
 top=3.5mm,bottom=3.0mm,toptitle=4.0mm,bottomtitle=-2.5mm,
-rounded corners,arc=7.5pt,
+colframe=ColorB!7.5,colback=ColorB!7.5,colbacktitle=ColorB!7.5,rounded corners,arc=7.5pt,
 before=\par\noindent\medskip,after=\par\medskip,
 parbox=false,before upper=\par,before lower=\par,
 fonttitle=\BoxTitleFont,coltitle=ColorA,
@@ -3346,21 +3343,11 @@ subtitle style={empty,fontupper=\BoxSubtitleFont,colupper=ColorA},
 title={#1},#2}
 
 
-\newenvironment{Proof}{\begin{box7}[\faBars~~证明]
-[colframe=ColorB!7.5,colback=ColorB!7.5,colbacktitle=ColorB!7.5]}{\end{box7}}
+\newenvironment{Proof}{\begin{box7}[\faBars~~证明]}{\end{box7}}
 %%
-\newenvironment{Solution}{\begin{box7}[\faBars~~参考答案]
-[colframe=ColorB!7.5,colback=ColorB!7.5,colbacktitle=ColorB!7.5]}{\end{box7}}
+\newenvironment{Solution}{\begin{box7}[\faBars~~参考答案]}{\end{box7}}
 %%
-\DeclareDocumentEnvironment{Block}{O{}}{\begin{box7}[#1][colframe=ColorB!7.5,colback=ColorB!7.5,colbacktitle=ColorB!7.5]}{\end{box7}}
-\DeclareDocumentEnvironment{Block*}{O{}}{\begin{box7}[#1]
-[empty,overlay={
-\ifodd\value{page}
-\draw[ColorB!7.5,fill=ColorB!7.5](frame.north east)[rounded corners=7.5pt]--(frame.south east)[sharp corners]--([xshift=-\@innerlen]frame.south west)[sharp corners]--([xshift=-\@innerlen]frame.north west)[rounded corners=7.5pt]--cycle;
-\else
-\draw[ColorB!7.5,fill=ColorB!7.5](frame.north west)[rounded corners=7.5pt]--(frame.south west)[sharp corners]--([xshift=\@innerlen]frame.south east)[sharp corners]--([xshift=\@innerlen]frame.north east)[rounded corners=7.5pt]--cycle;
-\fi}]}{\end{box7}}
-
+\DeclareDocumentEnvironment{Block}{O{}}{\begin{box7}[#1]}{\end{box7}}
 
 \DeclareTColorBox{box8}{O{} m O{} O{ColorA} O{}}{
 Box,
