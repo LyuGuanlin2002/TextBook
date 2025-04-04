@@ -1,5 +1,5 @@
-\documentclass[color=green]{textbook-cn}%,splitbib,openany
-\input{./styles/CoverA.tex}
+\documentclass[color=blue]{textbook-cn}%,splitbib,openany
+\input{./styles/Cover.tex}
 \input{./styles/Logo.tex}
 \usepackage{zhlipsum,lipsum}%乱数假文（测试文字）
 \graphicspath{{./figure/}{./figures/}{./image/}{./images/}{./graphics/}{./graphic/}{./pictures/}{./picture/}}%提供多种图片路径
@@ -32,8 +32,8 @@
 \author{RQCEN}
 \pressname{BILIBILI教育出版社}
 \presslogo{gj.pdf}
-\coverimage{laughsmall.jpg}%coverimage.pdf
-\backimage{laughsmall.jpg}%coverimage.pdf
+\coverimage{coverimage.pdf}%
+\backimage{coverimage.pdf}%
 
 \newcommand{\indexnoun}[1]{\index[noun]{#1}}
 \newcommand{\indexvideo}[1]{\index[video]{#1}}
@@ -93,10 +93,6 @@
 before=\par\noindent\medskip,after=\par\medskip,
 colback=white,colbacklower=white,colframe=ColorH,
 before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
-
-
-
-\newfontfamily\MainEnglish{Palatino Linotype}
 
 \newcommand{\E}{\mathbb{E}}
 \renewcommand{\Pr}{\mathbb{P}}
@@ -170,23 +166,13 @@ before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
 
 \Example{\lipsum[2]}
 
+\Variant{\lipsum[2]}
 
+\Example{\lipsum[2]}
 
-
+\Variant{\lipsum[2]}
 
 \makeatother
-
-
-
-\input{1.tex}
-%\input{2.tex}
-%\input{3.tex}
-%\input{4.tex}
-%\input{5.tex}
-%\input{6.tex}
-%\input{7.tex}
-%\input{8.tex}
-%\input{9.tex}
 
 
 
@@ -238,7 +224,7 @@ before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
 \end{Definition}
 
 
-\chapter{测试章}
+\chapter{测试章测试章测试章测试章测试章测试章测试章测试章测试章测试章测试章测试章测试章测试章测试章测试章测试章测试章测试章测试章测试章}
 \lipsum
 
 \begin{Project}
@@ -253,6 +239,32 @@ before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
 \begin{Definition}[定义名称]
 \lipsum[1]
 \end{Definition}
+
+\begin{Theorem}[定理名称]
+\lipsum[1]
+\end{Theorem}
+%
+\begin{Axiom}[公理名称]
+\lipsum[1]
+\end{Axiom}
+
+\begin{Lemma}[引理名称]
+\lipsum[1]
+\end{Lemma}
+
+\begin{Corollary}[推论名称]
+\lipsum[1]
+\end{Corollary}
+
+\begin{Proposition}[命题名称]
+\lipsum[1]
+\end{Proposition}
+
+\begin{Thinking}
+\lipsum[2]
+\end{Thinking}
+
+
 
 
 
@@ -479,31 +491,26 @@ before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
 
 
 
-\begin{box7}{相关信息}{ColorH}{\faCommentDots}
-	\zhlipsum[3]
-\end{box7}
+\RelaInfo{\zhlipsum[3]{\bfseries 测试文字}}
+
 
 \begin{Paracol}
-\begin{box7}{相关信息}{ColorH}{\faCommentDots}
-	\lipsum[3]
-\end{box7}
+\RelaInfo{\zhlipsum[3]}
 \switchcolumn
-\begin{box7}{相关信息}{ColorH}{\faCommentDots}
-	\lipsum[3][1-2]
-\end{box7}
+\RelaInfo{\bfseries\lipsum[3][1-3]}
 
 \end{Paracol}
 
 
 
-\begin{box9}{阅读理解}[Reading Comprehension][ColorB]
+\begin{box8}{阅读理解}[Reading Comprehension][ColorB]
 \lipsum
-\end{box9}
+\end{box8}
 
 
-\begin{box9}{阅读理解阅读理解阅读理解阅读理解阅读理解阅读理解阅读理解阅读理解阅读理解}[][ColorB]
+\begin{box8}{阅读理解阅读理解阅读理解阅读理解阅读理解阅读理解阅读理解阅读理解阅读理解}[][ColorB]
 	\lipsum
-\end{box9}
+\end{box8}
 
 
 
@@ -518,7 +525,7 @@ before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
 
 
 \begin{PythonBox}{代码}
-	
+import
 \end{PythonBox}
 
 
@@ -585,7 +592,9 @@ before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
 
 
 
-
+{\ttfamily\bfseries\itshape 测试文字}
+{\kaiti\itshape 测试文字}
+{\kaiti gan}
 
 \begin{Topic}
 
@@ -653,10 +662,10 @@ before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
 	\lipsum[2]
 \end{Definition}
 
-\section{主观题主观题主观题主观题主观题主观题主观题主观题主观题主观题主观题主观题主观题主观题主观题主观题}
+\section[主观题]{主观题主观题主观题主观题主观题主观题主观题主观题主观题主观题主观题主观题主观题主观题主观题主观题}
 
 
-\section*{主观题主观题主观题主观题主观题主观题主观题主观题主观题主观题主观题主观题主观题主观题主观题主观题}
+%\section*{主观题主观题主观题主观题主观题主观题主观题主观题主观题主观题主观题主观题主观题主观题主观题主观题}
 
 
 \subsection{单项选择题}
@@ -674,6 +683,7 @@ before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
 \section[子附录测试]{小标题小标题qp}
 
 \section[子附录测试]{abaqus}
+
 
 \section[子附录测试]{ABAQUS}
 
@@ -747,7 +757,7 @@ before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
 
 
 
-\begin{Appendix}
+\begin{Test}
 
 \chapter[PPPPPLLL]{中文}
 \thepart\zhlipsum
@@ -767,7 +777,7 @@ before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
 
 \chapter{英文}
 \zhlipsum
-\end{Appendix}
+\end{Test}
 
 
 
@@ -791,7 +801,7 @@ before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
 
 
 
-\chapter*[我讨厌你]{AAAAAAAAAAAAAAA}
+\chapter*[我讨厌你]{Lipsum}
 \zhlipsum\zhlipsum
 
 \chapter*{AAAAAAAAAAAAAAA测试一下}
@@ -800,6 +810,9 @@ before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
 
 \chapter*{AAA}
 
+\begin{Thinking}
+	\lipsum[2]
+\end{Thinking}
 \zhlipsum\zhlipsum
 
 \part[宝贝]{测试章节}
@@ -823,7 +836,46 @@ before lower=\bigskip,rounded corners,arc=5.0pt,boxrule=2.0pt}
 %\chapter{专题测试章节}
 \section{LipsumLipsumLipsum}
 
+\lipsum
+
 \end{Topic}
+
+
+\makeatletter
+%\@SectionStarStyle{第abA节第abA节第abA节}{QQQAAABjjjjjl}
+%\@SectionStarStyle{第abA节第abA节}{QQQAAABjjjjjl}
+%\@SectionStarStyle{第abA节第abA节第abA节}{节测试文字测试文字测试文字测试文字测试文字测试文字测试文字QQQAAABjjjjjl}
+%\@SectionStarStyle{第abA节第abA节第abA节}{节测试文字测试文字测试文字测试文字测试文字测试文字测试文字}
+%\@SectionStarStyle{第第节第节}{测试文字测试文字测试文字测试文字测试文字测试文字测试文字QQQAAABjjjjjl}
+%\@SectionStarStyle{第第节第节第第节第节第第节第节第第节第节第第节第节}{测试文字测试文字测试文字测试文字测试文字测试文字测试文字QQQAAABjjjjjl}
+%\@SectionStarStyle{第第节第节第第节第节第第节第节第第节第节第第节第节}{测试文字测试文字测试文字测试文字}
+%\@SectionStarStyle{测试文字}{测试文字}
+\@SectionStarStyle{第第节第}{测试文字测试文字测试文字测试文字测试文字测试文字测试文字测试文字测试文字}
+%\@SectionStarStyle{}{测试文字测试文字测试文字}
+%\@SectionStarStyle{第第节第}{}
+%\@SectionStarStyle{第第节第第第节第节第第节第节第第节第节第第节第节第第节第节第第节第节第第节第节第第节第节第第节第节第第节第节第第节第节第第节第节第第节第节第第节第节第第节第节第第节第节第第节第节第第节第节第第节第节第第节第节第第节第节第第节第节第第节第节第第节第节第第节第节第第节第节第第节第节第第节第节第第节第节第第节第节第第节第节第第节第节第第节第节第第节第节第第节第节}{}
+\@SectionStyle{A}{Q}{测试文字测试文字测试文字测试文字测试文字测试文字测试文字测试文字}{1}
+\@SectionStyle{Lipsum}{ajhf}{测试文字Q测试文字}{1}
+\@SectionStyle{AGRT}{QQWAE}{测试文字Q测试文字}{1}
+\@SectionStyle{第}{节}{测试文字测试文字}{1}
+
+\@SectionStyle{}{节}{测试文字测试文字}{1}
+\@SectionStyle{第}{}{测试文字测试文字}{1}
+\@SectionStyle{第测试文字测试文字}{测试文字测试文字}{测试文字测试文字}{1}
+
+
+\@SectionStyle{练习}{}{测试文字测试文字}{1}
+\@SectionStyle{练习}{}{}{1}
+
+\makeatother
+
+
+
+
+
+
+
+
 
 \cite{1}\cite{2}
 

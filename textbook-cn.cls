@@ -133,74 +133,109 @@
 
 %%%%%%%%%%%%%%%%%%%% 字体设置 %%%%%%%%%%%%%%%%%%%%
 \RequirePackage[fontset=none]{ctex}%中文文本
-\RequirePackage[T1]{fontenc}%字体设置宏包
 \RequirePackage{fontspec}%字体设置宏包
-\RequirePackage{mathpazo}
-%%中文默认字体：方正书宋_GBK，粗体为思源宋体半粗体，斜体为方正楷体_GBK%%
-\setCJKmainfont{FZShuSong-Z01}[BoldFont={Source Han Sans SC Heavy},ItalicFont=FZKai-Z03]
-%%中文无衬线字体：方正黑体_GBK，粗体为思源黑体中粗体%%
-\setCJKsansfont{FZHei-B01}[BoldFont={Source Han Sans SC Heavy}]
-%%中文等宽字体：方正仿宋_GBK%%
-\setCJKmonofont{FZFangSong-Z02}
-\newCJKfontfamily\songti{FZShuSong-Z01}[BoldFont={Source Han Sans SC Heavy}]
-\newCJKfontfamily\xbsong{Source Han Serif SC SemiBold}%小标宋
-\newCJKfontfamily\dbsong{Source Han Serif SC Bold}%大标宋
-\newCJKfontfamily\cusong{Source Han Serif SC Heavy}%粗宋
-\newCJKfontfamily\heiti{FZHei-B01}[BoldFont={Source Han Sans SC Heavy}]
-\newCJKfontfamily\dahei{Source Han Sans SC Medium}%大黑
-\newCJKfontfamily\cuhei{Source Han Sans SC Bold.otf}%粗黑
-\newCJKfontfamily\fangsong{FZFangSong-Z02}
-\newCJKfontfamily\kaishu{FZKai-Z03}
+\RequirePackage{mathptmx}%数学字体设置宏包
+%%设置英文字体%%
+%%主字体
+\setmainfont[
+Path=fonts/,
+BoldFont=palab.ttf,
+ItalicFont=palai.ttf,
+BoldItalicFont=palabi.ttf,
+]{pala.ttf}
+%%无衬线字体
+\setsansfont[
+Path=fonts/,
+BoldFont=GOTHICB.ttf,
+ItalicFont=GOTHICI.ttf,
+BoldItalicFont=GOTHICBI.ttf
+]{GOTHIC.ttf}
+%%等宽字体
+\setmonofont[
+Path=fonts/,
+BoldFont=courbd.ttf,
+ItalicFont=couri.ttf,
+BoldItalicFont=courbi.ttf
+]{cour.ttf}
+
+%%设置中文字体%%
+%%主字体
+\setCJKmainfont[
+Path=fonts/,
+BoldFont=Source Han Serif SC Heavy.otf,
+ItalicFont=Source Han Serif SC Regular Italic.ttf,
+BoldItalicFont=Source Han Serif SC Heavy Italic.ttf
+]{Source Han Serif SC Regular.otf}
+%%无衬线字体
+\setCJKsansfont[
+Path=fonts/,
+BoldFont=Source Han Serif SC Heavy.otf,
+ItalicFont=Source Han Serif SC Regular Italic.ttf,
+BoldItalicFont=Source Han Serif SC Heavy Italic.ttf
+]{Source Han Serif SC Regular.otf}
+%%等宽字体
+\setCJKmonofont[
+Path=fonts/,
+BoldFont=Source Han Serif SC Heavy.otf,
+ItalicFont=Source Han Serif SC Regular Italic.ttf,
+BoldItalicFont=Source Han Serif SC Heavy Italic.ttf
+]{Source Han Serif SC Regular.otf}
+%%黑体设置
+\newCJKfontfamily\heiti{Source Han Sans SC Regular.otf}[
+Path=fonts/,
+BoldFont=Source Han Sans SC Heavy.otf,
+ItalicFont=Source Han Sans SC Regular Italic.ttf,
+BoldItalicFont=Source Han Sans SC Heavy Italic.ttf]
+%%楷体设置
+\newCJKfontfamily\kaiti{FZKai.ttf}[
+Path=fonts/,
+BoldFont=FZCukai.ttf]
+
 %%简化字体命令%%
 \NewDocumentCommand{\FontSize}{O{1.0} m}{\fontsize{#2}{#1\baselineskip}\selectfont}
-\newcommand{\numberfont}{\rmfamily}
-\newcommand{\titlefont}{\dbsong}
-\newcommand{\contentfont}{\xbsong}
+\newcommand{\numberfont}{\sffamily}
 %%字号设置%%
-\newcommand{\PartLabelFont}{\titlefont\bfseries\FontSize[1.5]{34pt}}%部分标签字体
-\newcommand{\PartNameFont}{\titlefont\bfseries\FontSize[1.5]{32pt}}%部分名称字体
-\newcommand{\ChapterLabelFont}{\titlefont\bfseries\FontSize[1.2]{27pt}}%章标签字体
-\newcommand{\ChapterNameFont}{\titlefont\bfseries\FontSize[1.2]{25pt}}%章名称字体
-\newcommand{\ChapterSayingFont}{\itshape\kaishu\FontSize[0.75]{13pt}}%章谚语字体
-\newcommand{\SectionLabelFont}{\titlefont\bfseries\FontSize{18pt}}%节标签字体
-\newcommand{\SectionNameFont}{\titlefont\bfseries\FontSize{18pt}}%节名称字体
-\newcommand{\SubsectionLabelFont}{\titlefont\bfseries\FontSize{15pt}}%小节标签字体
-\newcommand{\SubsectionNameFont}{\titlefont\bfseries\FontSize{15pt}}%小节名称字体
-\newcommand{\SubsectionSubTFont}{\titlefont\bfseries\FontSize{14pt}}%小节副标题字体
-\newcommand{\SubsubsectionLabelFont}{\titlefont\bfseries\FontSize{25pt}}%小小节标签字体
-\newcommand{\SubsubsectionNameFont}{\titlefont\bfseries\FontSize{14.5pt}}%小小节名称字体
-\newcommand{\ParagraphNameFont}{\titlefont\bfseries\FontSize{14pt}}%段落名称字体
-\newcommand{\HeaderFont}{\titlefont\bfseries\FontSize[1.5]{13pt}}%页眉字体
-\newcommand{\FooterFont}{\titlefont\bfseries\FontSize{13pt}}%页脚字体
-\newcommand{\PageNumberFont}{\numberfont\bfseries\FontSize{16pt}}%页码字体
-\newcommand{\ThumbFont}{\titlefont\bfseries\FontSize[1.5]{14pt}}%侧标字体
-\newcommand{\CaptionFont}{\contentfont\bfseries\FontSize[1.5]{12pt}}%图表标签字体
-\newcommand{\TocPartFont}{\titlefont\bfseries\FontSize{14.5pt}}%目录部分字体
-\newcommand{\TocChapterFont}{\titlefont\bfseries\FontSize{14pt}}%目录章字体
-\newcommand{\TocSectionFont}{\contentfont\FontSize{14pt}}%目录节字体
-\newcommand{\TocSubsectionFont}{\contentfont\FontSize{14pt}}%目录节字体
-\newcommand{\LofFont}{\contentfont\FontSize{14pt}}%图列表字体
-\newcommand{\LotFont}{\contentfont\FontSize{14pt}}%表列表字体
-\newcommand{\LTocTitleFont}{\titlefont\bfseries\FontSize{14pt}}%小目录标题
-\newcommand{\TocLChapterFont}{\titlefont\bfseries\FontSize{14pt}}%小目录章字体
-\newcommand{\TocLSectionFont}{\contentfont\FontSize{14pt}}%小目录节字体
-\newcommand{\TocLSubsectionFont}{\contentfont\FontSize{14pt}}%小目录节字体
-\newcommand{\ContentPageNumFont}{\numberfont\FontSize{14pt}}%目录页码字体
+\newcommand{\PartLabelFont}{\sffamily\bfseries\FontSize[1.5]{34pt}}%部分标签字体
+\newcommand{\PartNameFont}{\sffamily\bfseries\FontSize[1.5]{32pt}}%部分名称字体
+\newcommand{\ChapterLabelFont}{\sffamily\bfseries\FontSize[1.2]{27pt}}%章标签字体
+\newcommand{\ChapterNameFont}{\sffamily\bfseries\FontSize[1.2]{25pt}}%章名称字体
+\newcommand{\ChapterSayingFont}{\itshape\kaiti\FontSize[0.75]{13pt}}%章谚语字体
+\newcommand{\SectionLabelFont}{\sffamily\bfseries\FontSize{18pt}}%节标签字体
+\newcommand{\SectionNameFont}{\sffamily\bfseries\FontSize{18pt}}%节名称字体
+\newcommand{\SubsectionLabelFont}{\sffamily\bfseries\FontSize{15pt}}%小节标签字体
+\newcommand{\SubsectionNameFont}{\sffamily\bfseries\FontSize{15pt}}%小节名称字体
+\newcommand{\SubsectionSubTFont}{\sffamily\bfseries\FontSize{14pt}}%小节副标题字体
+\newcommand{\SubsubsectionLabelFont}{\sffamily\bfseries\FontSize{25pt}}%小小节标签字体
+\newcommand{\SubsubsectionNameFont}{\sffamily\bfseries\FontSize{14.5pt}}%小小节名称字体
+\newcommand{\ParagraphNameFont}{\sffamily\bfseries\FontSize{14pt}}%段落名称字体
+\newcommand{\HeaderFont}{\sffamily\bfseries\FontSize[1.5]{13pt}}%页眉字体
+\newcommand{\FooterFont}{\sffamily\bfseries\FontSize{13pt}}%页脚字体
+\newcommand{\PageNumberFont}{\sffamily\bfseries\FontSize{16pt}}%页码字体
+\newcommand{\ThumbFont}{\sffamily\bfseries\FontSize[1.5]{14pt}}%侧标字体
+\newcommand{\CaptionFont}{\sffamily\bfseries\FontSize[1.5]{12pt}}%图表标签字体
+\newcommand{\TocPartFont}{\sffamily\bfseries\FontSize{14.5pt}}%目录部分字体
+\newcommand{\TocChapterFont}{\sffamily\bfseries\FontSize{14pt}}%目录章字体
+\newcommand{\TocSectionFont}{\sffamily\FontSize{14pt}}%目录节字体
+\newcommand{\TocSubsectionFont}{\sffamily\FontSize{14pt}}%目录小节字体
+\newcommand{\LofFont}{\sffamily\FontSize{14pt}}%图列表字体
+\newcommand{\LotFont}{\sffamily\FontSize{14pt}}%表列表字体
+\newcommand{\LTocTitleFont}{\sffamily\bfseries\FontSize{14pt}}%小目录标题
+\newcommand{\TocLChapterFont}{\sffamily\bfseries\FontSize{14pt}}%小目录章字体
+\newcommand{\TocLSectionFont}{\sffamily\FontSize{14pt}}%小目录节字体
+\newcommand{\TocLSubsectionFont}{\sffamily\FontSize{14pt}}%小目录节字体
+\newcommand{\ContentPageNumFont}{\sffamily\FontSize{14pt}}%目录页码字体
 \newcommand{\CiteNumFont}{\numberfont}%引用字体
 \newcommand{\LineNumFont}{\numberfont\bfseries\FontSize{10pt}}%行号字体
-\newcommand{\ListNumFont}{\numberfont\bfseries\FontSize{12pt}}%列表序号字体
-\newcommand{\ExerciseTitleFont}{\titlefont\bfseries\FontSize{13pt}}%练习标题字体
-\newcommand{\EgLabelFont}{\titlefont\bfseries\FontSize{13pt}}%例题标签字体
-\newcommand{\BoxTitleFont}{\titlefont\bfseries\FontSize{13pt}}%盒子标题字体
-\newcommand{\BoxSubtitleFont}{\titlefont\bfseries\FontSize{13pt}}%盒子副标题字体
-\newcommand{\BoxLogoFont}{\titlefont\bfseries\FontSize{16pt}}%盒子logo字体
-\newcommand{\BoxSublogoFont}{\titlefont\bfseries\FontSize{14pt}}%盒子小logo字体
-\newcommand{\MarginFont}{\itshape\kaishu\FontSize{13pt}}%边注字体
-\newcommand{\FootNoteFont}{\itshape\kaishu\FontSize{13pt}}%脚注字体
+\newcommand{\ListNumFont}{\sffamily\bfseries\FontSize{12pt}}%列表序号字体
+\newcommand{\ExerciseTitleFont}{\sffamily\bfseries\FontSize{13pt}}%练习标题字体
+\newcommand{\EgLabelFont}{\sffamily\bfseries\FontSize{13pt}}%例题标签字体
+\newcommand{\BoxTitleFont}{\sffamily\bfseries\FontSize{13pt}}%盒子标题字体
+\newcommand{\BoxSubtitleFont}{\sffamily\bfseries\FontSize{13pt}}%盒子副标题字体
+\newcommand{\BoxLogoFont}{\sffamily\bfseries\FontSize{16pt}}%盒子logo字体
+\newcommand{\BoxSublogoFont}{\sffamily\bfseries\FontSize{14pt}}%盒子小logo字体
+\newcommand{\MarginFont}{\itshape\kaiti\FontSize{13pt}}%边注字体
+\newcommand{\FootNoteFont}{\itshape\kaiti\FontSize{13pt}}%脚注字体
 \newcommand{\MainFont}{\FontSize{14.5pt}}%正文字体
-
-%%设置字体%%
-%\AtBeginDocument{\setmainfont{Times New Roman}}
 
 %%%%%%%%%%%%%%%%%%%% 页面布局设定宏包 %%%%%%%%%%%%%%%%%%%%
 \makeatletter
@@ -943,7 +978,7 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 %%部分名%%
 \node[align=flush right,anchor=north east,font=\PartNameFont,text=ColorA,inner xsep=0mm](PT)at([yshift=-\@Part@StripeWidth-0.25cm]X){\begin{varwidth}{\textwidth-2.45cm}#2\end{varwidth}};
 %%部分简介%%
-\node[align=flush right,inner xsep=3.0mm,anchor=north east,font=\itshape\kaishu,text=ColorA](IT)at([yshift=-0.5cm]PT.south east){
+\node[align=flush right,inner xsep=3.0mm,anchor=north east,font=\itshape\kaiti,text=ColorA](IT)at([yshift=-0.5cm]PT.south east){
 \begin{varwidth}{\textwidth-2.75cm}
 \@partintro
 \end{varwidth}};
@@ -1023,7 +1058,7 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 %%部分名%%
 \node[align=flush left,anchor=north west,font=\PartNameFont,text=ColorA,inner xsep=0mm](PT)at([yshift=-\@Part@StripeWidth-0.25cm]X){\begin{varwidth}{\textwidth-2.45cm}#2\end{varwidth}};
 %%部分简介%%
-\node[align=flush left,inner xsep=3.0mm,anchor=north west,font=\itshape\kaishu,text=ColorA](IT)at([yshift=-0.5cm]PT.south west){
+\node[align=flush left,inner xsep=3.0mm,anchor=north west,font=\itshape\kaiti,text=ColorA](IT)at([yshift=-0.5cm]PT.south west){
 \begin{varwidth}{\textwidth-2.75cm}
 \@partintro
 \end{varwidth}};
@@ -1124,7 +1159,7 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 %%左侧色块%%
 \filldraw[draw=ColorB,fill=ColorB,opacity=0.2](Y)[sharp corners]--(Z)--(YY)[rounded corners=2.5mm]--(ZZ)--cycle;
 %%部分简介%%
-\node[align=flush right,inner xsep=2.0mm,anchor=north east,font=\itshape\kaishu,text=ColorA](IT)at([yshift=-1.25cm]X){\begin{varwidth}{\textwidth-2.75cm}
+\node[align=flush right,inner xsep=2.0mm,anchor=north east,font=\itshape\kaiti,text=ColorA](IT)at([yshift=-1.25cm]X){\begin{varwidth}{\textwidth-2.75cm}
 \@partintro
 \end{varwidth}};
 %%部分目录%%
@@ -1205,7 +1240,7 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 \filldraw[draw=ColorB,fill=ColorB,opacity=0.2](Y)[sharp corners]--(Z)--(YY)[rounded corners=2.5mm]--(ZZ)--cycle;
 %%
 %%部分简介%%
-\node[align=flush left,inner xsep=2.0mm,anchor=north west,font=\itshape\kaishu,text=ColorA](IT)at([yshift=-1.25cm]X){
+\node[align=flush left,inner xsep=2.0mm,anchor=north west,font=\itshape\kaiti,text=ColorA](IT)at([yshift=-1.25cm]X){
 \begin{varwidth}{\textwidth-2.75cm}
 \@partintro
 \end{varwidth}};
@@ -2393,7 +2428,7 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 %%%%
 %%例题%%
 \def\@Eg@Name{例题}
-\def\@Eg@Label{\thechapter.\thesection.\the@egnum}
+\def\@Eg@Label{\the@prenumber.\the@egnum}
 \NewDocumentCommand{\Example}{sm}{
 \begin{FlushLeft}
 \justifying
@@ -2407,7 +2442,7 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 \end{FlushLeft}}
 %%变式%%
 \def\@Var@Name{变式}
-\def\@Var@Label{\thechapter.\thesection.\the@varnum}
+\def\@Var@Label{\the@prenumber.\the@varnum}
 \NewDocumentCommand{\Variant}{sm}{
 \begin{FlushLeft}
 \justifying
@@ -2468,31 +2503,31 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 {\@SubsectionStarStyle{\subsectionlabelfront~\thesubsection~\subsectionlabelback}{##1}}
 %%%%
 \def\@Eg@Name{例题（附录）}
-\def\@Eg@Label{\thechapter.\thesection.\the@egnum}
+\def\@Eg@Label{\the@prenumber.\the@egnum}
 \def\@Var@Name{变式（附录）}
-\def\@Var@Label{\thechapter.\thesection.\the@varnum}
+\def\@Var@Label{\the@prenumber.\the@varnum}
 %%%%
 \def\@Exercise@Label@Numbered{拓展练习~\the@prenumber}
 \def\@Exercise@Label@Unnumbered{拓展练习}
 \def\@Thinking@Label@Numbered{深入思考~\the@prenumber}
 \def\@Thinking@Label@Unnumbered{深入思考}
 %%%%
-\def\@Definiton@Title{定义（附录）\the@prenumber.\the@def}
+\def\@Definiton@Title{定义（附录）}
 \def\@Definiton@Label{Def(Appendix).\the@prenumber.\the@def}
 %%%%
-\def\@Theorem@Title{定理（附录）~\the@prenumber.\the@thm}
+\def\@Theorem@Title{定理（附录）}
 \def\@Theorem@Label{Thm(Appendix).\the@prenumber.\the@thm}
 %%%%
-\def\@Axiom@Title{公理（附录）~\the@prenumber.\the@axm}
+\def\@Axiom@Title{公理（附录）}
 \def\@Axiom@Label{Axm(Appendix).\the@prenumber.\the@axm}
 %%%%
-\def\@Lemma@Title{引理（附录）~\the@prenumber.\the@lem}
+\def\@Lemma@Title{引理（附录）}
 \def\@Lemma@Label{Lem(Appendix).\the@prenumber.\the@lem}
 %%%%
-\def\@Corollary@Title{推论（附录）~\the@prenumber.\the@colry}
+\def\@Corollary@Title{推论（附录）}
 \def\@Corollary@Label{Colry(Appendix).\the@prenumber.\the@colry}
 %%%%
-\def\@Propostion@Title{命题（附录）~\the@prenumber.\the@prop}
+\def\@Propostion@Title{命题（附录）}
 \def\@Proposition@Label{Prop(Appendix).\the@prenumber.\the@prop}
 %%%%
 %将环境前的章计数器值储存在beforecounter中
@@ -2548,31 +2583,31 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 {\@SubsectionStarStyle{\subsectionlabelfront~\thesubsection~\subsectionlabelback}{##1}}
 %%%%
 \def\@Eg@Name{例题（试题）}
-\def\@Eg@Label{\thechapter.\thesection.\the@egnum}
+\def\@Eg@Label{\the@prenumber.\the@egnum}
 \def\@Var@Name{变式（试题）}
-\def\@Var@Label{\thechapter.\thesection.\the@varnum}
+\def\@Var@Label{\the@prenumber.\the@varnum}
 %%%%
 \def\@Exercise@Label@Numbered{补充习题~\the@prenumber}
 \def\@Exercise@Label@Unnumbered{补充习题}
 \def\@Thinking@Label@Numbered{错题总结~\the@prenumber}
 \def\@Thinking@Label@Unnumbered{错题总结}
 %%%%
-\def\@Definiton@Title{定义（试题）\the@prenumber.\the@def}
+\def\@Definiton@Title{定义（试题）}
 \def\@Definiton@Label{Def(Test).\the@prenumber.\the@def}
 %%%%
-\def\@Theorem@Title{定理（试题）~\the@prenumber.\the@thm}
+\def\@Theorem@Title{定理（试题）}
 \def\@Theorem@Label{Thm(Test).\the@prenumber.\the@thm}
 %%%%
-\def\@Axiom@Title{公理（试题）~\the@prenumber.\the@axm}
+\def\@Axiom@Title{公理（试题）}
 \def\@Axiom@Label{Axm(Test).\the@prenumber.\the@axm}
 %%%%
-\def\@Lemma@Title{引理（试题）~\the@prenumber.\the@lem}
+\def\@Lemma@Title{引理（试题）}
 \def\@Lemma@Label{Lem(Test).\the@prenumber.\the@lem}
 %%%%
-\def\@Corollary@Title{推论（试题）~\the@prenumber.\the@colry}
+\def\@Corollary@Title{推论（试题）}
 \def\@Corollary@Label{Colry(Test).\the@prenumber.\the@colry}
 %%%%
-\def\@Propostion@Title{命题（试题）~\the@prenumber.\the@prop}
+\def\@Propostion@Title{命题（试题）}
 \def\@Proposition@Label{Prop(Test).\the@prenumber.\the@prop}
 %%%%
 %将环境前的章计数器值储存在beforecounter中
@@ -2623,32 +2658,35 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 %\setcounter{section}{\value{@Inner@Quiz@Counter}}}
 %\vspace*{\@Chapter@VSpace}}
 %%%%
-\def\@Definiton@Title{定义（测试）\thesection.\the@def}
-\def\@Definiton@Label{Def(Quiz).\thesection.\the@def}
+%%简化序号命令%%
+\renewcommand{\the@prenumber}{\thesection}
 %%%%
-\def\@Theorem@Title{定理（测试）~\thesection.\the@thm}
-\def\@Theorem@Label{Thm(Quiz).\thesection.\the@thm}
+\def\@Definiton@Title{定义（测试）}
+\def\@Definiton@Label{Def(Quiz).\the@prenumber.\the@def}
 %%%%
-\def\@Axiom@Title{公理（测试）~\thesection.\the@axm}
-\def\@Axiom@Label{Axm(Quiz).\thesection.\the@axm}
+\def\@Theorem@Title{定理（测试）}
+\def\@Theorem@Label{Thm(Quiz).\the@prenumber.\the@thm}
 %%%%
-\def\@Lemma@Title{引理（测试）~\thesection.\the@lem}
-\def\@Lemma@Label{Lem(Quiz).\thesection.\the@lem}
+\def\@Axiom@Title{公理（测试）}
+\def\@Axiom@Label{Axm(Quiz).\the@prenumber.\the@axm}
 %%%%
-\def\@Corollary@Title{推论（测试）~\thesection.\the@colry}
-\def\@Corollary@Label{Colry(Quiz).\thesection.\the@colry}
+\def\@Lemma@Title{引理（测试）}
+\def\@Lemma@Label{Lem(Quiz).\the@prenumber.\the@lem}
 %%%%
-\def\@Propostion@Title{命题（测试）~\thesection.\the@prop}
-\def\@Proposition@Label{Prop(Quiz).\thesection.\the@prop}
+\def\@Corollary@Title{推论（测试）}
+\def\@Corollary@Label{Colry(Quiz).\the@prenumber.\the@colry}
+%%%%
+\def\@Propostion@Title{命题（测试）}
+\def\@Proposition@Label{Prop(Quiz).\the@prenumber.\the@prop}
 %%%%
 \def\@Eg@Name{范例}
-\def\@Eg@Label{\thesection.\the@egnum}
+\def\@Eg@Label{\the@prenumber.\the@egnum}
 \def\@Var@Name{变例}
-\def\@Var@Label{\thesection.\the@varnum}
+\def\@Var@Label{\the@prenumber.\the@varnum}
 %%%%
-\def\@Exercise@Label@Numbered{补充习题~\thesection}
+\def\@Exercise@Label@Numbered{补充习题~\the@prenumber}
 \def\@Exercise@Label@Unnumbered{补充习题}
-\def\@Thinking@Label@Numbered{错题总结~\thesection}
+\def\@Thinking@Label@Numbered{错题总结~\the@prenumber}
 \def\@Thinking@Label@Unnumbered{错题总结}
 %%%%
 %将环境前的节计数器值储存在beforecounter中
@@ -2721,32 +2759,35 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 %\setcounter{section}{\value{@Inner@Topic@counter}}}
 %\vspace*{\@Chapter@VSpace}}
 %%%%
-\def\@Definiton@Title{定义（专题）\thesection.\the@def}
-\def\@Definiton@Label{Def(Topic).\thesection.\the@def}
+%%简化序号命令%%
+\renewcommand{\the@prenumber}{\thesection}
 %%%%
-\def\@Theorem@Title{定理（专题）~\thesection.\the@thm}
-\def\@Theorem@Label{Thm(Topic).\thesection.\the@thm}
+\def\@Definiton@Title{定义（专题）}
+\def\@Definiton@Label{Def(Topic).\the@prenumber.\the@def}
 %%%%
-\def\@Axiom@Title{公理（专题）~\thesection.\the@axm}
-\def\@Axiom@Label{Axm(Topic).\thesection.\the@axm}
+\def\@Theorem@Title{定理（专题）}
+\def\@Theorem@Label{Thm(Topic).\the@prenumber.\the@thm}
 %%%%
-\def\@Lemma@Title{引理（专题）~\thesection.\the@lem}
-\def\@Lemma@Label{Lem(Topic).\thesection.\the@lem}
+\def\@Axiom@Title{公理（专题）}
+\def\@Axiom@Label{Axm(Topic).\the@prenumber.\the@axm}
 %%%%
-\def\@Corollary@Title{推论（专题）~\thesection.\the@colry}
-\def\@Corollary@Label{Colry(Topic).\thesection.\the@colry}
+\def\@Lemma@Title{引理（专题）}
+\def\@Lemma@Label{Lem(Topic).\the@prenumber.\the@lem}
 %%%%
-\def\@Propostion@Title{命题（专题）~\thesection.\the@prop}
-\def\@Proposition@Label{Prop(Topic).\thesection.\the@prop}
+\def\@Corollary@Title{推论（专题）}
+\def\@Corollary@Label{Colry(Topic).\the@prenumber.\the@colry}
+%%%%
+\def\@Propostion@Title{命题（专题）}
+\def\@Proposition@Label{Prop(Topic).\the@prenumber.\the@prop}
 %%%%
 \def\@Eg@Name{典例}
-\def\@Eg@Label{\thesection.\the@egnum}
+\def\@Eg@Label{\the@prenumber.\the@egnum}
 \def\@Var@Name{延拓}
-\def\@Var@Label{\thesection.\the@varnum}
+\def\@Var@Label{\the@prenumber.\the@varnum}
 %%%%
-\def\@Exercise@Label@Numbered{针对练习~\thesection}
+\def\@Exercise@Label@Numbered{针对练习~\the@prenumber}
 \def\@Exercise@Label@Unnumbered{针对练习}
-\def\@Thinking@Label@Numbered{方法提炼~\thesection}
+\def\@Thinking@Label@Numbered{方法提炼~\the@prenumber}
 \def\@Thinking@Label@Unnumbered{方法提炼}
 %%%%
 %将环境前的节计数器值储存在beforecounter中
@@ -2818,32 +2859,35 @@ shadings,fadings,arrows,arrows.meta,patterns.meta,patterns,shapes.geometric,deco
 %\setcounter{section}{\value{@Inner@Project@Counter}}}
 %\vspace*{\@Chapter@VSpace}}
 %%%%
-\def\@Definiton@Title{定义（课题）\thesection.\the@def}
-\def\@Definiton@Label{Def(Project).\thesection.\the@def}
+%%简化序号命令%%
+\renewcommand{\the@prenumber}{\thesection}
 %%%%
-\def\@Theorem@Title{定理（课题）~\thesection.\the@thm}
-\def\@Theorem@Label{Thm(Project).\thesection.\the@thm}
+\def\@Definiton@Title{定义（课题）}
+\def\@Definiton@Label{Def(Project).\the@prenumber.\the@def}
 %%%%
-\def\@Axiom@Title{公理（课题）~\thesection.\the@axm}
-\def\@Axiom@Label{Axm(Project).\thesection.\the@axm}
+\def\@Theorem@Title{定理（课题）}
+\def\@Theorem@Label{Thm(Project).\the@prenumber.\the@thm}
 %%%%
-\def\@Lemma@Title{引理（课题）~\thesection.\the@lem}
-\def\@Lemma@Label{Lem(Project).\thesection.\the@lem}
+\def\@Axiom@Title{公理（课题）}
+\def\@Axiom@Label{Axm(Project).\the@prenumber.\the@axm}
 %%%%
-\def\@Corollary@Title{推论（课题）~\thesection.\the@colry}
-\def\@Corollary@Label{Colry(Project).\thesection.\the@colry}
+\def\@Lemma@Title{引理（课题）}
+\def\@Lemma@Label{Lem(Project).\the@prenumber.\the@lem}
 %%%%
-\def\@Propostion@Title{命题（课题）~\thesection.\the@prop}
-\def\@Proposition@Label{Prop(Project).\thesection.\the@prop}
+\def\@Corollary@Title{推论（课题）}
+\def\@Corollary@Label{Colry(Project).\the@prenumber.\the@colry}
+%%%%
+\def\@Propostion@Title{命题（课题）}
+\def\@Proposition@Label{Prop(Project).\the@prenumber.\the@prop}
 %%%%
 \def\@Eg@Name{示例}
-\def\@Eg@Label{\thesection.\the@egnum}
+\def\@Eg@Label{\the@prenumber.\the@egnum}
 \def\@Var@Name{改进}
-\def\@Var@Label{\thesection.\the@varnum}
+\def\@Var@Label{\the@prenumber.\the@varnum}
 %%%%
-\def\@Exercise@Label@Numbered{实践~\thesection}
+\def\@Exercise@Label@Numbered{实践~\the@prenumber}
 \def\@Exercise@Label@Unnumbered{实践}
-\def\@Thinking@Label@Numbered{思考~\thesection}
+\def\@Thinking@Label@Numbered{思考~\the@prenumber}
 \def\@Thinking@Label@Unnumbered{思考}
 %%%%
 %将环境前的节计数器值储存在beforecounter中
@@ -3075,6 +3119,8 @@ subtitle style={empty,fontupper=\BoxSubtitleFont,colupper=#4},
 \DeclareDocumentEnvironment{Method}{ O{} }{\begin{box2}{方法与技巧}[#1][ColorD][\faPodcast]}{\end{box2}}
 \DeclareDocumentEnvironment{Mind}{ O{} }{\begin{box2}{科学思维}[#1][ColorC][\faAtom]}{\end{box2}}
 
+%%简化序号命令%%
+\newcommand{\the@prenumber}{\thechapter.\thesection}
 %%设置定义定理盒子%%
 \DeclareTColorBox{box3}{O{} m O{} O{ColorA} O{\faCodepen} O{}}{
 Box,
@@ -3104,21 +3150,19 @@ underlay boxed title={
 subtitle style={empty,fontupper=\BoxSubtitleFont,colupper=#4},
 #1}
 %%%%
-\def\@Definiton@Title{定义~\the@prenumber.\the@def}
+\def\@Definiton@Title{定义}
 \def\@Definiton@Label{Def.\the@prenumber.\the@def}
 %%%%
-\def\@Theorem@Title{定理~\the@prenumber.\the@thm}
+\def\@Theorem@Title{定理}
 \def\@Theorem@Label{Thm.\the@prenumber.\the@thm}
 %%%%
-\def\@Axiom@Title{公理~\the@prenumber.\the@axm}
+\def\@Axiom@Title{公理}
 \def\@Axiom@Label{Axm.\the@prenumber.\the@axm}
 
 %%编号定义盒子%%
-\DeclareDocumentEnvironment{Definition}{ O{} }{\begin{box3}{
+\DeclareDocumentEnvironment{Definition}{ O{} }{\begin{box3}{\@Definiton@Title
 \if@mainmatter
-\@Definiton@Title
-\else
-定义
+~\the@prenumber.\the@def
 \fi}
 [#1][ColorA][\faCrosshairs][
 \if@mainmatter
@@ -3126,35 +3170,31 @@ subtitle style={empty,fontupper=\BoxSubtitleFont,colupper=#4},
 \label{\@Definiton@Label}
 \fi]}{\end{box3}}
 %%%%
-\DeclareDocumentEnvironment{Theorem}{ O{} }{\begin{box3}{
+\DeclareDocumentEnvironment{Theorem}{ O{} }{\begin{box3}{\@Theorem@Title
 \if@mainmatter
-\@Theorem@Title
-\else
-定理
+~\the@prenumber.\the@thm
 \fi}
 [#1][ColorB][\faCrosshairs][
-\if@mainnmatter
+\if@mainmatter
 \stepcounter{@thm}
 \label{\@Theorem@Label}
 \fi]}{\end{box3}}
 %%%%
-\DeclareDocumentEnvironment{Axiom}{ O{} }{\begin{box3}{
+\DeclareDocumentEnvironment{Axiom}{ O{} }{\begin{box3}{\@Axiom@Title
 \if@mainmatter
-\@Axiom@Title
-\else
-公理
+~\the@prenumber.\the@axm
 \fi}
 [#1][ColorI][\faCompactDisc][
-\if@mainnmatter
+\if@mainmatter
 \stepcounter{@axm}
 \label{\@Axiom@Label}
 \fi]}{\end{box3}}
 %%%%
 
 %%不编号定义盒子%%
-\DeclareDocumentEnvironment{Definition*}{ O{} }{\begin{box3}{定义}[#1][ColorA][\faCrosshairs]}{\end{box3}}
-\DeclareDocumentEnvironment{Theorem*}{ O{} }{\begin{box3}{定理}[#1][ColorB][\faCrosshairs]}{\end{box3}}
-\DeclareDocumentEnvironment{Axiom*}{ O{} }{\begin{box3}{公理}[#1][ColorI][\faCompactDisc]}{\end{box3}}
+\DeclareDocumentEnvironment{Definition*}{ O{} }{\begin{box3}{\@Theorem@Title}[#1][ColorA][\faCrosshairs]}{\end{box3}}
+\DeclareDocumentEnvironment{Theorem*}{ O{} }{\begin{box3}{\@Theorem@Title}[#1][ColorB][\faCrosshairs]}{\end{box3}}
+\DeclareDocumentEnvironment{Axiom*}{ O{} }{\begin{box3}{\@Axiom@Title}[#1][ColorI][\faCompactDisc]}{\end{box3}}
 %%%%
 %%设置引理盒子%%
 \DeclareTColorBox{box4}{O{} m O{} O{ColorA} O{\faDiceD20} O{}}{
@@ -3181,21 +3221,19 @@ underlay boxed title={
 subtitle style={empty,fontupper=\BoxSubtitleFont,colupper=#4},
 #1}
 %%%%
-\def\@Lemma@Title{引理~\the@prenumber.\the@lem}
+\def\@Lemma@Title{引理}
 \def\@Lemma@Label{Lem.\the@prenumber.\the@lem}
 %%%%
-\def\@Corollary@Title{推论~\the@prenumber.\the@colry}
+\def\@Corollary@Title{推论}
 \def\@Corollary@Label{Colry.\the@prenumber.\the@colry}
 %%%%
-\def\@Propostion@Title{命题~\the@prenumber.\the@prop}
+\def\@Propostion@Title{命题}
 \def\@Proposition@Label{Prop.\the@prenumber.\the@prop}
 
 %%编号引理盒子%%
-\DeclareDocumentEnvironment{Lemma}{ O{} }{\begin{box4}{
+\DeclareDocumentEnvironment{Lemma}{ O{} }{\begin{box4}{\@Lemma@Title
 \if@mainmatter
-\@Lemma@Title
-\else
-引理
+~\the@prenumber.\the@lem
 \fi}
 [#1][ColorE][\faGlobe][
 \if@mainmatter
@@ -3203,11 +3241,9 @@ subtitle style={empty,fontupper=\BoxSubtitleFont,colupper=#4},
 \label{\@Lemma@Label}
 \fi]}{\end{box4}}
 %%%%
-\DeclareDocumentEnvironment{Corollary}{ O{} }{\begin{box4}{
+\DeclareDocumentEnvironment{Corollary}{ O{} }{\begin{box4}{\@Corollary@Title
 \if@mainmatter
-\@Corollary@Title
-\else
-推论
+~\the@prenumber.\the@colry
 \fi}
 [#1][ColorG][\faCompactDisc][
 \if@mainmatter
@@ -3215,11 +3251,9 @@ subtitle style={empty,fontupper=\BoxSubtitleFont,colupper=#4},
 \label{\@Corollary@Label}
 \fi]}{\end{box4}}
 %%%%
-\DeclareDocumentEnvironment{Proposition}{ O{} }{\begin{box4}{
+\DeclareDocumentEnvironment{Proposition}{ O{} }{\begin{box4}{\@Propostion@Title
 \if@mainmatter
-\@Propostion@Title
-\else
-命题
+~\the@prenumber.\the@prop
 \fi}
 [#1][ColorH][\faGlobe][
 \if@mainmatter
@@ -3228,9 +3262,9 @@ subtitle style={empty,fontupper=\BoxSubtitleFont,colupper=#4},
 \fi]}{\end{box4}}
 %%%%
 %%不编号引理盒子%%
-\DeclareDocumentEnvironment{Lemma*}{ O{} }{\begin{box4}{引理}[#1][ColorE][\faGlobe]}{\end{box4}}
-\DeclareDocumentEnvironment{Corollary*}{ O{} }{\begin{box4}{推论}[#1][ColorG][\faCompactDisc]}{\end{box4}}
-\DeclareDocumentEnvironment{Proposition*}{ O{} }{\begin{box4}{命题}[#1][ColorH][\faGlobe]}{\end{box4}}
+\DeclareDocumentEnvironment{Lemma*}{ O{} }{\begin{box4}{\@Lemma@Title}[#1][ColorE][\faGlobe]}{\end{box4}}
+\DeclareDocumentEnvironment{Corollary*}{ O{} }{\begin{box4}{\@Corollary@Title}[#1][ColorG][\faCompactDisc]}{\end{box4}}
+\DeclareDocumentEnvironment{Proposition*}{ O{} }{\begin{box4}{\@Propostion@Title}[#1][ColorH][\faGlobe]}{\end{box4}}
 %%%%
 %%设置拓展盒子%%
 \DeclareTColorBox{box5}{O{} m O{} O{ColorA} O{\faLink}}{
@@ -3402,8 +3436,7 @@ title={#2},#1}
 \def\@Thinking@Label@Unnumbered{思考题}
 \def\@Improve@Label@Numbered{复习与提高~\thechapter}
 \def\@Improve@Label@Unnumbered{复习与提高}
-%%简化序号命令%%
-\newcommand{\the@prenumber}{\thechapter.\thesection}
+%%%%
 \DeclareTColorBox{box9}{ O{} O{} }{Question,code={#2},#1}
 %%%%
 \newenvironment{Exercise}{\begin{box9}[][
@@ -3507,7 +3540,7 @@ rounded corners,arc=5.0pt,#1}
 \draw[ColorA!25,fill=ColorA!25](A)--(B)--(C)--(D)--(H)[rounded corners=5.0mm]--(G)[rounded corners=5.0mm]--(F)[sharp corners]--(E)--cycle;
 \end{tikzpicture}
 \begin{center}
-\color{ColorA}\bfseries\titlefont
+\color{ColorA}\bfseries\sffamily
 %%书籍系列%%
 \ifdefvoid{\@series}{}{
 {\FontSize{15pt}\@series\par}}
