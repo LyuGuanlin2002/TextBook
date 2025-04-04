@@ -6,7 +6,7 @@
 \newcommand{\makecover}{
 \tikzset{coverup node/.style={text=ColorA,anchor=north west,inner sep=0mm},
 coverdown node/.style={text=white,anchor=west,inner sep=0mm},
-opacity node/.style={anchor=north west,font=\FontSize{100pt}\bfseries\titlefont,text=ColorB!25}
+opacity node/.style={anchor=north west,font=\FontSize{100pt}\bfseries\sffamily,text=ColorB!25}
 }
 \begin{titlepage}
 \begin{tikzpicture}[remember picture,overlay]
@@ -26,21 +26,21 @@ evaluate=\x as \opa using 1.2-0.2*\x] in {2,...,10}{
 \node[opacity node,text opacity=\opa](O_\x)at(O_\botpoint.south west){\ifetdef};}
 %%背景2%%
 \draw[ColorA!80,fill=ColorA!80](E)rectangle(C);
-%%封面图%%width=\paperwidth,
-\node[inner sep=0mm,anchor=center](CI)at(G){\ifdefvoid{\@coverimage}{}{\includegraphics[height=\paperheight/2+5.25cm]{\@coverimage}}};
+%%封面图%%
+\node[inner sep=0mm,anchor=center](CI)at(G){\ifdefvoid{\@coverimage}{}{\includegraphics[width=\paperwidth,height=\paperheight/2+5.25cm]{\@coverimage}}};
 %%标题%%
-\node[font=\FontSize{55pt}\bfseries\titlefont,coverup node](T)at(current page text area.north west){\@title};
+\node[font=\FontSize{55pt}\bfseries\sffamily,coverup node](T)at(current page text area.north west){\@title};
 %%英文标题%%
-\node[font=\FontSize{20pt}\bfseries\titlefont,coverup node](ET)at([yshift=-0.5cm]T.south west){\ifdefvoid{\@englishtitle}{}{\@englishtitle}};
+\node[font=\FontSize{20pt}\bfseries\sffamily,coverup node](ET)at([yshift=-0.5cm]T.south west){\ifdefvoid{\@englishtitle}{}{\@englishtitle}};
 %%副标题%%
-\node[font=\FontSize{30pt}\bfseries\titlefont,coverup node](ST)at([yshift=-0.5cm]ET.south west){\ifdefvoid{\@subtitle}{}{\@subtitle}};
+\node[font=\FontSize{30pt}\bfseries\sffamily,coverup node](ST)at([yshift=-0.5cm]ET.south west){\ifdefvoid{\@subtitle}{}{\@subtitle}};
 %%英文副标题%%
-\node[font=\FontSize{15pt}\bfseries\titlefont,coverup node](EST)at([yshift=-0.5cm]ST.south west){\ifdefvoid{\@englishsubtitle}{}{\@englishsubtitle}};
+\node[font=\FontSize{15pt}\bfseries\sffamily,coverup node](EST)at([yshift=-0.5cm]ST.south west){\ifdefvoid{\@englishsubtitle}{}{\@englishsubtitle}};
 %%作者%%
-\node[font=\FontSize{15pt}\bfseries\titlefont,coverdown node](A)at([yshift=4.0cm]current page text area.west){主编\quad\@author};
+\node[font=\FontSize{15pt}\bfseries\sffamily,coverdown node](A)at([yshift=4.0cm]current page text area.west){主编\quad\@author};
 %%出版社%%
-\node[font=\bfseries\titlefont,coverdown node](PL)at(current page text area.south west){\ifdefvoid{\@presslogo}{}{\includegraphics[width=0.75cm]{\@presslogo}}};
-\node[font=\FontSize{15pt}\bfseries,coverdown node](PN)at([xshift=0.25cm]PL.east){\ifdefvoid{\@pressname}{}{\@pressname}};
+\node[coverdown node](PL)at(current page text area.south west){\ifdefvoid{\@presslogo}{}{\includegraphics[width=0.75cm]{\@presslogo}}};
+\node[font=\FontSize{15pt}\bfseries\sffamily,coverdown node](PN)at([xshift=0.25cm]PL.east){\ifdefvoid{\@pressname}{}{\@pressname}};
 \end{tikzpicture}
 \end{titlepage}}
 
@@ -70,17 +70,17 @@ evaluate=\x as \opa using 1.2-0.2*\x] in {2,...,10}{
 \node[opacity node,text opacity=\opa](O_\x)at(O_\botpoint.south east){\ifestdef};}
 %%背景2%%
 \draw[ColorA!80,fill=ColorA!80](E)rectangle(C);
-%%封底图%%width=\paperwidth,
-\node[inner sep=0mm,anchor=center](BI)at(G){\ifdefvoid{\@backimage}{}{\scalebox{1}[1]{\includegraphics[height=\paperheight/2+5.25cm]{\@backimage}}}};
+%%封底图%%
+\node[inner sep=0mm,anchor=center](BI)at(G){\ifdefvoid{\@backimage}{}{\scalebox{1}[1]{\includegraphics[width=\paperwidth,height=\paperheight/2+5.25cm]{\@backimage}}}};
 %%条形码%%
 \IfValueTF{#2}{
 \node[draw=white,fill=white,inner xsep=0mm,anchor=south east](BC)at([yshift=-0.5cm]current page text area.south east){\includegraphics[width=5.0cm]{#2}};}{\relax}
 %%说明文字%%
-\node[font=\FontSize{12pt}\bfseries\titlefont,backup node](BT)at(current page text area.north east){\hspace*{2.0em}#1};
+\node[font=\FontSize{12pt}\bfseries\sffamily,backup node](BT)at(current page text area.north east){\hspace*{2.0em}#1};
 %%书籍系列%%
-\node[font=\FontSize{15pt}\bfseries\titlefont,backdown node](S)at([yshift=4.0cm]current page text area.west){\ifdefvoid{\@series}{}{\@series}};
+\node[font=\FontSize{15pt}\bfseries\sffamily,backdown node](S)at([yshift=4.0cm]current page text area.west){\ifdefvoid{\@series}{}{\@series}};
 %%书籍系列%%
-\node[font=\FontSize{15pt}\bfseries\titlefont,backdown node](V)at([yshift=-0.5cm]S.south west){\ifdefvoid{\@version}{}{第{\@version}版}};
+\node[font=\FontSize{15pt}\bfseries\sffamily,backdown node](V)at([yshift=-0.5cm]S.south west){\ifdefvoid{\@version}{}{第{\@version}版}};
 \end{tikzpicture}
 \end{titlepage}}
 
@@ -88,9 +88,9 @@ evaluate=\x as \opa using 1.2-0.2*\x] in {2,...,10}{
 \NewDocumentCommand{\makespine}{O{1.0cm}}{
 \newlength{\SpineWidth}
 \setlength{\SpineWidth}{#1}
-\tikzset{spine title/.style={font=\FontSize{20pt}\bfseries\titlefont,text=white,text width=1.0cm,align=center},
-spine subtitle/.style={font=\FontSize{15pt}\bfseries\titlefont,text=white,text width=1.0cm,align=center},
-spine englishtitle/.style={font=\FontSize{20pt}\bfseries\titlefont,text=ColorA,inner sep=0mm}}
+\tikzset{spine title/.style={font=\FontSize{20pt}\bfseries\sffamily,text=white,text width=1.0cm,align=center},
+spine subtitle/.style={font=\FontSize{15pt}\bfseries\sffamily,text=white,text width=1.0cm,align=center},
+spine englishtitle/.style={font=\FontSize{20pt}\bfseries\sffamily,text=ColorA,inner sep=0mm}}
 \begin{titlepage}
 \begin{tikzpicture}[remember picture,overlay]
 \coordinate(A)at(current page.north);
