@@ -51,7 +51,7 @@ evaluate=\x as \opa using 1.2-0.2*\x] in {2,...,10}{
 \NewDocumentCommand{\makeback}{oo}{
 \tikzset{backup node/.style={text=ColorA,anchor=north east,inner sep=0mm,text width=\textwidth},
 backdown node/.style={text=white,anchor=west,inner sep=0mm},
-opacity node/.style={anchor=north east,font=\FontSize{100pt}\bfseries,text=ColorB!25}}
+opacity node/.style={anchor=north east,font=\FontSize{100pt}\bfseries\sffamily,text=ColorB!25}}
 \begin{titlepage}
 \begin{tikzpicture}[remember picture,overlay]
 \coordinate(A)at(current page.north west);
